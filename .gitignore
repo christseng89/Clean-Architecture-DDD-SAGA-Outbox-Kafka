@@ -1,1 +1,3 @@
-/order-service/.idea/
+*.jar
+**/target/*
+**/.idea/*

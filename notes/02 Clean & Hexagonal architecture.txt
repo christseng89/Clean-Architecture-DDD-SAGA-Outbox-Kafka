@@ -67,3 +67,11 @@
 
 7. Creating Order Service modules using Clean Architecture - PART 1
 https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html
+
+8. Creating Order Service modules using Clean Architecture - PART 2
+https://graphviz.org/download/
+choco install graphviz -y
+
+Visualize dependencies:
+https://github.com/ferstl/depgraph-maven-plugin
+mvn com.github.ferstl:depgraph-maven-plugin:aggregate -DcreateImage=true -DreduceEdges=false -Dscope=compile "-Dincludes=com.food.ordering.system*:*"

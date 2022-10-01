@@ -9,10 +9,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>order-application-service</artifactId>
+    <artifactId>order-domain-service</artifactId>
 
     <properties>
 
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.food.ordering.system</groupId>
+            <artifactId>order-domain-core</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
