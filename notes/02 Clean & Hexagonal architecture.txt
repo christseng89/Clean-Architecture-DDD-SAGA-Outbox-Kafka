@@ -1,0 +1,66 @@
+5. Introduction to Clean and Hexagonal Architectures
+
+// Clean architecture
+.  Separation of concerns by dividing the software into different layers
+.  Use Dependency Inversion (high level modules should NOT depend on low level modules) 
+   and Polymorphism to create a dependency rule to make 
+   the domain layer the most independent and stable layer
+.  Independent of Frameworks, UI, Databases and any external agency
+.  Testable domain layer without requiring and external element
+.  Define Entities and Use Cases for domain logic
+.  Same high level principle with hexagonal and onion architectures: Isolate the domain
+
+// Hexagonal architecture
+.  Hexagonal architecture also known as Ports and Adapters
+.  Divides the software as insides (domain layer) and outsides (infrastructure layers),
+   and start with insides layer
+.  The principle of the hexagonal architecture is to isolate the domain from any 
+   dependency; such as UI, Data layer or even a framework like Spring   
+.  It is a response to the desire to create thoroughly testable applications with isolated
+   business logic from the infrastructure and data sources. i.e. Domain layer should be 
+   the most independent and stable component of a system
+.  Allow an application to equally be driven by users, programs, automated test or 
+   batch scripts, and to be developed and tested in isolation from its 
+   eventual run-time devices and Databases   
+.  Adapters   
+   1.  Primary / Driving Adapter => Input Ports
+        = API UI
+        = Console
+        = Test scripts
+   2.  Secondary / Driven Adapter => Output Ports
+        = Databases
+        = Message Queues
+        = HTTP
+
+// Advantage of Clean and Hexagonal architecture
+. Especially useful for long-lasting applications that need to keep up with CHANGING requirements
+  leave as many options open as possible as for as long as possible
+. Improvement to traditional Layered Architecture. The dependencies are now plugins to the business logic. 
+  All dependency arrows point to business logic making the domain independent. Reverses the relation using ports and adapters.
+. Delay the implementation details of dependencies
+. Easier to test the business logic by mocking the dependencies even before deciding the implementation details
+. Replace an adapter implementation easily, without touching the business logic
+. Easier to maintain as changing a part of software will not affect other parts
+. Independent development and deployment of different parts
+
+// Business Logic in Clean Architecture
+. Entities: Objects that embodies a small set of critical business rules.  Has the core business logic with the critical business rules.
+. Use Cases: Describes application-specific business rules. Contains the rules that specify how and when the 
+  Critical Business Rules within the Entities are invoked.
+  
+  Coordinates Entities and includes application-specific business rules.
+
+  Orchestrates the flow of data to and from the entities, and direct those entities 
+  to use their Critical Business Rules to achieve the goals of the use case
+ 
+// Clean Architecture and Domain Driven Design (DDD)
+. Clean Architecture
+  Domain layer consists of:
+    Entities
+    Use Cases
+. DDD
+  Domain layer consists of:
+    Entities with an Aggregate root (group of domain objects that always needs to be in consistent state)
+    Domain services
+. Application Services: first contact points from outside to domain layer to handle
+  validations, data mappings, transaction management and security

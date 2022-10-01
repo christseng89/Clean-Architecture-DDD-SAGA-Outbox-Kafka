@@ -1,0 +1,60 @@
+1. Structure of the course
+
+//  Clean architecture - isolated domain logic from outside dependencies and runtime tools
+    https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html  
+
+//  Hexagonal architecture - Ports and Adapters
+    https://alistair.cockburn.us/hexagonal-architecture/
+
+    https://dev.to/dyarleniber/hexagonal-architecture-and-clean-architecture-with-examples-48oi
+
+//  DDD - Implement domain model with Aggregates, Entities, Value Objects, Domain services, 
+          Application services and Domain events
+
+//  Kafka - Event store for event-driven services.  Enable loosely coupled services that communicate thru events.
+
+//  SAGA - Distributed long running transactions across services LLT (Long lived transaction).
+           Local transactions publish domain events that trigger local transaction in other services.
+
+//  Outbox - Use local ACID transaction to let consistent Distributed transactions to complete SAGA in a safe and consistent way.
+             (Pulling Outbox Table with a Scheduler)
+
+//  CQRS - Command Query Responsibility Segregation to separate read and write operations.
+
+//  K8S/Docker/Cloud providers
+
+4. Setting up the environment
+- Java SE V17
+  java -version
+    java version "17.0.4.1" 2022-08-18 LTS
+    Java(TM) SE Runtime Environment (build 17.0.4.1+1-LTS-2)
+    Java HotSpot(TM) 64-Bit Server VM (build 17.0.4.1+1-LTS-2, mixed mode, sharing)
+- Maven 
+  choco install maven -y
+  mvn --version
+    Apache Maven 3.8.6 (84538c9988a25aec085021c365c560670ad80f63)
+    Maven home: C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.6
+    Java version: 17.0.4.1, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-17.0.4.1
+    Default locale: en_US, platform encoding: MS950
+    OS name: "windows 11", version: "10.0", arch: "amd64", family: "windows"
+
+- IntelliJ
+- Git
+  git -v
+    git version 2.37.3.windows.1
+- Docker desktop // https://learn.microsoft.com/en-us/windows/wsl/install
+  wsl --install // Powershell
+  docker --version
+    Docker version 20.10.17, build 100c701
+  
+  docker run hello-world
+  
+  docker-compose --version
+    docker-compose version 1.29.2, build 5becea4c
+
+- Kafka (kcat from https://github.com/edenhill/kcat)
+  ## apt-get install kafkacat
+  https://docs.confluent.io/4.0.0/app-development/kafkacat-usage.html ## Kafka Utility
+  https://www.kafkatool.com/ ## Kafka Tools
+
+- PostgreSQL & pgAdmin

@@ -1,0 +1,46 @@
+- choco install minikube  
+  minikube version
+    minikube version: v1.26.1
+    commit: 62e108c3dfdec8029a890ad6d8ef96b6461426dc
+  ## Powershell (adm)  
+  Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+    Path          : 
+    Online        : True
+    RestartNeeded : False
+
+  minikube config set driver hyperv  
+  minikube addons list
+  minikube start --memory 4096 --cpus 2 --disk-size=100GB -p clean-arch
+
+  minikube profile list
+    |------------|-----------|---------|---------------|------|---------|---------|-------|--------|
+    |  Profile   | VM Driver | Runtime |      IP       | Port | Version | Status  | Nodes | Active |
+    |------------|-----------|---------|---------------|------|---------|---------|-------|--------|
+    | clean-arch | hyperv    | docker  | 172.31.131.87 | 8443 | v1.24.3 | Running |     1 |        |
+    |------------|-----------|---------|---------------|------|---------|---------|-------|--------|
+
+  minikube kubectl -p clean-arch -- get node 
+    NAME         STATUS   ROLES           AGE   VERSION
+    clean-arch   Ready    control-plane   25m   v1.24.3
+
+  minikube kubectl -p clean-arch -- get ns 
+    NAME              STATUS   AGE
+    default           Active   25m
+    kube-node-lease   Active   25m
+    kube-public       Active   25m
+    kube-system       Active   25m
+
+  minikube kubectl -p clean-arch -- get po -A 
+    NAMESPACE     NAME                                 READY   STATUS    RESTARTS      AGE
+    kube-system   coredns-6d4b75cb6d-dcv6l             1/1     Running   0             26m
+    kube-system   etcd-clean-arch                      1/1     Running   0             26m
+    kube-system   kube-apiserver-clean-arch            1/1     Running   0             26m
+    kube-system   kube-controller-manager-clean-arch   1/1     Running   0             26m
+    kube-system   kube-proxy-bfc9b                     1/1     Running   0             26m
+    kube-system   kube-scheduler-clean-arch            1/1     Running   0             26m
+    kube-system   storage-provisioner                  1/1     Running   1 (25m ago)   26m
+
+minikube ip -p clean-arch
+  172.31.131.87
+
+minikube start --memory 4096 --cpus 2 --disk-size=100GB --alsologtostderr -v=8 -p clean-test
