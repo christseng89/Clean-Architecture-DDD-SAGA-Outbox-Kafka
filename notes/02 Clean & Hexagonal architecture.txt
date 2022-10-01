@@ -64,3 +64,6 @@
     Domain services
 . Application Services: first contact points from outside to domain layer to handle
   validations, data mappings, transaction management and security
+
+7. Creating Order Service modules using Clean Architecture - PART 1
+https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html
