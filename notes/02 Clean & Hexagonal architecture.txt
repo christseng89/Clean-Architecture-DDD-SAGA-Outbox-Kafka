@@ -69,6 +69,8 @@
 https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html
 
 8. Creating Order Service modules using Clean Architecture - PART 2
+mvn clean install
+
 https://graphviz.org/download/
 choco install graphviz -y
 

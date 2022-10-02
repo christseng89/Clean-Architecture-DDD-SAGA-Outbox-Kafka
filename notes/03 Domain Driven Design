@@ -1,0 +1,43 @@
+https://zh.wikipedia.org/zh-tw/%E9%A0%98%E5%9F%9F%E9%A9%85%E5%8B%95%E8%A8%AD%E8%A8%88
+
+9. Introduction to Domain Driven Design
+- Domain-Driven Design: 
+  Offers solutions to common problem when building enterprise software to separate the business models from the infrastructure.
+  Strategic vs Tactic DDD
+  https://uxdesign.cc/strategic-design-vs-tactical-design-c7f66ca12b3a
+  https://learn.microsoft.com/en-us/azure/architecture/microservices/model/tactical-ddd
+
+- Tactic DDD: Implementation patterns.
+
+  * Entities: Domain object with a unique identity. Embodies set of critical business rules.
+  * Aggregates: Group of Entity objects which always need to be in consistent state
+  * Aggregate Root (AR): Entry point Entity for an aggregate. All business operations should go through root.
+     An Aggregate should be referenced from outside through its root only. AR should have pure, side-effect
+     free functions
+  * Value Objects: Immutable objects without identity. Only value matters. Brings context to the value
+
+  * Domain Events: Decouple different domains. Describe things that happen and change the state of a domain.
+     Makes the system extendable. Domain event listeners runs in a different transaction than the event publishers
+     In  Domain-driven system, domain events are an excellent way of achieving eventual consistency. 
+     Any system or module that needs to update itself when something happens in another module or system    
+     can subscribe to the domain events coming from that system
+  * Domain Services: Business logic that cannot fit in the aggregate. Used when multiple aggregates required in 
+     business logic Can interact with other domain services
+  * Application Services: Allows the isolated domain to communicate with outside. Orchestrate transaction,
+     security, looking up proper aggregates and saving state changes of the domain to the database. Does not  
+     contain any business logic.
+     Domain event listeners are special kind of Application services that is triggered by domain events. Each   
+     domain event listener can have a separate domain service to handle business logic.
+
+- DDD Highlights
+  * “For most software projects, the primary focus should be on the domain and domain logic.”
+  * “Complex domain designs should be based on a model.” 
+  * “Domain-driven design is both a way of thinking and a set of priorities, aimed at accelerating 
+    software projects that have to deal with complicated domains.”
+  * “LAYERED ARCHITECTURE is used in most systems today, under various layering schemes. 
+    Many styles of development can also benefit from layering. However, domain-driven design requires 
+    only one particular layer to exist.”
+  * “The domain model is a set of concepts. The "domain layer" is the manifestation of that model and 
+    all directly related design elements. The design and implementation of business logic constitute 
+    the domain layer. In a MODEL-DRIVEN DESIGN, the software constructs of the domain 
+    layer mirror the model concepts.”
