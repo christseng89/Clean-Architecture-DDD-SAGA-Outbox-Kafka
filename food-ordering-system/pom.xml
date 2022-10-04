@@ -10,6 +10,8 @@
         <module>order-service/order-dataaccess</module>
         <module>order-service/order-messaging</module>
         <module>order-service/order-container</module>
+        <module>common</module>
+        <module>common/common-domain</module>
     </modules>
 
     <parent>
@@ -58,6 +60,13 @@
                <artifactId>order-messaging</artifactId>
                <version>${project.version}</version>
            </dependency>
+
+           <dependency>
+               <groupId>com.food.ordering.system</groupId>
+               <artifactId>common-domain</artifactId>
+               <version>${project.version}</version>
+           </dependency>
+
        </dependencies>
    </dependencyManagement>
    <dependencies></dependencies>
