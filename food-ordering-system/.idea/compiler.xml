@@ -15,20 +15,10 @@
         <module name="order-container" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="aaaa" target="17" />
-      <module name="bbbb" target="17" />
-      <module name="common" target="17" />
-      <module name="common-domain" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="aaaa" options="-parameters" />
-      <module name="bbbb" options="-parameters" />
-      <module name="common" options="" />
-      <module name="common-domain" options="-parameters" />
-      <module name="food-ordering-system" options="-parameters" />
+      <module name="food-ordering-system" options="" />
       <module name="order-application" options="-parameters" />
       <module name="order-container" options="-parameters" />
       <module name="order-dataaccess" options="-parameters" />

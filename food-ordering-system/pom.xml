@@ -58,9 +58,9 @@
                <artifactId>order-messaging</artifactId>
                <version>${project.version}</version>
            </dependency>
-
        </dependencies>
    </dependencyManagement>
+   <dependencies></dependencies>
 
     <build>
         <plugins>
