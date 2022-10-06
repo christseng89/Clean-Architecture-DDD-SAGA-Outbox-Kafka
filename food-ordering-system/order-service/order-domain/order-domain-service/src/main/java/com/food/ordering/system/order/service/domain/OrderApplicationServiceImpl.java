@@ -6,7 +6,9 @@ import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRespo
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery;
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.ports.input.service.OrderApplicationService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrderApplicationServiceImpl implements OrderApplicationService {
     @Override
     public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
