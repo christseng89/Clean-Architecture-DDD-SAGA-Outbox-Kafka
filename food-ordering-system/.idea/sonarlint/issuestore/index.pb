@@ -17,12 +17,8 @@ Ycommon/common-domain/src/main/java/com/food/ordering/system/domain/valueobject/
 zorder-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/entity/Order.java,c\4\c4e5ed365a5d2060be9047f4d86448ac1bee9e42
 ¶
 …order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/event/OrderCreatedEvent.java,8\2\8258fc41eea08e37741cf08110f82b9640f7201e
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 d
 4order-service/order-domain/order-domain-core/pom.xml,e\2\e2c9ec2a77daaaa98761010294a2cfad7cd6acdd
-g
-7order-service/order-domain/order-domain-service/pom.xml,c\4\c490ff3d7fc8c1492247ba3e854b933e7d837dec
 ±
 €order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/OrderDomainService.java,3\2\3229f04078864c5432d61851ffd6f22901baebaa
 ¶
