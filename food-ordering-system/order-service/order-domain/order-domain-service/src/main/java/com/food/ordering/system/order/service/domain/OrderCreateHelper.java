@@ -31,21 +31,16 @@ public class OrderCreateHelper {
 
     private final OrderDataMapper orderDataMapper;
 
-    private final OrderCreatedPaymentRequestMessagePublisher orderCreatedEventDomainEventPublisher;
-
-
     public OrderCreateHelper(OrderDomainService orderDomainService,
                              OrderRepository orderRepository,
                              CustomerRepository customerRepository,
                              RestaurantRepository restaurantRepository,
-                             OrderDataMapper orderDataMapper,
-                             OrderCreatedPaymentRequestMessagePublisher orderCreatedEventDomainEventPublisher) {
+                             OrderDataMapper orderDataMapper) {
         this.orderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
-        this.orderCreatedEventDomainEventPublisher = orderCreatedEventDomainEventPublisher;
     }
 
     @Transactional
