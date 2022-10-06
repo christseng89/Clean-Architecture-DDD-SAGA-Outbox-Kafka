@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Microservices_CleanArchitecture.iml" filepath="$PROJECT_DIR$/.idea/Microservices_CleanArchitecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/food-ordering-system/common/common.iml" filepath="$PROJECT_DIR$/food-ordering-system/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/food-ordering-system/order-service/order-domain/order-domain-core/order-domain-core.iml" filepath="$PROJECT_DIR$/food-ordering-system/order-service/order-domain/order-domain-core/order-domain-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/food-ordering-system/order-service/order-domain/order-domain-service/order-domain-service.iml" filepath="$PROJECT_DIR$/food-ordering-system/order-service/order-domain/order-domain-service/order-domain-service.iml" />
     </modules>
   </component>
 </project>
