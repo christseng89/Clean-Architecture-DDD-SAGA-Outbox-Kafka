@@ -1,0 +1,15 @@
+26. Running Apache Kafka using Docker
+docker-compose -f common.yml -f zookeeper.yml up
+
+https://zookeeper.apache.org/doc/r3.4.8/zookeeperAdmin.html#sc_zkCommands
+https://nmap.org/dist/nmap-7.92-setup.exe
+
+echo ruok | ncat localhost 2181
+
+docker-compose -f common.yml -f kafka_cluster.yml up
+docker-compose -f common.yml -f init_kafka.yml up // RUN Once only...
+
+## Kafka manager
+http://localhost:9000/
+
+// Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => Save

@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="order-messaging" />
         <module name="common" />
+        <module name="infrastructure" />
         <module name="common-domain" />
         <module name="order-application" />
         <module name="order-domain-service" />
@@ -23,7 +24,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common" options="-parameters" />
       <module name="common-domain" options="-parameters" />
-      <module name="food-ordering-system" options="" />
+      <module name="food-ordering-system" options="-parameters" />
+      <module name="infrastructure" options="-parameters" />
       <module name="order-application" options="-parameters" />
       <module name="order-container" options="-parameters" />
       <module name="order-dataaccess" options="-parameters" />

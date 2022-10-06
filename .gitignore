@@ -1,2 +1,4 @@
 *.jar
 **/target/*
+**/kafka/*
+**/zookeeper/*
