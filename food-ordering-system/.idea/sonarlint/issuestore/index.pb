@@ -51,17 +51,9 @@ acommon/common-domain/src/main/java/com/food/ordering/system/domain/valueobject/
 ´order-service/order-domain/order-domain-service/src/main/java/com/food/ordering/system/order/service/domain/ports/input/message/listener/payment/PaymentResponseMessageListener.java,f\4\f41e5fcb3ce07e7937cab247985ed759b4b17936
 ¶
 …order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/valueobject/OrderItemId.java,f\a\fac59ff09a81930eb45632670fe26f6465ec102f
-¸
-‡order-service/order-domain/order-domain-service/src/main/java/com/food/ordering/system/order/service/domain/mapper/OrderDataMapper.java,c\2\c283bca9a7897cd14205c38af29e88988718170d
-¬
-|order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/entity/Product.java,2\6\26dc01e756c8c6d8293ed991ac6c8db65da038b3
 µ
 „order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/valueobject/TrackingId.java,1\3\13ba4f4b8c35142f4294da375331db975e93099a
 Í
 œorder-service/order-domain/order-domain-service/src/main/java/com/food/ordering/system/order/service/domain/ports/input/service/OrderApplicationService.java,f\e\fe99135d10b7b9434b43e68046fe7e9c78128400
 œ
 lcommon/common-domain/src/main/java/com/food/ordering/system/domain/event/publisher/DomainEventPublisher.java,0\8\08fc5feaedc040bd73e5b58494b0af9276a8dad2
-Ì
-›order-service/order-domain/order-domain-service/src/main/java/com/food/ordering/system/order/service/domain/ports/output/repository/CustomerRepository.java,1\4\14c74f72ae3c3b817c6a66b71a130454acbe90be
-É
-˜order-service/order-domain/order-domain-service/src/main/java/com/food/ordering/system/order/service/domain/ports/output/repository/OrderRepository.java,7\8\78cf604b2e258a0c933feabbc37a61465566bb5b

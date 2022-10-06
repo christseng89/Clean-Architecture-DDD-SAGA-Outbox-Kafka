@@ -25,8 +25,9 @@ public class OrderDataMapper {
     public Restaurant createOrderCommandToRestaurant(CreateOrderCommand createOrderCommand) {
         return Restaurant.builder()
                 .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-                .products(Collections.unmodifiableList(createOrderCommand.getItems().stream().map(orderItem ->
-                        new Product(new ProductId(orderItem.getProductId()))).collect(Collectors.toList())))
+                .products(createOrderCommand.getItems().stream().map(orderItem ->
+                        new Product(new ProductId(orderItem.getProductId())))
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -40,6 +41,15 @@ public class OrderDataMapper {
                 .build();
     }
 
+    private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
+        return new StreetAddress(
+                UUID.randomUUID(),
+                orderAddress.getStreet(),
+                orderAddress.getPostalCode(),
+                orderAddress.getCity()
+        );
+    }
+
     private List<OrderItem> orderItemsToOrderItemEntities(List<com.food.ordering.system.order.service.domain.dto.create.OrderItem> orderItems) {
         return orderItems.stream()
                 .map(orderItem ->
@@ -49,15 +59,6 @@ public class OrderDataMapper {
                                 .quantity(orderItem.getQuantity())
                                 .subTotal(new Money(orderItem.getSubTotal()))
                                 .build()).collect(Collectors.toList());
-    }
-
-    private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
-        return new StreetAddress(
-                UUID.randomUUID(),
-                orderAddress.getStreet(),
-                orderAddress.getPostalCode(),
-                orderAddress.getCity()
-        );
     }
 
     public CreateOrderResponse orderToCreateOrderResponse(Order order, String message) {
