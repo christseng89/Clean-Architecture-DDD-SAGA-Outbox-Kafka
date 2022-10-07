@@ -13,3 +13,9 @@ docker-compose -f common.yml -f init_kafka.yml up // RUN Once only...
 http://localhost:9000/
 
 // Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => Save
+
+28. Implementing Kafka model generic module
+https://avro.apache.org/docs/1.11.1/specification/#logical-types
+
+### kafka-model> 
+mvn clean install
