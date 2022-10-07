@@ -7,6 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="kafka-model" />
+        <module name="kafka-consumer" />
+        <module name="kafka-producer" />
+        <module name="kafka-config-data" />
+        <module name="order-dataaccess" />
+        <module name="order-container" />
         <module name="order-messaging" />
         <module name="common" />
         <module name="infrastructure" />
@@ -15,8 +21,6 @@
         <module name="order-domain-service" />
         <module name="order-service" />
         <module name="order-domain-core" />
-        <module name="order-dataaccess" />
-        <module name="order-container" />
       </profile>
     </annotationProcessing>
   </component>
@@ -24,8 +28,13 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common" options="-parameters" />
       <module name="common-domain" options="-parameters" />
-      <module name="food-ordering-system" options="-parameters" />
+      <module name="food-ordering-system" options="" />
       <module name="infrastructure" options="-parameters" />
+      <module name="kafka" options="-parameters" />
+      <module name="kafka-config-data" options="-parameters" />
+      <module name="kafka-consumer" options="-parameters" />
+      <module name="kafka-model" options="-parameters" />
+      <module name="kafka-producer" options="-parameters" />
       <module name="order-application" options="-parameters" />
       <module name="order-container" options="-parameters" />
       <module name="order-dataaccess" options="-parameters" />
