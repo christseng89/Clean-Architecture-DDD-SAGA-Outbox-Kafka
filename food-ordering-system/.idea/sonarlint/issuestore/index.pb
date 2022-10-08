@@ -13,8 +13,6 @@ Ycommon/common-domain/src/main/java/com/food/ordering/system/domain/valueobject/
 ‚order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/event/OrderPaidEvent.java,3\f\3f763cd44c00aba58b610546e6496cf7d0df6c5c
 ¸
 ‡order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/event/OrderCancelledEvent.java,3\7\37e0a437f745d2bc15d89051facc84524d94ae7b
-ª
-zorder-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/entity/Order.java,c\4\c4e5ed365a5d2060be9047f4d86448ac1bee9e42
 ¶
 …order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/event/OrderCreatedEvent.java,8\2\8258fc41eea08e37741cf08110f82b9640f7201e
 d
