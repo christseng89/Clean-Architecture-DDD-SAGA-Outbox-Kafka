@@ -19,3 +19,23 @@ https://avro.apache.org/docs/1.11.1/specification/#logical-types
 
 ### kafka-model> 
 mvn clean install
+
+### Stop Kafka
+docker compose -f common.yml -f kafka_cluster.yml stop
+docker compose -f common.yml -f zookeeper.yml stop
+
+### Re-start Kafka //Restarts all stopped and running services.
+docker compose -f common.yml -f zookeeper.yml up
+docker compose -f common.yml -f kafka_cluster.yml up
+
+### Docker compose stop vs down // https://nickjanetakis.com/blog/docker-tip-45-docker-compose-stop-vs-down#:~:text=The%20docker%2Dcompose%20stop%20command,any%20networks%20that%20were%20created.
+- The docker-compose stop command will stop your containers, but it won’t remove them.
+- The docker-compose down command will stop your containers, but it also removes the stopped containers 
+  as well as any networks that were created. 
+
+  docker-compose down -v //to remove all volumes too
+
+### Docker compose up vs start
+- docker-compose up, use up to start or restart all the services defined in a docker-compose.yml
+- docker-compose start command is useful only to restart containers that were previously created, 
+  but were stopped. It never creates new containers.

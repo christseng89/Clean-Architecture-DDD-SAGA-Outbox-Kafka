@@ -5,9 +5,7 @@
  */
 package com.food.ordering.system.kafka.order.avro.model;
 
-import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
-import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
@@ -168,9 +166,10 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
 
   /**
    * Gets the value of the 'id' field.
+   *
    * @return The value of the 'id' field.
    */
-  public java.util.UUID getId() {
+  public String getId() {
     return id;
   }
 
@@ -185,9 +184,10 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
 
   /**
    * Gets the value of the 'sagaId' field.
+   *
    * @return The value of the 'sagaId' field.
    */
-  public java.util.UUID getSagaId() {
+  public String getSagaId() {
     return sagaId;
   }
 
@@ -202,9 +202,10 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
 
   /**
    * Gets the value of the 'restaurantId' field.
+   *
    * @return The value of the 'restaurantId' field.
    */
-  public java.util.UUID getRestaurantId() {
+  public String getRestaurantId() {
     return restaurantId;
   }
 
@@ -219,9 +220,10 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
 
   /**
    * Gets the value of the 'orderId' field.
+   *
    * @return The value of the 'orderId' field.
    */
-  public java.util.UUID getOrderId() {
+  public String getOrderId() {
     return orderId;
   }
 
