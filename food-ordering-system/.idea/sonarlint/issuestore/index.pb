@@ -1,6 +1,4 @@
 
-­
-}order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/entity/Customer.java,2\2\226a7e51b4205dc5cd8da91e40037974308f0499
 ®
 ~order-service/order-domain/order-domain-core/src/main/java/com/food/ordering/system/order/service/domain/entity/OrderItem.java,d\9\d9726cae4241ed728bf9bdc8989f5307a850d5b7
 ‰
@@ -93,8 +91,6 @@ g
 ‡order-service/order-domain/order-domain-service/src/test/java/com/food/ordering/system/order/service/domain/OrderTestConfiguration.java,b\0\b0b6b019c4b53b0563407e58d3d2d4f69e7a879a
 û
 Êorder-service/order-domain/order-domain-service/src/main/java/com/food/ordering/system/order/service/domain/ports/input/message/listener/restaurantapproval/RestaurantApprovalResponseMessageListener.java,9\b\9bbe3a42e7b060c08fbf4f0c7786d63cb3ad32ea
-½
-Œorder-service/order-domain/order-domain-service/src/test/java/com/food/ordering/system/order/service/domain/OrderApplicationServiceTest.java,5\f\5fe605a11b7c514de8fbf93cc70f8f8b44bee6e8
 F
 infrastructure/pom.xml,2\b\2bb83dd43ff74bd2017133cd9dea6897cfe43de3
 \
