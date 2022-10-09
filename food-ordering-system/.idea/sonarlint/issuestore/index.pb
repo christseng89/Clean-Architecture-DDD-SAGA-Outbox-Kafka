@@ -113,8 +113,6 @@ X
 (infrastructure/kafka/kafka-model/pom.xml,b\5\b5ebdc449af44ac439d81aad072e585df2d63cc3
 ›
 kinfrastructure/kafka/kafka-model/src/main/java/com/food/ordering/system/kafka/order/avro/model/Product.java,0\9\093a16e7123c56f793af77c6378be9231d644c2d
-¸
-‡infrastructure/kafka/kafka-model/src/main/java/com/food/ordering/system/kafka/order/avro/model/RestaurantApprovalResponseAvroModel.java,e\3\e38982958336e877b16e02ae6098b0b168463019
 ©
 yinfrastructure/kafka/kafka-model/src/main/java/com/food/ordering/system/kafka/order/avro/model/RestaurantOrderStatus.java,8\e\8e9f42e0b4969d096e328f5aa93702170fea5884
 L
@@ -127,5 +125,3 @@ L
 }infrastructure/kafka/kafka-producer/src/main/java/com/food/ordering/system/kafka/producer/service/impl/KafkaProducerImpl.java,c\0\c07c33366fc961f7e74e3fcd3f4eeb824a3fdcf8
 [
 +infrastructure/kafka/kafka-consumer/pom.xml,1\7\174450eb89f9fc83c593a3864ff160aa5b470840
-©
-yinfrastructure/kafka/kafka-consumer/src/main/java/com/food/ordering/system/kafka/consumer/config/KafkaConsumerConfig.java,f\c\fc408a2339738c3b1478ac349f8ca2534a67d599

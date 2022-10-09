@@ -2,3 +2,4 @@
 **/target/*
 **/volumes/kafka/*
 **/zookeeper/*
+**//.idea/sonarlint/*
