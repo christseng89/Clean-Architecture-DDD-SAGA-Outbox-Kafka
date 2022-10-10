@@ -14,12 +14,14 @@
         <module>common/common-domain</module>
         <module>infrastructure</module>
         <module>infrastructure/kafka</module>
+        <module>customer-service</module>
+        <module>restaurant-service</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.4</version>
+        <version>2.6.7</version>
         <relativePath/>
     </parent>
 
