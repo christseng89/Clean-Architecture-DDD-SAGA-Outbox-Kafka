@@ -1,8 +1,3 @@
-*.jar
-# **/target/*
-# **/volumes/kafka/*
-# **/zookeeper/*
-**/.idea/sonarlint/*
 .idea
 .env
 target
