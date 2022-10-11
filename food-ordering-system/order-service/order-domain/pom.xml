@@ -17,8 +17,4 @@
         <module>order-domain-service</module>
     </modules>
 
-    <properties>
-
-    </properties>
-
 </project>
