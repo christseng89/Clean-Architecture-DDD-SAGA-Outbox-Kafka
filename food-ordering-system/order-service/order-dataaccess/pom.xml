@@ -11,14 +11,10 @@
 
     <artifactId>order-dataaccess</artifactId>
 
-    <properties>
-
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.food.ordering.system</groupId>
-            <artifactId>order-application-service</artifactId>
+            <artifactId>order-domain-service</artifactId>
         </dependency>
         <dependency>
             <groupId>com.food.ordering.system</groupId>

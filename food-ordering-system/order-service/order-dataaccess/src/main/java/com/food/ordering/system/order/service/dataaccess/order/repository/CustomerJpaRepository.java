@@ -1,4 +1,4 @@
-package com.food.ordering.system.order.service.dataaccess.customer.repository;
+package com.food.ordering.system.order.service.dataaccess.order.repository;
 
 import com.food.ordering.system.order.service.dataaccess.customer.entity.CustomerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
