@@ -11,10 +11,6 @@
 
     <artifactId>customer-service</artifactId>
 
-    <properties>
-
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

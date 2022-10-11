@@ -11,10 +11,6 @@
 
     <artifactId>kafka-config-data</artifactId>
 
-    <properties>
-
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
