@@ -15,7 +15,6 @@
         <module>infrastructure</module>
         <module>infrastructure/kafka</module>
         <module>customer-service</module>
-        <module>restaurant-service</module>
     </modules>
 
     <parent>

@@ -184,10 +184,9 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
 
   /**
    * Gets the value of the 'sagaId' field.
-   *
    * @return The value of the 'sagaId' field.
    */
-  public String getSagaId() {
+  public java.lang.String getSagaId() {
     return sagaId;
   }
 
@@ -202,10 +201,9 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
 
   /**
    * Gets the value of the 'restaurantId' field.
-   *
    * @return The value of the 'restaurantId' field.
    */
-  public String getRestaurantId() {
+  public java.lang.String getRestaurantId() {
     return restaurantId;
   }
 
@@ -220,10 +218,9 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
 
   /**
    * Gets the value of the 'orderId' field.
-   *
    * @return The value of the 'orderId' field.
    */
-  public String getOrderId() {
+  public java.lang.String getOrderId() {
     return orderId;
   }
 
