@@ -9,3 +9,4 @@ target
 **/volumes/kafka/*
 **/zookeeper/*
 **/.idea/*
+**/backup

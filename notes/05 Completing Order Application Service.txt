@@ -20,3 +20,65 @@ psql -U postgres
 
 cd food-ordering-system
 mvn clean install
+
+42. Creating Customer Service & Running Order Service
+1. Start 'Docker Desktop'
+2. Start 'pgAdmin4'
+3. Maven build project 
+   cd food-ordering-system
+   mvn clean install
+      [INFO] ------------------------------------------------------------------------
+      [INFO] BUILD SUCCESS
+      [INFO] ------------------------------------------------------------------------
+
+4. Clean up Kafka volumes directory 
+   rd food-ordering-system\infrastructure\docker-compose\volumes /s
+   md food-ordering-system\infrastructure\docker-compose\volumes\kafka\broker-1
+   md food-ordering-system\infrastructure\docker-compose\volumes\kafka\broker-2
+   md food-ordering-system\infrastructure\docker-compose\volumes\kafka\broker-3
+
+   md food-ordering-system\infrastructure\docker-compose\volumes\zookeeper\data
+   md food-ordering-system\infrastructure\docker-compose\volumes\zookeeper\transactions
+
+5. Setup 'Zookeeper & Kafka'
+   cd food-ordering-system\infrastructure\docker-compose
+   docker compose -f common.yml -f zookeeper.yml up -d
+   docker compose -f common.yml -f kafka_cluster.yml up -d
+
+6. Create Kafka Topics // RUN Once only...
+   docker compose -f common.yml -f init_kafka.yml up 
+
+7. ## Kafka manager (UI)
+   http://localhost:9000/
+
+   // Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => 
+      Save => Go to cluster view
+
+8. Run Application
+   - Customer Service (CustomerServiceApplication)
+   - Order Service (OrderServiceApplication)
+   - Restaurant Service (RestaurantServiceApplication)
+   // Check PostgreSQL Database 
+
+9. Postman 
+   // Post an Order
+   // Check PostgreSQL Database (order) 
+    {
+      "orderTrackingId": "0e09f82e-500d-4e36-ba17-c96d64cf7c1e",
+      "orderStatus": "PENDING",
+      "message": "Order created successfully"
+    }
+
+A. Check Kafka Topics (Unix ONLY)
+   kafkacat -C -b localhost:19092 -t payment-request
+
+### Housekeeping
+1. Stop 'Zookeeper & Kafka' containers
+   cd food-ordering-system\infrastructure\docker-compose
+   docker compose -f common.yml -f zookeeper.yml stop
+   docker compose -f common.yml -f kafka_cluster.yml stop
+
+2. Remove 'Zookeeper & Kafka' containers
+   cd food-ordering-system\infrastructure\docker-compose
+   docker compose -f common.yml -f zookeeper.yml down
+   docker compose -f common.yml -f kafka_cluster.yml down
