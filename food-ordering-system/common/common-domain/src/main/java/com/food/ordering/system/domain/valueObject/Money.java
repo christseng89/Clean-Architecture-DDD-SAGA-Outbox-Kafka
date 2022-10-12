@@ -14,7 +14,7 @@ public class Money {
     }
 
     public boolean isGreaterThanZero() {
-        return this.amount !=null && this.amount.compareTo(BigDecimal.ZERO) > 0;
+        return this.amount != null && this.amount.compareTo(BigDecimal.ZERO) > 0;
     }
 
     public boolean isGreaterThan(Money money) {
@@ -29,9 +29,10 @@ public class Money {
         return new Money(setScale(this.amount.subtract(money.getAmount())));
     }
 
-    public Money multiply(int quantity) {
-        return new Money(setScale(this.amount.multiply(new BigDecimal(quantity))));
+    public Money multiply(int multiplier) {
+        return new Money(setScale(this.amount.multiply(new BigDecimal(multiplier))));
     }
+
     public BigDecimal getAmount() {
         return amount;
     }
@@ -49,7 +50,7 @@ public class Money {
         return Objects.hash(amount);
     }
 
-    private BigDecimal setScale(BigDecimal amount) {
-        return amount.setScale(2, RoundingMode.HALF_EVEN);
+    private BigDecimal setScale(BigDecimal input) {
+        return input.setScale(2, RoundingMode.HALF_EVEN);
     }
 }

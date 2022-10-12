@@ -14,43 +14,42 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrderMessagingDataMapper {
-    public PaymentRequestAvroModel
-    orderCreatedEventToPaymentRequestAvroModel(OrderCreatedEvent orderCreatedEvent) {
+
+    public PaymentRequestAvroModel orderCreatedEventToPaymentRequestAvroModel(OrderCreatedEvent orderCreatedEvent) {
         Order order = orderCreatedEvent.getOrder();
         return PaymentRequestAvroModel.newBuilder()
-                .setId(UUID.randomUUID())
-                .setSagaId(UUID.fromString(""))
-                .setCustomerId(order.getCustomerId().getValue())
-                .setOrderId(order.getId().getValue())
+                .setId(UUID.randomUUID().toString())
+                .setSagaId("")
+                .setCustomerId(order.getCustomerId().getValue().toString())
+                .setOrderId(order.getId().getValue().toString())
                 .setPrice(order.getPrice().getAmount())
                 .setCreatedAt(orderCreatedEvent.getCreatedAt().toInstant())
                 .setPaymentOrderStatus(PaymentOrderStatus.PENDING)
                 .build();
     }
 
-    public PaymentRequestAvroModel
-    orderCancelledEventToPaymentRequestAvroModel(OrderCancelledEvent orderCancelledEvent) {
+    public PaymentRequestAvroModel orderCancelledEventToPaymentRequestAvroModel(OrderCancelledEvent orderCancelledEvent) {
         Order order = orderCancelledEvent.getOrder();
         return PaymentRequestAvroModel.newBuilder()
-          .setId(UUID.randomUUID())
-          .setSagaId(UUID.fromString(""))
-          .setCustomerId(order.getCustomerId().getValue())
-          .setOrderId(order.getId().getValue())
-          .setPrice(order.getPrice().getAmount())
-          .setCreatedAt(orderCancelledEvent.getCreatedAt().toInstant())
-          .setPaymentOrderStatus(PaymentOrderStatus.CANCELLED)
-          .build();
+                .setId(UUID.randomUUID().toString())
+                .setSagaId("")
+                .setCustomerId(order.getCustomerId().getValue().toString())
+                .setOrderId(order.getId().getValue().toString())
+                .setPrice(order.getPrice().getAmount())
+                .setCreatedAt(orderCancelledEvent.getCreatedAt().toInstant())
+                .setPaymentOrderStatus(PaymentOrderStatus.CANCELLED)
+                .build();
     }
 
     public RestaurantApprovalRequestAvroModel
     orderPaidEventToRestaurantApprovalRequestAvroModel(OrderPaidEvent orderPaidEvent) {
         Order order = orderPaidEvent.getOrder();
         return RestaurantApprovalRequestAvroModel.newBuilder()
-                .setId(UUID.randomUUID())
-                .setSagaId(UUID.fromString(""))
-                .setOrderId(order.getId().getValue())
-                .setRestaurantId(order.getRestaurantId().getValue())
-                .setOrderId(order.getId().getValue())
+                .setId(UUID.randomUUID().toString())
+                .setSagaId("")
+                .setOrderId(order.getId().getValue().toString())
+                .setRestaurantId(order.getRestaurantId().getValue().toString())
+                .setOrderId(order.getId().getValue().toString())
                 .setRestaurantOrderStatus(com.food.ordering.system.kafka.order.avro.model.RestaurantOrderStatus
                         .valueOf(order.getOrderStatus().name()))
                 .setProducts(order.getItems().stream().map(orderItem ->
@@ -64,7 +63,8 @@ public class OrderMessagingDataMapper {
                 .build();
     }
 
-    public PaymentResponse paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel paymentResponseAvroModel) {
+    public PaymentResponse paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel
+                                                                             paymentResponseAvroModel) {
         return PaymentResponse.builder()
                 .id(paymentResponseAvroModel.getId())
                 .sagaId(paymentResponseAvroModel.getSagaId())
@@ -80,7 +80,8 @@ public class OrderMessagingDataMapper {
     }
 
     public RestaurantApprovalResponse
-    approvalResponseAvroModelToApprovalResponse(RestaurantApprovalResponseAvroModel restaurantApprovalResponseAvroModel) {
+    approvalResponseAvroModelToApprovalResponse(RestaurantApprovalResponseAvroModel
+                                                        restaurantApprovalResponseAvroModel) {
         return RestaurantApprovalResponse.builder()
                 .id(restaurantApprovalResponseAvroModel.getId())
                 .sagaId(restaurantApprovalResponseAvroModel.getSagaId())

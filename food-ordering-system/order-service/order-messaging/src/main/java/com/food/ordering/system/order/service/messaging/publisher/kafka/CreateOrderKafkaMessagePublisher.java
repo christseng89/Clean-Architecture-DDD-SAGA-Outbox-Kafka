@@ -17,7 +17,7 @@ public class CreateOrderKafkaMessagePublisher implements OrderCreatedPaymentRequ
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final OrderServiceConfigData orderServiceConfigData;
     private final KafkaProducer<String, PaymentRequestAvroModel> kafkaProducer;
-    private final KafkaMessageHelper kafkaMessageHelper;
+    private final KafkaMessageHelper orderKafkaMessageHelper;
 
     public CreateOrderKafkaMessagePublisher(OrderMessagingDataMapper orderMessagingDataMapper,
                                             OrderServiceConfigData orderServiceConfigData,
@@ -26,7 +26,7 @@ public class CreateOrderKafkaMessagePublisher implements OrderCreatedPaymentRequ
         this.orderMessagingDataMapper = orderMessagingDataMapper;
         this.orderServiceConfigData = orderServiceConfigData;
         this.kafkaProducer = kafkaProducer;
-        this.kafkaMessageHelper = kafkaMessageHelper;
+        this.orderKafkaMessageHelper = kafkaMessageHelper;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CreateOrderKafkaMessagePublisher implements OrderCreatedPaymentRequ
             kafkaProducer.send(orderServiceConfigData.getPaymentRequestTopicName(),
                     orderId,
                     paymentRequestAvroModel,
-                    kafkaMessageHelper
+                    orderKafkaMessageHelper
                             .getKafkaCallback(orderServiceConfigData.getPaymentResponseTopicName(),
                                     paymentRequestAvroModel,
                                     orderId,
@@ -49,8 +49,8 @@ public class CreateOrderKafkaMessagePublisher implements OrderCreatedPaymentRequ
 
             log.info("PaymentRequestAvroModel sent to Kafka for order id: {}", paymentRequestAvroModel.getOrderId());
         } catch (Exception e) {
-            log.error("Error while sending PaymentRequestAvroModel message" +
-                    " to kafka with order id: {}, error: {}", orderId, e.getMessage());
+           log.error("Error while sending PaymentRequestAvroModel message" +
+                   " to kafka with order id: {}, error: {}", orderId, e.getMessage());
         }
     }
 }

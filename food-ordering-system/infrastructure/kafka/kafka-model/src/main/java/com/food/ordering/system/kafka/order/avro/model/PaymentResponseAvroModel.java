@@ -5,7 +5,9 @@
  */
 package com.food.ordering.system.kafka.order.avro.model;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
@@ -20,16 +22,15 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
 
   private static final SpecificData MODEL$ = new SpecificData();
   static {
-    MODEL$.addLogicalTypeConversion(new org.apache.avro.Conversions.UUIDConversion());
     MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.TimestampMillisConversion());
     MODEL$.addLogicalTypeConversion(new org.apache.avro.Conversions.DecimalConversion());
   }
 
   private static final BinaryMessageEncoder<PaymentResponseAvroModel> ENCODER =
-      new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
+      new BinaryMessageEncoder<PaymentResponseAvroModel>(MODEL$, SCHEMA$);
 
   private static final BinaryMessageDecoder<PaymentResponseAvroModel> DECODER =
-      new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
+      new BinaryMessageDecoder<PaymentResponseAvroModel>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
@@ -53,7 +54,7 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<PaymentResponseAvroModel> createDecoder(SchemaStore resolver) {
-    return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
+    return new BinaryMessageDecoder<PaymentResponseAvroModel>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
@@ -117,14 +118,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
     this.failureMessages = failureMessages;
   }
 
-  @Override
   public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
-
-  @Override
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
-
   // Used by DatumWriter.  Applications should not call.
-  @Override
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return id;
@@ -142,11 +138,11 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
 
   private static final org.apache.avro.Conversion<?>[] conversions =
       new org.apache.avro.Conversion<?>[] {
-      new org.apache.avro.Conversions.UUIDConversion(),
-      new org.apache.avro.Conversions.UUIDConversion(),
-      new org.apache.avro.Conversions.UUIDConversion(),
-      new org.apache.avro.Conversions.UUIDConversion(),
-      new org.apache.avro.Conversions.UUIDConversion(),
+      null,
+      null,
+      null,
+      null,
+      null,
       new org.apache.avro.Conversions.DecimalConversion(),
       new org.apache.avro.data.TimeConversions.TimestampMillisConversion(),
       null,
@@ -160,15 +156,14 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   }
 
   // Used by DatumReader.  Applications should not call.
-  @Override
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: id = (java.lang.String)value$; break;
-    case 1: sagaId = (java.lang.String)value$; break;
-    case 2: paymentId = (java.lang.String)value$; break;
-    case 3: customerId = (java.lang.String)value$; break;
-    case 4: orderId = (java.lang.String)value$; break;
+    case 0: id = value$ != null ? value$.toString() : null; break;
+    case 1: sagaId = value$ != null ? value$.toString() : null; break;
+    case 2: paymentId = value$ != null ? value$.toString() : null; break;
+    case 3: customerId = value$ != null ? value$.toString() : null; break;
+    case 4: orderId = value$ != null ? value$.toString() : null; break;
     case 5: price = (java.math.BigDecimal)value$; break;
     case 6: createdAt = (java.time.Instant)value$; break;
     case 7: paymentStatus = (com.food.ordering.system.kafka.order.avro.model.PaymentStatus)value$; break;
@@ -179,10 +174,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
 
   /**
    * Gets the value of the 'id' field.
-   *
    * @return The value of the 'id' field.
    */
-  public String getId() {
+  public java.lang.String getId() {
     return id;
   }
 
@@ -197,10 +191,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
 
   /**
    * Gets the value of the 'sagaId' field.
-   *
    * @return The value of the 'sagaId' field.
    */
-  public String getSagaId() {
+  public java.lang.String getSagaId() {
     return sagaId;
   }
 
@@ -215,10 +208,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
 
   /**
    * Gets the value of the 'paymentId' field.
-   *
    * @return The value of the 'paymentId' field.
    */
-  public String getPaymentId() {
+  public java.lang.String getPaymentId() {
     return paymentId;
   }
 

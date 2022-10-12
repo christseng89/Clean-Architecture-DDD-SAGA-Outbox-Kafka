@@ -4,3 +4,8 @@ target
 **/volumes
 **/*.iml
 **/.settings
+*.jar
+**/target/*
+**/volumes/kafka/*
+**/zookeeper/*
+**/.idea/*

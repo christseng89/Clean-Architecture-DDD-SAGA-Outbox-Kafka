@@ -1,6 +1,5 @@
 package com.food.ordering.system.order.service.domain;
 
-
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery;
@@ -19,8 +18,8 @@ class OrderApplicationServiceImpl implements OrderApplicationService {
 
     private final OrderTrackCommandHandler orderTrackCommandHandler;
 
-    OrderApplicationServiceImpl(OrderCreateCommandHandler orderCreateCommandHandler,
-                                OrderTrackCommandHandler orderTrackCommandHandler) {
+    public OrderApplicationServiceImpl(OrderCreateCommandHandler orderCreateCommandHandler,
+                                       OrderTrackCommandHandler orderTrackCommandHandler) {
         this.orderCreateCommandHandler = orderCreateCommandHandler;
         this.orderTrackCommandHandler = orderTrackCommandHandler;
     }
