@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.food.ordering.system.domain.DomainConstants.UTC;
-  
+
 @Slf4j
 public class PaymentDomainServiceImpl implements PaymentDomainService {
 

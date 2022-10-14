@@ -15,10 +15,10 @@ import java.util.UUID;
 @Entity
 public class OrderApprovalEntity {
 
-    @Id
-    private UUID id;
-    private UUID restaurantId;
-    private UUID orderId;
-    @Enumerated(EnumType.STRING)
-    private OrderApprovalStatus status;
+  @Id
+  private UUID id;
+  private UUID restaurantId;
+  private UUID orderId;
+  @Enumerated(EnumType.STRING)
+  private OrderApprovalStatus status;
 }

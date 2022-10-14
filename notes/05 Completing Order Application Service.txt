@@ -82,3 +82,6 @@ A. Check Kafka Topics (Unix ONLY)
    cd food-ordering-system\infrastructure\docker-compose
    docker compose -f common.yml -f zookeeper.yml down
    docker compose -f common.yml -f kafka_cluster.yml down
+
+### IntelliJ format project
+In the tree-structure, right click on the folder you like to reformat, choose "Reformat code" from the menu.

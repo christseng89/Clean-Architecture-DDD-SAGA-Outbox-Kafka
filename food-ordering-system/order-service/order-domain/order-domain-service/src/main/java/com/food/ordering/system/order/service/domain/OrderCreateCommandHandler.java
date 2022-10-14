@@ -11,27 +11,27 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class OrderCreateCommandHandler {
-    private final OrderCreateHelper orderCreateHelper;
+  private final OrderCreateHelper orderCreateHelper;
 
-    private final OrderDataMapper orderDataMapper;
+  private final OrderDataMapper orderDataMapper;
 
-    private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
+  private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
 
-    public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper,
-                                     OrderDataMapper orderDataMapper,
-                                     OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher) {
-        this.orderCreateHelper = orderCreateHelper;
-        this.orderDataMapper = orderDataMapper;
-        this.orderCreatedPaymentRequestMessagePublisher = orderCreatedPaymentRequestMessagePublisher;
-    }
+  public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper,
+                                   OrderDataMapper orderDataMapper,
+                                   OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher) {
+    this.orderCreateHelper = orderCreateHelper;
+    this.orderDataMapper = orderDataMapper;
+    this.orderCreatedPaymentRequestMessagePublisher = orderCreatedPaymentRequestMessagePublisher;
+  }
 
-    public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
-        // Save order then publish message
-        OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrder(createOrderCommand);
-        log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
-        orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
-        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),
-                "Order created successfully");
-    }
+  public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
+    // Save order then publish message
+    OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrder(createOrderCommand);
+    log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
+    orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
+    return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),
+      "Order created successfully");
+  }
 
 }

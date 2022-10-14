@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class RestaurantApprovalRequestMessageListenerImpl implements RestaurantApprovalRequestMessageListener {
 
-    private final RestaurantApprovalRequestHelper restaurantApprovalRequestHelper;
+  private final RestaurantApprovalRequestHelper restaurantApprovalRequestHelper;
 
-    public RestaurantApprovalRequestMessageListenerImpl(RestaurantApprovalRequestHelper
-                                                                restaurantApprovalRequestHelper) {
-        this.restaurantApprovalRequestHelper = restaurantApprovalRequestHelper;
-    }
+  public RestaurantApprovalRequestMessageListenerImpl(RestaurantApprovalRequestHelper
+                                                        restaurantApprovalRequestHelper) {
+    this.restaurantApprovalRequestHelper = restaurantApprovalRequestHelper;
+  }
 
-    @Override
-    public void approveOrder(RestaurantApprovalRequest restaurantApprovalRequest) {
-        OrderApprovalEvent orderApprovalEvent =
-                restaurantApprovalRequestHelper.persistOrderApproval(restaurantApprovalRequest);
-        orderApprovalEvent.fire();
-    }
+  @Override
+  public void approveOrder(RestaurantApprovalRequest restaurantApprovalRequest) {
+    OrderApprovalEvent orderApprovalEvent =
+      restaurantApprovalRequestHelper.persistOrderApproval(restaurantApprovalRequest);
+    orderApprovalEvent.fire();
+  }
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface CreditHistoryRepository {
 
-    CreditHistory save(CreditHistory creditHistory);
+  CreditHistory save(CreditHistory creditHistory);
 
-    Optional<List<CreditHistory>> findByCustomerId(CustomerId customerId);
+  Optional<List<CreditHistory>> findByCustomerId(CustomerId customerId);
 }

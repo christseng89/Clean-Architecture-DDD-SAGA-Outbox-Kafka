@@ -17,32 +17,32 @@ import java.util.UUID;
 @Table(name = "orders")
 @Entity
 public class OrderEntity {
-    @Id
-    private UUID id;
-    private UUID customerId;
-    private UUID restaurantId;
-    private UUID trackingId;
-    private BigDecimal price;
-    @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
-    private String failureMessages;
+  @Id
+  private UUID id;
+  private UUID customerId;
+  private UUID restaurantId;
+  private UUID trackingId;
+  private BigDecimal price;
+  @Enumerated(EnumType.STRING)
+  private OrderStatus orderStatus;
+  private String failureMessages;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private OrderAddressEntity address;
+  @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+  private OrderAddressEntity address;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItemEntity> items;
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+  private List<OrderItemEntity> items;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderEntity that = (OrderEntity) o;
-        return id.equals(that.id);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    OrderEntity that = (OrderEntity) o;
+    return id.equals(that.id);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
 }

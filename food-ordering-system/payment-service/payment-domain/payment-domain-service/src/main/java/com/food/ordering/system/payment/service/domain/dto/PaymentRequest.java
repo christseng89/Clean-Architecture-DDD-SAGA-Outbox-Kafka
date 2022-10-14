@@ -12,15 +12,15 @@ import java.time.Instant;
 @Builder
 @AllArgsConstructor
 public class PaymentRequest {
-    private String id;
-    private String sagaId;
-    private String orderId;
-    private String customerId;
-    private BigDecimal price;
-    private Instant createdAt;
-    private PaymentOrderStatus paymentOrderStatus;
+  private String id;
+  private String sagaId;
+  private String orderId;
+  private String customerId;
+  private BigDecimal price;
+  private Instant createdAt;
+  private PaymentOrderStatus paymentOrderStatus;
 
-    public void setPaymentOrderStatus(PaymentOrderStatus paymentOrderStatus) {
-        this.paymentOrderStatus = paymentOrderStatus;
-    }
+  public void setPaymentOrderStatus(PaymentOrderStatus paymentOrderStatus) {
+    this.paymentOrderStatus = paymentOrderStatus;
+  }
 }
