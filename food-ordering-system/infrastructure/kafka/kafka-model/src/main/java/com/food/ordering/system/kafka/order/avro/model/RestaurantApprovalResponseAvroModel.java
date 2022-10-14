@@ -53,10 +53,12 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
   }
 
   /**
-   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * Create a new BinaryMessageDecoder instance for this class that uses the
+   * specified {@link SchemaStore}.
    *
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
-   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
+   * @return a BinaryMessageDecoder instance for this class backed by the given
+   * SchemaStore
    */
   public static BinaryMessageDecoder<RestaurantApprovalResponseAvroModel> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<RestaurantApprovalResponseAvroModel>(MODEL$, SCHEMA$, resolver);
@@ -76,10 +78,13 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
   /**
    * Deserializes a RestaurantApprovalResponseAvroModel from a ByteBuffer.
    *
-   * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a RestaurantApprovalResponseAvroModel instance decoded from the given buffer
+   * @param b a byte buffer holding serialized data for an instance of this
+   *          class
+   * @return a RestaurantApprovalResponseAvroModel instance decoded from the
+   * given buffer
    *
-   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   * @throws java.io.IOException if the given bytes could not be deserialized
+   *                             into an instance of this class
    */
   public static RestaurantApprovalResponseAvroModel fromByteBuffer(
     java.nio.ByteBuffer b) throws java.io.IOException {
@@ -95,8 +100,9 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
   private java.util.List<java.lang.String> failureMessages;
 
   /**
-   * Default constructor.  Note that this does not initialize fields to their default values from the schema.  If that
-   * is desired then one should use <code>newBuilder()</code>.
+   * Default constructor.  Note that this does not initialize fields to their
+   * default values from the schema.  If that is desired then one should use
+   * <code>newBuilder()</code>.
    */
   public RestaurantApprovalResponseAvroModel() {
   }
@@ -335,7 +341,8 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
   }
 
   /**
-   * Creates a new RestaurantApprovalResponseAvroModel RecordBuilder by copying an existing Builder.
+   * Creates a new RestaurantApprovalResponseAvroModel RecordBuilder by copying
+   * an existing Builder.
    *
    * @param other The existing builder to copy.
    * @return A new RestaurantApprovalResponseAvroModel RecordBuilder
@@ -349,8 +356,8 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
   }
 
   /**
-   * Creates a new RestaurantApprovalResponseAvroModel RecordBuilder by copying an existing
-   * RestaurantApprovalResponseAvroModel instance.
+   * Creates a new RestaurantApprovalResponseAvroModel RecordBuilder by copying
+   * an existing RestaurantApprovalResponseAvroModel instance.
    *
    * @param other The existing instance to copy.
    * @return A new RestaurantApprovalResponseAvroModel RecordBuilder
@@ -423,7 +430,8 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
     }
 
     /**
-     * Creates a Builder by copying an existing RestaurantApprovalResponseAvroModel instance
+     * Creates a Builder by copying an existing
+     * RestaurantApprovalResponseAvroModel instance
      *
      * @param other The existing instance to copy.
      */
@@ -693,7 +701,8 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
     /**
      * Checks whether the 'orderApprovalStatus' field has been set.
      *
-     * @return True if the 'orderApprovalStatus' field has been set, false otherwise.
+     * @return True if the 'orderApprovalStatus' field has been set, false
+     * otherwise.
      */
     public boolean hasOrderApprovalStatus() {
       return fieldSetFlags()[5];
@@ -735,7 +744,8 @@ public class RestaurantApprovalResponseAvroModel extends org.apache.avro.specifi
     /**
      * Checks whether the 'failureMessages' field has been set.
      *
-     * @return True if the 'failureMessages' field has been set, false otherwise.
+     * @return True if the 'failureMessages' field has been set, false
+     * otherwise.
      */
     public boolean hasFailureMessages() {
       return fieldSetFlags()[6];

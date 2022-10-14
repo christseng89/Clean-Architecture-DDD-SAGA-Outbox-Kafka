@@ -54,10 +54,12 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   }
 
   /**
-   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * Create a new BinaryMessageDecoder instance for this class that uses the
+   * specified {@link SchemaStore}.
    *
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
-   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
+   * @return a BinaryMessageDecoder instance for this class backed by the given
+   * SchemaStore
    */
   public static BinaryMessageDecoder<PaymentRequestAvroModel> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<PaymentRequestAvroModel>(MODEL$, SCHEMA$, resolver);
@@ -77,10 +79,12 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   /**
    * Deserializes a PaymentRequestAvroModel from a ByteBuffer.
    *
-   * @param b a byte buffer holding serialized data for an instance of this class
+   * @param b a byte buffer holding serialized data for an instance of this
+   *          class
    * @return a PaymentRequestAvroModel instance decoded from the given buffer
    *
-   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   * @throws java.io.IOException if the given bytes could not be deserialized
+   *                             into an instance of this class
    */
   public static PaymentRequestAvroModel fromByteBuffer(
     java.nio.ByteBuffer b) throws java.io.IOException {
@@ -96,8 +100,9 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   private com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus paymentOrderStatus;
 
   /**
-   * Default constructor.  Note that this does not initialize fields to their default values from the schema.  If that
-   * is desired then one should use <code>newBuilder()</code>.
+   * Default constructor.  Note that this does not initialize fields to their
+   * default values from the schema.  If that is desired then one should use
+   * <code>newBuilder()</code>.
    */
   public PaymentRequestAvroModel() {
   }
@@ -336,7 +341,8 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   }
 
   /**
-   * Creates a new PaymentRequestAvroModel RecordBuilder by copying an existing Builder.
+   * Creates a new PaymentRequestAvroModel RecordBuilder by copying an existing
+   * Builder.
    *
    * @param other The existing builder to copy.
    * @return A new PaymentRequestAvroModel RecordBuilder
@@ -350,7 +356,8 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   }
 
   /**
-   * Creates a new PaymentRequestAvroModel RecordBuilder by copying an existing PaymentRequestAvroModel instance.
+   * Creates a new PaymentRequestAvroModel RecordBuilder by copying an existing
+   * PaymentRequestAvroModel instance.
    *
    * @param other The existing instance to copy.
    * @return A new PaymentRequestAvroModel RecordBuilder
@@ -423,7 +430,8 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
     }
 
     /**
-     * Creates a Builder by copying an existing PaymentRequestAvroModel instance
+     * Creates a Builder by copying an existing PaymentRequestAvroModel
+     * instance
      *
      * @param other The existing instance to copy.
      */
@@ -735,7 +743,8 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
     /**
      * Checks whether the 'paymentOrderStatus' field has been set.
      *
-     * @return True if the 'paymentOrderStatus' field has been set, false otherwise.
+     * @return True if the 'paymentOrderStatus' field has been set, false
+     * otherwise.
      */
     public boolean hasPaymentOrderStatus() {
       return fieldSetFlags()[6];

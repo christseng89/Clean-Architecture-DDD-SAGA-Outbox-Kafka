@@ -49,10 +49,12 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * Create a new BinaryMessageDecoder instance for this class that uses the
+   * specified {@link SchemaStore}.
    *
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
-   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
+   * @return a BinaryMessageDecoder instance for this class backed by the given
+   * SchemaStore
    */
   public static BinaryMessageDecoder<Product> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Product>(MODEL$, SCHEMA$, resolver);
@@ -72,10 +74,12 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * Deserializes a Product from a ByteBuffer.
    *
-   * @param b a byte buffer holding serialized data for an instance of this class
+   * @param b a byte buffer holding serialized data for an instance of this
+   *          class
    * @return a Product instance decoded from the given buffer
    *
-   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   * @throws java.io.IOException if the given bytes could not be deserialized
+   *                             into an instance of this class
    */
   public static Product fromByteBuffer(
     java.nio.ByteBuffer b) throws java.io.IOException {
@@ -86,8 +90,9 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
   private int quantity;
 
   /**
-   * Default constructor.  Note that this does not initialize fields to their default values from the schema.  If that
-   * is desired then one should use <code>newBuilder()</code>.
+   * Default constructor.  Note that this does not initialize fields to their
+   * default values from the schema.  If that is desired then one should use
+   * <code>newBuilder()</code>.
    */
   public Product() {
   }
@@ -198,7 +203,8 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Creates a new Product RecordBuilder by copying an existing Product instance.
+   * Creates a new Product RecordBuilder by copying an existing Product
+   * instance.
    *
    * @param other The existing instance to copy.
    * @return A new Product RecordBuilder

@@ -54,10 +54,12 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   }
 
   /**
-   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * Create a new BinaryMessageDecoder instance for this class that uses the
+   * specified {@link SchemaStore}.
    *
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
-   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
+   * @return a BinaryMessageDecoder instance for this class backed by the given
+   * SchemaStore
    */
   public static BinaryMessageDecoder<PaymentResponseAvroModel> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<PaymentResponseAvroModel>(MODEL$, SCHEMA$, resolver);
@@ -77,10 +79,12 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   /**
    * Deserializes a PaymentResponseAvroModel from a ByteBuffer.
    *
-   * @param b a byte buffer holding serialized data for an instance of this class
+   * @param b a byte buffer holding serialized data for an instance of this
+   *          class
    * @return a PaymentResponseAvroModel instance decoded from the given buffer
    *
-   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   * @throws java.io.IOException if the given bytes could not be deserialized
+   *                             into an instance of this class
    */
   public static PaymentResponseAvroModel fromByteBuffer(
     java.nio.ByteBuffer b) throws java.io.IOException {
@@ -98,8 +102,9 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   private java.util.List<java.lang.String> failureMessages;
 
   /**
-   * Default constructor.  Note that this does not initialize fields to their default values from the schema.  If that
-   * is desired then one should use <code>newBuilder()</code>.
+   * Default constructor.  Note that this does not initialize fields to their
+   * default values from the schema.  If that is desired then one should use
+   * <code>newBuilder()</code>.
    */
   public PaymentResponseAvroModel() {
   }
@@ -390,7 +395,8 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   }
 
   /**
-   * Creates a new PaymentResponseAvroModel RecordBuilder by copying an existing Builder.
+   * Creates a new PaymentResponseAvroModel RecordBuilder by copying an existing
+   * Builder.
    *
    * @param other The existing builder to copy.
    * @return A new PaymentResponseAvroModel RecordBuilder
@@ -404,7 +410,8 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
   }
 
   /**
-   * Creates a new PaymentResponseAvroModel RecordBuilder by copying an existing PaymentResponseAvroModel instance.
+   * Creates a new PaymentResponseAvroModel RecordBuilder by copying an existing
+   * PaymentResponseAvroModel instance.
    *
    * @param other The existing instance to copy.
    * @return A new PaymentResponseAvroModel RecordBuilder
@@ -487,7 +494,8 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
     }
 
     /**
-     * Creates a Builder by copying an existing PaymentResponseAvroModel instance
+     * Creates a Builder by copying an existing PaymentResponseAvroModel
+     * instance
      *
      * @param other The existing instance to copy.
      */
@@ -891,7 +899,8 @@ public class PaymentResponseAvroModel extends org.apache.avro.specific.SpecificR
     /**
      * Checks whether the 'failureMessages' field has been set.
      *
-     * @return True if the 'failureMessages' field has been set, false otherwise.
+     * @return True if the 'failureMessages' field has been set, false
+     * otherwise.
      */
     public boolean hasFailureMessages() {
       return fieldSetFlags()[8];
