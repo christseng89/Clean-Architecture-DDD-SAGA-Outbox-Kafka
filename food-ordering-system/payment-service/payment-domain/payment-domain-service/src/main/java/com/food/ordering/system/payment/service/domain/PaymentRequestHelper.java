@@ -78,6 +78,7 @@ public class PaymentRequestHelper {
       throw new PaymentApplicationServiceException("Payment with order id: " +
         paymentRequest.getOrderId() + " could not be found!");
     }
+
     Payment payment = paymentResponse.get();
     CreditEntry creditEntry = getCreditEntry(payment.getCustomerId());
     List<CreditHistory> creditHistories = getCreditHistory(payment.getCustomerId());
@@ -113,6 +114,8 @@ public class PaymentRequestHelper {
                                 CreditEntry creditEntry,
                                 List<CreditHistory> creditHistories,
                                 List<String> failureMessages) {
+
+    // Save data
     paymentRepository.save(payment);
     if (failureMessages.isEmpty()) {
       creditEntryRepository.save(creditEntry);

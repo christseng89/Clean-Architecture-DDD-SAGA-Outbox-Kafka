@@ -22,4 +22,5 @@ public class PaymentFailedEvent extends PaymentEvent {
   public void fire() {
     paymentFailedEventDomainEventPublisher.publish(this);
   }
+  
 }
