@@ -9,3 +9,8 @@
 - implements: to implement an interface. An interface consists only of 'Abstract Methods'. 
   A class will implement the interface and define these abstract methods as per the required functionality.
   Unlike extends, any class can implement multiple interfaces.
+
+50. Implementing Data Access module
+- JPA => *JpaRepository.java 
+- @Entity && @Table => *Entity.java => *EntityImpl.java
+- JPA <-> @Entity => *DataAccessMapper.java
