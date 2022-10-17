@@ -33,13 +33,19 @@
         <kafka-avro-serializer.version>7.0.1</kafka-avro-serializer.version>
         <avro.version>1.11.1</avro.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
- 
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- all except for *-container-->
+            <!-- Order ...-->
+            <dependency>
+                <groupId>com.food.ordering.system</groupId>
+                <artifactId>order-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
-            <!-- all except for order-container-->
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>order-domain-core</artifactId>
@@ -48,12 +54,6 @@
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>order-domain-service</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.food.ordering.system</groupId>
-                <artifactId>order-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -66,6 +66,8 @@
                 <artifactId>order-messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <!-- Payment ...-->
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>payment-domain-core</artifactId>
@@ -86,6 +88,8 @@
                 <artifactId>payment-messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <!-- Restaurant ...-->
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>restaurant-domain-core</artifactId>
@@ -106,17 +110,18 @@
                 <artifactId>restaurant-messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.food.ordering.system</groupId>
-                <artifactId>common-domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
+            <!-- Common ...-->
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>common-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.food.ordering.system</groupId>
+                <artifactId>common-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
                 <artifactId>common-dataaccess</artifactId>
@@ -145,7 +150,7 @@
                 <version>${project.version}</version>
             </dependency>
 
-           <!-- Test ...-->
+            <!-- Test ...-->
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
