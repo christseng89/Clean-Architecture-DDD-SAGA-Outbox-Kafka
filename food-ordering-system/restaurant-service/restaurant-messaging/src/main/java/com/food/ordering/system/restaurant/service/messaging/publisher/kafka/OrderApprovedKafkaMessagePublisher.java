@@ -43,6 +43,7 @@ public class OrderApprovedKafkaMessagePublisher implements OrderApprovedMessageP
       kafkaProducer.send(restaurantServiceConfigData.getRestaurantApprovalResponseTopicName(),
         orderId,
         restaurantApprovalResponseAvroModel,
+        // callback() => response message ...
         kafkaMessageHelper.getKafkaCallback(restaurantServiceConfigData
             .getRestaurantApprovalResponseTopicName(),
           restaurantApprovalResponseAvroModel,

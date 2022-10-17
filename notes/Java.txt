@@ -14,3 +14,11 @@
 - JPA => *JpaRepository.java 
 - @Entity && @Table => *Entity.java => *EntityImpl.java
 - JPA <-> @Entity => *DataAccessMapper.java
+
+
+51. Implementing Messaging module: Adding Mapper and Publishers
+- Mapper - Payment*Event <=> PaymentAvroModel
+  Listener:  PaymentAvroModel => Payment*Event
+  Publishers: Payment*Event => PaymentAvroModel
+
+- @KafkaListener(id=..., topics=...) => Kafka Listener

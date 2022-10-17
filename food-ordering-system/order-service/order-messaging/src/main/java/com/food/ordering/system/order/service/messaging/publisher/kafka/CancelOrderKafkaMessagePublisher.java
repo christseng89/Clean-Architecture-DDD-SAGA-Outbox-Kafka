@@ -17,16 +17,16 @@ public class CancelOrderKafkaMessagePublisher implements OrderCancelledPaymentRe
   private final OrderMessagingDataMapper orderMessagingDataMapper;
   private final OrderServiceConfigData orderServiceConfigData;
   private final KafkaProducer<String, PaymentRequestAvroModel> kafkaProducer;
-  private final KafkaMessageHelper orderKafkaMessageHelper;
+  private final KafkaMessageHelper kafkaMessageHelper;
 
   public CancelOrderKafkaMessagePublisher(OrderMessagingDataMapper orderMessagingDataMapper,
                                           OrderServiceConfigData orderServiceConfigData,
                                           KafkaProducer<String, PaymentRequestAvroModel> kafkaProducer,
-                                          KafkaMessageHelper orderKafkaMessageHelper) {
+                                          KafkaMessageHelper kafkaMessageHelper) {
     this.orderMessagingDataMapper = orderMessagingDataMapper;
     this.orderServiceConfigData = orderServiceConfigData;
     this.kafkaProducer = kafkaProducer;
-    this.orderKafkaMessageHelper = orderKafkaMessageHelper;
+    this.kafkaMessageHelper = kafkaMessageHelper;
   }
 
   @Override
@@ -41,7 +41,8 @@ public class CancelOrderKafkaMessagePublisher implements OrderCancelledPaymentRe
       kafkaProducer.send(orderServiceConfigData.getPaymentRequestTopicName(),
         orderId,
         paymentRequestAvroModel,
-        orderKafkaMessageHelper
+        // callback() => response message ...
+        kafkaMessageHelper
           .getKafkaCallback(orderServiceConfigData.getPaymentResponseTopicName(),
             paymentRequestAvroModel,
             orderId,
