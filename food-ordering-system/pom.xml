@@ -12,6 +12,7 @@
         <module>customer-service</module>
         <module>payment-service</module>
         <module>restaurant-service</module>
+        <module>infrastructure/saga</module>
     </modules>
 
     <parent>
@@ -38,6 +39,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Saga ...-->
+            <dependency>
+                <groupId>com.food.ordering.system</groupId>
+                <artifactId>saga</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- all except for *-container-->
             <!-- Order ...-->
             <dependency>
