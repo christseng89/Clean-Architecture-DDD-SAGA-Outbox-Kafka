@@ -1,12 +1,12 @@
 26. Running Apache Kafka using Docker
-docker compose -f common.yml -f zookeeper.yml up
+docker compose -f common.yml -f zookeeper.yml up -d
 
 https://zookeeper.apache.org/doc/r3.4.8/zookeeperAdmin.html#sc_zkCommands
 https://nmap.org/dist/nmap-7.92-setup.exe
 
 echo ruok | ncat localhost 2181
 
-docker compose -f common.yml -f kafka_cluster.yml up
+docker compose -f common.yml -f kafka_cluster.yml up -d
 docker compose -f common.yml -f init_kafka.yml up // RUN Once only...
 
 ## Kafka manager
@@ -25,8 +25,8 @@ docker compose -f common.yml -f kafka_cluster.yml stop
 docker compose -f common.yml -f zookeeper.yml stop
 
 ### Re-start Kafka //Restarts all stopped and running services.
-docker compose -f common.yml -f zookeeper.yml up
-docker compose -f common.yml -f kafka_cluster.yml up
+docker compose -f common.yml -f zookeeper.yml up -d
+docker compose -f common.yml -f kafka_cluster.yml up -d
 
 ### Docker compose stop vs down // https://nickjanetakis.com/blog/docker-tip-45-docker-compose-stop-vs-down#:~:text=The%20docker%2Dcompose%20stop%20command,any%20networks%20that%20were%20created.
 - The docker-compose stop command will stop your containers, but it won’t remove them.
@@ -35,7 +35,32 @@ docker compose -f common.yml -f kafka_cluster.yml up
 
   docker-compose down -v //to remove all volumes too
 
-### Docker compose up vs start
-- docker-compose up, use up to start or restart all the services defined in a docker-compose.yml
+### Docker compose up -d vs start
+- docker-compose up -d, use up -d to start or restart all the services defined in a docker-compose.yml
 - docker-compose start command is useful only to restart containers that were previously created, 
   but were stopped. It never creates new containers.
+
+### Reinstall 
+1. Stop Kafka (mentioned above)
+   docker compose -f common.yml -f kafka_cluster.yml stop
+   docker compose -f common.yml -f zookeeper.yml stop
+
+2. Cleanup files in folders
+   infrastructure\docker-compose\volumes\kafka\broker-1\*.*
+   infrastructure\docker-compose\volumes\kafka\broker-2\*.*
+   infrastructure\docker-compose\volumes\kafka\broker-3\*.*
+
+   infrastructure\docker-compose\volumes\zookeeper\data\*.*
+   infrastructure\docker-compose\volumes\zookeeper\transactions\*.*
+
+3. Start Kafka
+   docker compose -f common.yml -f zookeeper.yml up -d
+   docker compose -f common.yml -f kafka_cluster.yml up -d
+
+4. Initial Kafka Topics (once only)   
+   docker compose -f common.yml -f init_kafka.yml up 
+
+5. Setup Kafka Cluster
+   http://localhost:9000/
+
+   * Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => Save
