@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<connections>
+<connection bootstrap_servers="localhost:19092,localhost:29092,localhost:39092" broker_security_type="PLAINTEXT" chroot="/" group="Clusters" groupId="1" host="localhost" jaas_config="" keystore_location="" keystore_password="" keystore_privatekey="" name="food-ordering-sytem-cluster" port="2181" sasl_mechanism="" schema_registry_endpoint="" truststore_location="" truststore_password="" version="VERSION_2_4_0"/>
+<groups>
+<group id="1" name="Clusters"/>
+</groups>
+</connections>

@@ -7,7 +7,18 @@
 	},
 	"item": [
 		{
-			"name": "Post an Order",
+			"name": "Post an Order - APPROVED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"APPROVED_ID\", pm.response.json().orderTrackingId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {}
 			},
@@ -16,7 +27,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"customerId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb41\",\r\n    \"restaurantId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb45\",\r\n    \"address\": {\r\n        \"street\": \"street_1\",\r\n        \"postalCode\": \"1000AB\",\r\n        \"city\": \"Amsterdam\"\r\n    },\r\n    \"price\": 200.00,\r\n    \"items\": [\r\n        {\r\n            \"productId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb48\",\r\n            \"quantity\": 1,\r\n            \"price\": 50.00,\r\n            \"subTotal\": 50.00\r\n        },\r\n        {\r\n            \"productId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb48\",\r\n            \"quantity\": 3,\r\n            \"price\": 50.00,\r\n            \"subTotal\": 150.00\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"customerId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb41\",\r\n    \"restaurantId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb45\",\r\n    \"address\": {\r\n        \"street\": \"street_1\",\r\n        \"postalCode\": \"1000AB\",\r\n        \"city\": \"Amsterdam\"\r\n    },\r\n    \"price\": 150.00,\r\n    \"items\": [\r\n        {\r\n            \"productId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb48\",\r\n            \"quantity\": 1,\r\n            \"price\": 50.00,\r\n            \"subTotal\": 50.00\r\n        },\r\n        {\r\n            \"productId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb48\",\r\n            \"quantity\": 2,\r\n            \"price\": 50.00,\r\n            \"subTotal\": 100.00\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -32,6 +43,88 @@
 					"port": "8181",
 					"path": [
 						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post an Order - CANCELLED",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"CANCELLED_ID\", pm.response.json().orderTrackingId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb41\",\r\n    \"restaurantId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb45\",\r\n    \"address\": {\r\n        \"street\": \"street_1\",\r\n        \"postalCode\": \"1000AB\",\r\n        \"city\": \"Amsterdam\"\r\n    },\r\n    \"price\": 125.00,\r\n    \"items\": [\r\n        {\r\n            \"productId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb47\",\r\n            \"quantity\": 1,\r\n            \"price\": 25.00,\r\n            \"subTotal\": 25.00\r\n        },\r\n        {\r\n            \"productId\": \"d215b5f8-0249-4dc5-89a3-51fd148cfb48\",\r\n            \"quantity\": 2,\r\n            \"price\": 50.00,\r\n            \"subTotal\": 100.00\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8181/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tracking Order - APPROVED",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8181/orders/{{APPROVED_ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"orders",
+						"{{APPROVED_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tracking Order - CANCELLED",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8181/orders/{{CANCELLED_ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"orders",
+						"{{CANCELLED_ID}}"
 					]
 				}
 			},

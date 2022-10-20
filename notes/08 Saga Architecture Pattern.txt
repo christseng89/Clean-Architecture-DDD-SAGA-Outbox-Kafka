@@ -1,0 +1,31 @@
+63. Using Order Payment Saga in Messaging & Implementing Order Approval Saga
+cd food-ordering-system
+mvn clean install
+
+64. Testing the application end-to-end with SAGA pattern changes
+### Clean up volumes\kafka & volumes\zookeeper
+cd food-ordering-system\infrastructure\docker-compose
+docker compose -f common.yml -f zookeeper.yml up -d
+docker compose -f common.yml -f kafka_cluster.yml up -d
+docker compose -f common.yml -f init_kafka.yml
+
+### Kafka UI - setup Kafka Cluster
+http://localhost:9000
+
+### Run Applications
+1. OrderServiceApplication
+2. PaymentServiceApplication
+3. ResturantServiceApplication
+4. CustomerServiceApplication
+
+### Postman
+Post an Order - CANCELLED (not available product)
+Post an Order - APPROVED
+Post an Order - APPROVED
+Post an Order - CANCELLED (not enough amount)
+
+### Offset Explorer (Kafka Tool)
+1. Import explorer_offset.xml
+   (Advanced => Bootstrap servers = localhost:19092,localhost:29092,localhost:39092)
+2. Convert Hex to Ascii
+   https://www.rapidtables.com/convert/number/hex-to-ascii.html
