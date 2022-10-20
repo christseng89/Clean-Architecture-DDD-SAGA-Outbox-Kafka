@@ -29,3 +29,12 @@ Post an Order - CANCELLED (not enough amount)
    (Advanced => Bootstrap servers = localhost:19092,localhost:29092,localhost:39092)
 2. Convert Hex to Ascii
    https://www.rapidtables.com/convert/number/hex-to-ascii.html
+
+Quiz 15: SAGA Pattern Implementation Considerations
+### Points should be taken into account while using SAGA pattern.
+1.  SAGA is difficult to debug as multiple microservices are involved. So it it crucial 
+    to have a robust tracing implementations, with trace and span id.
+
+2.  As a result of compensating transactions, when user sees a change, in the 
+    second look after some time, the change could be removed. 
+    Users should aware about that.
