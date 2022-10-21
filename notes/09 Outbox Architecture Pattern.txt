@@ -14,3 +14,5 @@
   https://iter01.com/566612.html
 
 - Optimistic locks and DB Constraints: Prevent data corruption
+
+https://medium.com/skyler-record/%E5%BE%AE%E6%9C%8D%E5%8B%99%E6%9E%B6%E7%9A%84%E8%B3%87%E6%96%99%E4%B8%80%E8%87%B4%E6%80%A7-2-outbox-pattern-891512620453

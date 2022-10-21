@@ -7,7 +7,7 @@ mvn clean install
 cd food-ordering-system\infrastructure\docker-compose
 docker compose -f common.yml -f zookeeper.yml up -d
 docker compose -f common.yml -f kafka_cluster.yml up -d
-docker compose -f common.yml -f init_kafka.yml
+docker compose -f common.yml -f init_kafka.yml up
 
 ### Kafka UI - setup Kafka Cluster
 http://localhost:9000

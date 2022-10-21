@@ -13,7 +13,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.environment.set(\"APPROVED_ID\", pm.response.json().orderTrackingId);"
+							"pm.environment.set(\"TRACK_ID\", pm.response.json().orderTrackingId);"
 						],
 						"type": "text/javascript"
 					}
@@ -55,7 +55,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.environment.set(\"CANCELLED_ID\", pm.response.json().orderTrackingId);"
+							"pm.environment.set(\"TRACK_ID\", pm.response.json().orderTrackingId);"
 						],
 						"type": "text/javascript"
 					}
@@ -91,12 +91,12 @@
 			"response": []
 		},
 		{
-			"name": "Tracking Order - APPROVED",
+			"name": "Tracking Order",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8181/orders/{{APPROVED_ID}}",
+					"raw": "http://localhost:8181/orders/{{TRACK_ID}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -104,27 +104,7 @@
 					"port": "8181",
 					"path": [
 						"orders",
-						"{{APPROVED_ID}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Tracking Order - CANCELLED",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8181/orders/{{CANCELLED_ID}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8181",
-					"path": [
-						"orders",
-						"{{CANCELLED_ID}}"
+						"{{TRACK_ID}}"
 					]
 				}
 			},

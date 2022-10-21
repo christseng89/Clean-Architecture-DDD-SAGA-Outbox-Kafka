@@ -13,6 +13,7 @@
         <module>payment-service</module>
         <module>restaurant-service</module>
         <module>infrastructure/saga</module>
+        <module>infrastructure/outbox</module>
     </modules>
 
     <parent>
@@ -39,6 +40,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Outbox ...-->
+            <dependency>
+                <groupId>com.food.ordering.system</groupId>
+                <artifactId>outbox</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- Saga ...-->
             <dependency>
                 <groupId>com.food.ordering.system</groupId>
