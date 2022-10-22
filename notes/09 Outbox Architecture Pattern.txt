@@ -27,8 +27,17 @@ https://medium.com/skyler-record/%E5%BE%AE%E6%9C%8D%E5%8B%99%E6%9E%B6%E7%9A%84%E
 
 - OrderPaidRestaurantRequestMessagePublisher
 
-69. Refactoring Order domain layer: Adding Outbox scheduler
-OrderStatus == PENDING || CANCELLING || PAID(x) (All records fullfil with conditions)
+69. Refactoring Order domain layer: Adding Outbox scheduler for Payment
+OrderStatus == PENDING || CANCELLING && SagaStatus... (All records fullfil with conditions) 
   OutboxStatus.STARTED, 
-  SagaStatus.STARTED,
+
+  SagaStatus.STARTED, or
   SagaStatus.COMPENSATING);
+
+70. Refactoring Order domain layer: Adding Outbox cleaner scheduler for Payment
+OrderStatus == COMPLETED && SagaStatus... (All records fullfil with conditions) 
+  OutboxStatus.COMPLETED,
+
+  SagaStatus.SUCCEEDED, or
+  SagaStatus.COMPENSATED, or
+  SagaStatus.FAILED);
