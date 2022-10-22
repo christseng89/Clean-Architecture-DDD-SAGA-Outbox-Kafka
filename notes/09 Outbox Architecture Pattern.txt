@@ -41,3 +41,9 @@ OrderStatus == COMPLETED && SagaStatus... (All records fullfil with conditions)
   SagaStatus.SUCCEEDED, or
   SagaStatus.COMPENSATED, or
   SagaStatus.FAILED);
+
+71. Refactoring Order domain layer: Adding Outbox schedulers for Approval
+OrderStatus == COMPLETED && SagaStatus == PROCESSING
+  OutboxStatus.STARTED,
+  SagaStatus.PROCESSING;
+  
