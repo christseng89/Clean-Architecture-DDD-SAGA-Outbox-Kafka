@@ -60,6 +60,7 @@ public class PaymentOutboxHelper {
     log.info("OrderPaymentOutboxMessage saved with outbox id: {}", orderPaymentOutboxMessage.getId());
   }
 
+  // Save Payment Outbox
   @Transactional
   public void savePaymentOutboxMessage(
     OrderPaymentEventPayload paymentEventPayload,

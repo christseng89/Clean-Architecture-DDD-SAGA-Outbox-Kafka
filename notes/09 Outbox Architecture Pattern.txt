@@ -46,4 +46,28 @@ OrderStatus == COMPLETED && SagaStatus... (All records fullfil with conditions)
 OrderStatus == COMPLETED && SagaStatus == PROCESSING
   OutboxStatus.STARTED,
   SagaStatus.PROCESSING;
+
+72. Refactoring Order domain layer: Updating OrderCreate Command Handler 73 & 74. Refactoring Order domain layer: Updating Order Payment Saga
+### Delete Interfaces 
+- OrderCancelledPaymentRequestMessagePublisher
+- OrderCreatedPaymentRequestMessagePublisher
+- OrderPaidRestaurantRequestMessagePublisher
+
+OrderCreateCommandHandler
+  @Transactional
+  public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
+    ...
+
+    // Save payment outbox
+    paymentOutboxHelper.savePaymentOutboxMessage(
+      orderDataMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent),
+      orderCreatedEvent.getOrder().getOrderStatus(),
+      orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrder().getOrderStatus()),
+      OutboxStatus.STARTED,
+      UUID.randomUUID());
+
+    log.info("Returning CreateOrderResponse with order id: {}", orderCreatedEvent.getOrder().getId());
+
+    return createOrderResponse;
+  }
   

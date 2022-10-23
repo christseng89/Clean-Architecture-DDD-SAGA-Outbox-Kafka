@@ -6,7 +6,6 @@ import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
 import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException;
-import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.OrderPaidRestaurantRequestMessagePublisher;
 import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
 import com.food.ordering.system.saga.SagaStep;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +21,12 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse, OrderPaidEven
 
   private final OrderDomainService orderDomainService;
   private final OrderRepository orderRepository;
-  private final OrderPaidRestaurantRequestMessagePublisher orderPaidRestaurantRequestMessagePublisher;
 
-  public OrderPaymentSaga(OrderDomainService orderDomainService,
-                          OrderRepository orderRepository,
-                          OrderPaidRestaurantRequestMessagePublisher orderPaidRestaurantRequestMessagePublisher) {
+  public OrderPaymentSaga(
+    OrderDomainService orderDomainService,
+    OrderRepository orderRepository) {
     this.orderDomainService = orderDomainService;
     this.orderRepository = orderRepository;
-    this.orderPaidRestaurantRequestMessagePublisher = orderPaidRestaurantRequestMessagePublisher;
   }
 
   @Override
@@ -37,7 +34,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse, OrderPaidEven
   public OrderPaidEvent process(PaymentResponse paymentResponse) {
     log.info("Completing payment for order with id: {}", paymentResponse.getOrderId());
     Order order = findOrder(paymentResponse.getOrderId());
-    OrderPaidEvent domainEvent = orderDomainService.payOrder(order, orderPaidRestaurantRequestMessagePublisher);
+    OrderPaidEvent domainEvent = orderDomainService.payOrder(order);
     orderRepository.save(order);
     log.info("Order with id: {} is paid", order.getId().getValue());
     return domainEvent;

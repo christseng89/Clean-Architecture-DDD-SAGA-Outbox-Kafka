@@ -21,9 +21,10 @@ public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
   private final ApprovalOutboxHelper approvalOutboxHelper;
   private final RestaurantApprovalRequestMessagePublisher restaurantApprovalRequestMessagePublisher;
 
-  public RestaurantApprovalOutboxScheduler(
-    ApprovalOutboxHelper approvalOutboxHelper,
-    RestaurantApprovalRequestMessagePublisher restaurantApprovalRequestMessagePublisher) {
+  public RestaurantApprovalOutboxScheduler(ApprovalOutboxHelper
+                                             approvalOutboxHelper,
+                                           RestaurantApprovalRequestMessagePublisher
+                                             restaurantApprovalRequestMessagePublisher) {
     this.approvalOutboxHelper = approvalOutboxHelper;
     this.restaurantApprovalRequestMessagePublisher = restaurantApprovalRequestMessagePublisher;
   }
@@ -37,7 +38,6 @@ public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
       approvalOutboxHelper.getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.STARTED,
         SagaStatus.PROCESSING);
-
     if (outboxMessagesResponse.isPresent() && outboxMessagesResponse.get().size() > 0) {
       List<OrderApprovalOutboxMessage> outboxMessages = outboxMessagesResponse.get();
       log.info("Received {} OrderApprovalOutboxMessage with ids: {}, sending to message bus!",
