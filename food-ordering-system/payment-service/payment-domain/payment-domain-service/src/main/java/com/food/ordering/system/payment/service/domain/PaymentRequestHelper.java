@@ -38,13 +38,14 @@ public class PaymentRequestHelper {
   private final OrderOutboxHelper orderOutboxHelper;
   private final PaymentResponseMessagePublisher paymentResponseMessagePublisher;
 
-  public PaymentRequestHelper(PaymentDomainService paymentDomainService,
-                              PaymentDataMapper paymentDataMapper,
-                              PaymentRepository paymentRepository,
-                              CreditEntryRepository creditEntryRepository,
-                              CreditHistoryRepository creditHistoryRepository,
-                              OrderOutboxHelper orderOutboxHelper,
-                              PaymentResponseMessagePublisher paymentResponseMessagePublisher) {
+  public PaymentRequestHelper(
+    PaymentDomainService paymentDomainService,
+    PaymentDataMapper paymentDataMapper,
+    PaymentRepository paymentRepository,
+    CreditEntryRepository creditEntryRepository,
+    CreditHistoryRepository creditHistoryRepository,
+    OrderOutboxHelper orderOutboxHelper,
+    PaymentResponseMessagePublisher paymentResponseMessagePublisher) {
     this.paymentDomainService = paymentDomainService;
     this.paymentDataMapper = paymentDataMapper;
     this.paymentRepository = paymentRepository;
@@ -128,10 +129,11 @@ public class PaymentRequestHelper {
     return creditHistories.get();
   }
 
-  private void persistDbObjects(Payment payment,
-                                CreditEntry creditEntry,
-                                List<CreditHistory> creditHistories,
-                                List<String> failureMessages) {
+  private void persistDbObjects(
+    Payment payment,
+    CreditEntry creditEntry,
+    List<CreditHistory> creditHistories,
+    List<String> failureMessages) {
     paymentRepository.save(payment);
     if (failureMessages.isEmpty()) {
       creditEntryRepository.save(creditEntry);
@@ -139,8 +141,9 @@ public class PaymentRequestHelper {
     }
   }
 
-  private boolean publishIfOutboxMessageProcessedForPayment(PaymentRequest paymentRequest,
-                                                            PaymentStatus paymentStatus) {
+  private boolean publishIfOutboxMessageProcessedForPayment(
+    PaymentRequest paymentRequest,
+    PaymentStatus paymentStatus) {
     Optional<OrderOutboxMessage> orderOutboxMessage =
       orderOutboxHelper.getCompletedOrderOutboxMessageBySagaIdAndPaymentStatus(
         UUID.fromString(paymentRequest.getSagaId()),

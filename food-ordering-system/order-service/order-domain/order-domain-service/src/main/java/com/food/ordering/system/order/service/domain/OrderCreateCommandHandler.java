@@ -21,10 +21,11 @@ public class OrderCreateCommandHandler {
   private final PaymentOutboxHelper paymentOutboxHelper;
   private final OrderSagaHelper orderSagaHelper;
 
-  public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper,
-                                   OrderDataMapper orderDataMapper,
-                                   PaymentOutboxHelper paymentOutboxHelper,
-                                   OrderSagaHelper orderSagaHelper) {
+  public OrderCreateCommandHandler(
+    OrderCreateHelper orderCreateHelper,
+    OrderDataMapper orderDataMapper,
+    PaymentOutboxHelper paymentOutboxHelper,
+    OrderSagaHelper orderSagaHelper) {
     this.orderCreateHelper = orderCreateHelper;
     this.orderDataMapper = orderDataMapper;
     this.paymentOutboxHelper = paymentOutboxHelper;

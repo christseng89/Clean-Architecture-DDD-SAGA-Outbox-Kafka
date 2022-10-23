@@ -15,8 +15,9 @@ public class CreditEntryRepositoryImpl implements CreditEntryRepository {
   private final CreditEntryJpaRepository creditEntryJpaRepository;
   private final CreditEntryDataAccessMapper creditEntryDataAccessMapper;
 
-  public CreditEntryRepositoryImpl(CreditEntryJpaRepository creditEntryJpaRepository,
-                                   CreditEntryDataAccessMapper creditEntryDataAccessMapper) {
+  public CreditEntryRepositoryImpl(
+    CreditEntryJpaRepository creditEntryJpaRepository,
+    CreditEntryDataAccessMapper creditEntryDataAccessMapper) {
     this.creditEntryJpaRepository = creditEntryJpaRepository;
     this.creditEntryDataAccessMapper = creditEntryDataAccessMapper;
   }

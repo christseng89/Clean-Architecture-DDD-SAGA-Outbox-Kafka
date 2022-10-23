@@ -20,8 +20,9 @@ public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
   private final OrderOutboxJpaRepository orderOutboxJpaRepository;
   private final OrderOutboxDataAccessMapper orderOutboxDataAccessMapper;
 
-  public OrderOutboxRepositoryImpl(OrderOutboxJpaRepository orderOutboxJpaRepository,
-                                   OrderOutboxDataAccessMapper orderOutboxDataAccessMapper) {
+  public OrderOutboxRepositoryImpl(
+    OrderOutboxJpaRepository orderOutboxJpaRepository,
+    OrderOutboxDataAccessMapper orderOutboxDataAccessMapper) {
     this.orderOutboxJpaRepository = orderOutboxJpaRepository;
     this.orderOutboxDataAccessMapper = orderOutboxDataAccessMapper;
   }
@@ -45,10 +46,11 @@ public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
   }
 
   @Override
-  public Optional<OrderOutboxMessage> findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(String sagaType,
-                                                                                         UUID sagaId,
-                                                                                         PaymentStatus paymentStatus,
-                                                                                         OutboxStatus outboxStatus) {
+  public Optional<OrderOutboxMessage> findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(
+    String sagaType,
+    UUID sagaId,
+    PaymentStatus paymentStatus,
+    OutboxStatus outboxStatus) {
     return orderOutboxJpaRepository.findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(sagaType, sagaId,
         paymentStatus, outboxStatus)
       .map(orderOutboxDataAccessMapper::orderOutboxEntityToOrderOutboxMessage);

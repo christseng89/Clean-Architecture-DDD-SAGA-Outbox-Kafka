@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApprovalOutboxDataAccessMapper {
 
-  public ApprovalOutboxEntity orderCreatedOutboxMessageToOutboxEntity(OrderApprovalOutboxMessage
-                                                                        orderApprovalOutboxMessage) {
+  public ApprovalOutboxEntity orderCreatedOutboxMessageToOutboxEntity(
+    OrderApprovalOutboxMessage
+      orderApprovalOutboxMessage) {
     return ApprovalOutboxEntity.builder()
       .id(orderApprovalOutboxMessage.getId())
       .sagaId(orderApprovalOutboxMessage.getSagaId())
@@ -22,8 +23,9 @@ public class ApprovalOutboxDataAccessMapper {
       .build();
   }
 
-  public OrderApprovalOutboxMessage approvalOutboxEntityToOrderApprovalOutboxMessage(ApprovalOutboxEntity
-                                                                                       approvalOutboxEntity) {
+  public OrderApprovalOutboxMessage approvalOutboxEntityToOrderApprovalOutboxMessage(
+    ApprovalOutboxEntity
+      approvalOutboxEntity) {
     return OrderApprovalOutboxMessage.builder()
       .id(approvalOutboxEntity.getId())
       .sagaId(approvalOutboxEntity.getSagaId())

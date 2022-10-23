@@ -13,10 +13,11 @@ public interface OrderOutboxRepository {
 
   Optional<List<OrderOutboxMessage>> findByTypeAndOutboxStatus(String type, OutboxStatus status);
 
-  Optional<OrderOutboxMessage> findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(String type,
-                                                                                  UUID sagaId,
-                                                                                  PaymentStatus paymentStatus,
-                                                                                  OutboxStatus outboxStatus);
+  Optional<OrderOutboxMessage> findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(
+    String type,
+    UUID sagaId,
+    PaymentStatus paymentStatus,
+    OutboxStatus outboxStatus);
 
   void deleteByTypeAndOutboxStatus(String type, OutboxStatus status);
 }

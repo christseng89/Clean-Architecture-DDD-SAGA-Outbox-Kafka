@@ -15,8 +15,9 @@ public class PaymentRepositoryImpl implements PaymentRepository {
   private final PaymentJpaRepository paymentJpaRepository;
   private final PaymentDataAccessMapper paymentDataAccessMapper;
 
-  public PaymentRepositoryImpl(PaymentJpaRepository paymentJpaRepository,
-                               PaymentDataAccessMapper paymentDataAccessMapper) {
+  public PaymentRepositoryImpl(
+    PaymentJpaRepository paymentJpaRepository,
+    PaymentDataAccessMapper paymentDataAccessMapper) {
     this.paymentJpaRepository = paymentJpaRepository;
     this.paymentDataAccessMapper = paymentDataAccessMapper;
   }

@@ -26,8 +26,9 @@ public class PaymentOutboxHelper {
   private final PaymentOutboxRepository paymentOutboxRepository;
   private final ObjectMapper objectMapper;
 
-  public PaymentOutboxHelper(PaymentOutboxRepository paymentOutboxRepository,
-                             ObjectMapper objectMapper) {
+  public PaymentOutboxHelper(
+    PaymentOutboxRepository paymentOutboxRepository,
+    ObjectMapper objectMapper) {
     this.paymentOutboxRepository = paymentOutboxRepository;
     this.objectMapper = objectMapper;
   }
@@ -41,8 +42,9 @@ public class PaymentOutboxHelper {
   }
 
   @Transactional(readOnly = true)
-  public Optional<OrderPaymentOutboxMessage> getPaymentOutboxMessageBySagaIdAndSagaStatus(UUID sagaId,
-                                                                                          SagaStatus... sagaStatus) {
+  public Optional<OrderPaymentOutboxMessage> getPaymentOutboxMessageBySagaIdAndSagaStatus(
+    UUID sagaId,
+    SagaStatus... sagaStatus) {
     return paymentOutboxRepository.findByTypeAndSagaIdAndSagaStatus(ORDER_SAGA_NAME, sagaId, sagaStatus);
   }
 
@@ -58,11 +60,12 @@ public class PaymentOutboxHelper {
   }
 
   @Transactional
-  public void savePaymentOutboxMessage(OrderPaymentEventPayload paymentEventPayload,
-                                       OrderStatus orderStatus,
-                                       SagaStatus sagaStatus,
-                                       OutboxStatus outboxStatus,
-                                       UUID sagaId) {
+  public void savePaymentOutboxMessage(
+    OrderPaymentEventPayload paymentEventPayload,
+    OrderStatus orderStatus,
+    SagaStatus sagaStatus,
+    OutboxStatus outboxStatus,
+    UUID sagaId) {
     save(OrderPaymentOutboxMessage.builder()
       .id(UUID.randomUUID())
       .sagaId(sagaId)
@@ -76,8 +79,9 @@ public class PaymentOutboxHelper {
   }
 
   @Transactional
-  public void deletePaymentOutboxMessageByOutboxStatusAndSagaStatus(OutboxStatus outboxStatus,
-                                                                    SagaStatus... sagaStatus) {
+  public void deletePaymentOutboxMessageByOutboxStatusAndSagaStatus(
+    OutboxStatus outboxStatus,
+    SagaStatus... sagaStatus) {
     paymentOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(ORDER_SAGA_NAME, outboxStatus, sagaStatus);
   }
 

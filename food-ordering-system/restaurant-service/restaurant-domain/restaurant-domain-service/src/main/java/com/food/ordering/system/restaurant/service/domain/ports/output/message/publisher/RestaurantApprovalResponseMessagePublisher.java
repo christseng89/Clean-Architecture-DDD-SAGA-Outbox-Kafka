@@ -7,6 +7,7 @@ import java.util.function.BiConsumer;
 
 public interface RestaurantApprovalResponseMessagePublisher {
 
-  void publish(OrderOutboxMessage orderOutboxMessage,
-               BiConsumer<OrderOutboxMessage, OutboxStatus> outboxCallback);
+  void publish(
+    OrderOutboxMessage orderOutboxMessage,
+    BiConsumer<OrderOutboxMessage, OutboxStatus> outboxCallback);
 }

@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public class RestaurantMessagingDataMapper {
 
   public RestaurantApprovalRequest
-  restaurantApprovalRequestAvroModelToRestaurantApproval(RestaurantApprovalRequestAvroModel
-                                                           restaurantApprovalRequestAvroModel) {
+  restaurantApprovalRequestAvroModelToRestaurantApproval(
+    RestaurantApprovalRequestAvroModel restaurantApprovalRequestAvroModel) {
     return RestaurantApprovalRequest.builder()
       .id(restaurantApprovalRequestAvroModel.getId())
       .sagaId(restaurantApprovalRequestAvroModel.getSagaId())

@@ -23,10 +23,11 @@ public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublish
   private final PaymentServiceConfigData paymentServiceConfigData;
   private final KafkaMessageHelper kafkaMessageHelper;
 
-  public PaymentEventKafkaPublisher(PaymentMessagingDataMapper paymentMessagingDataMapper,
-                                    KafkaProducer<String, PaymentResponseAvroModel> kafkaProducer,
-                                    PaymentServiceConfigData paymentServiceConfigData,
-                                    KafkaMessageHelper kafkaMessageHelper) {
+  public PaymentEventKafkaPublisher(
+    PaymentMessagingDataMapper paymentMessagingDataMapper,
+    KafkaProducer<String, PaymentResponseAvroModel> kafkaProducer,
+    PaymentServiceConfigData paymentServiceConfigData,
+    KafkaMessageHelper kafkaMessageHelper) {
     this.paymentMessagingDataMapper = paymentMessagingDataMapper;
     this.kafkaProducer = kafkaProducer;
     this.paymentServiceConfigData = paymentServiceConfigData;
@@ -34,8 +35,9 @@ public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublish
   }
 
   @Override
-  public void publish(OrderOutboxMessage orderOutboxMessage,
-                      BiConsumer<OrderOutboxMessage, OutboxStatus> outboxCallback) {
+  public void publish(
+    OrderOutboxMessage orderOutboxMessage,
+    BiConsumer<OrderOutboxMessage, OutboxStatus> outboxCallback) {
     OrderEventPayload orderEventPayload =
       kafkaMessageHelper.getOrderEventPayload(orderOutboxMessage.getPayload(), OrderEventPayload.class);
 

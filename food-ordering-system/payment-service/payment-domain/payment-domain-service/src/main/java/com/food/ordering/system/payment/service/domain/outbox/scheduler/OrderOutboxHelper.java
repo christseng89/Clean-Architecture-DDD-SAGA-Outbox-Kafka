@@ -34,9 +34,9 @@ public class OrderOutboxHelper {
   }
 
   @Transactional(readOnly = true)
-  public Optional<OrderOutboxMessage> getCompletedOrderOutboxMessageBySagaIdAndPaymentStatus(UUID sagaId,
-                                                                                             PaymentStatus
-                                                                                               paymentStatus) {
+  public Optional<OrderOutboxMessage> getCompletedOrderOutboxMessageBySagaIdAndPaymentStatus(
+    UUID sagaId,
+    PaymentStatus paymentStatus) {
     return orderOutboxRepository.findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(ORDER_SAGA_NAME, sagaId,
       paymentStatus, OutboxStatus.COMPLETED);
   }
@@ -52,10 +52,11 @@ public class OrderOutboxHelper {
   }
 
   @Transactional
-  public void saveOrderOutboxMessage(OrderEventPayload orderEventPayload,
-                                     PaymentStatus paymentStatus,
-                                     OutboxStatus outboxStatus,
-                                     UUID sagaId) {
+  public void saveOrderOutboxMessage(
+    OrderEventPayload orderEventPayload,
+    PaymentStatus paymentStatus,
+    OutboxStatus outboxStatus,
+    UUID sagaId) {
     save(OrderOutboxMessage.builder()
       .id(UUID.randomUUID())
       .sagaId(sagaId)

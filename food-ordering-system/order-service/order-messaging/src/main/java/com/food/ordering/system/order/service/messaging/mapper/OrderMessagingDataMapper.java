@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 @Component
 public class OrderMessagingDataMapper {
 
-  public PaymentResponse paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel
-                                                                     paymentResponseAvroModel) {
+  public PaymentResponse paymentResponseAvroModelToPaymentResponse(
+    PaymentResponseAvroModel paymentResponseAvroModel) {
     return PaymentResponse.builder()
       .id(paymentResponseAvroModel.getId())
       .sagaId(paymentResponseAvroModel.getSagaId())
@@ -31,8 +31,9 @@ public class OrderMessagingDataMapper {
   }
 
   public RestaurantApprovalResponse
-  approvalResponseAvroModelToApprovalResponse(RestaurantApprovalResponseAvroModel
-                                                restaurantApprovalResponseAvroModel) {
+  approvalResponseAvroModelToApprovalResponse(
+    RestaurantApprovalResponseAvroModel
+      restaurantApprovalResponseAvroModel) {
     return RestaurantApprovalResponse.builder()
       .id(restaurantApprovalResponseAvroModel.getId())
       .sagaId(restaurantApprovalResponseAvroModel.getSagaId())
@@ -45,7 +46,8 @@ public class OrderMessagingDataMapper {
       .build();
   }
 
-  public PaymentRequestAvroModel orderPaymentEventToPaymentRequestAvroModel(String sagaId, OrderPaymentEventPayload
+  public PaymentRequestAvroModel orderPaymentEventToPaymentRequestAvroModel(
+    String sagaId, OrderPaymentEventPayload
     orderPaymentEventPayload) {
     return PaymentRequestAvroModel.newBuilder()
       .setId(UUID.randomUUID().toString())
@@ -59,7 +61,8 @@ public class OrderMessagingDataMapper {
   }
 
   public RestaurantApprovalRequestAvroModel
-  orderApprovalEventToRestaurantApprovalRequestAvroModel(String sagaId, OrderApprovalEventPayload
+  orderApprovalEventToRestaurantApprovalRequestAvroModel(
+    String sagaId, OrderApprovalEventPayload
     orderApprovalEventPayload) {
     return RestaurantApprovalRequestAvroModel.newBuilder()
       .setId(UUID.randomUUID().toString())

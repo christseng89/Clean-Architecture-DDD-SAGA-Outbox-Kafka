@@ -17,8 +17,9 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
   private final RestaurantJpaRepository restaurantJpaRepository;
   private final RestaurantDataAccessMapper restaurantDataAccessMapper;
 
-  public RestaurantRepositoryImpl(RestaurantJpaRepository restaurantJpaRepository,
-                                  RestaurantDataAccessMapper restaurantDataAccessMapper) {
+  public RestaurantRepositoryImpl(
+    RestaurantJpaRepository restaurantJpaRepository,
+    RestaurantDataAccessMapper restaurantDataAccessMapper) {
     this.restaurantJpaRepository = restaurantJpaRepository;
     this.restaurantDataAccessMapper = restaurantDataAccessMapper;
   }

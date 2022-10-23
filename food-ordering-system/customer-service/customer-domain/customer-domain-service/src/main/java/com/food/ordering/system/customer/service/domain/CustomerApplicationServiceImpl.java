@@ -21,9 +21,10 @@ class CustomerApplicationServiceImpl implements CustomerApplicationService {
 
   private final CustomerMessagePublisher customerMessagePublisher;
 
-  public CustomerApplicationServiceImpl(CustomerCreateCommandHandler customerCreateCommandHandler,
-                                        CustomerDataMapper customerDataMapper,
-                                        CustomerMessagePublisher customerMessagePublisher) {
+  public CustomerApplicationServiceImpl(
+    CustomerCreateCommandHandler customerCreateCommandHandler,
+    CustomerDataMapper customerDataMapper,
+    CustomerMessagePublisher customerMessagePublisher) {
     this.customerCreateCommandHandler = customerCreateCommandHandler;
     this.customerDataMapper = customerDataMapper;
     this.customerMessagePublisher = customerMessagePublisher;

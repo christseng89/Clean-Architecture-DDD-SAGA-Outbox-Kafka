@@ -25,8 +25,9 @@ public class PaymentMessagingDataMapper {
       .build();
   }
 
-  public PaymentResponseAvroModel orderEventPayloadToPaymentResponseAvroModel(String sagaId,
-                                                                              OrderEventPayload orderEventPayload) {
+  public PaymentResponseAvroModel orderEventPayloadToPaymentResponseAvroModel(
+    String sagaId,
+    OrderEventPayload orderEventPayload) {
     return PaymentResponseAvroModel.newBuilder()
       .setId(UUID.randomUUID().toString())
       .setSagaId(sagaId)

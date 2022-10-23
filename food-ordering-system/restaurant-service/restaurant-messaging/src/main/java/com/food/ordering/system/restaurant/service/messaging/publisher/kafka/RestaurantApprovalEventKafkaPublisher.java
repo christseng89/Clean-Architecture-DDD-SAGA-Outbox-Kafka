@@ -23,11 +23,11 @@ public class RestaurantApprovalEventKafkaPublisher implements RestaurantApproval
   private final RestaurantServiceConfigData restaurantServiceConfigData;
   private final KafkaMessageHelper kafkaMessageHelper;
 
-  public RestaurantApprovalEventKafkaPublisher(RestaurantMessagingDataMapper dataMapper,
-                                               KafkaProducer<String, RestaurantApprovalResponseAvroModel>
-                                                 kafkaProducer,
-                                               RestaurantServiceConfigData restaurantServiceConfigData,
-                                               KafkaMessageHelper kafkaMessageHelper) {
+  public RestaurantApprovalEventKafkaPublisher(
+    RestaurantMessagingDataMapper dataMapper,
+    KafkaProducer<String, RestaurantApprovalResponseAvroModel> kafkaProducer,
+    RestaurantServiceConfigData restaurantServiceConfigData,
+    KafkaMessageHelper kafkaMessageHelper) {
     this.restaurantMessagingDataMapper = dataMapper;
     this.kafkaProducer = kafkaProducer;
     this.restaurantServiceConfigData = restaurantServiceConfigData;
@@ -35,8 +35,9 @@ public class RestaurantApprovalEventKafkaPublisher implements RestaurantApproval
   }
 
   @Override
-  public void publish(OrderOutboxMessage orderOutboxMessage,
-                      BiConsumer<OrderOutboxMessage, OutboxStatus> outboxCallback) {
+  public void publish(
+    OrderOutboxMessage orderOutboxMessage,
+    BiConsumer<OrderOutboxMessage, OutboxStatus> outboxCallback) {
     OrderEventPayload orderEventPayload =
       kafkaMessageHelper.getOrderEventPayload(orderOutboxMessage.getPayload(),
         OrderEventPayload.class);

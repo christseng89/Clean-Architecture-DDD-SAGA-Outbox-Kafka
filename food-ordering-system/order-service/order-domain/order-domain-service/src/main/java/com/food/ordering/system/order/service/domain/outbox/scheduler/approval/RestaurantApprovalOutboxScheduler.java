@@ -21,10 +21,9 @@ public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
   private final ApprovalOutboxHelper approvalOutboxHelper;
   private final RestaurantApprovalRequestMessagePublisher restaurantApprovalRequestMessagePublisher;
 
-  public RestaurantApprovalOutboxScheduler(ApprovalOutboxHelper
-                                             approvalOutboxHelper,
-                                           RestaurantApprovalRequestMessagePublisher
-                                             restaurantApprovalRequestMessagePublisher) {
+  public RestaurantApprovalOutboxScheduler(
+    ApprovalOutboxHelper approvalOutboxHelper,
+    RestaurantApprovalRequestMessagePublisher restaurantApprovalRequestMessagePublisher) {
     this.approvalOutboxHelper = approvalOutboxHelper;
     this.restaurantApprovalRequestMessagePublisher = restaurantApprovalRequestMessagePublisher;
   }

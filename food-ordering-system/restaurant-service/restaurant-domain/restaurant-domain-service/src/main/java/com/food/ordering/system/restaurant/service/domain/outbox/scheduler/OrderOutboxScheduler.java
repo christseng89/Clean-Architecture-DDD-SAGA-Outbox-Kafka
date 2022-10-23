@@ -20,8 +20,9 @@ public class OrderOutboxScheduler implements OutboxScheduler {
   private final OrderOutboxHelper orderOutboxHelper;
   private final RestaurantApprovalResponseMessagePublisher responseMessagePublisher;
 
-  public OrderOutboxScheduler(OrderOutboxHelper orderOutboxHelper,
-                              RestaurantApprovalResponseMessagePublisher responseMessagePublisher) {
+  public OrderOutboxScheduler(
+    OrderOutboxHelper orderOutboxHelper,
+    RestaurantApprovalResponseMessagePublisher responseMessagePublisher) {
     this.orderOutboxHelper = orderOutboxHelper;
     this.responseMessagePublisher = responseMessagePublisher;
   }

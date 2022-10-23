@@ -13,8 +13,9 @@ public interface OrderOutboxRepository {
 
   Optional<List<OrderOutboxMessage>> findByTypeAndOutboxStatus(String type, OutboxStatus outboxStatus);
 
-  Optional<OrderOutboxMessage> findByTypeAndSagaIdAndOutboxStatus(String type, UUID sagaId,
-                                                                  OutboxStatus outboxStatus);
+  Optional<OrderOutboxMessage> findByTypeAndSagaIdAndOutboxStatus(
+    String type, UUID sagaId,
+    OutboxStatus outboxStatus);
 
   void deleteByTypeAndOutboxStatus(String type, OutboxStatus outboxStatus);
 

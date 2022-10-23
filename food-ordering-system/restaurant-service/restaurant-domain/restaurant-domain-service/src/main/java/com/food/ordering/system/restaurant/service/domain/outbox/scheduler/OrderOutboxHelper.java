@@ -28,16 +28,18 @@ public class OrderOutboxHelper {
   private final OrderOutboxRepository orderOutboxRepository;
   private final ObjectMapper objectMapper;
 
-  public OrderOutboxHelper(OrderOutboxRepository orderOutboxRepository,
-                           ObjectMapper objectMapper) {
+  public OrderOutboxHelper(
+    OrderOutboxRepository orderOutboxRepository,
+    ObjectMapper objectMapper) {
     this.orderOutboxRepository = orderOutboxRepository;
     this.objectMapper = objectMapper;
   }
 
   @Transactional(readOnly = true)
-  public Optional<OrderOutboxMessage> getCompletedOrderOutboxMessageBySagaIdAndOutboxStatus(UUID sagaId,
-                                                                                            OutboxStatus
-                                                                                              outboxStatus) {
+  public Optional<OrderOutboxMessage> getCompletedOrderOutboxMessageBySagaIdAndOutboxStatus(
+    UUID sagaId,
+    OutboxStatus
+      outboxStatus) {
     return orderOutboxRepository.findByTypeAndSagaIdAndOutboxStatus(ORDER_SAGA_NAME, sagaId, outboxStatus);
   }
 
@@ -52,10 +54,11 @@ public class OrderOutboxHelper {
   }
 
   @Transactional
-  public void saveOrderOutboxMessage(OrderEventPayload orderEventPayload,
-                                     OrderApprovalStatus approvalStatus,
-                                     OutboxStatus outboxStatus,
-                                     UUID sagaId) {
+  public void saveOrderOutboxMessage(
+    OrderEventPayload orderEventPayload,
+    OrderApprovalStatus approvalStatus,
+    OutboxStatus outboxStatus,
+    UUID sagaId) {
     save(OrderOutboxMessage.builder()
       .id(UUID.randomUUID())
       .sagaId(sagaId)

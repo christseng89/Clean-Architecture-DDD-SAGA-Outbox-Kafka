@@ -23,18 +23,20 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
   private final PaymentResponseMessageListener paymentResponseMessageListener;
   private final OrderMessagingDataMapper orderMessagingDataMapper;
 
-  public PaymentResponseKafkaListener(PaymentResponseMessageListener paymentResponseMessageListener,
-                                      OrderMessagingDataMapper orderMessagingDataMapper) {
+  public PaymentResponseKafkaListener(
+    PaymentResponseMessageListener paymentResponseMessageListener,
+    OrderMessagingDataMapper orderMessagingDataMapper) {
     this.paymentResponseMessageListener = paymentResponseMessageListener;
     this.orderMessagingDataMapper = orderMessagingDataMapper;
   }
 
   @Override
   @KafkaListener(id = "${kafka-consumer-config.payment-consumer-group-id}", topics = "${order-service.payment-response-topic-name}")
-  public void receive(@Payload List<PaymentResponseAvroModel> messages,
-                      @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) List<String> keys,
-                      @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
-                      @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
+  public void receive(
+    @Payload List<PaymentResponseAvroModel> messages,
+    @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) List<String> keys,
+    @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
+    @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
     log.info("{} number of payment responses received with keys:{}, partitions:{} and offsets: {}",
       messages.size(),
       keys.toString(),

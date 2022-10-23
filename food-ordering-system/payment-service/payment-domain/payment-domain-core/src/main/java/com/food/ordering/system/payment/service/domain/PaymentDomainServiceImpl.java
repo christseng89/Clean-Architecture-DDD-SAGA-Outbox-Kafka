@@ -24,10 +24,11 @@ import static com.food.ordering.system.domain.DomainConstants.UTC;
 public class PaymentDomainServiceImpl implements PaymentDomainService {
 
   @Override
-  public PaymentEvent validateAndInitiatePayment(Payment payment,
-                                                 CreditEntry creditEntry,
-                                                 List<CreditHistory> creditHistories,
-                                                 List<String> failureMessages) {
+  public PaymentEvent validateAndInitiatePayment(
+    Payment payment,
+    CreditEntry creditEntry,
+    List<CreditHistory> creditHistories,
+    List<String> failureMessages) {
     payment.validatePayment(failureMessages);
     payment.initializePayment();
     validateCreditEntry(payment, creditEntry, failureMessages);
@@ -47,10 +48,11 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
   }
 
   @Override
-  public PaymentEvent validateAndCancelPayment(Payment payment,
-                                               CreditEntry creditEntry,
-                                               List<CreditHistory> creditHistories,
-                                               List<String> failureMessages) {
+  public PaymentEvent validateAndCancelPayment(
+    Payment payment,
+    CreditEntry creditEntry,
+    List<CreditHistory> creditHistories,
+    List<String> failureMessages) {
     payment.validatePayment(failureMessages);
     addCreditEntry(payment, creditEntry);
     updateCreditHistory(payment, creditHistories, TransactionType.CREDIT);
@@ -79,9 +81,10 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     creditEntry.subtractCreditAmount(payment.getPrice());
   }
 
-  private void updateCreditHistory(Payment payment,
-                                   List<CreditHistory> creditHistories,
-                                   TransactionType transactionType) {
+  private void updateCreditHistory(
+    Payment payment,
+    List<CreditHistory> creditHistories,
+    TransactionType transactionType) {
     creditHistories.add(CreditHistory.builder()
       .creditHistoryId(new CreditHistoryId(UUID.randomUUID()))
       .customerId(payment.getCustomerId())
@@ -90,9 +93,10 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
       .build());
   }
 
-  private void validateCreditHistory(CreditEntry creditEntry,
-                                     List<CreditHistory> creditHistories,
-                                     List<String> failureMessages) {
+  private void validateCreditHistory(
+    CreditEntry creditEntry,
+    List<CreditHistory> creditHistories,
+    List<String> failureMessages) {
     Money totalCreditHistory = getTotalHistoryAmount(creditHistories, TransactionType.CREDIT);
     Money totalDebitHistory = getTotalHistoryAmount(creditHistories, TransactionType.DEBIT);
 

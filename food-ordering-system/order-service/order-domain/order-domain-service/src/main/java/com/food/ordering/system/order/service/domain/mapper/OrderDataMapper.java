@@ -68,8 +68,8 @@ public class OrderDataMapper {
       .build();
   }
 
-  public OrderPaymentEventPayload orderCancelledEventToOrderPaymentEventPayload(OrderCancelledEvent
-                                                                                  orderCancelledEvent) {
+  public OrderPaymentEventPayload orderCancelledEventToOrderPaymentEventPayload(
+    OrderCancelledEvent orderCancelledEvent) {
     return OrderPaymentEventPayload.builder()
       .customerId(orderCancelledEvent.getOrder().getCustomerId().getValue().toString())
       .orderId(orderCancelledEvent.getOrder().getId().getValue().toString())

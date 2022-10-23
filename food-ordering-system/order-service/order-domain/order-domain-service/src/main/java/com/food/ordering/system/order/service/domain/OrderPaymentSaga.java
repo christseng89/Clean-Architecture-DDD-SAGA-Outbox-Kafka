@@ -39,12 +39,13 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
   private final OrderSagaHelper orderSagaHelper;
   private final OrderDataMapper orderDataMapper;
 
-  public OrderPaymentSaga(OrderDomainService orderDomainService,
-                          OrderRepository orderRepository,
-                          PaymentOutboxHelper paymentOutboxHelper,
-                          ApprovalOutboxHelper approvalOutboxHelper,
-                          OrderSagaHelper orderSagaHelper,
-                          OrderDataMapper orderDataMapper) {
+  public OrderPaymentSaga(
+    OrderDomainService orderDomainService,
+    OrderRepository orderRepository,
+    PaymentOutboxHelper paymentOutboxHelper,
+    ApprovalOutboxHelper approvalOutboxHelper,
+    OrderSagaHelper orderSagaHelper,
+    OrderDataMapper orderDataMapper) {
     this.orderDomainService = orderDomainService;
     this.orderRepository = orderRepository;
     this.paymentOutboxHelper = paymentOutboxHelper;
@@ -125,12 +126,13 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     return orderResponse.get();
   }
 
-  private OrderPaymentOutboxMessage getUpdatedPaymentOutboxMessage(OrderPaymentOutboxMessage
-                                                                     orderPaymentOutboxMessage,
-                                                                   OrderStatus
-                                                                     orderStatus,
-                                                                   SagaStatus
-                                                                     sagaStatus) {
+  private OrderPaymentOutboxMessage getUpdatedPaymentOutboxMessage(
+    OrderPaymentOutboxMessage
+      orderPaymentOutboxMessage,
+    OrderStatus
+      orderStatus,
+    SagaStatus
+      sagaStatus) {
     orderPaymentOutboxMessage.setProcessedAt(ZonedDateTime.now(ZoneId.of(UTC)));
     orderPaymentOutboxMessage.setOrderStatus(orderStatus);
     orderPaymentOutboxMessage.setSagaStatus(sagaStatus);
@@ -162,9 +164,10 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     return order;
   }
 
-  private OrderApprovalOutboxMessage getUpdatedApprovalOutboxMessage(String sagaId,
-                                                                     OrderStatus orderStatus,
-                                                                     SagaStatus sagaStatus) {
+  private OrderApprovalOutboxMessage getUpdatedApprovalOutboxMessage(
+    String sagaId,
+    OrderStatus orderStatus,
+    SagaStatus sagaStatus) {
     Optional<OrderApprovalOutboxMessage> orderApprovalOutboxMessageResponse =
       approvalOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
         UUID.fromString(sagaId),

@@ -13,16 +13,19 @@ import java.util.UUID;
 @Repository
 public interface ApprovalOutboxJpaRepository extends JpaRepository<ApprovalOutboxEntity, UUID> {
 
-  Optional<List<ApprovalOutboxEntity>> findByTypeAndOutboxStatusAndSagaStatusIn(String type,
-                                                                                OutboxStatus outboxStatus,
-                                                                                List<SagaStatus> sagaStatus);
+  Optional<List<ApprovalOutboxEntity>> findByTypeAndOutboxStatusAndSagaStatusIn(
+    String type,
+    OutboxStatus outboxStatus,
+    List<SagaStatus> sagaStatus);
 
-  Optional<ApprovalOutboxEntity> findByTypeAndSagaIdAndSagaStatusIn(String type,
-                                                                    UUID sagaId,
-                                                                    List<SagaStatus> sagaStatus);
+  Optional<ApprovalOutboxEntity> findByTypeAndSagaIdAndSagaStatusIn(
+    String type,
+    UUID sagaId,
+    List<SagaStatus> sagaStatus);
 
-  void deleteByTypeAndOutboxStatusAndSagaStatusIn(String type,
-                                                  OutboxStatus outboxStatus,
-                                                  List<SagaStatus> sagaStatus);
+  void deleteByTypeAndOutboxStatusAndSagaStatusIn(
+    String type,
+    OutboxStatus outboxStatus,
+    List<SagaStatus> sagaStatus);
 
 }

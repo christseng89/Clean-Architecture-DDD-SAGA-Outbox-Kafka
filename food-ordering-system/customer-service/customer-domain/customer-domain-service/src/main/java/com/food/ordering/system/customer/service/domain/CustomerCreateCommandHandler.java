@@ -20,9 +20,10 @@ class CustomerCreateCommandHandler {
 
   private final CustomerDataMapper customerDataMapper;
 
-  public CustomerCreateCommandHandler(CustomerDomainService customerDomainService,
-                                      CustomerRepository customerRepository,
-                                      CustomerDataMapper customerDataMapper) {
+  public CustomerCreateCommandHandler(
+    CustomerDomainService customerDomainService,
+    CustomerRepository customerRepository,
+    CustomerDataMapper customerDataMapper) {
     this.customerDomainService = customerDomainService;
     this.customerRepository = customerRepository;
     this.customerDataMapper = customerDataMapper;

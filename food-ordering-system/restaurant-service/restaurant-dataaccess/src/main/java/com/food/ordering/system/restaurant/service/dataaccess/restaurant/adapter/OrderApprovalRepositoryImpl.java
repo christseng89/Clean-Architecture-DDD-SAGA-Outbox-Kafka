@@ -12,8 +12,9 @@ public class OrderApprovalRepositoryImpl implements OrderApprovalRepository {
   private final OrderApprovalJpaRepository orderApprovalJpaRepository;
   private final RestaurantDataAccessMapper restaurantDataAccessMapper;
 
-  public OrderApprovalRepositoryImpl(OrderApprovalJpaRepository orderApprovalJpaRepository,
-                                     RestaurantDataAccessMapper restaurantDataAccessMapper) {
+  public OrderApprovalRepositoryImpl(
+    OrderApprovalJpaRepository orderApprovalJpaRepository,
+    RestaurantDataAccessMapper restaurantDataAccessMapper) {
     this.orderApprovalJpaRepository = orderApprovalJpaRepository;
     this.restaurantDataAccessMapper = restaurantDataAccessMapper;
   }

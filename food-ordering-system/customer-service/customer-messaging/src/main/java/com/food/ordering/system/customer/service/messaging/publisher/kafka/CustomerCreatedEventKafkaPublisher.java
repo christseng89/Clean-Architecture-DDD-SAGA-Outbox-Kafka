@@ -22,9 +22,10 @@ public class CustomerCreatedEventKafkaPublisher implements CustomerMessagePublis
 
   private final CustomerServiceConfigData customerServiceConfigData;
 
-  public CustomerCreatedEventKafkaPublisher(CustomerMessagingDataMapper customerMessagingDataMapper,
-                                            KafkaProducer<String, CustomerAvroModel> kafkaProducer,
-                                            CustomerServiceConfigData customerServiceConfigData) {
+  public CustomerCreatedEventKafkaPublisher(
+    CustomerMessagingDataMapper customerMessagingDataMapper,
+    KafkaProducer<String, CustomerAvroModel> kafkaProducer,
+    CustomerServiceConfigData customerServiceConfigData) {
     this.customerMessagingDataMapper = customerMessagingDataMapper;
     this.kafkaProducer = kafkaProducer;
     this.customerServiceConfigData = customerServiceConfigData;

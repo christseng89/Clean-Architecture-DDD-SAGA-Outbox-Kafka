@@ -34,11 +34,12 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
   private final ApprovalOutboxHelper approvalOutboxHelper;
   private final OrderDataMapper orderDataMapper;
 
-  public OrderApprovalSaga(OrderDomainService orderDomainService,
-                           OrderSagaHelper orderSagaHelper,
-                           PaymentOutboxHelper paymentOutboxHelper,
-                           ApprovalOutboxHelper approvalOutboxHelper,
-                           OrderDataMapper orderDataMapper) {
+  public OrderApprovalSaga(
+    OrderDomainService orderDomainService,
+    OrderSagaHelper orderSagaHelper,
+    PaymentOutboxHelper paymentOutboxHelper,
+    ApprovalOutboxHelper approvalOutboxHelper,
+    OrderDataMapper orderDataMapper) {
     this.orderDomainService = orderDomainService;
     this.orderSagaHelper = orderSagaHelper;
     this.paymentOutboxHelper = paymentOutboxHelper;
@@ -116,21 +117,23 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
     return order;
   }
 
-  private OrderApprovalOutboxMessage getUpdatedApprovalOutboxMessage(OrderApprovalOutboxMessage
-                                                                       orderApprovalOutboxMessage,
-                                                                     OrderStatus
-                                                                       orderStatus,
-                                                                     SagaStatus
-                                                                       sagaStatus) {
+  private OrderApprovalOutboxMessage getUpdatedApprovalOutboxMessage(
+    OrderApprovalOutboxMessage
+      orderApprovalOutboxMessage,
+    OrderStatus
+      orderStatus,
+    SagaStatus
+      sagaStatus) {
     orderApprovalOutboxMessage.setProcessedAt(ZonedDateTime.now(ZoneId.of(UTC)));
     orderApprovalOutboxMessage.setOrderStatus(orderStatus);
     orderApprovalOutboxMessage.setSagaStatus(sagaStatus);
     return orderApprovalOutboxMessage;
   }
 
-  private OrderPaymentOutboxMessage getUpdatedPaymentOutboxMessage(String sagaId,
-                                                                   OrderStatus orderStatus,
-                                                                   SagaStatus sagaStatus) {
+  private OrderPaymentOutboxMessage getUpdatedPaymentOutboxMessage(
+    String sagaId,
+    OrderStatus orderStatus,
+    SagaStatus sagaStatus) {
     Optional<OrderPaymentOutboxMessage> orderPaymentOutboxMessageResponse = paymentOutboxHelper
       .getPaymentOutboxMessageBySagaIdAndSagaStatus(UUID.fromString(sagaId), SagaStatus.PROCESSING);
     if (orderPaymentOutboxMessageResponse.isEmpty()) {

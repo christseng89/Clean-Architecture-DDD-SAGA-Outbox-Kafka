@@ -59,11 +59,12 @@ public class ApprovalOutboxHelper {
   }
 
   @Transactional
-  public void saveApprovalOutboxMessage(OrderApprovalEventPayload orderApprovalEventPayload,
-                                        OrderStatus orderStatus,
-                                        SagaStatus sagaStatus,
-                                        OutboxStatus outboxStatus,
-                                        UUID sagaId) {
+  public void saveApprovalOutboxMessage(
+    OrderApprovalEventPayload orderApprovalEventPayload,
+    OrderStatus orderStatus,
+    SagaStatus sagaStatus,
+    OutboxStatus outboxStatus,
+    UUID sagaId) {
     save(OrderApprovalOutboxMessage.builder()
       .id(UUID.randomUUID())
       .sagaId(sagaId)
@@ -77,8 +78,9 @@ public class ApprovalOutboxHelper {
   }
 
   @Transactional
-  public void deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(OutboxStatus outboxStatus,
-                                                                     SagaStatus... sagaStatus) {
+  public void deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(
+    OutboxStatus outboxStatus,
+    SagaStatus... sagaStatus) {
     approvalOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(ORDER_SAGA_NAME, outboxStatus, sagaStatus);
   }
 

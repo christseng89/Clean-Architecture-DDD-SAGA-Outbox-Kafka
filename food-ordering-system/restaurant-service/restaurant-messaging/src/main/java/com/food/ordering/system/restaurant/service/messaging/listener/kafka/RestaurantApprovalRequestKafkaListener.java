@@ -25,10 +25,9 @@ public class RestaurantApprovalRequestKafkaListener implements KafkaConsumer<Res
   private final RestaurantApprovalRequestMessageListener restaurantApprovalRequestMessageListener;
   private final RestaurantMessagingDataMapper restaurantMessagingDataMapper;
 
-  public RestaurantApprovalRequestKafkaListener(RestaurantApprovalRequestMessageListener
-                                                  restaurantApprovalRequestMessageListener,
-                                                RestaurantMessagingDataMapper
-                                                  restaurantMessagingDataMapper) {
+  public RestaurantApprovalRequestKafkaListener(
+    RestaurantApprovalRequestMessageListener restaurantApprovalRequestMessageListener,
+    RestaurantMessagingDataMapper restaurantMessagingDataMapper) {
     this.restaurantApprovalRequestMessageListener = restaurantApprovalRequestMessageListener;
     this.restaurantMessagingDataMapper = restaurantMessagingDataMapper;
   }
@@ -36,10 +35,11 @@ public class RestaurantApprovalRequestKafkaListener implements KafkaConsumer<Res
   @Override
   @KafkaListener(id = "${kafka-consumer-config.restaurant-approval-consumer-group-id}",
     topics = "${restaurant-service.restaurant-approval-request-topic-name}")
-  public void receive(@Payload List<RestaurantApprovalRequestAvroModel> messages,
-                      @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) List<String> keys,
-                      @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
-                      @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
+  public void receive(
+    @Payload List<RestaurantApprovalRequestAvroModel> messages,
+    @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) List<String> keys,
+    @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
+    @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
     log.info("{} number of orders approval requests received with keys {}, partitions {} and offsets {}" +
         ", sending for restaurant approval",
       messages.size(),

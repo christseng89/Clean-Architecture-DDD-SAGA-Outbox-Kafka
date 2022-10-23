@@ -8,10 +8,11 @@ import java.util.List;
 
 public class OrderApprovedEvent extends OrderApprovalEvent {
 
-  public OrderApprovedEvent(OrderApproval orderApproval,
-                            RestaurantId restaurantId,
-                            List<String> failureMessages,
-                            ZonedDateTime createdAt) {
+  public OrderApprovedEvent(
+    OrderApproval orderApproval,
+    RestaurantId restaurantId,
+    List<String> failureMessages,
+    ZonedDateTime createdAt) {
     super(orderApproval, restaurantId, failureMessages, createdAt);
   }
 

@@ -18,8 +18,9 @@ public class CreditHistoryRepositoryImpl implements CreditHistoryRepository {
   private final CreditHistoryJpaRepository creditHistoryJpaRepository;
   private final CreditHistoryDataAccessMapper creditHistoryDataAccessMapper;
 
-  public CreditHistoryRepositoryImpl(CreditHistoryJpaRepository creditHistoryJpaRepository,
-                                     CreditHistoryDataAccessMapper creditHistoryDataAccessMapper) {
+  public CreditHistoryRepositoryImpl(
+    CreditHistoryJpaRepository creditHistoryJpaRepository,
+    CreditHistoryDataAccessMapper creditHistoryDataAccessMapper) {
     this.creditHistoryJpaRepository = creditHistoryJpaRepository;
     this.creditHistoryDataAccessMapper = creditHistoryDataAccessMapper;
   }

@@ -7,6 +7,7 @@ import java.util.function.BiConsumer;
 
 public interface PaymentRequestMessagePublisher {
 
-  void publish(OrderPaymentOutboxMessage orderPaymentOutboxMessage,
-               BiConsumer<OrderPaymentOutboxMessage, OutboxStatus> outboxCallback);
+  void publish(
+    OrderPaymentOutboxMessage orderPaymentOutboxMessage,
+    BiConsumer<OrderPaymentOutboxMessage, OutboxStatus> outboxCallback);
 }

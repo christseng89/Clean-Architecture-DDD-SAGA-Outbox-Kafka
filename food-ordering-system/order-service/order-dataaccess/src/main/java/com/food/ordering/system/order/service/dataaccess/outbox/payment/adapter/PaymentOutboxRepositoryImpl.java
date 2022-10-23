@@ -21,8 +21,9 @@ public class PaymentOutboxRepositoryImpl implements PaymentOutboxRepository {
   private final PaymentOutboxJpaRepository paymentOutboxJpaRepository;
   private final PaymentOutboxDataAccessMapper paymentOutboxDataAccessMapper;
 
-  public PaymentOutboxRepositoryImpl(PaymentOutboxJpaRepository paymentOutboxJpaRepository,
-                                     PaymentOutboxDataAccessMapper paymentOutboxDataAccessMapper) {
+  public PaymentOutboxRepositoryImpl(
+    PaymentOutboxJpaRepository paymentOutboxJpaRepository,
+    PaymentOutboxDataAccessMapper paymentOutboxDataAccessMapper) {
     this.paymentOutboxJpaRepository = paymentOutboxJpaRepository;
     this.paymentOutboxDataAccessMapper = paymentOutboxDataAccessMapper;
   }
@@ -36,9 +37,10 @@ public class PaymentOutboxRepositoryImpl implements PaymentOutboxRepository {
   }
 
   @Override
-  public Optional<List<OrderPaymentOutboxMessage>> findByTypeAndOutboxStatusAndSagaStatus(String sagaType,
-                                                                                          OutboxStatus outboxStatus,
-                                                                                          SagaStatus... sagaStatus) {
+  public Optional<List<OrderPaymentOutboxMessage>> findByTypeAndOutboxStatusAndSagaStatus(
+    String sagaType,
+    OutboxStatus outboxStatus,
+    SagaStatus... sagaStatus) {
     return Optional.of(paymentOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(sagaType,
         outboxStatus,
         Arrays.asList(sagaStatus))
@@ -50,9 +52,10 @@ public class PaymentOutboxRepositoryImpl implements PaymentOutboxRepository {
   }
 
   @Override
-  public Optional<OrderPaymentOutboxMessage> findByTypeAndSagaIdAndSagaStatus(String type,
-                                                                              UUID sagaId,
-                                                                              SagaStatus... sagaStatus) {
+  public Optional<OrderPaymentOutboxMessage> findByTypeAndSagaIdAndSagaStatus(
+    String type,
+    UUID sagaId,
+    SagaStatus... sagaStatus) {
     return paymentOutboxJpaRepository
       .findByTypeAndSagaIdAndSagaStatusIn(type, sagaId, Arrays.asList(sagaStatus))
       .map(paymentOutboxDataAccessMapper::paymentOutboxEntityToOrderPaymentOutboxMessage);
