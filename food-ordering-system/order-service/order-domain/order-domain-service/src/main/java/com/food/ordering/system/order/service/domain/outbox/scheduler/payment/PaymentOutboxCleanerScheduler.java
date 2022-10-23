@@ -41,9 +41,10 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
       paymentOutboxHelper.deletePaymentOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.COMPLETED,
         SagaStatus.SUCCEEDED,
-        SagaStatus.COMPENSATED,
-        SagaStatus.FAILED);
+        SagaStatus.FAILED,
+        SagaStatus.COMPENSATED);
       log.info("{} OrderPaymentOutboxMessage deleted!", outboxMessages.size());
     }
+
   }
 }

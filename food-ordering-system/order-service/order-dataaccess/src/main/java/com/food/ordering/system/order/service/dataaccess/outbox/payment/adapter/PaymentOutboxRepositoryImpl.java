@@ -9,7 +9,7 @@ import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,9 +21,8 @@ public class PaymentOutboxRepositoryImpl implements PaymentOutboxRepository {
   private final PaymentOutboxJpaRepository paymentOutboxJpaRepository;
   private final PaymentOutboxDataAccessMapper paymentOutboxDataAccessMapper;
 
-  public PaymentOutboxRepositoryImpl(
-    PaymentOutboxJpaRepository paymentOutboxJpaRepository,
-    PaymentOutboxDataAccessMapper paymentOutboxDataAccessMapper) {
+  public PaymentOutboxRepositoryImpl(PaymentOutboxJpaRepository paymentOutboxJpaRepository,
+                                     PaymentOutboxDataAccessMapper paymentOutboxDataAccessMapper) {
     this.paymentOutboxJpaRepository = paymentOutboxJpaRepository;
     this.paymentOutboxDataAccessMapper = paymentOutboxDataAccessMapper;
   }
@@ -37,10 +36,12 @@ public class PaymentOutboxRepositoryImpl implements PaymentOutboxRepository {
   }
 
   @Override
-  public Optional<List<OrderPaymentOutboxMessage>> findByTypeAndOutboxStatusAndSagaStatus(
-    String sagaType, OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
-    return Optional.of(paymentOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(
-        sagaType, outboxStatus, Collections.singletonList(sagaStatus[0]))
+  public Optional<List<OrderPaymentOutboxMessage>> findByTypeAndOutboxStatusAndSagaStatus(String sagaType,
+                                                                                          OutboxStatus outboxStatus,
+                                                                                          SagaStatus... sagaStatus) {
+    return Optional.of(paymentOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(sagaType,
+        outboxStatus,
+        Arrays.asList(sagaStatus))
       .orElseThrow(() -> new PaymentOutboxNotFoundException("Payment outbox object " +
         "could not be found for saga type " + sagaType))
       .stream()
@@ -49,17 +50,17 @@ public class PaymentOutboxRepositoryImpl implements PaymentOutboxRepository {
   }
 
   @Override
-  public Optional<OrderPaymentOutboxMessage> findByTypeAndSagaIdAndSagaStatus(
-    String type, UUID sagaId, SagaStatus... sagaStatus) {
+  public Optional<OrderPaymentOutboxMessage> findByTypeAndSagaIdAndSagaStatus(String type,
+                                                                              UUID sagaId,
+                                                                              SagaStatus... sagaStatus) {
     return paymentOutboxJpaRepository
-      .findByTypeAndSagaIdAndSagaStatusIn(type, sagaId, Collections.singletonList(sagaStatus[0]))
+      .findByTypeAndSagaIdAndSagaStatusIn(type, sagaId, Arrays.asList(sagaStatus))
       .map(paymentOutboxDataAccessMapper::paymentOutboxEntityToOrderPaymentOutboxMessage);
   }
 
   @Override
-  public void deleteByTypeAndOutboxStatusAndSagaStatus(
-    String type, OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
-    paymentOutboxJpaRepository.deleteByTypeAndOutboxStatusAndSagaStatusIn(
-      type, outboxStatus, Collections.singletonList(sagaStatus[0]));
+  public void deleteByTypeAndOutboxStatusAndSagaStatus(String type, OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
+    paymentOutboxJpaRepository.deleteByTypeAndOutboxStatusAndSagaStatusIn(type, outboxStatus,
+      Arrays.asList(sagaStatus));
   }
 }

@@ -5,12 +5,10 @@
  */
 package com.food.ordering.system.kafka.order.avro.model;
 
-import org.apache.avro.generic.GenericArray;
-import org.apache.avro.specific.SpecificData;
-import org.apache.avro.util.Utf8;
-import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.SchemaStore;
+import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
 public class Product extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
@@ -32,7 +30,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
-   *
    * @return the message encoder used by this class
    */
   public static BinaryMessageEncoder<Product> getEncoder() {
@@ -41,7 +38,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Return the BinaryMessageDecoder instance used by this class.
-   *
    * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<Product> getDecoder() {
@@ -49,12 +45,9 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Create a new BinaryMessageDecoder instance for this class that uses the
-   * specified {@link SchemaStore}.
-   *
+   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
-   * @return a BinaryMessageDecoder instance for this class backed by the given
-   * SchemaStore
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<Product> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Product>(MODEL$, SCHEMA$, resolver);
@@ -62,9 +55,7 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Serializes this Product to a ByteBuffer.
-   *
    * @return a buffer holding the serialized data for this instance
-   *
    * @throws java.io.IOException if this instance could not be serialized
    */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
@@ -73,13 +64,9 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Deserializes a Product from a ByteBuffer.
-   *
-   * @param b a byte buffer holding serialized data for an instance of this
-   *          class
+   * @param b a byte buffer holding serialized data for an instance of this class
    * @return a Product instance decoded from the given buffer
-   *
-   * @throws java.io.IOException if the given bytes could not be deserialized
-   *                             into an instance of this class
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
   public static Product fromByteBuffer(
     java.nio.ByteBuffer b) throws java.io.IOException {
@@ -90,17 +77,16 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
   private int quantity;
 
   /**
-   * Default constructor.  Note that this does not initialize fields to their
-   * default values from the schema.  If that is desired then one should use
-   * <code>newBuilder()</code>.
+   * Default constructor.  Note that this does not initialize fields
+   * to their default values from the schema.  If that is desired then
+   * one should use <code>newBuilder()</code>.
    */
   public Product() {
   }
 
   /**
    * All-args constructor.
-   *
-   * @param id       The new value for id
+   * @param id The new value for id
    * @param quantity The new value for quantity
    */
   public Product(java.lang.String id, java.lang.Integer quantity) {
@@ -145,7 +131,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Gets the value of the 'id' field.
-   *
    * @return The value of the 'id' field.
    */
   public java.lang.String getId() {
@@ -154,7 +139,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Sets the value of the 'id' field.
-   *
    * @param value the value to set.
    */
   public void setId(java.lang.String value) {
@@ -163,7 +147,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Gets the value of the 'quantity' field.
-   *
    * @return The value of the 'quantity' field.
    */
   public int getQuantity() {
@@ -172,7 +155,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Sets the value of the 'quantity' field.
-   *
    * @param value the value to set.
    */
   public void setQuantity(int value) {
@@ -181,7 +163,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Creates a new Product RecordBuilder.
-   *
    * @return A new Product RecordBuilder
    */
   public static com.food.ordering.system.kafka.order.avro.model.Product.Builder newBuilder() {
@@ -190,7 +171,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
   /**
    * Creates a new Product RecordBuilder by copying an existing Builder.
-   *
    * @param other The existing builder to copy.
    * @return A new Product RecordBuilder
    */
@@ -203,9 +183,7 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Creates a new Product RecordBuilder by copying an existing Product
-   * instance.
-   *
+   * Creates a new Product RecordBuilder by copying an existing Product instance.
    * @param other The existing instance to copy.
    * @return A new Product RecordBuilder
    */
@@ -227,16 +205,13 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
     private java.lang.String id;
     private int quantity;
 
-    /**
-     * Creates a new Builder
-     */
+    /** Creates a new Builder */
     private Builder() {
       super(SCHEMA$, MODEL$);
     }
 
     /**
      * Creates a Builder by copying an existing Builder.
-     *
      * @param other The existing Builder to copy.
      */
     private Builder(com.food.ordering.system.kafka.order.avro.model.Product.Builder other) {
@@ -253,7 +228,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Creates a Builder by copying an existing Product instance
-     *
      * @param other The existing instance to copy.
      */
     private Builder(com.food.ordering.system.kafka.order.avro.model.Product other) {
@@ -270,7 +244,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Gets the value of the 'id' field.
-     *
      * @return The value.
      */
     public java.lang.String getId() {
@@ -279,7 +252,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Sets the value of the 'id' field.
-     *
      * @param value The value of 'id'.
      * @return This builder.
      */
@@ -292,7 +264,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Checks whether the 'id' field has been set.
-     *
      * @return True if the 'id' field has been set, false otherwise.
      */
     public boolean hasId() {
@@ -301,7 +272,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Clears the value of the 'id' field.
-     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.Product.Builder clearId() {
@@ -312,7 +282,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Gets the value of the 'quantity' field.
-     *
      * @return The value.
      */
     public int getQuantity() {
@@ -321,7 +290,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Sets the value of the 'quantity' field.
-     *
      * @param value The value of 'quantity'.
      * @return This builder.
      */
@@ -334,7 +302,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Checks whether the 'quantity' field has been set.
-     *
      * @return True if the 'quantity' field has been set, false otherwise.
      */
     public boolean hasQuantity() {
@@ -343,7 +310,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Clears the value of the 'quantity' field.
-     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.Product.Builder clearQuantity() {

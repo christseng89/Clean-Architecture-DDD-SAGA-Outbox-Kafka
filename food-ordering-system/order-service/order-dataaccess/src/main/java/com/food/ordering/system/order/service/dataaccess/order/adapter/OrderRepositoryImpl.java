@@ -23,7 +23,6 @@ public class OrderRepositoryImpl implements OrderRepository {
   }
 
   @Override
-
   public Order save(Order order) {
     return orderDataAccessMapper.orderEntityToOrder(orderJpaRepository
       .save(orderDataAccessMapper.orderToOrderEntity(order)));
@@ -31,8 +30,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
   @Override
   public Optional<Order> findById(OrderId orderId) {
-    return orderJpaRepository.findById(orderId.getValue())
-      .map(orderDataAccessMapper::orderEntityToOrder);
+    return orderJpaRepository.findById(orderId.getValue()).map(orderDataAccessMapper::orderEntityToOrder);
   }
 
   @Override
