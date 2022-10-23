@@ -11,17 +11,31 @@ import java.util.List;
 import java.util.UUID;
 
 public class Order extends AggregateRoot<OrderId> {
+  public static final String FAILURE_MESSAGE_DELIMITER = ",";
   private final CustomerId customerId;
   private final RestaurantId restaurantId;
   private final StreetAddress deliveryAddress;
   private final Money price;
   private final List<OrderItem> items;
-
   private TrackingId trackingId;
   private OrderStatus orderStatus;
   private List<String> failureMessages;
 
-  public static final String FAILURE_MESSAGE_DELIMITER = ",";
+  private Order(Builder builder) {
+    super.setId(builder.orderId);
+    customerId = builder.customerId;
+    restaurantId = builder.restaurantId;
+    deliveryAddress = builder.deliveryAddress;
+    price = builder.price;
+    items = builder.items;
+    trackingId = builder.trackingId;
+    orderStatus = builder.orderStatus;
+    failureMessages = builder.failureMessages;
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
 
   public void initializeOrder() {
     setId(new OrderId(UUID.randomUUID()));
@@ -111,22 +125,6 @@ public class Order extends AggregateRoot<OrderId> {
     for (OrderItem orderItem : items) {
       orderItem.initializeOrderItem(super.getId(), new OrderItemId(itemId++));
     }
-  }
-
-  private Order(Builder builder) {
-    super.setId(builder.orderId);
-    customerId = builder.customerId;
-    restaurantId = builder.restaurantId;
-    deliveryAddress = builder.deliveryAddress;
-    price = builder.price;
-    items = builder.items;
-    trackingId = builder.trackingId;
-    orderStatus = builder.orderStatus;
-    failureMessages = builder.failureMessages;
-  }
-
-  public static Builder builder() {
-    return new Builder();
   }
 
   public CustomerId getCustomerId() {

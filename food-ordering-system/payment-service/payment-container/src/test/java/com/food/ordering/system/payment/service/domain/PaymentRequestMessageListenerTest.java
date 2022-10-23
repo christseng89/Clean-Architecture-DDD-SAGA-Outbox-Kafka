@@ -28,14 +28,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest(classes = PaymentServiceApplication.class)
 public class PaymentRequestMessageListenerTest {
 
-  @Autowired
-  private PaymentRequestMessageListener paymentRequestMessageListener;
-
-  @Autowired
-  private OrderOutboxJpaRepository orderOutboxJpaRepository;
-
   private final static String CUSTOMER_ID = "d215b5f8-0249-4dc5-89a3-51fd148cfb41";
   private final static BigDecimal PRICE = new BigDecimal("100");
+  @Autowired
+  private PaymentRequestMessageListener paymentRequestMessageListener;
+  @Autowired
+  private OrderOutboxJpaRepository orderOutboxJpaRepository;
 
   @Test
   void testDoublePayment() {

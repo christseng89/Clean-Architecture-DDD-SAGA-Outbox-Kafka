@@ -25,6 +25,6 @@ public class OrderApprovalEventPayload {
   private String restaurantOrderStatus;
   @JsonProperty
   private List<OrderApprovalEventProduct> products;
-  
+
 }
 

@@ -12,24 +12,62 @@ import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
 public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -861064569672548277L;
-
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"CustomerAvroModel\",\"namespace\":\"com.food.ordering.system.kafka.order.avro.model\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"username\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"firstName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"lastName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  private static final long serialVersionUID = -861064569672548277L;
+  private static final SpecificData MODEL$ = new SpecificData();
+  private static final BinaryMessageEncoder<CustomerAvroModel> ENCODER =
+    new BinaryMessageEncoder<CustomerAvroModel>(MODEL$, SCHEMA$);
+  private static final BinaryMessageDecoder<CustomerAvroModel> DECODER =
+    new BinaryMessageDecoder<CustomerAvroModel>(MODEL$, SCHEMA$);
+  private static final org.apache.avro.Conversion<?>[] conversions =
+    new org.apache.avro.Conversion<?>[]{
+      null,
+      null,
+      null,
+      null,
+      null
+    };
+  @SuppressWarnings("unchecked")
+  private static final org.apache.avro.io.DatumWriter<CustomerAvroModel>
+    WRITER$ = (org.apache.avro.io.DatumWriter<CustomerAvroModel>) MODEL$.createDatumWriter(SCHEMA$);
+  @SuppressWarnings("unchecked")
+  private static final org.apache.avro.io.DatumReader<CustomerAvroModel>
+    READER$ = (org.apache.avro.io.DatumReader<CustomerAvroModel>) MODEL$.createDatumReader(SCHEMA$);
+  private java.lang.String id;
+  private java.lang.String username;
+  private java.lang.String firstName;
+  private java.lang.String lastName;
+
+  /**
+   * Default constructor.  Note that this does not initialize fields to their
+   * default values from the schema.  If that is desired then one should use
+   * <code>newBuilder()</code>.
+   */
+  public CustomerAvroModel() {
+  }
+
+  /**
+   * All-args constructor.
+   *
+   * @param id        The new value for id
+   * @param username  The new value for username
+   * @param firstName The new value for firstName
+   * @param lastName  The new value for lastName
+   */
+  public CustomerAvroModel(java.lang.String id, java.lang.String username, java.lang.String firstName, java.lang.String lastName) {
+    this.id = id;
+    this.username = username;
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 
   public static org.apache.avro.Schema getClassSchema() {
     return SCHEMA$;
   }
 
-  private static final SpecificData MODEL$ = new SpecificData();
-
-  private static final BinaryMessageEncoder<CustomerAvroModel> ENCODER =
-    new BinaryMessageEncoder<CustomerAvroModel>(MODEL$, SCHEMA$);
-
-  private static final BinaryMessageDecoder<CustomerAvroModel> DECODER =
-    new BinaryMessageDecoder<CustomerAvroModel>(MODEL$, SCHEMA$);
-
   /**
    * Return the BinaryMessageEncoder instance used by this class.
+   *
    * @return the message encoder used by this class
    */
   public static BinaryMessageEncoder<CustomerAvroModel> getEncoder() {
@@ -38,6 +76,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Return the BinaryMessageDecoder instance used by this class.
+   *
    * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<CustomerAvroModel> getDecoder() {
@@ -45,59 +84,80 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
   }
 
   /**
-   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * Create a new BinaryMessageDecoder instance for this class that uses the
+   * specified {@link SchemaStore}.
+   *
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
-   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
+   * @return a BinaryMessageDecoder instance for this class backed by the given
+   * SchemaStore
    */
   public static BinaryMessageDecoder<CustomerAvroModel> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<CustomerAvroModel>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this CustomerAvroModel to a ByteBuffer.
-   * @return a buffer holding the serialized data for this instance
-   * @throws java.io.IOException if this instance could not be serialized
-   */
-  public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
-    return ENCODER.encode(this);
-  }
-
-  /**
    * Deserializes a CustomerAvroModel from a ByteBuffer.
-   * @param b a byte buffer holding serialized data for an instance of this class
+   *
+   * @param b a byte buffer holding serialized data for an instance of this
+   *          class
    * @return a CustomerAvroModel instance decoded from the given buffer
-   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   *
+   * @throws java.io.IOException if the given bytes could not be deserialized
+   *                             into an instance of this class
    */
   public static CustomerAvroModel fromByteBuffer(
     java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  private java.lang.String id;
-  private java.lang.String username;
-  private java.lang.String firstName;
-  private java.lang.String lastName;
-
   /**
-   * Default constructor.  Note that this does not initialize fields
-   * to their default values from the schema.  If that is desired then
-   * one should use <code>newBuilder()</code>.
+   * Creates a new CustomerAvroModel RecordBuilder.
+   *
+   * @return A new CustomerAvroModel RecordBuilder
    */
-  public CustomerAvroModel() {
+  public static com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder newBuilder() {
+    return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder();
   }
 
   /**
-   * All-args constructor.
-   * @param id The new value for id
-   * @param username The new value for username
-   * @param firstName The new value for firstName
-   * @param lastName The new value for lastName
+   * Creates a new CustomerAvroModel RecordBuilder by copying an existing
+   * Builder.
+   *
+   * @param other The existing builder to copy.
+   * @return A new CustomerAvroModel RecordBuilder
    */
-  public CustomerAvroModel(java.lang.String id, java.lang.String username, java.lang.String firstName, java.lang.String lastName) {
-    this.id = id;
-    this.username = username;
-    this.firstName = firstName;
-    this.lastName = lastName;
+  public static com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder newBuilder(com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder other) {
+    if (other == null) {
+      return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder();
+    } else {
+      return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder(other);
+    }
+  }
+
+  /**
+   * Creates a new CustomerAvroModel RecordBuilder by copying an existing
+   * CustomerAvroModel instance.
+   *
+   * @param other The existing instance to copy.
+   * @return A new CustomerAvroModel RecordBuilder
+   */
+  public static com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder newBuilder(com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel other) {
+    if (other == null) {
+      return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder();
+    } else {
+      return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder(other);
+    }
+  }
+
+  /**
+   * Serializes this CustomerAvroModel to a ByteBuffer.
+   *
+   * @return a buffer holding the serialized data for this instance
+   *
+   * @throws java.io.IOException if this instance could not be serialized
+   */
+  public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
+    return ENCODER.encode(this);
   }
 
   public org.apache.avro.specific.SpecificData getSpecificData() {
@@ -123,15 +183,6 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
         throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
-
-  private static final org.apache.avro.Conversion<?>[] conversions =
-    new org.apache.avro.Conversion<?>[]{
-      null,
-      null,
-      null,
-      null,
-      null
-    };
 
   @Override
   public org.apache.avro.Conversion<?> getConversion(int field) {
@@ -161,6 +212,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Gets the value of the 'id' field.
+   *
    * @return The value of the 'id' field.
    */
   public java.lang.String getId() {
@@ -169,6 +221,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Sets the value of the 'id' field.
+   *
    * @param value the value to set.
    */
   public void setId(java.lang.String value) {
@@ -177,6 +230,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Gets the value of the 'username' field.
+   *
    * @return The value of the 'username' field.
    */
   public java.lang.String getUsername() {
@@ -185,6 +239,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Sets the value of the 'username' field.
+   *
    * @param value the value to set.
    */
   public void setUsername(java.lang.String value) {
@@ -193,6 +248,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Gets the value of the 'firstName' field.
+   *
    * @return The value of the 'firstName' field.
    */
   public java.lang.String getFirstName() {
@@ -201,6 +257,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Sets the value of the 'firstName' field.
+   *
    * @param value the value to set.
    */
   public void setFirstName(java.lang.String value) {
@@ -209,6 +266,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Gets the value of the 'lastName' field.
+   *
    * @return The value of the 'lastName' field.
    */
   public java.lang.String getLastName() {
@@ -217,44 +275,23 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
   /**
    * Sets the value of the 'lastName' field.
+   *
    * @param value the value to set.
    */
   public void setLastName(java.lang.String value) {
     this.lastName = value;
   }
 
-  /**
-   * Creates a new CustomerAvroModel RecordBuilder.
-   * @return A new CustomerAvroModel RecordBuilder
-   */
-  public static com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder newBuilder() {
-    return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder();
+  @Override
+  public void writeExternal(java.io.ObjectOutput out)
+    throws java.io.IOException {
+    WRITER$.write(this, SpecificData.getEncoder(out));
   }
 
-  /**
-   * Creates a new CustomerAvroModel RecordBuilder by copying an existing Builder.
-   * @param other The existing builder to copy.
-   * @return A new CustomerAvroModel RecordBuilder
-   */
-  public static com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder newBuilder(com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder other) {
-    if (other == null) {
-      return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder();
-    } else {
-      return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder(other);
-    }
-  }
-
-  /**
-   * Creates a new CustomerAvroModel RecordBuilder by copying an existing CustomerAvroModel instance.
-   * @param other The existing instance to copy.
-   * @return A new CustomerAvroModel RecordBuilder
-   */
-  public static com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder newBuilder(com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel other) {
-    if (other == null) {
-      return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder();
-    } else {
-      return new com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder(other);
-    }
+  @Override
+  public void readExternal(java.io.ObjectInput in)
+    throws java.io.IOException {
+    READER$.read(this, SpecificData.getDecoder(in));
   }
 
   /**
@@ -269,13 +306,16 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
     private java.lang.String firstName;
     private java.lang.String lastName;
 
-    /** Creates a new Builder */
+    /**
+     * Creates a new Builder
+     */
     private Builder() {
       super(SCHEMA$, MODEL$);
     }
 
     /**
      * Creates a Builder by copying an existing Builder.
+     *
      * @param other The existing Builder to copy.
      */
     private Builder(com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder other) {
@@ -300,6 +340,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Creates a Builder by copying an existing CustomerAvroModel instance
+     *
      * @param other The existing instance to copy.
      */
     private Builder(com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel other) {
@@ -324,6 +365,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Gets the value of the 'id' field.
+     *
      * @return The value.
      */
     public java.lang.String getId() {
@@ -332,6 +374,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Sets the value of the 'id' field.
+     *
      * @param value The value of 'id'.
      * @return This builder.
      */
@@ -344,6 +387,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Checks whether the 'id' field has been set.
+     *
      * @return True if the 'id' field has been set, false otherwise.
      */
     public boolean hasId() {
@@ -352,6 +396,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Clears the value of the 'id' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder clearId() {
@@ -362,6 +407,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Gets the value of the 'username' field.
+     *
      * @return The value.
      */
     public java.lang.String getUsername() {
@@ -370,6 +416,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Sets the value of the 'username' field.
+     *
      * @param value The value of 'username'.
      * @return This builder.
      */
@@ -382,6 +429,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Checks whether the 'username' field has been set.
+     *
      * @return True if the 'username' field has been set, false otherwise.
      */
     public boolean hasUsername() {
@@ -390,6 +438,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Clears the value of the 'username' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder clearUsername() {
@@ -400,6 +449,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Gets the value of the 'firstName' field.
+     *
      * @return The value.
      */
     public java.lang.String getFirstName() {
@@ -408,6 +458,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Sets the value of the 'firstName' field.
+     *
      * @param value The value of 'firstName'.
      * @return This builder.
      */
@@ -420,6 +471,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Checks whether the 'firstName' field has been set.
+     *
      * @return True if the 'firstName' field has been set, false otherwise.
      */
     public boolean hasFirstName() {
@@ -428,6 +480,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Clears the value of the 'firstName' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder clearFirstName() {
@@ -438,6 +491,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Gets the value of the 'lastName' field.
+     *
      * @return The value.
      */
     public java.lang.String getLastName() {
@@ -446,6 +500,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Sets the value of the 'lastName' field.
+     *
      * @param value The value of 'lastName'.
      * @return This builder.
      */
@@ -458,6 +513,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Checks whether the 'lastName' field has been set.
+     *
      * @return True if the 'lastName' field has been set, false otherwise.
      */
     public boolean hasLastName() {
@@ -466,6 +522,7 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
 
     /**
      * Clears the value of the 'lastName' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel.Builder clearLastName() {
@@ -490,26 +547,6 @@ public class CustomerAvroModel extends org.apache.avro.specific.SpecificRecordBa
         throw new org.apache.avro.AvroRuntimeException(e);
       }
     }
-  }
-
-  @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<CustomerAvroModel>
-    WRITER$ = (org.apache.avro.io.DatumWriter<CustomerAvroModel>) MODEL$.createDatumWriter(SCHEMA$);
-
-  @Override
-  public void writeExternal(java.io.ObjectOutput out)
-    throws java.io.IOException {
-    WRITER$.write(this, SpecificData.getEncoder(out));
-  }
-
-  @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<CustomerAvroModel>
-    READER$ = (org.apache.avro.io.DatumReader<CustomerAvroModel>) MODEL$.createDatumReader(SCHEMA$);
-
-  @Override
-  public void readExternal(java.io.ObjectInput in)
-    throws java.io.IOException {
-    READER$.read(this, SpecificData.getDecoder(in));
   }
 
 }
