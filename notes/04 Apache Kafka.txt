@@ -1,5 +1,5 @@
 26. Running Apache Kafka using Docker
-docker compose -f common.yml -f zookeeper.yml up -d
+docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
 
 https://zookeeper.apache.org/doc/r3.4.8/zookeeperAdmin.html#sc_zkCommands
 https://nmap.org/dist/nmap-7.92-setup.exe
@@ -25,8 +25,8 @@ docker compose -f common.yml -f kafka_cluster.yml stop
 docker compose -f common.yml -f zookeeper.yml stop
 
 ### Re-start Kafka //Restarts all stopped and running services.
-docker compose -f common.yml -f zookeeper.yml up -d
-docker compose -f common.yml -f kafka_cluster.yml up -d
+docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
+docker compose -f common.yml -f kafka_cluster.yml up -d 
 
 ### Docker compose stop vs down // https://nickjanetakis.com/blog/docker-tip-45-docker-compose-stop-vs-down#:~:text=The%20docker%2Dcompose%20stop%20command,any%20networks%20that%20were%20created.
 - The docker-compose stop command will stop your containers, but it won’t remove them.
@@ -54,7 +54,7 @@ docker compose -f common.yml -f kafka_cluster.yml up -d
    infrastructure\docker-compose\volumes\zookeeper\transactions\*.*
 
 3. Start Kafka
-   docker compose -f common.yml -f zookeeper.yml up -d
+   docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
    docker compose -f common.yml -f kafka_cluster.yml up -d
 
 4. Initial Kafka Topics (once only)   

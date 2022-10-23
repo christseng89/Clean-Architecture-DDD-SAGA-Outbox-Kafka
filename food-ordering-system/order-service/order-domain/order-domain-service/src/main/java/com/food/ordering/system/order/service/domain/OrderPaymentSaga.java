@@ -71,13 +71,15 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
 
     OrderPaidEvent domainEvent = completePaymentForOrder(paymentResponse);
 
-    SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(domainEvent.getOrder().getOrderStatus());
+    SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(
+      domainEvent.getOrder().getOrderStatus());
 
     paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(orderPaymentOutboxMessage,
       domainEvent.getOrder().getOrderStatus(), sagaStatus));
 
     approvalOutboxHelper
-      .saveApprovalOutboxMessage(orderDataMapper.orderPaidEventToOrderApprovalEventPayload(domainEvent),
+      .saveApprovalOutboxMessage(
+        orderDataMapper.orderPaidEventToOrderApprovalEventPayload(domainEvent),
         domainEvent.getOrder().getOrderStatus(),
         sagaStatus,
         OutboxStatus.STARTED,
@@ -106,12 +108,13 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
 
     SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(order.getOrderStatus());
 
-    paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(orderPaymentOutboxMessage,
-      order.getOrderStatus(), sagaStatus));
+    paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(
+      orderPaymentOutboxMessage, order.getOrderStatus(), sagaStatus));
 
     if (paymentResponse.getPaymentStatus() == PaymentStatus.CANCELLED) {
-      approvalOutboxHelper.save(getUpdatedApprovalOutboxMessage(paymentResponse.getSagaId(),
-        order.getOrderStatus(), sagaStatus));
+      approvalOutboxHelper.save(
+        getUpdatedApprovalOutboxMessage(
+          paymentResponse.getSagaId(), order.getOrderStatus(), sagaStatus));
     }
 
     log.info("Order with id: {} is cancelled", order.getId().getValue());
@@ -127,12 +130,9 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
   }
 
   private OrderPaymentOutboxMessage getUpdatedPaymentOutboxMessage(
-    OrderPaymentOutboxMessage
-      orderPaymentOutboxMessage,
-    OrderStatus
-      orderStatus,
-    SagaStatus
-      sagaStatus) {
+    OrderPaymentOutboxMessage orderPaymentOutboxMessage,
+    OrderStatus orderStatus,
+    SagaStatus sagaStatus) {
     orderPaymentOutboxMessage.setProcessedAt(ZonedDateTime.now(ZoneId.of(UTC)));
     orderPaymentOutboxMessage.setOrderStatus(orderStatus);
     orderPaymentOutboxMessage.setSagaStatus(sagaStatus);

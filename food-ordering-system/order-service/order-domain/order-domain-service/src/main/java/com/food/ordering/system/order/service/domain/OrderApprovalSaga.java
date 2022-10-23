@@ -65,12 +65,14 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
 
     Order order = approveOrder(restaurantApprovalResponse);
 
-    SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(order.getOrderStatus());
+    SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(
+      order.getOrderStatus());
 
-    approvalOutboxHelper.save(getUpdatedApprovalOutboxMessage(orderApprovalOutboxMessage,
-      order.getOrderStatus(), sagaStatus));
+    approvalOutboxHelper.save(getUpdatedApprovalOutboxMessage(
+      orderApprovalOutboxMessage, order.getOrderStatus(), sagaStatus));
 
-    paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(restaurantApprovalResponse.getSagaId(),
+    paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(
+      restaurantApprovalResponse.getSagaId(),
       order.getOrderStatus(), sagaStatus));
 
     log.info("Order with id: {} is approved", order.getId().getValue());
@@ -94,13 +96,14 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
 
     OrderCancelledEvent domainEvent = rollbackOrder(restaurantApprovalResponse);
 
-    SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(domainEvent.getOrder().getOrderStatus());
+    SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(
+      domainEvent.getOrder().getOrderStatus());
 
-    approvalOutboxHelper.save(getUpdatedApprovalOutboxMessage(orderApprovalOutboxMessage,
-      domainEvent.getOrder().getOrderStatus(), sagaStatus));
+    approvalOutboxHelper.save(getUpdatedApprovalOutboxMessage(
+      orderApprovalOutboxMessage, domainEvent.getOrder().getOrderStatus(), sagaStatus));
 
-    paymentOutboxHelper.savePaymentOutboxMessage(orderDataMapper
-        .orderCancelledEventToOrderPaymentEventPayload(domainEvent),
+    paymentOutboxHelper.savePaymentOutboxMessage(
+      orderDataMapper.orderCancelledEventToOrderPaymentEventPayload(domainEvent),
       domainEvent.getOrder().getOrderStatus(),
       sagaStatus,
       OutboxStatus.STARTED,
@@ -118,12 +121,9 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
   }
 
   private OrderApprovalOutboxMessage getUpdatedApprovalOutboxMessage(
-    OrderApprovalOutboxMessage
-      orderApprovalOutboxMessage,
-    OrderStatus
-      orderStatus,
-    SagaStatus
-      sagaStatus) {
+    OrderApprovalOutboxMessage orderApprovalOutboxMessage,
+    OrderStatus orderStatus,
+    SagaStatus sagaStatus) {
     orderApprovalOutboxMessage.setProcessedAt(ZonedDateTime.now(ZoneId.of(UTC)));
     orderApprovalOutboxMessage.setOrderStatus(orderStatus);
     orderApprovalOutboxMessage.setSagaStatus(sagaStatus);
