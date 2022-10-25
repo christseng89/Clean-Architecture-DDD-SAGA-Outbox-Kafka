@@ -142,7 +142,8 @@ public class OrderDomainServiceTest {
 
     Restaurant restaurantResponse = Restaurant.builder()
       .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-      .products(List.of(new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
+      .products(List.of(
+        new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
         new Product(new ProductId(PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
       .active(true)
       .build();
@@ -150,11 +151,16 @@ public class OrderDomainServiceTest {
     Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
     order.setId(new OrderId(ORDER_ID));
 
-    when(customerRepository.findCustomer(CUSTOMER_ID)).thenReturn(Optional.of(customer));
-    when(restaurantRepository.findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
+    when(customerRepository.findCustomer(CUSTOMER_ID))
+      .thenReturn(Optional.of(customer));
+    when(restaurantRepository
+      .findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
       .thenReturn(Optional.of(restaurantResponse));
-    when(orderRepository.save(any(Order.class))).thenReturn(order);
-    when(paymentOutboxRepository.save(any(OrderPaymentOutboxMessage.class))).thenReturn(getOrderPaymentOutboxMessage());
+    when(orderRepository.save(any(Order.class)))
+      .thenReturn(order);
+    when(paymentOutboxRepository
+      .save(any(OrderPaymentOutboxMessage.class)))
+      .thenReturn(getOrderPaymentOutboxMessage());
   }
 
   @Test
@@ -162,21 +168,29 @@ public class OrderDomainServiceTest {
     CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderCommand);
     assertEquals(createOrderResponse.getOrderStatus(), OrderStatus.PENDING);
     assertEquals(createOrderResponse.getMessage(), "Order created successfully");
+
+    System.out.println("\nOrder created...\n");
     assertNotNull(createOrderResponse.getOrderTrackingId());
   }
 
   @Test
   public void testCreateOrderWithWrongTotalPrice() {
-    OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
-      () -> orderApplicationService.createOrder(createOrderCommandWrongPrice));
+    OrderDomainException orderDomainException =
+      assertThrows(OrderDomainException.class,
+        () -> orderApplicationService.createOrder(createOrderCommandWrongPrice));
+
+    System.out.println("\nWrong total price...\n");
     assertEquals(orderDomainException.getMessage(),
       "Total price: 250.00 is not equal to Order items total: 200.00!");
   }
 
   @Test
   public void testCreateOrderWithWrongProductPrice() {
-    OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
+    OrderDomainException orderDomainException = assertThrows(
+      OrderDomainException.class,
       () -> orderApplicationService.createOrder(createOrderCommandWrongProductPrice));
+
+    System.out.println("\nWrong product ID " + PRODUCT_ID + " price...\n");
     assertEquals(orderDomainException.getMessage(),
       "Order item price: 60.00 is not valid for product " + PRODUCT_ID);
   }
@@ -185,14 +199,21 @@ public class OrderDomainServiceTest {
   public void testCreateOrderWithPassiveRestaurant() {
     Restaurant restaurantResponse = Restaurant.builder()
       .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-      .products(List.of(new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
+      .products(List.of(
+        new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
         new Product(new ProductId(PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
       .active(false)
       .build();
-    when(restaurantRepository.findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
+
+    when(restaurantRepository
+      .findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
       .thenReturn(Optional.of(restaurantResponse));
-    OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
+
+    OrderDomainException orderDomainException = assertThrows(
+      OrderDomainException.class,
       () -> orderApplicationService.createOrder(createOrderCommand));
+
+    System.out.println("\nInactive restaurant ID " + RESTAURANT_ID + "...\n");
     assertEquals(orderDomainException.getMessage(),
       "Restaurant with id " + RESTAURANT_ID + " is currently not active!");
   }
@@ -206,7 +227,7 @@ public class OrderDomainServiceTest {
       .paymentOrderStatus(PaymentOrderStatus.PENDING.name())
       .build();
 
-    return OrderPaymentOutboxMessage.builder()
+    OrderPaymentOutboxMessage orderPaymentOutboxMessage = OrderPaymentOutboxMessage.builder()
       .id(UUID.randomUUID())
       .sagaId(SAGA_ID)
       .createdAt(ZonedDateTime.now())
@@ -217,6 +238,9 @@ public class OrderDomainServiceTest {
       .outboxStatus(OutboxStatus.STARTED)
       .version(0)
       .build();
+
+    System.out.println("\nOrderPaymentOutboxMessage Payload..." + orderPaymentOutboxMessage.getPayload());
+    return orderPaymentOutboxMessage;
   }
 
   private String createPayload(OrderPaymentEventPayload orderPaymentEventPayload) {

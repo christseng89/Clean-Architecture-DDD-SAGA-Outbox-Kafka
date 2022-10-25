@@ -116,3 +116,13 @@ B.  UNIQUE INDEXES
     CREATE UNIQUE INDEX "restaurant_order_outbox_saga_id"
         ON "restaurant".order_outbox
             (type, saga_id, approval_status, outbox_status);
+
+76. Updating the Order Application Service Test for Outbox pattern
+OrderPaymentOutboxMessage Payload...
+{
+  "orderId":"15a497c1-0f4b-4eff-b9f4-c402c8c07afb",
+  "customerId":"d215b5f8-0249-4dc5-89a3-51fd148cfb41",
+  "price":200.00,
+  "createdAt":"2022-10-25T20:24:17.2401835+08:00",
+  "paymentOrderStatus":"PENDING"
+}

@@ -83,8 +83,7 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
   public void rollback(RestaurantApprovalResponse restaurantApprovalResponse) {
     Optional<OrderApprovalOutboxMessage> orderApprovalOutboxMessageResponse =
       approvalOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
-        UUID.fromString(restaurantApprovalResponse.getSagaId()),
-        SagaStatus.PROCESSING);
+        UUID.fromString(restaurantApprovalResponse.getSagaId()), SagaStatus.PROCESSING);
 
     if (orderApprovalOutboxMessageResponse.isEmpty()) {
       log.info("An outbox message with saga id: {} is already roll backed!",
@@ -93,23 +92,23 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
     }
 
     OrderApprovalOutboxMessage orderApprovalOutboxMessage = orderApprovalOutboxMessageResponse.get();
-    OrderCancelledEvent domainEvent = rollbackOrder(restaurantApprovalResponse);
+    OrderCancelledEvent cancelledEvent = rollbackOrder(restaurantApprovalResponse);
     SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(
-      domainEvent.getOrder().getOrderStatus());
+      cancelledEvent.getOrder().getOrderStatus());
 
     // Update Approval Outbox
     approvalOutboxHelper.save(getUpdatedApprovalOutboxMessage(
-      orderApprovalOutboxMessage, domainEvent.getOrder().getOrderStatus(), sagaStatus));
+      orderApprovalOutboxMessage, cancelledEvent.getOrder().getOrderStatus(), sagaStatus));
 
     // Payment Outbox Message (Cancelled) STARTED
     paymentOutboxHelper.savePaymentOutboxMessage(
-      orderDataMapper.orderCancelledEventToOrderPaymentEventPayload(domainEvent),
-      domainEvent.getOrder().getOrderStatus(),
+      orderDataMapper.orderCancelledEventToOrderPaymentEventPayload(cancelledEvent),
+      cancelledEvent.getOrder().getOrderStatus(),
       sagaStatus,
       OutboxStatus.STARTED,
       UUID.fromString(restaurantApprovalResponse.getSagaId()));
 
-    log.info("Order with id: {} is cancelling", domainEvent.getOrder().getId().getValue());
+    log.info("Order with id: {} is cancelling", cancelledEvent.getOrder().getId().getValue());
   }
 
   private Order approveOrder(RestaurantApprovalResponse restaurantApprovalResponse) {
@@ -151,9 +150,9 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
   private OrderCancelledEvent rollbackOrder(RestaurantApprovalResponse restaurantApprovalResponse) {
     log.info("Cancelling order with id: {}", restaurantApprovalResponse.getOrderId());
     Order order = orderSagaHelper.findOrder(restaurantApprovalResponse.getOrderId());
-    OrderCancelledEvent domainEvent = orderDomainService.cancelOrderPayment(order,
+    OrderCancelledEvent cancelledEvent = orderDomainService.cancelOrderPayment(order,
       restaurantApprovalResponse.getFailureMessages());
     orderSagaHelper.saveOrder(order);
-    return domainEvent;
+    return cancelledEvent;
   }
 }
