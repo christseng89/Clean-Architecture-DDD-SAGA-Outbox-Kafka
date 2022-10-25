@@ -1,1 +1,5 @@
 - File → Project Structure → Modules, clicked on + and then Import Module, found my root folder, selected it and it worked.
+- Press on the SHIFT key twice to open a search everywhere windows to quickly find a class or a file.
+  * Ctrl+N – finds a class by name.
+  * Ctrl+Shift+N – finds a file or directory by name.
+  

@@ -49,17 +49,6 @@ public class PaymentOutboxHelper {
   }
 
   @Transactional
-  public void save(OrderPaymentOutboxMessage orderPaymentOutboxMessage) {
-    OrderPaymentOutboxMessage response = paymentOutboxRepository.save(orderPaymentOutboxMessage);
-    if (response == null) {
-      log.error("Could not save OrderPaymentOutboxMessage with outbox id: {}", orderPaymentOutboxMessage.getId());
-      throw new OrderDomainException("Could not save OrderPaymentOutboxMessage with outbox id: " +
-        orderPaymentOutboxMessage.getId());
-    }
-    log.info("OrderPaymentOutboxMessage saved with outbox id: {}", orderPaymentOutboxMessage.getId());
-  }
-
-  @Transactional
   public void savePaymentOutboxMessage(
     OrderPaymentEventPayload paymentEventPayload,
     OrderStatus orderStatus,
@@ -76,6 +65,17 @@ public class PaymentOutboxHelper {
       .sagaStatus(sagaStatus)
       .outboxStatus(outboxStatus)
       .build());
+  }
+
+  @Transactional
+  public void save(OrderPaymentOutboxMessage orderPaymentOutboxMessage) {
+    OrderPaymentOutboxMessage response = paymentOutboxRepository.save(orderPaymentOutboxMessage);
+    if (response == null) {
+      log.error("Could not save OrderPaymentOutboxMessage with outbox id: {}", orderPaymentOutboxMessage.getId());
+      throw new OrderDomainException("Could not save OrderPaymentOutboxMessage with outbox id: " +
+        orderPaymentOutboxMessage.getId());
+    }
+    log.info("OrderPaymentOutboxMessage saved with outbox id: {}", orderPaymentOutboxMessage.getId());
   }
 
   @Transactional

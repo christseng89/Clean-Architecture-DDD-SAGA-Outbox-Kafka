@@ -1,5 +1,7 @@
 66. Introduction to Outbox pattern
 
+https://microservices.io/patterns/data/transactional-outbox.html
+
 - Outbox: Help use of local ACID transactions to let consistent (eventual) distributed 
   transactions. 
 - It will complete SAGA in a SAFE and CONSISTENT way. 
@@ -9,7 +11,7 @@
    - Change Data Capture: Listen transaction logs
 - Keep track of Saga and order status in Outbox Table
 - Ensure Idempotency: Do not consume the same data 
-  在数学计算或者计算机科学中，幂等性（idempotence）是指相同操作或资源在一次或
+  在数学计算或者计算机科学中，幂等性（Idempotency）是指相同操作或资源在一次或
   多次请求中具有同样效果的作用。 幂等性在分布式系统设计中具有十分重要的地位。
   https://iter01.com/566612.html
 
@@ -71,3 +73,46 @@ OrderCreateCommandHandler
     return createOrderResponse;
   }
   
+74. Refactoring Order domain layer: Updating Order Payment Saga (OrderPaymentSaga)
+Idempotency => PaymentOutboxEntity
+...
+JPA Optimistic locking => https://www.byteslounge.com/tutorials/jpa-entity-versioning-version-and-optimistic-locking
+
+  PRODUCT:
+  =============================
+  ID	DESCRIPTION	PRICE	VERSION
+  1	  Book	      11.00	3
+  2	  Television	99.00	7
+
+  UPDATE PRODUCT
+  SET PRICE = 14.00, VERSION = 4
+  WHERE ID = 1
+  AND VERSION = 3;
+
+
+A.  @Version (OrderOutboxEntity, PaymentOutboxEntity, ApprovalOutboxEntity)
+    private int version;
+    ...
+B.  UNIQUE INDEXES
+
+    * Order Container
+    UNIQUE INDEX - saga_id   
+    CREATE UNIQUE INDEX "payment_outbox_saga_id"
+    ON "order".payment_outbox
+        (type, saga_id, saga_status);
+
+    // type = ORDER_SAGA_NAME = "OrderProcessingSaga";
+
+    CREATE UNIQUE INDEX "restaurant_approval_outbox_saga_id"
+        ON "order".restaurant_approval_outbox
+            (type, saga_id, saga_status);
+
+    * Payment Container
+    CREATE UNIQUE INDEX "payment_order_outbox_saga_id_payment_status_outbox_status"
+        ON "payment".order_outbox
+            (type, saga_id, payment_status, outbox_status);
+
+    * Restaurant Container
+    CREATE UNIQUE INDEX "restaurant_order_outbox_saga_id"
+        ON "restaurant".order_outbox
+            (type, saga_id, approval_status, outbox_status);

@@ -52,7 +52,8 @@ public class PaymentOutboxScheduler implements OutboxScheduler {
 
   }
 
-  private void updateOutboxStatus(OrderPaymentOutboxMessage orderPaymentOutboxMessage, OutboxStatus outboxStatus) {
+  private void updateOutboxStatus(
+    OrderPaymentOutboxMessage orderPaymentOutboxMessage, OutboxStatus outboxStatus) {
     orderPaymentOutboxMessage.setOutboxStatus(outboxStatus);
     paymentOutboxHelper.save(orderPaymentOutboxMessage);
     log.info("OrderPaymentOutboxMessage is updated with outbox status: {}", outboxStatus.name());
