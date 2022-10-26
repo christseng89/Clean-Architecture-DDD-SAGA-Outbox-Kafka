@@ -42,10 +42,7 @@ public class RestaurantApprovalRequestKafkaListener implements KafkaConsumer<Res
     @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
     log.info("{} number of orders approval requests received with keys {}, partitions {} and offsets {}" +
         ", sending for restaurant approval",
-      messages.size(),
-      keys.toString(),
-      partitions.toString(),
-      offsets.toString());
+      messages.size(), keys.toString(), partitions.toString(), offsets.toString());
 
     messages.forEach(restaurantApprovalRequestAvroModel -> {
       try {

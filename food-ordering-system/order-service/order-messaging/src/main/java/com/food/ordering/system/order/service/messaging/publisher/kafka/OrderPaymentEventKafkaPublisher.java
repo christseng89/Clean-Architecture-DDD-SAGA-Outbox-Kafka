@@ -45,17 +45,21 @@ public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePub
     String sagaId = orderPaymentOutboxMessage.getSagaId().toString();
 
     log.info("Received OrderPaymentOutboxMessage for order id: {} and saga id: {}",
-      orderPaymentEventPayload.getOrderId(),
-      sagaId);
+      orderPaymentEventPayload.getOrderId(), sagaId);
 
     try {
       PaymentRequestAvroModel paymentRequestAvroModel = orderMessagingDataMapper
         .orderPaymentEventToPaymentRequestAvroModel(sagaId, orderPaymentEventPayload);
 
-      kafkaProducer.send(orderServiceConfigData.getPaymentRequestTopicName(),
+      // Payment Request
+      String topicName = orderServiceConfigData.getPaymentRequestTopicName();
+      
+      kafkaProducer.send(
+        topicName,
         sagaId,
         paymentRequestAvroModel,
-        kafkaMessageHelper.getKafkaCallback(orderServiceConfigData.getPaymentRequestTopicName(),
+        kafkaMessageHelper.getKafkaCallback(
+          topicName,
           paymentRequestAvroModel,
           orderPaymentOutboxMessage,
           outboxCallback,
@@ -69,6 +73,5 @@ public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePub
           " to kafka with order id: {} and saga id: {}, error: {}",
         orderPaymentEventPayload.getOrderId(), sagaId, e.getMessage());
     }
-
   }
 }

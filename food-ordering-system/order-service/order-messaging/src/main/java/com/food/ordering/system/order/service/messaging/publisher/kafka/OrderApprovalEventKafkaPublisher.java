@@ -45,8 +45,7 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
     String sagaId = orderApprovalOutboxMessage.getSagaId().toString();
 
     log.info("Received OrderApprovalOutboxMessage for order id: {} and saga id: {}",
-      orderApprovalEventPayload.getOrderId(),
-      sagaId);
+      orderApprovalEventPayload.getOrderId(), sagaId);
 
     try {
       RestaurantApprovalRequestAvroModel restaurantApprovalRequestAvroModel =
@@ -54,10 +53,16 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
           .orderApprovalEventToRestaurantApprovalRequestAvroModel(sagaId,
             orderApprovalEventPayload);
 
-      kafkaProducer.send(orderServiceConfigData.getRestaurantApprovalRequestTopicName(),
+      // Approval Request
+      String topicName =
+        orderServiceConfigData.getRestaurantApprovalRequestTopicName();
+
+      kafkaProducer.send(
+        topicName,
         sagaId,
         restaurantApprovalRequestAvroModel,
-        kafkaMessageHelper.getKafkaCallback(orderServiceConfigData.getRestaurantApprovalRequestTopicName(),
+        kafkaMessageHelper.getKafkaCallback(
+          topicName,
           restaurantApprovalRequestAvroModel,
           orderApprovalOutboxMessage,
           outboxCallback,
@@ -70,6 +75,5 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
       log.error("Error while sending OrderApprovalEventPayload to kafka for order id: {} and saga id: {}," +
         " error: {}", orderApprovalEventPayload.getOrderId(), sagaId, e.getMessage());
     }
-
   }
 }

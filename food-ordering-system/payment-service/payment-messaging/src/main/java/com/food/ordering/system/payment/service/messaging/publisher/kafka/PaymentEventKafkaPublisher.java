@@ -44,17 +44,21 @@ public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublish
     String sagaId = orderOutboxMessage.getSagaId().toString();
 
     log.info("Received OrderOutboxMessage for order id: {} and saga id: {}",
-      orderEventPayload.getOrderId(),
-      sagaId);
+      orderEventPayload.getOrderId(), sagaId);
 
     try {
       PaymentResponseAvroModel paymentResponseAvroModel = paymentMessagingDataMapper
         .orderEventPayloadToPaymentResponseAvroModel(sagaId, orderEventPayload);
 
-      kafkaProducer.send(paymentServiceConfigData.getPaymentResponseTopicName(),
+      // Payment Response
+      String topicName = paymentServiceConfigData.getPaymentResponseTopicName();
+
+      kafkaProducer.send(
+        topicName,
         sagaId,
         paymentResponseAvroModel,
-        kafkaMessageHelper.getKafkaCallback(paymentServiceConfigData.getPaymentResponseTopicName(),
+        kafkaMessageHelper.getKafkaCallback(
+          topicName,
           paymentResponseAvroModel,
           orderOutboxMessage,
           outboxCallback,

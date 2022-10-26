@@ -8,6 +8,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "restaurant-service")
 public class RestaurantServiceConfigData {
-  private String restaurantApprovalRequestTopicName;
   private String restaurantApprovalResponseTopicName;
 }

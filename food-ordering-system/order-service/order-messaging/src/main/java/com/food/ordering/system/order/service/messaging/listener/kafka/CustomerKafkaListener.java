@@ -35,10 +35,7 @@ public class CustomerKafkaListener implements KafkaConsumer<CustomerAvroModel> {
     @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
     @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
     log.info("{} number of customer create messages received with keys {}, partitions {} and offsets {}",
-      messages.size(),
-      keys.toString(),
-      partitions.toString(),
-      offsets.toString());
+      messages.size(), keys.toString(), partitions.toString(), offsets.toString());
 
     messages.forEach(customerAvroModel ->
       customerMessageListener.customerCreated(orderMessagingDataMapper
