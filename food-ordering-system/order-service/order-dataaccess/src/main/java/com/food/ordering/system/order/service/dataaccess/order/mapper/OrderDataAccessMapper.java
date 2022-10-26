@@ -35,6 +35,7 @@ public class OrderDataAccessMapper {
       .failureMessages(order.getFailureMessages() != null ?
         String.join(FAILURE_MESSAGE_DELIMITER, order.getFailureMessages()) : "")
       .build();
+
     orderEntity.getAddress().setOrder(orderEntity);
     orderEntity.getItems().forEach(orderItemEntity -> orderItemEntity.setOrder(orderEntity));
 
@@ -51,7 +52,8 @@ public class OrderDataAccessMapper {
       .items(orderItemEntitiesToOrderItems(orderEntity.getItems()))
       .trackingId(new TrackingId(orderEntity.getTrackingId()))
       .orderStatus(orderEntity.getOrderStatus())
-      .failureMessages(orderEntity.getFailureMessages().isEmpty() ? new ArrayList<>() :
+      .failureMessages(orderEntity.getFailureMessages().isEmpty() ?
+        new ArrayList<>() :
         new ArrayList<>(Arrays.asList(orderEntity.getFailureMessages()
           .split(FAILURE_MESSAGE_DELIMITER))))
       .build();
@@ -70,10 +72,8 @@ public class OrderDataAccessMapper {
   }
 
   private StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address) {
-    return new StreetAddress(address.getId(),
-      address.getStreet(),
-      address.getPostalCode(),
-      address.getCity());
+    return new StreetAddress(
+      address.getId(), address.getStreet(), address.getPostalCode(), address.getCity());
   }
 
   private List<OrderItemEntity> orderItemsToOrderItemEntities(List<OrderItem> items) {

@@ -38,11 +38,9 @@ public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
 
   @Override
   public Optional<List<OrderApprovalOutboxMessage>> findByTypeAndOutboxStatusAndSagaStatus(
-    String sagaType,
-    OutboxStatus outboxStatus,
-    SagaStatus... sagaStatus) {
-    return Optional.of(approvalOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(sagaType, outboxStatus,
-        Arrays.asList(sagaStatus))
+    String sagaType, OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
+    return Optional.of(approvalOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(
+        sagaType, outboxStatus, Arrays.asList(sagaStatus))
       .orElseThrow(() -> new ApprovalOutboxNotFoundException("Approval outbox object " +
         "could be found for saga type " + sagaType))
       .stream()
@@ -52,9 +50,7 @@ public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
 
   @Override
   public Optional<OrderApprovalOutboxMessage> findByTypeAndSagaIdAndSagaStatus(
-    String type,
-    UUID sagaId,
-    SagaStatus... sagaStatus) {
+    String type, UUID sagaId, SagaStatus... sagaStatus) {
     return approvalOutboxJpaRepository
       .findByTypeAndSagaIdAndSagaStatusIn(type, sagaId,
         Arrays.asList(sagaStatus))
@@ -63,7 +59,8 @@ public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
   }
 
   @Override
-  public void deleteByTypeAndOutboxStatusAndSagaStatus(String type, OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
+  public void deleteByTypeAndOutboxStatusAndSagaStatus(
+    String type, OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
     approvalOutboxJpaRepository.deleteByTypeAndOutboxStatusAndSagaStatusIn(type, outboxStatus,
       Arrays.asList(sagaStatus));
   }
