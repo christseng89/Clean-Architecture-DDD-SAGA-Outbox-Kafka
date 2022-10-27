@@ -126,3 +126,27 @@ OrderPaymentOutboxMessage Payload...
   "createdAt":"2022-10-25T20:24:17.2401835+08:00",
   "paymentOrderStatus":"PENDING"
 }
+
+80. Testing Order Payment Saga
+OrderPaymentSagaTest - testDoublePayment()
+
+### First thread
+Hibernate: select paymentout0_.id as id1_5_, paymentout0_.created_at as created_2_5_, paymentout0_.order_status as order_st3_5_, paymentout0_.outbox_status as outbox_s4_5_, paymentout0_.payload as payload5_5_, paymentout0_.processed_at as processe6_5_, paymentout0_.saga_id as saga_id7_5_, paymentout0_.saga_status as saga_sta8_5_, paymentout0_.type as type9_5_, paymentout0_.version as version10_5_ from payment_outbox paymentout0_ 
+  where paymentout0_.type=? and paymentout0_.saga_id=? and (paymentout0_.saga_status in (?))
+...
+Hibernate: insert into restaurant_approval_outbox (created_at, order_status, outbox_status, payload, processed_at, saga_id, saga_status, type, version, id) 
+  values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: update payment_outbox set created_at=?, order_status=?, outbox_status=?, payload=?, processed_at=?, saga_id=?, saga_status=?, type=?, version=? 
+  where id=? and version=?
+Hibernate: update orders set customer_id=?, failure_messages=?, order_status=?, price=?, restaurant_id=?, tracking_id=? 
+  where id=?
+
+### Second thread
+Hibernate: select paymentout0_.id as id1_5_, paymentout0_.created_at as created_2_5_, paymentout0_.order_status as order_st3_5_, paymentout0_.outbox_status as outbox_s4_5_, paymentout0_.payload as payload5_5_, paymentout0_.processed_at as processe6_5_, paymentout0_.saga_id as saga_id7_5_, paymentout0_.saga_status as saga_sta8_5_, paymentout0_.type as type9_5_, paymentout0_.version as version10_5_ from payment_outbox paymentout0_ 
+  where paymentout0_.type=? and paymentout0_.saga_id=? and (paymentout0_.saga_status in (?))
+2022-10-27 16:20:27.066  INFO 13640 --- [           main] c.f.o.s.o.s.domain.OrderPaymentSaga      : 
+  An outbox message with saga id: 15a497c1-0f4b-4eff-b9f4-c402c8c07afa is "already processed!"
+
+### PostgreSQL
+order
+ - restaurant_approval_outbox => 3 records

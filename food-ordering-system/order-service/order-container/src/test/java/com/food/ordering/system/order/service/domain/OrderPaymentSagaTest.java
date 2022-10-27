@@ -1,5 +1,6 @@
 package com.food.ordering.system.order.service.domain;
 
+import com.food.ordering.system.domain.valueobject.PaymentStatus;
 import com.food.ordering.system.order.service.dataaccess.outbox.payment.entity.PaymentOutboxEntity;
 import com.food.ordering.system.order.service.dataaccess.outbox.payment.repository.PaymentOutboxJpaRepository;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
@@ -26,7 +27,8 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 @Slf4j
 @SpringBootTest(classes = OrderServiceApplication.class)
 @Sql(value = {"classpath:sql/OrderPaymentSagaTestSetUp.sql"})
-@Sql(value = {"classpath:sql/OrderPaymentSagaTestCleanUp.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"classpath:sql/OrderPaymentSagaTestCleanUp.sql"},
+  executionPhase = AFTER_TEST_METHOD)
 public class OrderPaymentSagaTest {
 
   private final UUID SAGA_ID = UUID.fromString("15a497c1-0f4b-4eff-b9f4-c402c8c07afa");
@@ -92,18 +94,11 @@ public class OrderPaymentSagaTest {
 
   }
 
-  private void assertPaymentOutbox() {
-    Optional<PaymentOutboxEntity> paymentOutboxEntity =
-      paymentOutboxJpaRepository.findByTypeAndSagaIdAndSagaStatusIn(ORDER_SAGA_NAME, SAGA_ID,
-        List.of(SagaStatus.PROCESSING));
-    assertTrue(paymentOutboxEntity.isPresent());
-  }
-
   private PaymentResponse getPaymentResponse() {
     return PaymentResponse.builder()
       .id(UUID.randomUUID().toString())
       .sagaId(SAGA_ID.toString())
-      .paymentStatus(com.food.ordering.system.domain.valueobject.PaymentStatus.COMPLETED)
+      .paymentStatus(PaymentStatus.COMPLETED)
       .paymentId(PAYMENT_ID.toString())
       .orderId(ORDER_ID.toString())
       .customerId(CUSTOMER_ID.toString())
@@ -111,6 +106,14 @@ public class OrderPaymentSagaTest {
       .createdAt(Instant.now())
       .failureMessages(new ArrayList<>())
       .build();
+  }
+
+  private void assertPaymentOutbox() {
+    Optional<PaymentOutboxEntity> paymentOutboxEntity =
+      paymentOutboxJpaRepository.findByTypeAndSagaIdAndSagaStatusIn(ORDER_SAGA_NAME, SAGA_ID,
+        List.of(SagaStatus.PROCESSING));
+
+    assertTrue(paymentOutboxEntity.isPresent());
   }
 
 }
