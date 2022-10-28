@@ -17,7 +17,6 @@ import java.util.function.BiConsumer;
 @Slf4j
 @Component
 public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublisher {
-
   private final PaymentMessagingDataMapper paymentMessagingDataMapper;
   private final KafkaProducer<String, PaymentResponseAvroModel> kafkaProducer;
   private final PaymentServiceConfigData paymentServiceConfigData;
@@ -54,10 +53,7 @@ public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublish
       String topicName = paymentServiceConfigData.getPaymentResponseTopicName();
 
       kafkaProducer.send(
-        topicName,
-        sagaId,
-        paymentResponseAvroModel,
-        kafkaMessageHelper.getKafkaCallback(
+        topicName, sagaId, paymentResponseAvroModel, kafkaMessageHelper.getKafkaCallback(
           topicName,
           paymentResponseAvroModel,
           orderOutboxMessage,

@@ -34,6 +34,7 @@ public class OrderOutboxScheduler implements OutboxScheduler {
   public void processOutboxMessage() {
     Optional<List<OrderOutboxMessage>> outboxMessagesResponse =
       orderOutboxHelper.getOrderOutboxMessageByOutboxStatus(OutboxStatus.STARTED);
+      
     if (outboxMessagesResponse.isPresent() && outboxMessagesResponse.get().size() > 0) {
       List<OrderOutboxMessage> outboxMessages = outboxMessagesResponse.get();
       log.info("Received {} OrderOutboxMessage with ids {}, sending to message bus!", outboxMessages.size(),

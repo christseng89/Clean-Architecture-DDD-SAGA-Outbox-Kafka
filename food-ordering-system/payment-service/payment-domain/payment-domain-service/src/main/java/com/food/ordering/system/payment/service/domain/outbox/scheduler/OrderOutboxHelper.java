@@ -24,39 +24,40 @@ import static com.food.ordering.system.saga.order.SagaConstants.ORDER_SAGA_NAME;
 @Slf4j
 @Component
 public class OrderOutboxHelper {
-
   private final OrderOutboxRepository orderOutboxRepository;
   private final ObjectMapper objectMapper;
 
-  public OrderOutboxHelper(OrderOutboxRepository orderOutboxRepository, ObjectMapper objectMapper) {
+  public OrderOutboxHelper(
+    OrderOutboxRepository orderOutboxRepository,
+    ObjectMapper objectMapper) {
     this.orderOutboxRepository = orderOutboxRepository;
     this.objectMapper = objectMapper;
   }
 
   @Transactional(readOnly = true)
   public Optional<OrderOutboxMessage> getCompletedOrderOutboxMessageBySagaIdAndPaymentStatus(
-    UUID sagaId,
-    PaymentStatus paymentStatus) {
-    return orderOutboxRepository.findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(ORDER_SAGA_NAME, sagaId,
-      paymentStatus, OutboxStatus.COMPLETED);
+    UUID sagaId, PaymentStatus paymentStatus) {
+    return orderOutboxRepository.findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(
+      ORDER_SAGA_NAME, sagaId, paymentStatus, OutboxStatus.COMPLETED);
   }
 
   @Transactional(readOnly = true)
-  public Optional<List<OrderOutboxMessage>> getOrderOutboxMessageByOutboxStatus(OutboxStatus outboxStatus) {
-    return orderOutboxRepository.findByTypeAndOutboxStatus(ORDER_SAGA_NAME, outboxStatus);
+  public Optional<List<OrderOutboxMessage>> getOrderOutboxMessageByOutboxStatus(
+    OutboxStatus outboxStatus) {
+    return orderOutboxRepository.findByTypeAndOutboxStatus(
+      ORDER_SAGA_NAME, outboxStatus);
   }
 
   @Transactional
   public void deleteOrderOutboxMessageByOutboxStatus(OutboxStatus outboxStatus) {
-    orderOutboxRepository.deleteByTypeAndOutboxStatus(ORDER_SAGA_NAME, outboxStatus);
+    orderOutboxRepository.deleteByTypeAndOutboxStatus(
+      ORDER_SAGA_NAME, outboxStatus);
   }
 
   @Transactional
   public void saveOrderOutboxMessage(
-    OrderEventPayload orderEventPayload,
-    PaymentStatus paymentStatus,
-    OutboxStatus outboxStatus,
-    UUID sagaId) {
+    OrderEventPayload orderEventPayload, PaymentStatus paymentStatus,
+    OutboxStatus outboxStatus, UUID sagaId) {
     save(OrderOutboxMessage.builder()
       .id(UUID.randomUUID())
       .sagaId(sagaId)
@@ -70,7 +71,8 @@ public class OrderOutboxHelper {
   }
 
   @Transactional
-  public void updateOutboxMessage(OrderOutboxMessage orderOutboxMessage, OutboxStatus outboxStatus) {
+  public void updateOutboxMessage(
+    OrderOutboxMessage orderOutboxMessage, OutboxStatus outboxStatus) {
     orderOutboxMessage.setOutboxStatus(outboxStatus);
     save(orderOutboxMessage);
     log.info("Order outbox table status is updated as: {}", outboxStatus.name());

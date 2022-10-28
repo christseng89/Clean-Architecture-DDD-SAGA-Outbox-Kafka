@@ -22,7 +22,6 @@ import java.util.List;
 @Slf4j
 @Component
 public class PaymentRequestKafkaListener implements KafkaConsumer<PaymentRequestAvroModel> {
-
   private final PaymentRequestMessageListener paymentRequestMessageListener;
   private final PaymentMessagingDataMapper paymentMessagingDataMapper;
 
