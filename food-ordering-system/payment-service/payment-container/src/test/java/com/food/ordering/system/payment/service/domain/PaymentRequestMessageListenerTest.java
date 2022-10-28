@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PaymentRequestMessageListenerTest {
 
   private final static String CUSTOMER_ID = "d215b5f8-0249-4dc5-89a3-51fd148cfb41";
-  private final static BigDecimal PRICE = new BigDecimal("100");
+  private final static BigDecimal PRICE = new BigDecimal("10");
   @Autowired
   private PaymentRequestMessageListener paymentRequestMessageListener;
   @Autowired
@@ -42,7 +42,7 @@ public class PaymentRequestMessageListenerTest {
     try {
       paymentRequestMessageListener.completePayment(getPaymentRequest(sagaId));
     } catch (DataAccessException e) {
-      log.error("DataAccessException occurred with sql state: {}",
+      log.error("\nDataAccess Exception occurred with sql state: {}\n",
         ((PSQLException) Objects.requireNonNull(e.getRootCause())).getSQLState());
     }
     assertOrderOutbox(sagaId);
@@ -61,7 +61,8 @@ public class PaymentRequestMessageListenerTest {
         try {
           paymentRequestMessageListener.completePayment(getPaymentRequest(sagaId));
         } catch (DataAccessException e) {
-          log.error("DataAccessException occurred for thread 1 with sql state: {}",
+          log.error("\nDataAccess Exception occurred for thread 1 with sql " +
+              "state: {}\n",
             ((PSQLException) Objects.requireNonNull(e.getRootCause())).getSQLState());
         }
       }));
@@ -70,7 +71,8 @@ public class PaymentRequestMessageListenerTest {
         try {
           paymentRequestMessageListener.completePayment(getPaymentRequest(sagaId));
         } catch (DataAccessException e) {
-          log.error("DataAccessException occurred for thread 2 with sql state: {}",
+          log.error("\nDataAccess Exception occurred for thread 2 with sql " +
+              "state: {}\n",
             ((PSQLException) Objects.requireNonNull(e.getRootCause())).getSQLState());
         }
       }));
@@ -79,7 +81,7 @@ public class PaymentRequestMessageListenerTest {
 
       assertOrderOutbox(sagaId);
     } catch (InterruptedException e) {
-      log.error("Error calling complete payment!", e);
+      log.error("\nError calling complete payment!", e);
     } finally {
       if (executor != null) {
         executor.shutdown();

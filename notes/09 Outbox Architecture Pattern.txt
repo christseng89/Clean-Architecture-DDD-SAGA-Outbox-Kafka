@@ -150,3 +150,11 @@ Hibernate: select paymentout0_.id as id1_5_, paymentout0_.created_at as created_
 ### PostgreSQL
 order
  - restaurant_approval_outbox => 3 records
+
+86. Testing Payment Request Message Listener for double payment
+PaymentRequestMessageListenerTest
+- payment.credit_entry (480)
+- payment.order_outbox
+- payment.payments 
+
+// History -> Bugs
