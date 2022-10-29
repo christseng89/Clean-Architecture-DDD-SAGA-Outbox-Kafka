@@ -160,10 +160,17 @@ PaymentRequestMessageListenerTest
 // History -> Bugs
 
 89. Testing the application end-to-end with Outbox pattern changes
+### Start up PostgreSQL
 ### Start up Kafka
 docker compose -f common.yml -f zookeeper.yml up -d  --remove-orphans
 docker compose -f common.yml -f kafka_cluster.yml up -d
+docker compose -f common.yml -f init_kafka.yml up
+
 http://localhost:9000/
+
+### Clean install
+cd food-ordering-system
+mvn clean install
 
 ### Run Applications
 CustomerServiceApplication
@@ -173,3 +180,18 @@ RestaurantServiceApplication
 
 ### Postman
 Post an Order - APPROVED
+Tracking Order
+// PENDING -> APPROVED
+
+### PostgreSQL
+SELECT * FROM "order".orders ORDER BY id ASC 
+SELECT * FROM "order".payment_outbox ORDER BY id ASC 
+SELECT * FROM "order".restaurant_approval_outbox ORDER BY id ASC 
+
+SELECT * FROM payment.credit_entry ORDER BY id ASC 
+SELECT * FROM payment.credit_history ORDER BY id ASC 
+SELECT * FROM payment.order_outbox ORDER BY id ASC 
+SELECT * FROM payment.payments ORDER BY id ASC 
+
+SELECT * FROM restaurant.order_approval ORDER BY id ASC 
+SELECT * FROM restaurant.order_outbox ORDER BY id ASC 
