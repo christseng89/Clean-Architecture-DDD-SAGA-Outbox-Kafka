@@ -181,7 +181,11 @@ RestaurantServiceApplication
 ### Postman
 Post an Order - APPROVED
 Tracking Order
-// PENDING -> APPROVED
+// PENDING -> PAID -> APPROVED
+
+Post an Order - CANCELLED
+Tracking Order
+// PENDING -> PAID -> CANCELLING -> CANCELLED
 
 ### PostgreSQL
 SELECT * FROM "order".orders ORDER BY id ASC 
