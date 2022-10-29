@@ -35,6 +35,7 @@ public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublish
 
   @Override
   public void publish(
+    // Payment Order Outbox
     OrderOutboxMessage orderOutboxMessage,
     BiConsumer<OrderOutboxMessage, OutboxStatus> outboxCallback) {
     OrderEventPayload orderEventPayload =
@@ -61,7 +62,7 @@ public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublish
           orderEventPayload.getOrderId(),
           "PaymentResponseAvroModel"));
 
-      log.info("PaymentResponseAvroModel sent to kafka for order id: {} and saga id: {}",
+      log.info("PaymentResponseAvroModel sent to Kafka for order id: {} and saga id: {}",
         paymentResponseAvroModel.getOrderId(), sagaId);
     } catch (Exception e) {
       log.error("Error while sending PaymentRequestAvroModel message" +

@@ -36,6 +36,7 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
 
   @Override
   public void publish(
+    // Order Restaurant Approval Outbox
     OrderApprovalOutboxMessage orderApprovalOutboxMessage,
     BiConsumer<OrderApprovalOutboxMessage, OutboxStatus> outboxCallback) {
     OrderApprovalEventPayload orderApprovalEventPayload =
@@ -69,7 +70,7 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
           orderApprovalEventPayload.getOrderId(),
           "RestaurantApprovalRequestAvroModel"));
 
-      log.info("OrderApprovalEventPayload sent to kafka for order id: {} and saga id: {}",
+      log.info("OrderApprovalEventPayload sent to Kafka for order id: {} and saga id: {}",
         restaurantApprovalRequestAvroModel.getOrderId(), sagaId);
     } catch (Exception e) {
       log.error("Error while sending OrderApprovalEventPayload to kafka for order id: {} and saga id: {}," +

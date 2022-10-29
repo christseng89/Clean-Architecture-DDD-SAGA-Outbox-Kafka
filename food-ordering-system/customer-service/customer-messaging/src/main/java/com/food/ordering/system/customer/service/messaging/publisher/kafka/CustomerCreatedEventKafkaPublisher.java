@@ -39,11 +39,16 @@ public class CustomerCreatedEventKafkaPublisher implements CustomerMessagePublis
       CustomerAvroModel customerAvroModel = customerMessagingDataMapper
         .paymentResponseAvroModelToPaymentResponse(customerCreatedEvent);
 
-      kafkaProducer.send(customerServiceConfigData.getCustomerTopicName(), customerAvroModel.getId(),
-        customerAvroModel,
-        getCallback(customerServiceConfigData.getCustomerTopicName(), customerAvroModel));
+      // Customer CQRS (Publish ONLY)
+      String topicName = customerServiceConfigData.getCustomerTopicName();
 
-      log.info("CustomerCreatedEvent sent to kafka for customer id: {}",
+      kafkaProducer.send(
+        topicName,
+        customerAvroModel.getId(),
+        customerAvroModel,
+        getCallback(topicName, customerAvroModel));
+
+      log.info("CustomerCreatedEvent sent to Kafka for customer id: {}",
         customerAvroModel.getId());
     } catch (Exception e) {
       log.error("Error while sending CustomerCreatedEvent to kafka for customer id: {}," +

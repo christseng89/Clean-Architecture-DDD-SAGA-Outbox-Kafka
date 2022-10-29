@@ -36,6 +36,7 @@ public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePub
 
   @Override
   public void publish(
+    // Order Payment Outbox
     OrderPaymentOutboxMessage orderPaymentOutboxMessage,
     BiConsumer<OrderPaymentOutboxMessage, OutboxStatus> outboxCallback) {
     OrderPaymentEventPayload orderPaymentEventPayload =
@@ -53,7 +54,7 @@ public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePub
 
       // Payment Request
       String topicName = orderServiceConfigData.getPaymentRequestTopicName();
-      
+
       kafkaProducer.send(
         topicName,
         sagaId,
