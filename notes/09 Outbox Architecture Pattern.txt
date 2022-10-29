@@ -158,3 +158,18 @@ PaymentRequestMessageListenerTest
 - payment.payments 
 
 // History -> Bugs
+
+89. Testing the application end-to-end with Outbox pattern changes
+### Start up Kafka
+docker compose -f common.yml -f zookeeper.yml up -d  --remove-orphans
+docker compose -f common.yml -f kafka_cluster.yml up -d
+http://localhost:9000/
+
+### Run Applications
+CustomerServiceApplication
+OrderServiceApplication
+PaymentServiceApplication
+RestaurantServiceApplication
+
+### Postman
+Post an Order - APPROVED
