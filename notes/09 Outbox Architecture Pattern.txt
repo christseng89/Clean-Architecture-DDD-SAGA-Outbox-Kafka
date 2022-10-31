@@ -200,14 +200,3 @@ SELECT * FROM payment.payments ORDER BY id ASC
 SELECT * FROM restaurant.order_approval ORDER BY id ASC 
 SELECT * FROM restaurant.order_outbox ORDER BY id ASC 
 
-95. Running Order and Customer Services to test CQRS pattern
-### Start Applications
-1. CustomerServiceApplication
-2. OrderServiceApplication
-3. PaymentServiceApplication
-4. RestaurantServiceApplication
-
-### Postman
-1. Create Customer;
-2. Create Order - APPROVED;
-3. Track Order;
