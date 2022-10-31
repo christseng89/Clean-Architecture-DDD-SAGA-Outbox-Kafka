@@ -30,8 +30,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
   @Override
   public Customer save(Customer customer) {
-    return customerDataAccessMapper.customerEntityToCustomer(
-      customerJpaRepository.save(
-        customerDataAccessMapper.customerToCustomerEntity(customer)));
+    return customerDataAccessMapper.customerEntityToCustomer(customerJpaRepository
+      .save(customerDataAccessMapper.customerToCustomerEntity(customer)));
   }
 }

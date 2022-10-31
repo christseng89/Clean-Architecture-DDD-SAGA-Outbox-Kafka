@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/customers", produces = "application/vnd.api.v1+json")
 public class CustomerController {
-
   private final CustomerApplicationService customerApplicationService;
 
   public CustomerController(CustomerApplicationService customerApplicationService) {
@@ -25,6 +24,7 @@ public class CustomerController {
   public ResponseEntity<CreateCustomerResponse> createCustomer(
     @RequestBody CreateCustomerCommand createCustomerCommand) {
     log.info("Creating customer with username: {}", createCustomerCommand.getUsername());
+
     CreateCustomerResponse response = customerApplicationService.createCustomer(createCustomerCommand);
     return ResponseEntity.ok(response);
   }

@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerDataMapper {
 
-  public Customer createCustomerCommandToCustomer(CreateCustomerCommand createCustomerCommand) {
-    return new Customer(new CustomerId(createCustomerCommand.getCustomerId()),
+  public Customer createCustomerCommandToCustomer(
+    CreateCustomerCommand createCustomerCommand) {
+    return new Customer(
+      new CustomerId(createCustomerCommand.getCustomerId()),
       createCustomerCommand.getUsername(),
       createCustomerCommand.getFirstName(),
       createCustomerCommand.getLastName());
