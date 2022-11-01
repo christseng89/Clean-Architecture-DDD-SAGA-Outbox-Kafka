@@ -1,0 +1,51 @@
+96. Introduction to Kubernetes and running a local Kubernetes using Docker Desktop
+kubectl get node
+  NAME             STATUS    ROLES           AGE       VERSION
+  docker-desktop   Ready     control-plane   11m       v1.25.0
+
+kubectl get ns
+  NAME              STATUS    AGE
+  default           Active    21m
+  kube-node-lease   Active    21m
+  kube-public       Active    21m
+  kube-system       Active    21m
+
+kubectl get po -n kube-system
+  NAME                                     READY     STATUS    RESTARTS       AGE
+  coredns-95db45d46-46j2v                  1/1       Running   0              22m
+  coredns-95db45d46-g9ph9                  1/1       Running   0              22m (v)
+  etcd-docker-desktop                      1/1       Running   0              22m (v)
+  kube-apiserver-docker-desktop            1/1       Running   0              22m (v)
+  kube-controller-manager-docker-desktop   1/1       Running   0              22m
+  kube-proxy-2k8pw                         1/1       Running   0              22m
+  kube-scheduler-docker-desktop            1/1       Running   0              22m (v)
+  storage-provisioner                      1/1       Running   0              21m
+  vpnkit-controller                        1/1       Running   1 (4m1s ago)   21m (Docker Desktop)
+
+https://www.docker.com/blog/how-kubernetes-works-under-the-hood-with-docker-desktop/
+
+97. Deploying Confluent Kafka to local Kubernetes using cp-helm-charts
+https://github.com/confluentinc/cp-helm-charts
+
+git clone https://github.com/confluentinc/cp-helm-charts.git confluentinc\cp-helm-charts
+
+### Install Kafka
+helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/   
+helm repo update 
+
+### IMPORTANT NOTES: Update poddisruptionbudget.yaml file in helm folder and use v1 instead of v1beta1...
+helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
+
+kubectl get po
+NAME                                                        READY     STATUS    RESTARTS        AGE
+  local-confluent-kafka-cp-control-center-6bc59c488f-hb5gz    1/1       Running   7 (6m14s ago)   12m
+  local-confluent-kafka-cp-kafka-0                            2/2       Running   0               12m
+  local-confluent-kafka-cp-kafka-1                            2/2       Running   0               2m32s
+  local-confluent-kafka-cp-kafka-2                            2/2       Running   0               2m30s
+  local-confluent-kafka-cp-kafka-connect-56bc67cc6d-xt774     2/2       Running   7 (6m2s ago)    12m
+  local-confluent-kafka-cp-kafka-rest-66f866bcb8-sphzr        2/2       Running   4 (3m23s ago)   12m
+  local-confluent-kafka-cp-ksql-server-5566858456-4bnx5       2/2       Running   7 (6m24s ago)   12m
+  local-confluent-kafka-cp-schema-registry-7b9f6ff677-d6zqw   2/2       Running   7 (6m21s ago)   12m
+  local-confluent-kafka-cp-zookeeper-0                        2/2       Running   0               12m
+  local-confluent-kafka-cp-zookeeper-1                        2/2       Running   0               12m
+  local-confluent-kafka-cp-zookeeper-2                        2/2       Running   0               12m

@@ -44,3 +44,50 @@ restaurant-service:
 
 id = "${kafka-consumer-config.restaurant-approval-consumer-group-id}",
 topics = "${restaurant-service.restaurant-approval-request-topic-name}"
+
+### Helm Install Kafka
+helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
+  =========
+  NAME: local-confluent-kafka
+  LAST DEPLOYED: Tue Nov  1 14:41:33 2022
+  NAMESPACE: default
+  STATUS: deployed
+  ...
+
+  1. Deploy a kafka client pod with configuration:
+
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: kafka-client
+        namespace: default
+      spec:
+        containers:
+        - name: kafka-client
+          image: confluentinc/cp-enterprise-kafka:6.1.0
+          command:
+            - sh
+            - -c
+            - "exec tail -f /dev/null"
+
+  2. Log into the Pod
+
+    kubectl exec -it kafka-client -- /bin/bash
+
+  3. Explore with kafka commands:
+
+    # Create the topic
+    kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic local-confluent-kafka-topic --create --partitions 1 --replication-factor 1 --if-not-exists
+
+    # Create a message
+    MESSAGE="`date -u`"
+
+    # Produce a test message to the topic
+    echo "$MESSAGE" | kafka-console-producer --broker-list local-confluent-kafka-cp-kafka-headless:9092 --topic local-confluent-kafka-topic
+
+    # Consume a test message from the topic
+    kafka-console-consumer --bootstrap-server local-confluent-kafka-cp-kafka-headless:9092 --topic local-confluent-kafka-topic --from-beginning --timeout-ms 2000 --max-messages 1 | grep "$MESSAGE"
+  =========
+
+### Uninstall Kafka
+helm uninstall local-confluent-kafka
