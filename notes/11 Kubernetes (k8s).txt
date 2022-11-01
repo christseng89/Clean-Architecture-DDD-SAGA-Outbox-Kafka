@@ -93,4 +93,21 @@ helm uninstall local-confluent-kafka
 
 kubectl delete -f food-ordering-system\k8s-yamls\docker-desktop\kafka-client.yml
   pod "kafka-client" deleted
-  
+
+98. Creating Kubernetes deployment files for Microservices
+cd food-ordering-system
+mvn clean install
+
+docker images | grep food.ordering
+  com.food.ordering.system/customer.service                 1.0-SNAPSHOT                                                                 e39ddd43f935   42 years ago    269MB
+  com.food.ordering.system/payment.service                  1.0-SNAPSHOT                                                                 ebdca5bb0b89   42 years ago    273MB
+  com.food.ordering.system/order.service                    1.0-SNAPSHOT                                                                 49e96f2b4483   42 years ago    278MB
+  com.food.ordering.system/restaurant.service               1.0-SNAPSHOT                                                                 916c7ea65bb4   42 years ago    264MB
+
+### Service Ports (LoadBalancer)
+- Order Service = 8081
+- Payment Service = 8082
+- Restaurant Service = 8083
+- Customer = 8084
+
+### application-deployment-local.yml
