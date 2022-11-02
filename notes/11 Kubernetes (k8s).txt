@@ -111,3 +111,68 @@ docker images | grep food.ordering
 - Customer = 8084
 
 ### application-deployment-local.yml
+
+99. Deploying Microservices into local Kubernetes
+### Update pom.xml
+  ...
+    <!-- k8s -->
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  ...
+
+mvn clean install
+  ...
+  [INFO]     [creator]         Using Java version 17.* from BP_JVM_VERSION
+  [INFO]     [creator]       BellSoft Liberica JRE 17.0.5: Contributing to layer
+  [INFO]     [creator]         Downloading from https://github.com/bell-sw/Liberica/releases/download/17.0.5+8/bellsoft-jre17.0.5+8-linux-amd64.tar.gz
+  ...
+
+helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
+kubectl get po
+  NAME                                                        READY     STATUS    RESTARTS   AGE
+  local-confluent-kafka-cp-control-center-6bc59c488f-886mn    1/1       Running   0          10s
+  local-confluent-kafka-cp-kafka-0                            2/2       Running   0          10s
+  local-confluent-kafka-cp-kafka-1                            0/2       Pending   0          2s
+  local-confluent-kafka-cp-kafka-connect-56bc67cc6d-hj926     2/2       Running   0          10s
+  local-confluent-kafka-cp-kafka-rest-66f866bcb8-2hcdm        2/2       Running   0          10s
+  local-confluent-kafka-cp-ksql-server-5566858456-lxfpz       2/2       Running   0          10s
+  local-confluent-kafka-cp-schema-registry-7b9f6ff677-ql2xk   2/2       Running   0          10s
+  local-confluent-kafka-cp-zookeeper-0                        2/2       Running   0          10s
+  local-confluent-kafka-cp-zookeeper-1                        0/2       Pending   0          0s
+
+### Install Food ordering services
+kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\application-deployment-local.yml
+  deployment.apps/order-deployment created
+  service/order-service created
+  deployment.apps/payment-deployment created
+  service/payment-service created
+  deployment.apps/restaurant-deployment created
+  service/restaurant-service created
+  deployment.apps/customer-deployment created
+  service/customer-service created
+
+kubectl get po | grep deploy
+  customer-deployment-7584b74679-46vhr                        1/1       Running   2 (4m50s ago)   8m20s
+  order-deployment-5769c69f97-bhgtg                           1/1       Running   2 (4m59s ago)   8m20s
+  payment-deployment-748c988cfc-b979s                         1/1       Running   2 (4m59s ago)   8m20s
+  restaurant-deployment-7d6d4986c5-xz2s9                      1/1       Running   2 (4m59s ago)   8m20s
+
+kubectl get svc | grep service
+  customer-service                              LoadBalancer   10.100.40.188    localhost     8184:30270/TCP      7m13s
+  order-service                                 LoadBalancer   10.96.152.217    localhost     8181:30231/TCP      7m13s
+  payment-service                               LoadBalancer   10.101.93.122    localhost     8182:31671/TCP      7m13s
+  restaurant-service                            LoadBalancer   10.99.2.181      localhost     8183:32135/TCP      7m13s
+
+### Postman
+- New Customer #1
+- New Customer #2
+- Post an Order - APPROVED
+- Tracking Order
+- Post an Order - CANCELLED
+- Tracking Order
+
+kubectl logs customer-deployment-5fc75bddbf-9vmxq
+kubectl logs order-deployment-5fdc5f465f-55b77
+kubectl logs payment-deployment-5bb64d8cf-8mnjm
+kubectl logs restaurant-deployment-76579fffc-wd5lg 
