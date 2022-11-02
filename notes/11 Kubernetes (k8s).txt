@@ -176,3 +176,66 @@ kubectl logs customer-deployment-5fc75bddbf-9vmxq
 kubectl logs order-deployment-5fdc5f465f-55b77
 kubectl logs payment-deployment-5bb64d8cf-8mnjm
 kubectl logs restaurant-deployment-76579fffc-wd5lg 
+
+100. Deploying Postgres to local Kubernetes using Postgres docker image
+kubectl delete -f food-ordering-system\k8s-yamls\docker-desktop\application-deployment-local.yml
+helm uninstall local-confluent-kafka 
+
+helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
+kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\postgres-deployment.yml
+  service/postgres-service created
+
+kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\application-deployment-local-postgres.yml
+  deployment.apps/order-deployment created
+  service/order-service created
+  deployment.apps/payment-deployment created
+  service/payment-service created
+  deployment.apps/restaurant-deployment created
+  service/restaurant-service created
+  deployment.apps/customer-deployment created
+  service/customer-service created
+
+kubectl get po
+  NAME                                                        READY     STATUS    RESTARTS      AGE
+  customer-deployment-7584b74679-w2vrf                        1/1       Running   0             40s
+  local-confluent-kafka-cp-control-center-6bc59c488f-xzjt8    1/1       Running   1 (94s ago)   105s
+  local-confluent-kafka-cp-kafka-0                            2/2       Running   1 (46s ago)   105s
+  local-confluent-kafka-cp-kafka-1                            2/2       Running   1 (45s ago)   95s
+  local-confluent-kafka-cp-kafka-2                            2/2       Running   1             87s
+  local-confluent-kafka-cp-kafka-connect-56bc67cc6d-lhnwh     2/2       Running   2 (81s ago)   105s
+  local-confluent-kafka-cp-kafka-rest-66f866bcb8-gnv2g        2/2       Running   3 (31s ago)   105s
+  local-confluent-kafka-cp-ksql-server-5566858456-2xq6r       2/2       Running   3 (69s ago)   105s
+  local-confluent-kafka-cp-schema-registry-7b9f6ff677-2sm2l   2/2       Running   2 (49s ago)   105s
+  local-confluent-kafka-cp-zookeeper-0                        2/2       Running   0             105s
+  local-confluent-kafka-cp-zookeeper-1                        2/2       Running   0             94s
+  local-confluent-kafka-cp-zookeeper-2                        2/2       Running   0             83s
+  order-deployment-5769c69f97-gdx2p                           1/1       Running   0             40s
+  payment-deployment-748c988cfc-n7cxm                         1/1       Running   0             40s
+  postgres-deployment-86d5c5dd7c-f9z22                        1/1       Running   0             41s
+  restaurant-deployment-7d6d4986c5-dhfbr                      1/1       Running   0             40s
+
+### Check Kafka topics
+kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\kafka-client.yml
+kubectl exec -it kafka-client -- /bin/bash
+  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --list
+    ...
+    customer
+    local-confluent-kafka-cp-kafka-connect-config
+    local-confluent-kafka-cp-kafka-connect-offset
+    local-confluent-kafka-cp-kafka-connect-status
+    payment-request
+    payment-response
+    restaurant-approval-request
+    restaurant-approval-response
+
+  exit
+
+### Postman
+- New Customer #1
+- New Customer #2
+- Post an Order - APPROVED
+- Tracking Order
+- Post an Order - CANCELLED
+- Tracking Order
+
+kubectl logs order-deployment-5769c69f97-gdx2p
