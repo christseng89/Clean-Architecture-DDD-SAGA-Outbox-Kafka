@@ -91,3 +91,26 @@ helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
 
 ### Uninstall Kafka
 helm uninstall local-confluent-kafka
+
+### Kafka-UI
+https://github.com/provectus/kafka-ui/blob/master/helm_chart.md
+
+git clone https://github.com/provectus/kafka-ui.git
+helm install helm-release-name kafka-ui/charts/kafka-ui -f food-ordering-system\k8s-yamls\docker-desktop\kafka-ui-values.yml
+  ...
+  NOTES:
+  1. Get the application URL by running these commands:
+    export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=kafka-ui,app.kubernetes.io/instance=helm-release-name" -o jsonpath="{.items[0].metadata.name}")
+    echo "Visit http://127.0.0.1:8080 to use your application"
+    kubectl --namespace default port-forward $POD_NAME 8080:8080
+
+kubectl get po | grep kafka-ui
+  helm-release-name-kafka-ui-55b8b49c77-6qzfz                 0/1       Running   0              21s
+
+### Git Bash
+export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=kafka-ui,app.kubernetes.io/instance=helm-release-name" -o jsonpath="{.items[0].metadata.name}")
+echo $POD_NAME
+  helm-release-name-kafka-ui-59557c999f-fnrmd
+kubectl --namespace default port-forward $POD_NAME 8080:8080
+
+http://localhost:8080/

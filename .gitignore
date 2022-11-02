@@ -13,3 +13,4 @@ target
 .classpath
 .project
 **/confluentinc/*
+**/kafka-ui/*
