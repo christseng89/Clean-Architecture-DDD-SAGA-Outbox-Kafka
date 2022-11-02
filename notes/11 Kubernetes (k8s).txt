@@ -239,3 +239,13 @@ kubectl exec -it kafka-client -- /bin/bash
 - Tracking Order
 
 kubectl logs order-deployment-5769c69f97-gdx2p
+
+### Deploy pgAdmin in k8s
+kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\pgadmin-deployment.yml
+
+http://localhost
+
+// Login => Servers => Register => 
+   General (Name = Food Ordering) => 
+   Connection (Host name = postgres-service, username = postgres) =>
+   Save
