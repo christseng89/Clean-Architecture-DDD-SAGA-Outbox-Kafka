@@ -1,0 +1,31 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: helm-release-name
+    meta.helm.sh/release-namespace: default
+  labels:
+    app.kubernetes.io/instance: helm-release-name
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kafka-ui
+    app.kubernetes.io/version: v0.4.0
+    helm.sh/chart: kafka-ui-0.4.4
+    manager: helm
+    operation: Update
+  name: helm-release-name-kafka-ui
+  namespace: default
+spec:
+  ports:
+  - name: http
+    port: 8100
+    protocol: TCP
+    targetPort: http
+  selector:
+    app.kubernetes.io/instance: helm-release-name
+    app.kubernetes.io/name: kafka-ui
+  sessionAffinity: None
+  type: LoadBalancer

@@ -114,3 +114,13 @@ echo $POD_NAME
 kubectl --namespace default port-forward $POD_NAME 8080:8080
 
 http://localhost:8080/
+
+
+### Furthermore = Change Kafka UI by using LoadBalancer
+kubectl delete svc helm-release-name-kafka-ui
+kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\kafka-ui-service.yml
+
+kubectl get svc | grep kafka-ui
+  helm-release-name-kafka-ui                    LoadBalancer   10.109.115.239   localhost     8100:31980/TCP      102m
+
+http://localhost:8800/
