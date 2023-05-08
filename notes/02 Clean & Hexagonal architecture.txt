@@ -1,4 +1,5 @@
 5. Introduction to Clean and Hexagonal Architectures
+https://www.happycoders.eu/software-craftsmanship/hexagonal-architecture/
 
 // Clean architecture
 .  Separation of concerns by dividing the software into different layers
@@ -67,6 +68,9 @@
 
 7. Creating Order Service modules using Clean Architecture - PART 1
 https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html
+
+- dependencyManagement - Used by sub-modules
+- dependencies - Used by this current module
 
 8. Creating Order Service modules using Clean Architecture - PART 2
 mvn clean install

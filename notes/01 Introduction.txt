@@ -8,16 +8,25 @@
 
     https://dev.to/dyarleniber/hexagonal-architecture-and-clean-architecture-with-examples-48oi
 
-//  DDD - Implement domain model with Aggregates, Entities, Value Objects, Domain services, 
-          Application services and Domain events
+//  DDD - Implement domain model with 
+    https://zh.wikipedia.org/wiki/%E9%A0%98%E5%9F%9F%E9%A9%85%E5%8B%95%E8%A8%AD%E8%A8%88
+    
+    - Bounded context,
+    - Entities,
+    - Aggregates,         
+    - Value Objects, 
+    - Domain services, 
+    - Application services and 
+    - Domain events
 
-//  Kafka - Event store for event-driven services.  Enable loosely coupled services that communicate thru events.
+//  Kafka - Event store for event-driven services.  
+    - Enable loosely coupled services that communicate thru events.
 
 //  SAGA - Distributed long running transactions across services LLT (Long lived transaction).
-           Local transactions publish domain events that trigger local transaction in other services.
+    - Local transactions publish domain events that trigger local transaction in other services.
 
 //  Outbox - Use local ACID transaction to let consistent Distributed transactions to complete SAGA in a safe and consistent way.
-             (Pulling Outbox Table with a Scheduler)
+    - (Pulling Outbox Table with a Scheduler)
 
 //  CQRS - Command Query Responsibility Segregation to separate read and write operations.
 
@@ -52,9 +61,16 @@
   docker-compose --version
     docker-compose version 1.29.2, build 5becea4c
 
+### Install Kafka and Kafka Explorer
 - Kafka (kcat from https://github.com/edenhill/kcat)
   ## apt-get install kafkacat
   https://docs.confluent.io/4.0.0/app-development/kafkacat-usage.html ## Kafka Utility
-  https://www.kafkatool.com/ ## Kafka Tools
+  https://github.com/edenhill/kcat
 
+  https://www.kafkatool.com/ ## Kafka Tools (Offset Explorer 2.3.2)
+
+### Install PostgreSQL and pgAdmin
 - PostgreSQL & pgAdmin
+
+### Important Notice
+- Source code => Lecture 61, 66 and 96
