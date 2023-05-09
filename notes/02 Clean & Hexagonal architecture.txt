@@ -69,8 +69,16 @@ https://www.happycoders.eu/software-craftsmanship/hexagonal-architecture/
 7. Creating Order Service modules using Clean Architecture - PART 1
 https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html
 
+### Maven Project Introduction
 - dependencyManagement - Used by sub-modules
 - dependencies - Used by this current module
+- plugins
+    * create jar file
+    * create war file
+    * compile code files
+    * unit testing of code
+    * create project documentation
+    * create project reports
 
 8. Creating Order Service modules using Clean Architecture - PART 2
 mvn clean install

@@ -15,6 +15,5 @@
     <module>payment-domain-core</module>
     <module>payment-domain-service</module>
   </modules>
-
-
+  
 </project>
