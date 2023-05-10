@@ -1,0 +1,73 @@
+0. Infrastructure
+- kafka
+- outbox
+- saga
+
+1. Common
+- common-application
+- common-dataaccess
+- common-domain
+
+2. Customer Service
+- customer-application
+  = handler
+  = rest
+- customer-container
+- customer-dataaccess
+  = adapter
+  = entity
+  = exception
+  = mapper
+  = repository
+- customer-domain
+  = customer-domain-core
+    % entity
+    % event
+    % exception
+  = customer-domain-service
+    % config
+    % create
+    % mapper
+    % ports  
+      $ input.service
+      $ output  
+        @ message.publisher
+        @ repository
+- customer-messaging
+  = mapper
+  = publisher.kafka
+
+3. Order Service
+- order-application
+- order-container
+- order-dataaccess
+- order-domain
+  = order-domain-core
+  = order-domain-service
+- order-messaging
+
+4. Payment Service
+- payment-container
+- payment-dataaccess
+- payment-domain
+  = payment-domain-core
+  = payment-domain-service
+- payment-messaging
+
+5. Restaurant Service
+- restaurant-container
+- restaurant-dataaccess
+- restaurant-domain
+  = restaurant-domain-core
+  = restaurant-domain-service
+- restaurant-messaging
+
+### ObjectDataAccessMapper
+import com.food.ordering.system.object.service.dataaccess.object.entity.ObjectEntity;
+import com.food.ordering.system.object.service.domain.entity.Object;
+...
+
+public class ObjectDataAccessMapper ...
+
+- objectEntityToObject
+- objectToObjectEntity
