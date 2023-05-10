@@ -12,14 +12,17 @@
   <artifactId>customer-application</artifactId>
 
   <dependencies>
-    <dependency>
-      <groupId>com.food.ordering.system</groupId>
-      <artifactId>customer-domain-service</artifactId>
-    </dependency>
+    <!-- 1. Common -->
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>common-application</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.food.ordering.system</groupId>
+      <artifactId>customer-domain-service</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>

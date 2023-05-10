@@ -12,6 +12,7 @@
   <artifactId>customer-domain-core</artifactId>
 
   <dependencies>
+    <!-- 1. Common -->
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>common-domain</artifactId>

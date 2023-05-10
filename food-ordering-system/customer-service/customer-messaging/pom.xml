@@ -12,10 +12,7 @@
   <artifactId>customer-messaging</artifactId>
 
   <dependencies>
-    <dependency>
-      <groupId>com.food.ordering.system</groupId>
-      <artifactId>customer-domain-service</artifactId>
-    </dependency>
+    <!-- 0. Infrastructure -->
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>kafka-producer</artifactId>
@@ -24,6 +21,12 @@
       <groupId>com.food.ordering.system</groupId>
       <artifactId>kafka-model</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.food.ordering.system</groupId>
+      <artifactId>customer-domain-service</artifactId>
+    </dependency>
+
   </dependencies>
 
 </project>

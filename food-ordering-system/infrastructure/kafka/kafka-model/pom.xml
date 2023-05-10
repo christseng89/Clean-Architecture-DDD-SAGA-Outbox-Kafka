@@ -28,6 +28,7 @@
           <stringType>String</stringType>
           <enableDecimalLogicalType>true</enableDecimalLogicalType>
         </configuration>
+        
         <executions>
           <execution>
             <phase>generate-sources</phase>
