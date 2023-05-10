@@ -12,12 +12,7 @@
   <artifactId>order-messaging</artifactId>
 
   <dependencies>
-    <dependency>
-      <groupId>com.food.ordering.system</groupId>
-      <artifactId>order-domain-service</artifactId>
-    </dependency>
-
-    <!-- Kafka modules  -->
+    <!-- 0. Infrastructure -->
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>kafka-producer</artifactId>
@@ -29,6 +24,11 @@
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>kafka-model</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.food.ordering.system</groupId>
+      <artifactId>order-domain-service</artifactId>
     </dependency>
   </dependencies>
 
