@@ -10,7 +10,14 @@ https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 https://www.youtube.com/watch?v=yg3jPmPlRlI&ab_channel=EPICProgramming
 
 psql -U postgres
-  Password for user postgres:
+   Password for user postgres: //tnnnnXxxxx
+   ...
+   psql (15.2)
+   Type "help" for help.
+
+   postgres=# 
+
+// Add Path => C:\Program Files\PostgreSQL\15\bin
 
 ### pgAdmin => SQL
 - restaurant-schema

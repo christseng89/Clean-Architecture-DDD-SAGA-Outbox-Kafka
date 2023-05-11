@@ -14,7 +14,8 @@ https://zh.wikipedia.org/zh-tw/%E9%A0%98%E5%9F%9F%E9%A9%85%E5%8B%95%E8%A8%AD%E8%
   * Aggregate Root (AR): Entry point Entity for an aggregate. All business operations should go through root.
      An Aggregate should be referenced from outside through its root only. AR should have pure, side-effect
      free functions
-  * Value Objects: Immutable objects without identity. Only value matters. Brings context to the value
+  * Value Objects: Immutable objects without identity. Only value matters. Brings context to the value, 
+    such as LC Number, LC Amount (Currency, Amount), Address (Street, City, Country) etc.
 
   * Domain Events: Decouple different domains. Describe things that happen and change the state of a domain.
      Makes the system extendable. Domain event listeners runs in a different transaction than the event publishers
