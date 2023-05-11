@@ -1,0 +1,9 @@
+### Login PostgreSQL
+psql -U postgres
+    Password for user postgres: // tnnnnXxxxx
+    psql (15.2)
+    Type "help" for help.
+
+    postgres=# exit
+
+### Create database 
