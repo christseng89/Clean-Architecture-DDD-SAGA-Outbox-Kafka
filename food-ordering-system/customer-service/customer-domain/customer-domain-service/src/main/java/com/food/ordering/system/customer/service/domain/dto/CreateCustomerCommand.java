@@ -1,4 +1,4 @@
-package com.food.ordering.system.customer.service.domain.create;
+package com.food.ordering.system.customer.service.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +10,13 @@ import java.util.UUID;
 @Getter
 @Builder
 @AllArgsConstructor
-public class CreateCustomerResponse {
+public class CreateCustomerCommand {
   @NotNull
   private final UUID customerId;
   @NotNull
-  private final String message;
+  private final String username;
+  @NotNull
+  private final String firstName;
+  @NotNull
+  private final String lastName;
 }

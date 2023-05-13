@@ -1,7 +1,7 @@
 package com.food.ordering.system.customer.service.application.rest;
 
-import com.food.ordering.system.customer.service.domain.create.CreateCustomerCommand;
-import com.food.ordering.system.customer.service.domain.create.CreateCustomerResponse;
+import com.food.ordering.system.customer.service.domain.dto.CreateCustomerCommand;
+import com.food.ordering.system.customer.service.domain.dto.CreateCustomerResponse;
 import com.food.ordering.system.customer.service.domain.ports.input.service.CustomerApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
