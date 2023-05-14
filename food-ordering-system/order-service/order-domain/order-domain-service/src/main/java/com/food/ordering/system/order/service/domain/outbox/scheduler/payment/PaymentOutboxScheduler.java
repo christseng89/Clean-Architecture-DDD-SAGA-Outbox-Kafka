@@ -39,7 +39,7 @@ public class PaymentOutboxScheduler implements OutboxScheduler {
         SagaStatus.STARTED,
         SagaStatus.COMPENSATING);
 
-    if (outboxMessagesResponse.isPresent() && outboxMessagesResponse.get().size() > 0) {
+    if (outboxMessagesResponse.isPresent() && !outboxMessagesResponse.isEmpty()) {
       List<OrderPaymentOutboxMessage> outboxMessages = outboxMessagesResponse.get();
       log.info("Received {} OrderPaymentOutboxMessage with ids: {}, sending to message bus!",
         outboxMessages.size(),
