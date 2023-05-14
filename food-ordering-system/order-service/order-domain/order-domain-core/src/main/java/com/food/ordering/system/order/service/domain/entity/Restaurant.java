@@ -4,10 +4,11 @@ import com.food.ordering.system.domain.entity.AggregateRoot;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Restaurant extends AggregateRoot<RestaurantId> {
   private final List<Product> products;
-  private boolean active;
+  private final boolean active;
 
   private Restaurant(Builder builder) {
     super.setId(builder.restaurantId);
@@ -53,5 +54,19 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     public Restaurant build() {
       return new Restaurant(this);
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Restaurant that = (Restaurant) o;
+    return active == that.active && Objects.equals(products, that.products);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), products, active);
   }
 }

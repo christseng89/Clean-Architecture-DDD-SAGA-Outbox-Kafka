@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class OrderDataMapper {
@@ -28,7 +27,7 @@ public class OrderDataMapper {
       .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
       .products(createOrderCommand.getItems().stream().map(orderItem ->
           new Product(new ProductId(orderItem.getProductId())))
-        .collect(Collectors.toList()))
+        .toList())
       .build();
   }
 
@@ -88,7 +87,7 @@ public class OrderDataMapper {
         OrderApprovalEventProduct.builder()
           .id(orderItem.getProduct().getId().getValue().toString())
           .quantity(orderItem.getQuantity())
-          .build()).collect(Collectors.toList()))
+          .build()).toList())
       .price(orderPaidEvent.getOrder().getPrice().getAmount())
       .createdAt(orderPaidEvent.getCreatedAt())
       .build();
@@ -110,7 +109,7 @@ public class OrderDataMapper {
           .price(new Money(orderItem.getPrice()))
           .quantity(orderItem.getQuantity())
           .subTotal(new Money(orderItem.getSubTotal()))
-          .build()).collect(Collectors.toList());
+          .build()).toList();
   }
 
   private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
