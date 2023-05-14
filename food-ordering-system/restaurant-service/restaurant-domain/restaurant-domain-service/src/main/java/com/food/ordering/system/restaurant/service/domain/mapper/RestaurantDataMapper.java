@@ -13,6 +13,7 @@ import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderEven
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class RestaurantDataMapper {
@@ -27,7 +28,7 @@ public class RestaurantDataMapper {
               .productId(product.getId())
               .quantity(product.getQuantity())
               .build())
-          .toList())
+          .collect(Collectors.toList()))
         .totalAmount(new Money(restaurantApprovalRequest.getPrice()))
         .orderStatus(OrderStatus.valueOf(restaurantApprovalRequest.getRestaurantOrderStatus().name()))
         .build())
