@@ -25,3 +25,8 @@
 
 Source code ...
 https://github.com/bidoudan/food-ordering-system
+
+### Jars
+- lombok => https://projectlombok.org/#
+- mockito => https://site.mockito.org/  https://www.javatpoint.com/mockito
+- avro => https://kapilsreed.medium.com/apache-avro-demystified-66d80426c752

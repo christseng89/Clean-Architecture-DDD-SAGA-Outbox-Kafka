@@ -21,6 +21,7 @@
     <spring-kafka.version>2.9.8</spring-kafka.version>
     <kafka-avro-serializer.version>7.0.1</kafka-avro-serializer.version>
     <avro.version>1.11.1</avro.version>
+    <postgresql.version>42.5.4</postgresql.version>
     <!-- k8s -->
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
@@ -39,17 +40,82 @@
 
   <dependencyManagement>
     <dependencies>
-      <!-- Saga ...-->
+      <!-- 0. Infrastructure Saga/Outbox/Kafka-->
       <dependency>
         <groupId>com.food.ordering.system</groupId>
         <artifactId>saga</artifactId>
         <version>${project.version}</version>
       </dependency>
 
-      <!-- Outbox ...-->
       <dependency>
         <groupId>com.food.ordering.system</groupId>
         <artifactId>outbox</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>kafka-producer</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>kafka-consumer</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>kafka-model</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>kafka-config-data</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!-- 1. Common ...-->
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>common-domain</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>common-application</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <!-- Order and Restaurant Shared Dataaccess -->
+        <artifactId>common-dataaccess</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!-- Customer ...-->
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>customer-domain-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>customer-domain-service</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>customer-application</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>customer-dataaccess</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>customer-messaging</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -124,72 +190,6 @@
         <version>${project.version}</version>
       </dependency>
 
-      <!-- Customer ...-->
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>customer-domain-core</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>customer-domain-service</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>customer-application</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>customer-dataaccess</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>customer-messaging</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <!-- Common ...-->
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>common-domain</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>common-application</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>common-dataaccess</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <!-- Kafka ...-->
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>kafka-producer</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>kafka-consumer</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>kafka-model</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.food.ordering.system</groupId>
-        <artifactId>kafka-config-data</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
       <!-- Vulnerability Temp Fixing Start ...-->
       <dependency>
         <groupId>org.yaml</groupId>
@@ -197,6 +197,13 @@
         <version>2.0</version>
       </dependency>
       <!-- Vulnerability Temp Fixing End ...-->
+
+      <!-- PostgreSQL ...-->
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${postgresql.version}</version>
+      </dependency>
 
       <!-- Test ...-->
       <dependency>
