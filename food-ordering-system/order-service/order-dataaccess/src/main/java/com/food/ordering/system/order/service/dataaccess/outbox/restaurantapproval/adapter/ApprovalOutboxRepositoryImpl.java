@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
@@ -45,7 +44,7 @@ public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
         "could be found for saga type " + sagaType))
       .stream()
       .map(approvalOutboxDataAccessMapper::approvalOutboxEntityToOrderApprovalOutboxMessage)
-      .collect(Collectors.toList()));
+      .toList());
   }
 
   @Override
