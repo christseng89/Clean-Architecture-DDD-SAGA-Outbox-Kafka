@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
@@ -41,7 +40,7 @@ public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
         "cannot be found for saga type " + sagaType))
       .stream()
       .map(orderOutboxDataAccessMapper::orderOutboxEntityToOrderOutboxMessage)
-      .collect(Collectors.toList()));
+      .toList());
   }
 
   @Override
