@@ -4,7 +4,7 @@ import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
-import com.food.ordering.system.restaurant.service.domain.event.OrderApprovalEvent;
+import com.food.ordering.system.restaurant.service.domain.event.RestaurantEvent;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantNotFoundException;
 import com.food.ordering.system.restaurant.service.domain.mapper.RestaurantDataMapper;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutboxMessage;
@@ -58,7 +58,7 @@ public class RestaurantApprovalRequestHelper {
     log.info("Processing restaurant approval for order id: {}", restaurantApprovalRequest.getOrderId());
     List<String> failureMessages = new ArrayList<>();
     Restaurant restaurant = findRestaurant(restaurantApprovalRequest);
-    OrderApprovalEvent orderApprovalEvent =
+    RestaurantEvent orderApprovalEvent =
       restaurantDomainService.validateOrder(
         restaurant,
         failureMessages);
