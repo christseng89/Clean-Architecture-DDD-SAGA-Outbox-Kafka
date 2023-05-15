@@ -1,12 +1,12 @@
 package com.food.ordering.system.order.service.domain.entity;
 
-import com.food.ordering.system.domain.entity.AggregateRoot;
+import com.food.ordering.system.domain.entity.BaseEntity;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 
 import java.util.List;
 import java.util.Objects;
 
-public class Restaurant extends AggregateRoot<RestaurantId> {
+public class Restaurant extends BaseEntity<RestaurantId> {
   private final List<Product> products;
   private final boolean active;
 

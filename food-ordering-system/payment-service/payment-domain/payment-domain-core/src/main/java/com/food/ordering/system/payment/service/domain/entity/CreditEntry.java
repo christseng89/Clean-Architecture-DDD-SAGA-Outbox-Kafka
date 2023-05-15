@@ -5,6 +5,8 @@ import com.food.ordering.system.domain.valueobject.CustomerId;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.payment.service.domain.valueobject.CreditEntryId;
 
+import java.util.Objects;
+
 public class CreditEntry extends BaseEntity<CreditEntryId> {
 
   private final CustomerId customerId;
@@ -62,5 +64,19 @@ public class CreditEntry extends BaseEntity<CreditEntryId> {
     public CreditEntry build() {
       return new CreditEntry(this);
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    CreditEntry that = (CreditEntry) o;
+    return Objects.equals(customerId, that.customerId) && Objects.equals(totalCreditAmount, that.totalCreditAmount);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), customerId, totalCreditAmount);
   }
 }

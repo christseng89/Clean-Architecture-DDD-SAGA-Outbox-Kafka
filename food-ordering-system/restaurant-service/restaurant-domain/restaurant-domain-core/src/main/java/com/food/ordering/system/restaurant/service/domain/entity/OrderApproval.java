@@ -6,6 +6,8 @@ import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.valueobject.OrderApprovalId;
 
+import java.util.Objects;
+
 public class OrderApproval extends BaseEntity<OrderApprovalId> {
   private final RestaurantId restaurantId;
   private final OrderId orderId;
@@ -66,5 +68,19 @@ public class OrderApproval extends BaseEntity<OrderApprovalId> {
     public OrderApproval build() {
       return new OrderApproval(this);
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    OrderApproval that = (OrderApproval) o;
+    return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && approvalStatus == that.approvalStatus;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), restaurantId, orderId, approvalStatus);
   }
 }

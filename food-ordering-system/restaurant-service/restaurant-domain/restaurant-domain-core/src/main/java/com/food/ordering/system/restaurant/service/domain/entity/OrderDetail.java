@@ -6,11 +6,12 @@ import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.OrderStatus;
 
 import java.util.List;
+import java.util.Objects;
 
 public class OrderDetail extends BaseEntity<OrderId> {
   private final List<Product> products;
-  private OrderStatus orderStatus;
-  private Money totalAmount;
+  private final OrderStatus orderStatus;
+  private final Money totalAmount;
 
   private OrderDetail(Builder builder) {
     setId(builder.orderId);
@@ -67,5 +68,19 @@ public class OrderDetail extends BaseEntity<OrderId> {
     public OrderDetail build() {
       return new OrderDetail(this);
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    OrderDetail that = (OrderDetail) o;
+    return Objects.equals(products, that.products) && orderStatus == that.orderStatus && Objects.equals(totalAmount, that.totalAmount);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), products, orderStatus, totalAmount);
   }
 }

@@ -8,6 +8,7 @@ import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.valueobject.OrderApprovalId;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Restaurant extends AggregateRoot<RestaurantId> {
@@ -100,5 +101,19 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     public Restaurant build() {
       return new Restaurant(this);
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Restaurant that = (Restaurant) o;
+    return active == that.active && Objects.equals(orderDetail, that.orderDetail) && Objects.equals(orderApproval, that.orderApproval);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), orderDetail, orderApproval, active);
   }
 }

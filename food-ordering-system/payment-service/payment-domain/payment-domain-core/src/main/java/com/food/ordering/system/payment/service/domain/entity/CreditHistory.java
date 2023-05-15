@@ -6,6 +6,8 @@ import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.payment.service.domain.valueobject.CreditHistoryId;
 import com.food.ordering.system.payment.service.domain.valueobject.TransactionType;
 
+import java.util.Objects;
+
 public class CreditHistory extends BaseEntity<CreditHistoryId> {
 
   private final CustomerId customerId;
@@ -67,5 +69,19 @@ public class CreditHistory extends BaseEntity<CreditHistoryId> {
     public CreditHistory build() {
       return new CreditHistory(this);
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    CreditHistory that = (CreditHistory) o;
+    return Objects.equals(customerId, that.customerId) && Objects.equals(amount, that.amount) && transactionType == that.transactionType;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), customerId, amount, transactionType);
   }
 }
