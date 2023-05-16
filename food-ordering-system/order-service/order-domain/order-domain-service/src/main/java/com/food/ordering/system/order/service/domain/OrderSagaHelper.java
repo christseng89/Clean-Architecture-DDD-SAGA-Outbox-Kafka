@@ -3,7 +3,7 @@ package com.food.ordering.system.order.service.domain;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.OrderStatus;
 import com.food.ordering.system.order.service.domain.entity.Order;
-import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException;
+import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
 import com.food.ordering.system.saga.SagaStatus;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class OrderSagaHelper {
     Optional<Order> orderResponse = orderRepository.findById(new OrderId(UUID.fromString(orderId)));
     if (orderResponse.isEmpty()) {
       log.error("Order with id: {} could not be found!", orderId);
-      throw new OrderNotFoundException("Order with id " + orderId + " could not be found!");
+      throw new OrderDomainException("Order with id " + orderId + " could not be found!");
     }
     return orderResponse.get();
   }

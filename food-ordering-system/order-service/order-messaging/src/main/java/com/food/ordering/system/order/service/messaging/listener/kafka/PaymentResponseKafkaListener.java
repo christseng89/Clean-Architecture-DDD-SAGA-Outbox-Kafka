@@ -4,7 +4,7 @@ import com.food.ordering.system.kafka.consumer.KafkaConsumer;
 import com.food.ordering.system.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.PaymentStatus;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
-import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException;
+import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.service.domain.ports.input.message.listener.payment.PaymentResponseMessageListener;
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -60,8 +60,8 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
         // work, do not throw error to prevent reading the data from kafka again!
         log.error("Caught optimistic locking exception in PaymentResponseKafkaListener for order id: {}",
           paymentResponseAvroModel.getOrderId());
-      } catch (OrderNotFoundException e) {
-        // NO-OP for OrderNotFoundException
+      } catch (OrderDomainException e) {
+        // NO-OP for OrderDomainException
         log.error("No order found for order id: {}", paymentResponseAvroModel.getOrderId());
       }
     });

@@ -7,7 +7,6 @@ import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
-import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException;
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
 import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
@@ -131,7 +130,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     Optional<Order> orderResponse = orderRepository.findById(new OrderId(UUID.fromString(orderId)));
     if (orderResponse.isEmpty()) {
       log.error("Order with id: {} could not be found!", orderId);
-      throw new OrderNotFoundException("Order with id " + orderId + " could not be found!");
+      throw new OrderDomainException("Order with id " + orderId + " could not be found!");
     }
     return orderResponse.get();
   }
