@@ -36,6 +36,6 @@ class CustomerApplicationServiceImpl implements CustomerApplicationService {
     customerMessagePublisher.publish(customerCreatedEvent);
     return customerDataMapper
       .customerToCreateCustomerResponse(customerCreatedEvent.getCustomer(),
-        "Customer saved successfully!");
+        "Customer saved successfully @ " + customerCreatedEvent.getCreatedAt());
   }
 }

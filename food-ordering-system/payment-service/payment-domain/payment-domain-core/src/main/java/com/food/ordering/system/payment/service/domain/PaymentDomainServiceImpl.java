@@ -36,14 +36,19 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     updateCreditHistory(payment, creditHistories, TransactionType.DEBIT);
     validateCreditHistory(creditEntry, creditHistories, failureMessages);
 
-    if (failureMessages.isEmpty()) {
+    if (failureMessages.isEmpty()) { // COMPLETED
       log.info("Payment is initiated for order id: {}", payment.getOrderId().getValue());
       payment.updateStatus(PaymentStatus.COMPLETED);
-      return new PaymentCompletedEvent(payment, ZonedDateTime.now(ZoneId.of(UTC)));
-    } else {
+      return new PaymentCompletedEvent(
+        payment,
+        ZonedDateTime.now(ZoneId.of(UTC)));
+    } else { // FAILED
       log.info("Payment initiation is failed for order id: {}", payment.getOrderId().getValue());
       payment.updateStatus(PaymentStatus.FAILED);
-      return new PaymentFailedEvent(payment, ZonedDateTime.now(ZoneId.of(UTC)), failureMessages);
+      return new PaymentFailedEvent(
+        payment,
+        ZonedDateTime.now(ZoneId.of(UTC)),
+        failureMessages);
     }
   }
 

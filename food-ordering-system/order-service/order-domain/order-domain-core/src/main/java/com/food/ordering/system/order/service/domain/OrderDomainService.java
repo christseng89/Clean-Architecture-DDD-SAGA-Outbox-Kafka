@@ -10,13 +10,16 @@ import java.util.List;
 
 public interface OrderDomainService {
 
-  OrderCreatedEvent validateAndInitiateOrder(Order order, Restaurant restaurant);
+  OrderCreatedEvent validateAndInitiateOrder(
+    Order order, Restaurant restaurant); // NEW -> PENDING
 
-  OrderPaidEvent payOrder(Order order);
+  OrderPaidEvent payOrder(Order order); // PENDING -> PAID
+
+  OrderCancelledEvent cancelOrderPayment(
+    Order order,
+    List<String> failureMessages); // PENDING -> CANCELLED
 
   void approveOrder(Order order);
-
-  OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages);
 
   void cancelOrder(Order order, List<String> failureMessages);
 }
