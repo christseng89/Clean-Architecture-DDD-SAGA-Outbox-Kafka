@@ -70,8 +70,8 @@ public class OrderMessagingDataMapper {
       .setRestaurantId(orderApprovalEventPayload.getRestaurantId())
       .setRestaurantOrderStatus(RestaurantOrderStatus
         .valueOf(orderApprovalEventPayload.getRestaurantOrderStatus()))
-      .setProducts(orderApprovalEventPayload.getProducts().stream().map(orderApprovalEventProduct ->
-        com.food.ordering.system.kafka.order.avro.model.Product.newBuilder()
+      .setProducts(orderApprovalEventPayload.getProducts().stream()
+      .map(orderApprovalEventProduct -> com.food.ordering.system.kafka.order.avro.model.Product.newBuilder()
           .setId(orderApprovalEventProduct.getId())
           .setQuantity(orderApprovalEventProduct.getQuantity())
           .build()).toList())

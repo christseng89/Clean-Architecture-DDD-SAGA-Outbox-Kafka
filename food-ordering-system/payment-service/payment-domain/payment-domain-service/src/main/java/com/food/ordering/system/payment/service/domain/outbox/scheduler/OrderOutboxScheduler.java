@@ -33,13 +33,13 @@ public class OrderOutboxScheduler implements OutboxScheduler {
   public void processOutboxMessage() {
     Optional<List<OrderOutboxMessage>> outboxMessagesResponse =
       orderOutboxHelper.getOrderOutboxMessageByOutboxStatus(OutboxStatus.STARTED);
-      
+
     if (outboxMessagesResponse.isPresent() && !outboxMessagesResponse.get().isEmpty()) {
       List<OrderOutboxMessage> outboxMessages = outboxMessagesResponse.get();
 
       log.info("Received {} OrderOutboxMessage with ids {}, sending to message bus!", outboxMessages.size(),
-        outboxMessages.stream().map(outboxMessage ->
-          outboxMessage.getId().toString()).collect(Collectors.joining(",")));
+        outboxMessages.stream()
+          .map(outboxMessage -> outboxMessage.getId().toString()).collect(Collectors.joining(",")));
 
       outboxMessages.forEach(orderOutboxMessage ->
         paymentResponseMessagePublisher.publish(orderOutboxMessage,

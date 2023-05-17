@@ -36,8 +36,10 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
       List<OrderPaymentOutboxMessage> outboxMessages = outboxMessagesResponse.get();
       log.info("Received {} OrderPaymentOutboxMessage for clean-up. The payloads: {}",
         outboxMessages.size(),
-        outboxMessages.stream().map(OrderPaymentOutboxMessage::getPayload)
+        outboxMessages.stream()
+          .map(OrderPaymentOutboxMessage::getPayload)
           .collect(Collectors.joining("\n")));
+      
       paymentOutboxHelper.deletePaymentOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.COMPLETED,
         SagaStatus.SUCCEEDED,

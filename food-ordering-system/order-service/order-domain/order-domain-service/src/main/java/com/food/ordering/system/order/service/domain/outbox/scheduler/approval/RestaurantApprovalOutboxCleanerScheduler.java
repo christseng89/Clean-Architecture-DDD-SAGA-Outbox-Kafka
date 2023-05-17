@@ -35,7 +35,8 @@ public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler
       List<OrderApprovalOutboxMessage> outboxMessages = outboxMessagesResponse.get();
       log.info("Received {} OrderApprovalOutboxMessage for clean-up. The payloads: {}",
         outboxMessages.size(),
-        outboxMessages.stream().map(OrderApprovalOutboxMessage::getPayload)
+        outboxMessages.stream()
+          .map(OrderApprovalOutboxMessage::getPayload)
           .collect(Collectors.joining("\n")));
       approvalOutboxHelper.deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.COMPLETED,

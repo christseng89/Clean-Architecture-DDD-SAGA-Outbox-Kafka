@@ -26,11 +26,11 @@ public class RestaurantMessagingDataMapper {
       .restaurantOrderStatus(RestaurantOrderStatus.valueOf(restaurantApprovalRequestAvroModel
         .getRestaurantOrderStatus().name()))
       .products(restaurantApprovalRequestAvroModel.getProducts()
-        .stream().map(avroModel ->
-          Product.builder()
-            .productId(new ProductId(UUID.fromString(avroModel.getId())))
-            .quantity(avroModel.getQuantity())
-            .build())
+        .stream()
+        .map(avroModel -> Product.builder()
+          .productId(new ProductId(UUID.fromString(avroModel.getId())))
+          .quantity(avroModel.getQuantity())
+          .build())
         .toList())
       .price(restaurantApprovalRequestAvroModel.getPrice())
       .createdAt(restaurantApprovalRequestAvroModel.getCreatedAt())
