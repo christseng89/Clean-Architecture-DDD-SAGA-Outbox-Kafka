@@ -1,6 +1,6 @@
 package com.food.ordering.system.customer.service.domain;
 
-import com.food.ordering.system.customer.service.domain.dto.CreateCustomerCommand;
+import com.food.ordering.system.customer.service.domain.dto.CreateCustomer;
 import com.food.ordering.system.customer.service.domain.dto.CreateCustomerResponse;
 import com.food.ordering.system.customer.service.domain.event.CustomerCreatedEvent;
 import com.food.ordering.system.customer.service.domain.mapper.CustomerDataMapper;
@@ -15,24 +15,24 @@ import org.springframework.validation.annotation.Validated;
 @Service
 class CustomerApplicationServiceImpl implements CustomerApplicationService {
 
-  private final CustomerCreateCommandHandler customerCreateCommandHandler;
+  private final CustomerCreateHandler customerCreateHandler;
 
   private final CustomerDataMapper customerDataMapper;
 
   private final CustomerMessagePublisher customerMessagePublisher;
 
   public CustomerApplicationServiceImpl(
-    CustomerCreateCommandHandler customerCreateCommandHandler,
+    CustomerCreateHandler customerCreateHandler,
     CustomerDataMapper customerDataMapper,
     CustomerMessagePublisher customerMessagePublisher) {
-    this.customerCreateCommandHandler = customerCreateCommandHandler;
+    this.customerCreateHandler = customerCreateHandler;
     this.customerDataMapper = customerDataMapper;
     this.customerMessagePublisher = customerMessagePublisher;
   }
 
   @Override
-  public CreateCustomerResponse createCustomer(CreateCustomerCommand createCustomerCommand) {
-    CustomerCreatedEvent customerCreatedEvent = customerCreateCommandHandler.createCustomer(createCustomerCommand);
+  public CreateCustomerResponse createCustomer(CreateCustomer createCustomer) {
+    CustomerCreatedEvent customerCreatedEvent = customerCreateHandler.createCustomer(createCustomer);
     customerMessagePublisher.publish(customerCreatedEvent);
     return customerDataMapper
       .customerToCreateCustomerResponse(customerCreatedEvent.getCustomer(),

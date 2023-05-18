@@ -1,6 +1,6 @@
 package com.food.ordering.system.customer.service.domain;
 
-import com.food.ordering.system.customer.service.domain.dto.CreateCustomerCommand;
+import com.food.ordering.system.customer.service.domain.dto.CreateCustomer;
 import com.food.ordering.system.customer.service.domain.entity.Customer;
 import com.food.ordering.system.customer.service.domain.event.CustomerCreatedEvent;
 import com.food.ordering.system.customer.service.domain.exception.CustomerDomainException;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
-class CustomerCreateCommandHandler {
+class CustomerCreateHandler {
 
   private final CustomerDomainService customerDomainService;
 
@@ -20,7 +20,7 @@ class CustomerCreateCommandHandler {
 
   private final CustomerDataMapper customerDataMapper;
 
-  public CustomerCreateCommandHandler(
+  public CustomerCreateHandler(
     CustomerDomainService customerDomainService,
     CustomerRepository customerRepository,
     CustomerDataMapper customerDataMapper) {
@@ -30,16 +30,16 @@ class CustomerCreateCommandHandler {
   }
 
   @Transactional
-  public CustomerCreatedEvent createCustomer(CreateCustomerCommand createCustomerCommand) {
-    Customer customer = customerDataMapper.createCustomerCommandToCustomer(createCustomerCommand);
+  public CustomerCreatedEvent createCustomer(CreateCustomer createCustomer) {
+    Customer customer = customerDataMapper.createCustomerCommandToCustomer(createCustomer);
     CustomerCreatedEvent customerCreatedEvent = customerDomainService.validateAndInitiateCustomer(customer);
     Customer savedCustomer = customerRepository.createCustomer(customer);
     if (savedCustomer == null) {
-      log.error("Could not save customer with id: {}", createCustomerCommand.getCustomerId());
+      log.error("Could not save customer with id: {}", createCustomer.getCustomerId());
       throw new CustomerDomainException("Could not save customer with id " +
-        createCustomerCommand.getCustomerId());
+        createCustomer.getCustomerId());
     }
-    log.info("Returning CustomerCreatedEvent for customer id: {}", createCustomerCommand.getCustomerId());
+    log.info("Returning CustomerCreatedEvent for customer id: {}", createCustomer.getCustomerId());
     return customerCreatedEvent;
   }
 }

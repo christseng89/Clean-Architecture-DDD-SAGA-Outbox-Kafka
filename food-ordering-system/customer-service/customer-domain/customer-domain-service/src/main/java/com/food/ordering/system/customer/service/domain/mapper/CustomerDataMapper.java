@@ -1,6 +1,6 @@
 package com.food.ordering.system.customer.service.domain.mapper;
 
-import com.food.ordering.system.customer.service.domain.dto.CreateCustomerCommand;
+import com.food.ordering.system.customer.service.domain.dto.CreateCustomer;
 import com.food.ordering.system.customer.service.domain.dto.CreateCustomerResponse;
 import com.food.ordering.system.customer.service.domain.entity.Customer;
 import com.food.ordering.system.domain.valueobject.CustomerId;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 public class CustomerDataMapper {
 
   public Customer createCustomerCommandToCustomer(
-    CreateCustomerCommand createCustomerCommand) {
+    CreateCustomer createCustomer) {
     return new Customer(
-      new CustomerId(createCustomerCommand.getCustomerId()),
-      createCustomerCommand.getUsername(),
-      createCustomerCommand.getFirstName(),
-      createCustomerCommand.getLastName());
+      new CustomerId(createCustomer.getCustomerId()),
+      createCustomer.getUsername(),
+      createCustomer.getFirstName(),
+      createCustomer.getLastName());
   }
 
   public CreateCustomerResponse customerToCreateCustomerResponse(Customer customer, String message) {
