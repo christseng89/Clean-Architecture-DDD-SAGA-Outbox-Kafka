@@ -3,7 +3,7 @@ package com.food.ordering.system.order.service.dataaccess.outbox.restaurantappro
 import com.food.ordering.system.order.service.dataaccess.outbox.restaurantapproval.exception.ApprovalOutboxNotFoundException;
 import com.food.ordering.system.order.service.dataaccess.outbox.restaurantapproval.mapper.ApprovalOutboxDataAccessMapper;
 import com.food.ordering.system.order.service.dataaccess.outbox.restaurantapproval.repository.ApprovalOutboxJpaRepository;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
 import com.food.ordering.system.order.service.domain.ports.output.repository.ApprovalOutboxRepository;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
@@ -28,15 +28,15 @@ public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
   }
 
   @Override
-  public OrderApprovalOutboxMessage save(OrderApprovalOutboxMessage orderApprovalOutboxMessage) {
+  public OrderRestaurantOutboxMessage save(OrderRestaurantOutboxMessage orderRestaurantOutboxMessage) {
     return approvalOutboxDataAccessMapper
       .approvalOutboxEntityToOrderApprovalOutboxMessage(approvalOutboxJpaRepository
         .save(approvalOutboxDataAccessMapper
-          .orderCreatedOutboxMessageToOutboxEntity(orderApprovalOutboxMessage)));
+          .orderCreatedOutboxMessageToOutboxEntity(orderRestaurantOutboxMessage)));
   }
 
   @Override
-  public Optional<List<OrderApprovalOutboxMessage>> findByTypeAndOutboxStatusAndSagaStatus(
+  public Optional<List<OrderRestaurantOutboxMessage>> findByTypeAndOutboxStatusAndSagaStatus(
     String sagaType, OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
     return Optional.of(approvalOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(
         sagaType, outboxStatus, Arrays.asList(sagaStatus))
@@ -48,7 +48,7 @@ public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
   }
 
   @Override
-  public Optional<OrderApprovalOutboxMessage> findByTypeAndSagaIdAndSagaStatus(
+  public Optional<OrderRestaurantOutboxMessage> findByTypeAndSagaIdAndSagaStatus(
     String type, UUID sagaId, SagaStatus... sagaStatus) {
     return approvalOutboxJpaRepository
       .findByTypeAndSagaIdAndSagaStatusIn(type, sagaId,

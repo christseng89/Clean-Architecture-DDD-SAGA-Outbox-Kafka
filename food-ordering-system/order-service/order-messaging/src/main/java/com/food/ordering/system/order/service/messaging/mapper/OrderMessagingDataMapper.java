@@ -4,8 +4,8 @@ import com.food.ordering.system.kafka.order.avro.model.*;
 import com.food.ordering.system.order.service.domain.dto.message.CustomerMessage;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
 import com.food.ordering.system.order.service.domain.dto.message.RestaurantResponse;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventPayload;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -61,22 +61,22 @@ public class OrderMessagingDataMapper {
 
   public RestaurantApprovalRequestAvroModel
   orderApprovalEventToRestaurantApprovalRequestAvroModel(
-    String sagaId, OrderApprovalEventPayload
-    orderApprovalEventPayload) {
+    String sagaId, OrderRestaurantEventPayload
+    orderRestaurantEventPayload) {
     return RestaurantApprovalRequestAvroModel.newBuilder()
       .setId(UUID.randomUUID().toString())
       .setSagaId(sagaId)
-      .setOrderId(orderApprovalEventPayload.getOrderId())
-      .setRestaurantId(orderApprovalEventPayload.getRestaurantId())
+      .setOrderId(orderRestaurantEventPayload.getOrderId())
+      .setRestaurantId(orderRestaurantEventPayload.getRestaurantId())
       .setRestaurantOrderStatus(RestaurantOrderStatus
-        .valueOf(orderApprovalEventPayload.getRestaurantOrderStatus()))
-      .setProducts(orderApprovalEventPayload.getProducts().stream()
+        .valueOf(orderRestaurantEventPayload.getRestaurantOrderStatus()))
+      .setProducts(orderRestaurantEventPayload.getProducts().stream()
         .map(orderApprovalEventProduct -> com.food.ordering.system.kafka.order.avro.model.Product.newBuilder()
           .setId(orderApprovalEventProduct.getId())
           .setQuantity(orderApprovalEventProduct.getQuantity())
           .build()).toList())
-      .setPrice(orderApprovalEventPayload.getPrice())
-      .setCreatedAt(orderApprovalEventPayload.getCreatedAt().toInstant())
+      .setPrice(orderRestaurantEventPayload.getPrice())
+      .setCreatedAt(orderRestaurantEventPayload.getCreatedAt().toInstant())
       .build();
   }
 

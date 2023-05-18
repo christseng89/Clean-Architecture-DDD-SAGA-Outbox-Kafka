@@ -1,7 +1,7 @@
 package com.food.ordering.system.order.service.domain.mapper;
 
 import com.food.ordering.system.domain.valueobject.*;
-import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.create.OrderAddress;
 import com.food.ordering.system.order.service.domain.dto.message.CustomerMessage;
@@ -10,9 +10,9 @@ import com.food.ordering.system.order.service.domain.entity.*;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
 import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalEventProduct;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventPayload;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventProduct;
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import org.springframework.stereotype.Component;
 
@@ -22,21 +22,21 @@ import java.util.UUID;
 @Component
 public class OrderDataMapper {
 
-  public Restaurant createOrderCommandToRestaurant(CreateOrderCommand createOrderCommand) {
+  public Restaurant createOrderCommandToRestaurant(CreateOrderRequest createOrderRequestCommand) {
     return Restaurant.builder()
-      .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-      .products(createOrderCommand.getItems().stream()
+      .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
+      .products(createOrderRequestCommand.getItems().stream()
         .map(orderItem -> new Product(new ProductId(orderItem.getProductId())))
         .toList()).build();
   }
 
-  public Order createOrderCommandToOrder(CreateOrderCommand createOrderCommand) {
+  public Order createOrderCommandToOrder(CreateOrderRequest createOrderRequestCommand) {
     return Order.builder()
-      .customerId(new CustomerId(createOrderCommand.getCustomerId()))
-      .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-      .deliveryAddress(orderAddressToStreetAddress(createOrderCommand.getAddress()))
-      .price(new Money(createOrderCommand.getPrice()))
-      .items(orderItemsToOrderItemEntities(createOrderCommand.getItems()))
+      .customerId(new CustomerId(createOrderRequestCommand.getCustomerId()))
+      .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
+      .deliveryAddress(orderAddressToStreetAddress(createOrderRequestCommand.getAddress()))
+      .price(new Money(createOrderRequestCommand.getPrice()))
+      .items(orderItemsToOrderItemEntities(createOrderRequestCommand.getItems()))
       .build();
   }
 
@@ -77,13 +77,13 @@ public class OrderDataMapper {
       .build();
   }
 
-  public OrderApprovalEventPayload orderPaidEventToOrderApprovalEventPayload(OrderPaidEvent orderPaidEvent) {
-    return OrderApprovalEventPayload.builder()
+  public OrderRestaurantEventPayload orderPaidEventToOrderApprovalEventPayload(OrderPaidEvent orderPaidEvent) {
+    return OrderRestaurantEventPayload.builder()
       .orderId(orderPaidEvent.getOrder().getId().getValue().toString())
       .restaurantId(orderPaidEvent.getOrder().getRestaurantId().getValue().toString())
       .restaurantOrderStatus(RestaurantOrderStatus.PAID.name())
       .products(orderPaidEvent.getOrder().getItems().stream()
-        .map(orderItem -> OrderApprovalEventProduct.builder()
+        .map(orderItem -> OrderRestaurantEventProduct.builder()
           .id(orderItem.getProduct().getId().getValue().toString())
           .quantity(orderItem.getQuantity())
           .build()).toList())

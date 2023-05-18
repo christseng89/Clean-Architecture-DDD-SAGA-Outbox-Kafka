@@ -11,23 +11,23 @@ import static com.food.ordering.system.order.service.domain.entity.Order.FAILURE
 @Slf4j
 @Validated
 @Service
-public class RestaurantApprovalResponseMessageListenerImpl implements RestaurantApprovalResponseMessageListener {
+public class RestaurantResponseMessageListenerImpl implements RestaurantApprovalResponseMessageListener {
 
-  private final OrderApprovalSaga orderApprovalSaga;
+  private final OrderRestaurantSaga orderRestaurantSaga;
 
-  public RestaurantApprovalResponseMessageListenerImpl(OrderApprovalSaga orderApprovalSaga) {
-    this.orderApprovalSaga = orderApprovalSaga;
+  public RestaurantResponseMessageListenerImpl(OrderRestaurantSaga orderRestaurantSaga) {
+    this.orderRestaurantSaga = orderRestaurantSaga;
   }
 
   @Override
   public void orderApproved(RestaurantResponse restaurantResponse) {
-    orderApprovalSaga.process(restaurantResponse);
+    orderRestaurantSaga.process(restaurantResponse);
     log.info("Order is approved for order id: {}", restaurantResponse.getOrderId());
   }
 
   @Override
   public void orderRejected(RestaurantResponse restaurantResponse) {
-    orderApprovalSaga.rollback(restaurantResponse);
+    orderRestaurantSaga.rollback(restaurantResponse);
     log.info("Order Approval Saga rollback operation is completed for order id: {} with failure messages: {}",
       restaurantResponse.getOrderId(),
       String.join(FAILURE_MESSAGE_DELIMITER, restaurantResponse.getFailureMessages()));

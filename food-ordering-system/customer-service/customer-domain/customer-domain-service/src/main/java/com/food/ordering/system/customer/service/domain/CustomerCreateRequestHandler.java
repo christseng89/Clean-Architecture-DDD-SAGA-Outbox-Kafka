@@ -1,6 +1,6 @@
 package com.food.ordering.system.customer.service.domain;
 
-import com.food.ordering.system.customer.service.domain.dto.CreateCustomer;
+import com.food.ordering.system.customer.service.domain.dto.CreateCustomerRequest;
 import com.food.ordering.system.customer.service.domain.entity.Customer;
 import com.food.ordering.system.customer.service.domain.event.CustomerCreatedEvent;
 import com.food.ordering.system.customer.service.domain.exception.CustomerDomainException;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
-class CustomerCreateHandler {
+class CustomerCreateRequestHandler {
 
   private final CustomerDomainService customerDomainService;
 
@@ -20,7 +20,7 @@ class CustomerCreateHandler {
 
   private final CustomerDataMapper customerDataMapper;
 
-  public CustomerCreateHandler(
+  public CustomerCreateRequestHandler(
     CustomerDomainService customerDomainService,
     CustomerRepository customerRepository,
     CustomerDataMapper customerDataMapper) {
@@ -30,16 +30,16 @@ class CustomerCreateHandler {
   }
 
   @Transactional
-  public CustomerCreatedEvent createCustomer(CreateCustomer createCustomer) {
-    Customer customer = customerDataMapper.createCustomerCommandToCustomer(createCustomer);
+  public CustomerCreatedEvent createCustomer(CreateCustomerRequest createCustomerRequest) {
+    Customer customer = customerDataMapper.createCustomerCommandToCustomer(createCustomerRequest);
     CustomerCreatedEvent customerCreatedEvent = customerDomainService.validateAndInitiateCustomer(customer);
     Customer savedCustomer = customerRepository.createCustomer(customer);
     if (savedCustomer == null) {
-      log.error("Could not save customer with id: {}", createCustomer.getCustomerId());
+      log.error("Could not save customer with id: {}", createCustomerRequest.getCustomerId());
       throw new CustomerDomainException("Could not save customer with id " +
-        createCustomer.getCustomerId());
+        createCustomerRequest.getCustomerId());
     }
-    log.info("Returning CustomerCreatedEvent for customer id: {}", createCustomer.getCustomerId());
+    log.info("Returning CustomerCreatedEvent for customer id: {}", createCustomerRequest.getCustomerId());
     return customerCreatedEvent;
   }
 }

@@ -1,6 +1,6 @@
 package com.food.ordering.system.order.service.domain;
 
-import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRequest;
 import com.food.ordering.system.order.service.domain.entity.Customer;
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.entity.Restaurant;
@@ -45,23 +45,23 @@ public class OrderCreateHelper {
   }
 
   @Transactional
-  public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
-    checkCustomer(createOrderCommand.getCustomerId());
-    Restaurant restaurant = checkRestaurant(createOrderCommand);
-    Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
+  public OrderCreatedEvent persistOrder(CreateOrderRequest createOrderRequestCommand) {
+    checkCustomer(createOrderRequestCommand.getCustomerId());
+    Restaurant restaurant = checkRestaurant(createOrderRequestCommand);
+    Order order = orderDataMapper.createOrderCommandToOrder(createOrderRequestCommand);
     OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant);
     saveOrder(order);
     log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
     return orderCreatedEvent;
   }
 
-  private Restaurant checkRestaurant(CreateOrderCommand createOrderCommand) {
-    Restaurant restaurant = orderDataMapper.createOrderCommandToRestaurant(createOrderCommand);
+  private Restaurant checkRestaurant(CreateOrderRequest createOrderRequestCommand) {
+    Restaurant restaurant = orderDataMapper.createOrderCommandToRestaurant(createOrderRequestCommand);
     Optional<Restaurant> optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant);
     if (optionalRestaurant.isEmpty()) {
-      log.warn("Could not find restaurant with restaurant id: {}", createOrderCommand.getRestaurantId());
+      log.warn("Could not find restaurant with restaurant id: {}", createOrderRequestCommand.getRestaurantId());
       throw new OrderDomainException("Could not find restaurant with restaurant id: " +
-        createOrderCommand.getRestaurantId());
+        createOrderRequestCommand.getRestaurantId());
     }
     return optionalRestaurant.get();
   }

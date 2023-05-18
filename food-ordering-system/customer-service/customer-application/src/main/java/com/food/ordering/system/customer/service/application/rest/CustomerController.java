@@ -1,6 +1,6 @@
 package com.food.ordering.system.customer.service.application.rest;
 
-import com.food.ordering.system.customer.service.domain.dto.CreateCustomer;
+import com.food.ordering.system.customer.service.domain.dto.CreateCustomerRequest;
 import com.food.ordering.system.customer.service.domain.dto.CreateCustomerResponse;
 import com.food.ordering.system.customer.service.domain.ports.input.service.CustomerApplicationService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +22,11 @@ public class CustomerController {
 
   @PostMapping
   public ResponseEntity<CreateCustomerResponse> createCustomer(
-    @RequestBody CreateCustomer createCustomer) {
-    log.info("Creating customer with username: {}", createCustomer.getUsername());
+    @RequestBody CreateCustomerRequest createCustomerRequest) {
+    log.info("Creating customer with username: {}", createCustomerRequest.getUsername());
 
     CreateCustomerResponse response = customerApplicationService.
-      createCustomer(createCustomer);
+      createCustomer(createCustomerRequest);
     return ResponseEntity.ok(response);
   }
 

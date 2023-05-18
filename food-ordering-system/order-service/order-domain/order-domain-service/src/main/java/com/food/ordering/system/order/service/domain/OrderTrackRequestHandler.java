@@ -1,6 +1,6 @@
 package com.food.ordering.system.order.service.domain;
 
-import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery;
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
@@ -15,13 +15,13 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-public class OrderTrackCommandHandler {
+public class OrderTrackRequestHandler {
 
   private final OrderDataMapper orderDataMapper;
 
   private final OrderRepository orderRepository;
 
-  public OrderTrackCommandHandler(
+  public OrderTrackRequestHandler(
     OrderDataMapper orderDataMapper,
     OrderRepository orderRepository) {
     this.orderDataMapper = orderDataMapper;
@@ -29,13 +29,13 @@ public class OrderTrackCommandHandler {
   }
 
   @Transactional(readOnly = true)
-  public TrackOrderResponse trackOrder(TrackOrderQuery trackOrderQuery) {
+  public TrackOrderResponse trackOrder(TrackOrderRequest trackOrderRequest) {
     Optional<Order> orderResult =
-      orderRepository.findByTrackingId(new TrackingId(trackOrderQuery.getOrderTrackingId()));
+      orderRepository.findByTrackingId(new TrackingId(trackOrderRequest.getOrderTrackingId()));
     if (orderResult.isEmpty()) {
-      log.warn("Could not find order with tracking id: {}", trackOrderQuery.getOrderTrackingId());
+      log.warn("Could not find order with tracking id: {}", trackOrderRequest.getOrderTrackingId());
       throw new OrderDomainException("Could not find order with tracking id: " +
-        trackOrderQuery.getOrderTrackingId());
+        trackOrderRequest.getOrderTrackingId());
     }
     return orderDataMapper.orderToTrackOrderResponse(orderResult.get());
   }

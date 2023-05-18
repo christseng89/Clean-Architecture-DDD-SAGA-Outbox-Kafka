@@ -4,8 +4,8 @@ import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequest
 import com.food.ordering.system.kafka.producer.KafkaMessageHelper;
 import com.food.ordering.system.kafka.producer.service.KafkaProducer;
 import com.food.ordering.system.order.service.domain.config.OrderServiceConfigData;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventPayload;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
 import com.food.ordering.system.outbox.OutboxStatus;
@@ -37,22 +37,22 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
   @Override
   public void publish(
     // Order Restaurant Approval Outbox
-    OrderApprovalOutboxMessage orderApprovalOutboxMessage,
-    BiConsumer<OrderApprovalOutboxMessage, OutboxStatus> outboxCallback) {
-    OrderApprovalEventPayload orderApprovalEventPayload =
-      kafkaMessageHelper.getOrderEventPayload(orderApprovalOutboxMessage.getPayload(),
-        OrderApprovalEventPayload.class);
+    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage,
+    BiConsumer<OrderRestaurantOutboxMessage, OutboxStatus> outboxCallback) {
+    OrderRestaurantEventPayload orderRestaurantEventPayload =
+      kafkaMessageHelper.getOrderEventPayload(orderRestaurantOutboxMessage.getPayload(),
+        OrderRestaurantEventPayload.class);
 
-    String sagaId = orderApprovalOutboxMessage.getSagaId().toString();
+    String sagaId = orderRestaurantOutboxMessage.getSagaId().toString();
 
     log.info("Received OrderApprovalOutboxMessage for order id: {} and saga id: {}",
-      orderApprovalEventPayload.getOrderId(), sagaId);
+      orderRestaurantEventPayload.getOrderId(), sagaId);
 
     try {
       RestaurantApprovalRequestAvroModel restaurantApprovalRequestAvroModel =
         orderMessagingDataMapper
           .orderApprovalEventToRestaurantApprovalRequestAvroModel(sagaId,
-            orderApprovalEventPayload);
+            orderRestaurantEventPayload);
 
       // Approval Request
       String topicName =
@@ -65,16 +65,16 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
         kafkaMessageHelper.getKafkaCallback(
           topicName,
           restaurantApprovalRequestAvroModel,
-          orderApprovalOutboxMessage,
+          orderRestaurantOutboxMessage,
           outboxCallback,
-          orderApprovalEventPayload.getOrderId(),
+          orderRestaurantEventPayload.getOrderId(),
           "RestaurantApprovalRequestAvroModel"));
 
       log.info("OrderApprovalEventPayload sent to Kafka for order id: {} and saga id: {}",
         restaurantApprovalRequestAvroModel.getOrderId(), sagaId);
     } catch (Exception e) {
       log.error("Error while sending OrderApprovalEventPayload to kafka for order id: {} and saga id: {}," +
-        " error: {}", orderApprovalEventPayload.getOrderId(), sagaId, e.getMessage());
+        " error: {}", orderRestaurantEventPayload.getOrderId(), sagaId, e.getMessage());
     }
   }
 }

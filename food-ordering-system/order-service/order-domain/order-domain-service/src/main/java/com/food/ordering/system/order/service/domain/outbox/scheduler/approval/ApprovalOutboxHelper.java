@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.food.ordering.system.domain.valueobject.OrderStatus;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventPayload;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
 import com.food.ordering.system.order.service.domain.ports.output.repository.ApprovalOutboxRepository;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
@@ -34,7 +34,7 @@ public class ApprovalOutboxHelper {
   }
 
   @Transactional(readOnly = true)
-  public Optional<List<OrderApprovalOutboxMessage>>
+  public Optional<List<OrderRestaurantOutboxMessage>>
   getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
     OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
     return approvalOutboxRepository.findByTypeAndOutboxStatusAndSagaStatus(
@@ -42,7 +42,7 @@ public class ApprovalOutboxHelper {
   }
 
   @Transactional(readOnly = true)
-  public Optional<OrderApprovalOutboxMessage>
+  public Optional<OrderRestaurantOutboxMessage>
   getApprovalOutboxMessageBySagaIdAndSagaStatus(
     UUID sagaId, SagaStatus... sagaStatus) {
     return approvalOutboxRepository.findByTypeAndSagaIdAndSagaStatus(
@@ -50,31 +50,31 @@ public class ApprovalOutboxHelper {
   }
 
   @Transactional
-  public void save(OrderApprovalOutboxMessage orderApprovalOutboxMessage) {
-    OrderApprovalOutboxMessage response = approvalOutboxRepository
-      .save(orderApprovalOutboxMessage);
+  public void save(OrderRestaurantOutboxMessage orderRestaurantOutboxMessage) {
+    OrderRestaurantOutboxMessage response = approvalOutboxRepository
+      .save(orderRestaurantOutboxMessage);
     if (response == null) {
       log.error("Could not save OrderApprovalOutboxMessage with outbox id: {}",
-        orderApprovalOutboxMessage.getId());
+        orderRestaurantOutboxMessage.getId());
       throw new OrderDomainException("Could not save OrderApprovalOutboxMessage with outbox id: " +
-        orderApprovalOutboxMessage.getId());
+        orderRestaurantOutboxMessage.getId());
     }
-    log.info("OrderApprovalOutboxMessage saved with outbox id: {}", orderApprovalOutboxMessage.getId());
+    log.info("OrderApprovalOutboxMessage saved with outbox id: {}", orderRestaurantOutboxMessage.getId());
   }
 
   @Transactional
   public void saveApprovalOutboxMessage(
-    OrderApprovalEventPayload orderApprovalEventPayload,
+    OrderRestaurantEventPayload orderRestaurantEventPayload,
     OrderStatus orderStatus,
     SagaStatus sagaStatus,
     OutboxStatus outboxStatus,
     UUID sagaId) {
-    save(OrderApprovalOutboxMessage.builder()
+    save(OrderRestaurantOutboxMessage.builder()
       .id(UUID.randomUUID())
       .sagaId(sagaId)
-      .createdAt(orderApprovalEventPayload.getCreatedAt())
+      .createdAt(orderRestaurantEventPayload.getCreatedAt())
       .type(ORDER_SAGA_NAME)
-      .payload(createPayload(orderApprovalEventPayload))
+      .payload(createPayload(orderRestaurantEventPayload))
       .orderStatus(orderStatus)
       .sagaStatus(sagaStatus)
       .outboxStatus(outboxStatus)
@@ -89,14 +89,14 @@ public class ApprovalOutboxHelper {
       ORDER_SAGA_NAME, outboxStatus, sagaStatus);
   }
 
-  private String createPayload(OrderApprovalEventPayload orderApprovalEventPayload) {
+  private String createPayload(OrderRestaurantEventPayload orderRestaurantEventPayload) {
     try {
-      return objectMapper.writeValueAsString(orderApprovalEventPayload);
+      return objectMapper.writeValueAsString(orderRestaurantEventPayload);
     } catch (JsonProcessingException e) {
       log.error("Could not create OrderApprovalEventPayload for order id: {}",
-        orderApprovalEventPayload.getOrderId(), e);
+        orderRestaurantEventPayload.getOrderId(), e);
       throw new OrderDomainException("Could not create OrderApprovalEventPayload for order id: " +
-        orderApprovalEventPayload.getOrderId(), e);
+        orderRestaurantEventPayload.getOrderId(), e);
     }
   }
 

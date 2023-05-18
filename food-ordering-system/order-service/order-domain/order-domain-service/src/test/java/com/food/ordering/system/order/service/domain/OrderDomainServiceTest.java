@@ -3,7 +3,7 @@ package com.food.ordering.system.order.service.domain;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.food.ordering.system.domain.valueobject.*;
-import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.create.OrderAddress;
 import com.food.ordering.system.order.service.domain.dto.create.OrderItem;
@@ -63,13 +63,13 @@ public class OrderDomainServiceTest {
   private PaymentOutboxRepository paymentOutboxRepository;
   @Autowired
   private ObjectMapper objectMapper;
-  private CreateOrderCommand createOrderCommand;
-  private CreateOrderCommand createOrderCommandWrongPrice;
-  private CreateOrderCommand createOrderCommandWrongProductPrice;
+  private CreateOrderRequest createOrderRequestCommand;
+  private CreateOrderRequest createOrderRequestCommandWrongPrice;
+  private CreateOrderRequest createOrderRequestCommandWrongProductPrice;
 
   @BeforeAll
   public void init() {
-    createOrderCommand = CreateOrderCommand.builder()
+    createOrderRequestCommand = CreateOrderRequest.builder()
       .customerId(CUSTOMER_ID)
       .restaurantId(RESTAURANT_ID)
       .address(OrderAddress.builder()
@@ -92,7 +92,7 @@ public class OrderDomainServiceTest {
           .build()))
       .build();
 
-    createOrderCommandWrongPrice = CreateOrderCommand.builder()
+    createOrderRequestCommandWrongPrice = CreateOrderRequest.builder()
       .customerId(CUSTOMER_ID)
       .restaurantId(RESTAURANT_ID)
       .address(OrderAddress.builder()
@@ -115,7 +115,7 @@ public class OrderDomainServiceTest {
           .build()))
       .build();
 
-    createOrderCommandWrongProductPrice = CreateOrderCommand.builder()
+    createOrderRequestCommandWrongProductPrice = CreateOrderRequest.builder()
       .customerId(CUSTOMER_ID)
       .restaurantId(RESTAURANT_ID)
       .address(OrderAddress.builder()
@@ -141,7 +141,7 @@ public class OrderDomainServiceTest {
     Customer customer = new Customer(new CustomerId(CUSTOMER_ID));
 
     Restaurant restaurantResponse = Restaurant.builder()
-      .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
+      .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
       .products(List.of(
         new Product(new ProductId(PRODUCT_ID), "product-1",
           new Money(new BigDecimal("50.00"))),
@@ -150,13 +150,13 @@ public class OrderDomainServiceTest {
       .active(true)
       .build();
 
-    Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
+    Order order = orderDataMapper.createOrderCommandToOrder(createOrderRequestCommand);
     order.setId(new OrderId(ORDER_ID));
 
     when(customerRepository.findCustomer(CUSTOMER_ID))
       .thenReturn(Optional.of(customer));
     when(restaurantRepository
-      .findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
+      .findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderRequestCommand)))
       .thenReturn(Optional.of(restaurantResponse));
     when(orderRepository.save(any(Order.class)))
       .thenReturn(order);
@@ -167,7 +167,7 @@ public class OrderDomainServiceTest {
 
   @Test
   public void testCreateOrder() {
-    CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderCommand);
+    CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderRequestCommand);
     assertEquals(createOrderResponse.getOrderStatus(), OrderStatus.PENDING);
     assertEquals(createOrderResponse.getMessage(), "Order created successfully");
 
@@ -179,7 +179,7 @@ public class OrderDomainServiceTest {
   public void testCreateOrderWithWrongTotalPrice() {
     OrderDomainException orderDomainException =
       assertThrows(OrderDomainException.class,
-        () -> orderApplicationService.createOrder(createOrderCommandWrongPrice));
+        () -> orderApplicationService.createOrder(createOrderRequestCommandWrongPrice));
 
     System.out.println("\nWrong total price...\n");
     assertEquals(orderDomainException.getMessage(),
@@ -190,7 +190,7 @@ public class OrderDomainServiceTest {
   public void testCreateOrderWithWrongProductPrice() {
     OrderDomainException orderDomainException = assertThrows(
       OrderDomainException.class,
-      () -> orderApplicationService.createOrder(createOrderCommandWrongProductPrice));
+      () -> orderApplicationService.createOrder(createOrderRequestCommandWrongProductPrice));
 
     System.out.println("\nWrong product ID " + PRODUCT_ID + " price...\n");
     assertEquals(orderDomainException.getMessage(),
@@ -200,7 +200,7 @@ public class OrderDomainServiceTest {
   @Test
   public void testCreateOrderWithPassiveRestaurant() {
     Restaurant restaurantResponse = Restaurant.builder()
-      .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
+      .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
       .products(List.of(
         new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
         new Product(new ProductId(PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
@@ -208,12 +208,12 @@ public class OrderDomainServiceTest {
       .build();
 
     when(restaurantRepository
-      .findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderCommand)))
+      .findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderRequestCommand)))
       .thenReturn(Optional.of(restaurantResponse));
 
     OrderDomainException orderDomainException = assertThrows(
       OrderDomainException.class,
-      () -> orderApplicationService.createOrder(createOrderCommand));
+      () -> orderApplicationService.createOrder(createOrderRequestCommand));
 
     System.out.println("\nInactive restaurant ID " + RESTAURANT_ID + "...\n");
     assertEquals(orderDomainException.getMessage(),

@@ -52,4 +52,4 @@ https://zh.wikipedia.org/zh-tw/%E9%A0%98%E5%9F%9F%E9%A9%85%E5%8B%95%E8%A8%AD%E8%
   Using lombok to generate getters and setters.
 
 *** Special Notes ***
-// Need to use RestaurantStatus instead of OrderApprovalStatus
+// Need to use RestaurantApproval... instead of OrderApproval...

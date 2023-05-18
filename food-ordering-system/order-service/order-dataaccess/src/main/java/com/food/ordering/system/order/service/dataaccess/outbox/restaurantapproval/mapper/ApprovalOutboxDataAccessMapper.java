@@ -1,30 +1,30 @@
 package com.food.ordering.system.order.service.dataaccess.outbox.restaurantapproval.mapper;
 
 import com.food.ordering.system.order.service.dataaccess.outbox.restaurantapproval.entity.ApprovalOutboxEntity;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ApprovalOutboxDataAccessMapper {
 
   public ApprovalOutboxEntity orderCreatedOutboxMessageToOutboxEntity(
-    OrderApprovalOutboxMessage orderApprovalOutboxMessage) {
+    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage) {
     return ApprovalOutboxEntity.builder()
-      .id(orderApprovalOutboxMessage.getId())
-      .sagaId(orderApprovalOutboxMessage.getSagaId())
-      .createdAt(orderApprovalOutboxMessage.getCreatedAt())
-      .type(orderApprovalOutboxMessage.getType())
-      .payload(orderApprovalOutboxMessage.getPayload())
-      .orderStatus(orderApprovalOutboxMessage.getOrderStatus())
-      .sagaStatus(orderApprovalOutboxMessage.getSagaStatus())
-      .outboxStatus(orderApprovalOutboxMessage.getOutboxStatus())
-      .version(orderApprovalOutboxMessage.getVersion())
+      .id(orderRestaurantOutboxMessage.getId())
+      .sagaId(orderRestaurantOutboxMessage.getSagaId())
+      .createdAt(orderRestaurantOutboxMessage.getCreatedAt())
+      .type(orderRestaurantOutboxMessage.getType())
+      .payload(orderRestaurantOutboxMessage.getPayload())
+      .orderStatus(orderRestaurantOutboxMessage.getOrderStatus())
+      .sagaStatus(orderRestaurantOutboxMessage.getSagaStatus())
+      .outboxStatus(orderRestaurantOutboxMessage.getOutboxStatus())
+      .version(orderRestaurantOutboxMessage.getVersion())
       .build();
   }
 
-  public OrderApprovalOutboxMessage approvalOutboxEntityToOrderApprovalOutboxMessage(
+  public OrderRestaurantOutboxMessage approvalOutboxEntityToOrderApprovalOutboxMessage(
     ApprovalOutboxEntity approvalOutboxEntity) {
-    return OrderApprovalOutboxMessage.builder()
+    return OrderRestaurantOutboxMessage.builder()
       .id(approvalOutboxEntity.getId())
       .sagaId(approvalOutboxEntity.getSagaId())
       .createdAt(approvalOutboxEntity.getCreatedAt())

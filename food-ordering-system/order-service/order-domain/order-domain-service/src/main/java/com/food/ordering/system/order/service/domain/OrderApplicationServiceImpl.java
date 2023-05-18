@@ -1,8 +1,8 @@
 package com.food.ordering.system.order.service.domain;
 
-import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
-import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery;
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.ports.input.service.OrderApplicationService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,24 +14,24 @@ import org.springframework.validation.annotation.Validated;
 @Service
 class OrderApplicationServiceImpl implements OrderApplicationService {
 
-  private final OrderCreateCommandHandler orderCreateCommandHandler;
+  private final OrderCreateRequestHandler orderCreateRequestHandler;
 
-  private final OrderTrackCommandHandler orderTrackCommandHandler;
+  private final OrderTrackRequestHandler orderTrackRequestHandler;
 
   public OrderApplicationServiceImpl(
-    OrderCreateCommandHandler orderCreateCommandHandler,
-    OrderTrackCommandHandler orderTrackCommandHandler) {
-    this.orderCreateCommandHandler = orderCreateCommandHandler;
-    this.orderTrackCommandHandler = orderTrackCommandHandler;
+    OrderCreateRequestHandler orderCreateRequestHandler,
+    OrderTrackRequestHandler orderTrackRequestHandler) {
+    this.orderCreateRequestHandler = orderCreateRequestHandler;
+    this.orderTrackRequestHandler = orderTrackRequestHandler;
   }
 
   @Override
-  public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
-    return orderCreateCommandHandler.createOrder(createOrderCommand);
+  public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequestCommand) {
+    return orderCreateRequestHandler.createOrder(createOrderRequestCommand);
   }
 
   @Override
-  public TrackOrderResponse trackOrder(TrackOrderQuery trackOrderQuery) {
-    return orderTrackCommandHandler.trackOrder(trackOrderQuery);
+  public TrackOrderResponse trackOrder(TrackOrderRequest trackOrderRequest) {
+    return orderTrackRequestHandler.trackOrder(trackOrderRequest);
   }
 }

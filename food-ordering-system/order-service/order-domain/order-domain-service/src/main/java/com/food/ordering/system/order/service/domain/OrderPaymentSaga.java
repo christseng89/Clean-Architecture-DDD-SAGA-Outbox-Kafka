@@ -8,8 +8,8 @@ import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
-import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
+import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
 import com.food.ordering.system.order.service.domain.outbox.scheduler.approval.ApprovalOutboxHelper;
 import com.food.ordering.system.order.service.domain.outbox.scheduler.payment.PaymentOutboxHelper;
 import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
@@ -161,11 +161,11 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     return order;
   }
 
-  private OrderApprovalOutboxMessage getUpdatedApprovalOutboxMessage(
+  private OrderRestaurantOutboxMessage getUpdatedApprovalOutboxMessage(
     String sagaId,
     OrderStatus orderStatus,
     SagaStatus sagaStatus) {
-    Optional<OrderApprovalOutboxMessage> orderApprovalOutboxMessageResponse =
+    Optional<OrderRestaurantOutboxMessage> orderApprovalOutboxMessageResponse =
       approvalOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
         UUID.fromString(sagaId),
         SagaStatus.COMPENSATING);
@@ -173,10 +173,10 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
       throw new OrderDomainException("Approval outbox message could not be found in " +
         SagaStatus.COMPENSATING.name() + " status!");
     }
-    OrderApprovalOutboxMessage orderApprovalOutboxMessage = orderApprovalOutboxMessageResponse.get();
-    orderApprovalOutboxMessage.setProcessedAt(ZonedDateTime.now(ZoneId.of(UTC)));
-    orderApprovalOutboxMessage.setOrderStatus(orderStatus);
-    orderApprovalOutboxMessage.setSagaStatus(sagaStatus);
-    return orderApprovalOutboxMessage;
+    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage = orderApprovalOutboxMessageResponse.get();
+    orderRestaurantOutboxMessage.setProcessedAt(ZonedDateTime.now(ZoneId.of(UTC)));
+    orderRestaurantOutboxMessage.setOrderStatus(orderStatus);
+    orderRestaurantOutboxMessage.setSagaStatus(sagaStatus);
+    return orderRestaurantOutboxMessage;
   }
 }

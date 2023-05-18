@@ -1,4 +1,4 @@
-package com.food.ordering.system.order.service.domain.outbox.model.approval;
+package com.food.ordering.system.order.service.domain.outbox.model.restaurant;
 
 import com.food.ordering.system.domain.valueobject.OrderStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Builder
 @AllArgsConstructor
-public class OrderApprovalOutboxMessage {
+public class OrderRestaurantOutboxMessage {
   private UUID id;
   private UUID sagaId;
   private ZonedDateTime createdAt;
