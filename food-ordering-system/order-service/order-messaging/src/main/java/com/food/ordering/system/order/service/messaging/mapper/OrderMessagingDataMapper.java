@@ -1,7 +1,7 @@
 package com.food.ordering.system.order.service.messaging.mapper;
 
 import com.food.ordering.system.kafka.order.avro.model.*;
-import com.food.ordering.system.order.service.domain.dto.message.CustomerModel;
+import com.food.ordering.system.order.service.domain.dto.message.CustomerMessage;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
 import com.food.ordering.system.order.service.domain.dto.message.RestaurantResponse;
 import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
@@ -80,8 +80,8 @@ public class OrderMessagingDataMapper {
       .build();
   }
 
-  public CustomerModel customerAvroModeltoCustomerModel(CustomerAvroModel customerAvroModel) {
-    return CustomerModel.builder()
+  public CustomerMessage customerAvroModeltoCustomerModel(CustomerAvroModel customerAvroModel) {
+    return CustomerMessage.builder()
       .id(customerAvroModel.getId())
       .username(customerAvroModel.getUsername())
       .firstName(customerAvroModel.getFirstName())
