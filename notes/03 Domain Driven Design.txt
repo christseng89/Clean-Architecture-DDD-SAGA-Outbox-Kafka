@@ -42,3 +42,11 @@ https://zh.wikipedia.org/zh-tw/%E9%A0%98%E5%9F%9F%E9%A9%85%E5%8B%95%E8%A8%AD%E8%
     all directly related design elements. The design and implementation of business logic constitute 
     the domain layer. In a MODEL-DRIVEN DESIGN, the software constructs of the domain 
     layer mirror the model concepts.”
+
+18. Implementing Order Application Service - DTO classes
+- pom.xml (to integrate with 3rd parties packages)
+
+- DTO (Data Transfer Object)
+  https://www.okta.com/uk/identity-101/dto/
+  DTO is an object (on-demand info) that carries data between processes.  
+  Using lombok to generate getters and setters.

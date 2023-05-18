@@ -102,13 +102,12 @@ public class OrderDataMapper {
   private List<OrderItem> orderItemsToOrderItemEntities(
     List<com.food.ordering.system.order.service.domain.dto.create.OrderItem> orderItems) {
     return orderItems.stream()
-      .map(orderItem ->
-        OrderItem.builder()
-          .product(new Product(new ProductId(orderItem.getProductId())))
-          .price(new Money(orderItem.getPrice()))
-          .quantity(orderItem.getQuantity())
-          .subTotal(new Money(orderItem.getSubTotal()))
-          .build()).toList();
+      .map(orderItem -> OrderItem.builder()
+        .product(new Product(new ProductId(orderItem.getProductId())))
+        .price(new Money(orderItem.getPrice()))
+        .quantity(orderItem.getQuantity())
+        .subTotal(new Money(orderItem.getSubTotal()))
+        .build()).toList();
   }
 
   private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
