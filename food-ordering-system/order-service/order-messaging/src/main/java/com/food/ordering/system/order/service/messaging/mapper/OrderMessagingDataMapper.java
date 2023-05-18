@@ -3,7 +3,7 @@ package com.food.ordering.system.order.service.messaging.mapper;
 import com.food.ordering.system.kafka.order.avro.model.*;
 import com.food.ordering.system.order.service.domain.dto.message.CustomerModel;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
-import com.food.ordering.system.order.service.domain.dto.message.RestaurantApprovalResponse;
+import com.food.ordering.system.order.service.domain.dto.message.RestaurantResponse;
 import com.food.ordering.system.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
 import org.springframework.stereotype.Component;
@@ -29,11 +29,11 @@ public class OrderMessagingDataMapper {
       .build();
   }
 
-  public RestaurantApprovalResponse
+  public RestaurantResponse
   approvalResponseAvroModelToApprovalResponse(
     RestaurantApprovalResponseAvroModel
       restaurantApprovalResponseAvroModel) {
-    return RestaurantApprovalResponse.builder()
+    return RestaurantResponse.builder()
       .id(restaurantApprovalResponseAvroModel.getId())
       .sagaId(restaurantApprovalResponseAvroModel.getSagaId())
       .restaurantId(restaurantApprovalResponseAvroModel.getRestaurantId())
@@ -71,7 +71,7 @@ public class OrderMessagingDataMapper {
       .setRestaurantOrderStatus(RestaurantOrderStatus
         .valueOf(orderApprovalEventPayload.getRestaurantOrderStatus()))
       .setProducts(orderApprovalEventPayload.getProducts().stream()
-      .map(orderApprovalEventProduct -> com.food.ordering.system.kafka.order.avro.model.Product.newBuilder()
+        .map(orderApprovalEventProduct -> com.food.ordering.system.kafka.order.avro.model.Product.newBuilder()
           .setId(orderApprovalEventProduct.getId())
           .setQuantity(orderApprovalEventProduct.getQuantity())
           .build()).toList())

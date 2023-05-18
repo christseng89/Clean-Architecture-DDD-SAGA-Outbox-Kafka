@@ -3,7 +3,7 @@ package com.food.ordering.system.order.service.messaging.listener.kafka;
 import com.food.ordering.system.kafka.consumer.KafkaConsumer;
 import com.food.ordering.system.kafka.order.avro.model.OrderApprovalStatus;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
-import com.food.ordering.system.order.service.domain.dto.message.RestaurantApprovalResponse;
+import com.food.ordering.system.order.service.domain.dto.message.RestaurantResponse;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.service.domain.ports.input.message.listener.restaurantapproval.RestaurantApprovalResponseMessageListener;
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
@@ -46,19 +46,19 @@ public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<Re
 
     messages.forEach(restaurantApprovalResponseAvroModel -> {
       try {
-        RestaurantApprovalResponse restaurantApprovalResponse = orderMessagingDataMapper
+        RestaurantResponse restaurantResponse = orderMessagingDataMapper
           .approvalResponseAvroModelToApprovalResponse(restaurantApprovalResponseAvroModel);
 
         if (OrderApprovalStatus.APPROVED == restaurantApprovalResponseAvroModel.getOrderApprovalStatus()) {
           log.info("Processing approved order for order id: {}",
             restaurantApprovalResponseAvroModel.getOrderId());
-          restaurantApprovalResponseMessageListener.orderApproved(restaurantApprovalResponse);
+          restaurantApprovalResponseMessageListener.orderApproved(restaurantResponse);
         } else if (OrderApprovalStatus.REJECTED == restaurantApprovalResponseAvroModel.getOrderApprovalStatus()) {
           log.info("Processing rejected order for order id: {}, with failure messages: {}",
             restaurantApprovalResponseAvroModel.getOrderId(),
             String.join(FAILURE_MESSAGE_DELIMITER,
               restaurantApprovalResponseAvroModel.getFailureMessages()));
-          restaurantApprovalResponseMessageListener.orderRejected(restaurantApprovalResponse);
+          restaurantApprovalResponseMessageListener.orderRejected(restaurantResponse);
         }
       } catch (OptimisticLockingFailureException e) {
         // NO-OP for optimistic lock. This means another thread finished the

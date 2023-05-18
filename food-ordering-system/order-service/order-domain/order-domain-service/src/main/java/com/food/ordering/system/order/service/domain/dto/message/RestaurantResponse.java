@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor
-public class RestaurantApprovalResponse {
+public class RestaurantResponse {
   private String id;
   private String sagaId;
   private String orderId;
