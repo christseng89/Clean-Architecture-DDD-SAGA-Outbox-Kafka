@@ -1,6 +1,6 @@
 package com.food.ordering.system.order.service.domain;
 
-import com.food.ordering.system.order.service.domain.dto.message.CustomerMessage;
+import com.food.ordering.system.order.service.domain.dto.message.CustomerRequest;
 import com.food.ordering.system.order.service.domain.entity.Customer;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
@@ -24,13 +24,13 @@ public class CustomerMessageListenerImpl implements CustomerMessageListener {
   }
 
   @Override
-  public void customerCreated(CustomerMessage customerMessage) {
+  public void customerCreated(CustomerRequest customerRequest) {
     Customer customer = customerRepository.save(
-      orderDataMapper.customerMessageToCustomer(customerMessage));
+      orderDataMapper.customer(customerRequest));
     if (customer == null) {
-      log.error("Customer could not be created in order database with id: {}", customerMessage.getId());
+      log.error("Customer could not be created in order database with id: {}", customerRequest.getId());
       throw new OrderDomainException("Customer could not be created in order database with id " +
-        customerMessage.getId());
+        customerRequest.getId());
     }
     log.info("Customer is created in order database with id: {}", customer.getId());
   }

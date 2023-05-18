@@ -16,8 +16,7 @@ import java.util.UUID;
 
 @Component
 public class RestaurantDataMapper {
-  public Restaurant restaurantApprovalRequestToRestaurant(
-    RestaurantApprovalRequest restaurantApprovalRequest) {
+  public Restaurant restaurant(RestaurantApprovalRequest restaurantApprovalRequest) {
     return Restaurant.builder()
       .restaurantId(new RestaurantId(UUID.fromString(restaurantApprovalRequest.getRestaurantId())))
       .orderDetail(OrderDetail.builder()
@@ -34,14 +33,13 @@ public class RestaurantDataMapper {
       .build();
   }
 
-  public OrderEventPayload
-  orderApprovalEventToOrderEventPayload(RestaurantEvent orderApprovalEvent) {
+  public OrderEventPayload orderEventPayload(RestaurantEvent restaurantEvent) {
     return OrderEventPayload.builder()
-      .orderId(orderApprovalEvent.getOrderApproval().getOrderId().getValue().toString())
-      .restaurantId(orderApprovalEvent.getRestaurantId().getValue().toString())
-      .orderApprovalStatus(orderApprovalEvent.getOrderApproval().getApprovalStatus().name())
-      .createdAt(orderApprovalEvent.getCreatedAt())
-      .failureMessages(orderApprovalEvent.getFailureMessages())
+      .orderId(restaurantEvent.getOrderApproval().getOrderId().getValue().toString())
+      .restaurantId(restaurantEvent.getRestaurantId().getValue().toString())
+      .orderApprovalStatus(restaurantEvent.getOrderApproval().getApprovalStatus().name())
+      .createdAt(restaurantEvent.getCreatedAt())
+      .failureMessages(restaurantEvent.getFailureMessages())
       .build();
   }
 }

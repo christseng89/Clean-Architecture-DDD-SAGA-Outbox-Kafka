@@ -40,6 +40,6 @@ public class CustomerKafkaListener implements KafkaConsumer<CustomerAvroModel> {
 
     messages.forEach(customerAvroModel ->
       customerMessageListener.customerCreated(orderMessagingDataMapper
-        .customerAvroModeltoCustomerModel(customerAvroModel)));
+        .customerRequest(customerAvroModel)));
   }
 }

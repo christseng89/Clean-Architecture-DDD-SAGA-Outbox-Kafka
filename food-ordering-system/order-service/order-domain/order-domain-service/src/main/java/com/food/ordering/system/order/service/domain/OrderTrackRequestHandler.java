@@ -37,6 +37,6 @@ public class OrderTrackRequestHandler {
       throw new OrderDomainException("Could not find order with tracking id: " +
         trackOrderRequest.getOrderTrackingId());
     }
-    return orderDataMapper.orderToTrackOrderResponse(orderResult.get());
+    return orderDataMapper.trackOrderResponse(orderResult.get());
   }
 }

@@ -50,7 +50,7 @@ public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePub
 
     try {
       PaymentRequestAvroModel paymentRequestAvroModel = orderMessagingDataMapper
-        .orderPaymentEventToPaymentRequestAvroModel(sagaId, orderPaymentEventPayload);
+        .paymentRequestAvroModel(sagaId, orderPaymentEventPayload);
 
       // Payment Request
       String topicName = orderServiceConfigData.getPaymentRequestTopicName();

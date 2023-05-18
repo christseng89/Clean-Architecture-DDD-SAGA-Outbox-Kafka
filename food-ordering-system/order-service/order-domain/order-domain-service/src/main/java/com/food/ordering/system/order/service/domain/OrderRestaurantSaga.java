@@ -102,7 +102,7 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
 
     // Payment Outbox Message (Cancelled) STARTED
     paymentOutboxHelper.savePaymentOutboxMessage(
-      orderDataMapper.orderCancelledEventToOrderPaymentEventPayload(cancelledEvent),
+      orderDataMapper.orderPaymentEventCancelledPayload(cancelledEvent),
       cancelledEvent.getOrder().getOrderStatus(),
       sagaStatus,
       OutboxStatus.STARTED,

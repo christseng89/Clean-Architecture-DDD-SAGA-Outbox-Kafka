@@ -78,7 +78,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     // Approval Outbox Message STARTED
     approvalOutboxHelper
       .saveApprovalOutboxMessage(
-        orderDataMapper.orderPaidEventToOrderApprovalEventPayload(domainEvent),
+        orderDataMapper.orderRestaurantEventPayload(domainEvent),
         domainEvent.getOrder().getOrderStatus(),
         sagaStatus,
         OutboxStatus.STARTED,

@@ -48,7 +48,7 @@ public class OrderCreateHelper {
   public OrderCreatedEvent persistOrder(CreateOrderRequest createOrderRequestCommand) {
     checkCustomer(createOrderRequestCommand.getCustomerId());
     Restaurant restaurant = checkRestaurant(createOrderRequestCommand);
-    Order order = orderDataMapper.createOrderCommandToOrder(createOrderRequestCommand);
+    Order order = orderDataMapper.order(createOrderRequestCommand);
     OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant);
     saveOrder(order);
     log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
@@ -56,7 +56,7 @@ public class OrderCreateHelper {
   }
 
   private Restaurant checkRestaurant(CreateOrderRequest createOrderRequestCommand) {
-    Restaurant restaurant = orderDataMapper.createOrderCommandToRestaurant(createOrderRequestCommand);
+    Restaurant restaurant = orderDataMapper.restaurant(createOrderRequestCommand);
     Optional<Restaurant> optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant);
     if (optionalRestaurant.isEmpty()) {
       log.warn("Could not find restaurant with restaurant id: {}", createOrderRequestCommand.getRestaurantId());

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Component
 public class PaymentDataMapper {
 
-  public Payment paymentRequestModelToPayment(PaymentRequest paymentRequest) {
+  public Payment payment(PaymentRequest paymentRequest) {
     return Payment.builder()
       .orderId(new OrderId(UUID.fromString(paymentRequest.getOrderId())))
       .customerId(new CustomerId(UUID.fromString(paymentRequest.getCustomerId())))
@@ -22,7 +22,7 @@ public class PaymentDataMapper {
       .build();
   }
 
-  public OrderEventPayload paymentEventToOrderEventPayload(PaymentEvent paymentEvent) {
+  public OrderEventPayload orderEventPayload(PaymentEvent paymentEvent) {
     return OrderEventPayload.builder()
       .paymentId(paymentEvent.getPayment().getId().getValue().toString())
       .customerId(paymentEvent.getPayment().getCustomerId().getValue().toString())

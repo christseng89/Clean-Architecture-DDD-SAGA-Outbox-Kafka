@@ -65,7 +65,7 @@ public class RestaurantApprovalRequestHelper {
     orderApprovalRepository.save(restaurant.getOrderApproval());
 
     orderOutboxHelper
-      .saveOrderOutboxMessage(restaurantDataMapper.orderApprovalEventToOrderEventPayload(orderApprovalEvent),
+      .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(orderApprovalEvent),
         orderApprovalEvent.getOrderApproval().getApprovalStatus(),
         OutboxStatus.STARTED,
         UUID.fromString(restaurantApprovalRequest.getSagaId()));
@@ -74,7 +74,7 @@ public class RestaurantApprovalRequestHelper {
 
   private Restaurant findRestaurant(RestaurantApprovalRequest restaurantApprovalRequest) {
     Restaurant restaurant = restaurantDataMapper
-      .restaurantApprovalRequestToRestaurant(restaurantApprovalRequest);
+      .restaurant(restaurantApprovalRequest);
     Optional<Restaurant> restaurantResult = restaurantRepository.findRestaurantInformation(restaurant);
     if (restaurantResult.isEmpty()) {
       log.error("Restaurant with id " + restaurant.getId().getValue() + " not found!");

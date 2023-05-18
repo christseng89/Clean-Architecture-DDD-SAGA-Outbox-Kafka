@@ -62,7 +62,7 @@ OrderCreateCommandHandler
 
     // Save payment outbox
     paymentOutboxHelper.savePaymentOutboxMessage(
-      orderDataMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent),
+      orderDataMapper.orderPaymentEventCreatedPayload(orderCreatedEvent),
       orderCreatedEvent.getOrder().getOrderStatus(),
       orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrder().getOrderStatus()),
       OutboxStatus.STARTED,

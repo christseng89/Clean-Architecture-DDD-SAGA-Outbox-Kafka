@@ -45,7 +45,7 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
     messages.forEach(paymentResponseAvroModel -> {
       try {
         PaymentResponse paymentResponse = orderMessagingDataMapper
-          .paymentResponseAvroModelToPaymentResponse(paymentResponseAvroModel);
+          .paymentResponse(paymentResponseAvroModel);
 
         if (PaymentStatus.COMPLETED == paymentResponseAvroModel.getPaymentStatus()) {
           log.info("Processing successful payment for order id: {}", paymentResponseAvroModel.getOrderId());

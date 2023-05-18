@@ -36,12 +36,12 @@ public class OrderCreateRequestHandler {
   public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequestCommand) {
     OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrder(createOrderRequestCommand);
     log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
-    CreateOrderResponse createOrderResponse = orderDataMapper.orderToCreateOrderResponse(
+    CreateOrderResponse createOrderResponse = orderDataMapper.createOrderResponse(
       orderCreatedEvent.getOrder(),
       "Order created successfully");
 
     paymentOutboxHelper.savePaymentOutboxMessage(
-      orderDataMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent),
+      orderDataMapper.orderPaymentEventCreatedPayload(orderCreatedEvent),
       orderCreatedEvent.getOrder().getOrderStatus(),
       orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrder().getOrderStatus()),
       OutboxStatus.STARTED,

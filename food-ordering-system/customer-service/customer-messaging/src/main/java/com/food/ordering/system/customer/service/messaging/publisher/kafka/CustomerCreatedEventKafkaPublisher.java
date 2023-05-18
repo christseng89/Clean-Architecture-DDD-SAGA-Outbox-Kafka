@@ -37,7 +37,7 @@ public class CustomerCreatedEventKafkaPublisher implements CustomerMessagePublis
       customerCreatedEvent.getCustomer().getId().getValue());
     try {
       CustomerAvroModel customerAvroModel = customerMessagingDataMapper
-        .paymentResponseAvroModelToPaymentResponse(customerCreatedEvent);
+        .paymentResponse(customerCreatedEvent);
 
       // Customer CQRS (Publish ONLY)
       String topicName = customerServiceConfigData.getCustomerTopicName();

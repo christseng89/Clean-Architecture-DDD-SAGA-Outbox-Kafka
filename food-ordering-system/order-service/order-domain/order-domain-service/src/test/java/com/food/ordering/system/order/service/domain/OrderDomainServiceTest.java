@@ -150,13 +150,13 @@ public class OrderDomainServiceTest {
       .active(true)
       .build();
 
-    Order order = orderDataMapper.createOrderCommandToOrder(createOrderRequestCommand);
+    Order order = orderDataMapper.order(createOrderRequestCommand);
     order.setId(new OrderId(ORDER_ID));
 
     when(customerRepository.findCustomer(CUSTOMER_ID))
       .thenReturn(Optional.of(customer));
     when(restaurantRepository
-      .findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderRequestCommand)))
+      .findRestaurantInformation(orderDataMapper.restaurant(createOrderRequestCommand)))
       .thenReturn(Optional.of(restaurantResponse));
     when(orderRepository.save(any(Order.class)))
       .thenReturn(order);
@@ -208,7 +208,7 @@ public class OrderDomainServiceTest {
       .build();
 
     when(restaurantRepository
-      .findRestaurantInformation(orderDataMapper.createOrderCommandToRestaurant(createOrderRequestCommand)))
+      .findRestaurantInformation(orderDataMapper.restaurant(createOrderRequestCommand)))
       .thenReturn(Optional.of(restaurantResponse));
 
     OrderDomainException orderDomainException = assertThrows(

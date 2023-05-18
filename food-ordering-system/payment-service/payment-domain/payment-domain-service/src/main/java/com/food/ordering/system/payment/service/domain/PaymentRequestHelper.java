@@ -64,7 +64,7 @@ public class PaymentRequestHelper {
     }
 
     log.info("Received payment complete event for order id: {}", paymentRequest.getOrderId());
-    Payment payment = paymentDataMapper.paymentRequestModelToPayment(paymentRequest);
+    Payment payment = paymentDataMapper.payment(paymentRequest);
     CreditEntry creditEntry = getCreditEntry(payment.getCustomerId());
     List<CreditHistory> creditHistories = getCreditHistory(payment.getCustomerId());
     List<String> failureMessages = new ArrayList<>();
@@ -72,7 +72,7 @@ public class PaymentRequestHelper {
       paymentDomainService.validateAndInitiatePayment(payment, creditEntry, creditHistories, failureMessages);
     persistDbObjects(payment, creditEntry, creditHistories, failureMessages);
 
-    orderOutboxHelper.saveOrderOutboxMessage(paymentDataMapper.paymentEventToOrderEventPayload(paymentEvent),
+    orderOutboxHelper.saveOrderOutboxMessage(paymentDataMapper.orderEventPayload(paymentEvent),
       paymentEvent.getPayment().getPaymentStatus(),
       OutboxStatus.STARTED,
       UUID.fromString(paymentRequest.getSagaId()));
@@ -102,7 +102,7 @@ public class PaymentRequestHelper {
       .validateAndCancelPayment(payment, creditEntry, creditHistories, failureMessages);
     persistDbObjects(payment, creditEntry, creditHistories, failureMessages);
 
-    orderOutboxHelper.saveOrderOutboxMessage(paymentDataMapper.paymentEventToOrderEventPayload(paymentEvent),
+    orderOutboxHelper.saveOrderOutboxMessage(paymentDataMapper.orderEventPayload(paymentEvent),
       paymentEvent.getPayment().getPaymentStatus(),
       OutboxStatus.STARTED,
       UUID.fromString(paymentRequest.getSagaId()));

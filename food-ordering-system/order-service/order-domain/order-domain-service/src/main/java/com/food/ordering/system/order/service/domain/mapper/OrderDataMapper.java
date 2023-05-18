@@ -4,7 +4,7 @@ import com.food.ordering.system.domain.valueobject.*;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.create.OrderAddress;
-import com.food.ordering.system.order.service.domain.dto.message.CustomerMessage;
+import com.food.ordering.system.order.service.domain.dto.message.CustomerRequest;
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.entity.*;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
@@ -22,7 +22,7 @@ import java.util.UUID;
 @Component
 public class OrderDataMapper {
 
-  public Restaurant createOrderCommandToRestaurant(CreateOrderRequest createOrderRequestCommand) {
+  public Restaurant restaurant(CreateOrderRequest createOrderRequestCommand) {
     return Restaurant.builder()
       .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
       .products(createOrderRequestCommand.getItems().stream()
@@ -30,17 +30,17 @@ public class OrderDataMapper {
         .toList()).build();
   }
 
-  public Order createOrderCommandToOrder(CreateOrderRequest createOrderRequestCommand) {
+  public Order order(CreateOrderRequest createOrderRequestCommand) {
     return Order.builder()
       .customerId(new CustomerId(createOrderRequestCommand.getCustomerId()))
       .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
-      .deliveryAddress(orderAddressToStreetAddress(createOrderRequestCommand.getAddress()))
+      .deliveryAddress(streetAddress(createOrderRequestCommand.getAddress()))
       .price(new Money(createOrderRequestCommand.getPrice()))
       .items(orderItemsToOrderItemEntities(createOrderRequestCommand.getItems()))
       .build();
   }
 
-  public CreateOrderResponse orderToCreateOrderResponse(Order order, String message) {
+  public CreateOrderResponse createOrderResponse(Order order, String message) {
     return CreateOrderResponse.builder()
       .orderTrackingId(order.getTrackingId().getValue())
       .orderStatus(order.getOrderStatus())
@@ -48,7 +48,7 @@ public class OrderDataMapper {
       .build();
   }
 
-  public TrackOrderResponse orderToTrackOrderResponse(Order order) {
+  public TrackOrderResponse trackOrderResponse(Order order) {
     return TrackOrderResponse.builder()
       .orderTrackingId(order.getTrackingId().getValue())
       .orderStatus(order.getOrderStatus())
@@ -56,7 +56,8 @@ public class OrderDataMapper {
       .build();
   }
 
-  public OrderPaymentEventPayload orderCreatedEventToOrderPaymentEventPayload(OrderCreatedEvent orderCreatedEvent) {
+  public OrderPaymentEventPayload orderPaymentEventCreatedPayload(
+    OrderCreatedEvent orderCreatedEvent) {
     return OrderPaymentEventPayload.builder()
       .customerId(orderCreatedEvent.getOrder().getCustomerId().getValue().toString())
       .orderId(orderCreatedEvent.getOrder().getId().getValue().toString())
@@ -66,7 +67,7 @@ public class OrderDataMapper {
       .build();
   }
 
-  public OrderPaymentEventPayload orderCancelledEventToOrderPaymentEventPayload(
+  public OrderPaymentEventPayload orderPaymentEventCancelledPayload(
     OrderCancelledEvent orderCancelledEvent) {
     return OrderPaymentEventPayload.builder()
       .customerId(orderCancelledEvent.getOrder().getCustomerId().getValue().toString())
@@ -77,7 +78,7 @@ public class OrderDataMapper {
       .build();
   }
 
-  public OrderRestaurantEventPayload orderPaidEventToOrderApprovalEventPayload(OrderPaidEvent orderPaidEvent) {
+  public OrderRestaurantEventPayload orderRestaurantEventPayload(OrderPaidEvent orderPaidEvent) {
     return OrderRestaurantEventPayload.builder()
       .orderId(orderPaidEvent.getOrder().getId().getValue().toString())
       .restaurantId(orderPaidEvent.getOrder().getRestaurantId().getValue().toString())
@@ -92,11 +93,11 @@ public class OrderDataMapper {
       .build();
   }
 
-  public Customer customerMessageToCustomer(CustomerMessage customerMessage) {
-    return new Customer(new CustomerId(UUID.fromString(customerMessage.getId())),
-      customerMessage.getUsername(),
-      customerMessage.getFirstName(),
-      customerMessage.getLastName());
+  public Customer customer(CustomerRequest customerRequest) {
+    return new Customer(new CustomerId(UUID.fromString(customerRequest.getId())),
+      customerRequest.getUsername(),
+      customerRequest.getFirstName(),
+      customerRequest.getLastName());
   }
 
   private List<OrderItem> orderItemsToOrderItemEntities(
@@ -110,7 +111,7 @@ public class OrderDataMapper {
         .build()).toList();
   }
 
-  private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
+  private StreetAddress streetAddress(OrderAddress orderAddress) {
     return new StreetAddress(
       UUID.randomUUID(),
       orderAddress.getStreet(),

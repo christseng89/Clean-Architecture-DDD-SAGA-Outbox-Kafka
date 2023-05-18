@@ -1,8 +1,8 @@
 package com.food.ordering.system.order.service.domain.ports.input.message.listener.customer;
 
-import com.food.ordering.system.order.service.domain.dto.message.CustomerMessage;
+import com.food.ordering.system.order.service.domain.dto.message.CustomerRequest;
 
 public interface CustomerMessageListener {
 
-  void customerCreated(CustomerMessage customerMessage);
+  void customerCreated(CustomerRequest customerRequest);
 }
