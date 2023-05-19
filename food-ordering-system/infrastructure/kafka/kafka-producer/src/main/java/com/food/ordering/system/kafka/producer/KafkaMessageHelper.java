@@ -38,9 +38,9 @@ public class KafkaMessageHelper {
     String orderId, String avroModelName) {
     return new ListenableFutureCallback<SendResult<String, T>>() {
       @Override
-      public void onFailure(Throwable ex) {
+      public void onFailure(Throwable throwable) {
         log.error("Error while sending {} with message: {} and outbox type: {} to topic {}",
-          avroModelName, avroModel.toString(), outboxMessage.getClass().getName(), responseTopicName, ex);
+          avroModelName, avroModel.toString(), outboxMessage.getClass().getName(), responseTopicName, throwable);
         outboxCallback.accept(outboxMessage, OutboxStatus.FAILED);
       }
 

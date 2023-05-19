@@ -13,6 +13,12 @@
   <artifactId>customer-dataaccess</artifactId>
 
   <dependencies>
+    <!-- 1. Common -->
+    <dependency>
+      <groupId>com.food.ordering.system</groupId>
+      <artifactId>common-dataaccess</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>customer-domain-service</artifactId>

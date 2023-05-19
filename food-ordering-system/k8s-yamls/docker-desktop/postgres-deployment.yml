@@ -37,4 +37,4 @@ spec:
       protocol: TCP
       port: 5432
   type: LoadBalancer
-  loadBalancerIP: ""
+  #loadBalancerIP: ""

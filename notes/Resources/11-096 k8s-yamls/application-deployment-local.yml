@@ -48,7 +48,7 @@ spec:
       protocol: TCP
       port: 8181
   type: LoadBalancer
-  loadBalancerIP: ""
+  #loadBalancerIP: ""
 
 ---
 apiVersion: apps/v1
@@ -100,7 +100,7 @@ spec:
       protocol: TCP
       port: 8182
   type: LoadBalancer
-  loadBalancerIP: ""
+  #loadBalancerIP: ""
 
 ---
 apiVersion: apps/v1
@@ -152,7 +152,7 @@ spec:
       protocol: TCP
       port: 8183
   type: LoadBalancer
-  loadBalancerIP: ""
+  #loadBalancerIP: ""
 
 ---
 apiVersion: apps/v1
@@ -203,4 +203,4 @@ spec:
       protocol: TCP
       port: 8184
   type: LoadBalancer
-  loadBalancerIP: ""
+  #loadBalancerIP: ""
