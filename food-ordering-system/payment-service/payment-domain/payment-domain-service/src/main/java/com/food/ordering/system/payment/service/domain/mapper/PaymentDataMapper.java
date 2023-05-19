@@ -1,4 +1,4 @@
-package com.food.ordering.system.payment.service.domain.outbox.mapper;
+package com.food.ordering.system.payment.service.domain.mapper;
 
 import com.food.ordering.system.domain.valueobject.CustomerId;
 import com.food.ordering.system.domain.valueobject.Money;

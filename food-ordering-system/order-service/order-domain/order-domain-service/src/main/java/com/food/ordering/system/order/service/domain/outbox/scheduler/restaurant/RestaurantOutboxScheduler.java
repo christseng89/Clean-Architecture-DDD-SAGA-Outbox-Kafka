@@ -1,7 +1,7 @@
-package com.food.ordering.system.order.service.domain.outbox.scheduler.approval;
+package com.food.ordering.system.order.service.domain.outbox.scheduler.restaurant;
 
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
-import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
+import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurant.RestaurantRequestMessagePublisher;
 import com.food.ordering.system.outbox.OutboxScheduler;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
+public class RestaurantOutboxScheduler implements OutboxScheduler {
 
-  private final ApprovalOutboxHelper approvalOutboxHelper;
-  private final RestaurantApprovalRequestMessagePublisher restaurantApprovalRequestMessagePublisher;
+  private final RestaurantOutboxHelper restaurantOutboxHelper;
+  private final RestaurantRequestMessagePublisher restaurantRequestMessagePublisher;
 
-  public RestaurantApprovalOutboxScheduler(
-    ApprovalOutboxHelper approvalOutboxHelper,
-    RestaurantApprovalRequestMessagePublisher restaurantApprovalRequestMessagePublisher) {
-    this.approvalOutboxHelper = approvalOutboxHelper;
-    this.restaurantApprovalRequestMessagePublisher = restaurantApprovalRequestMessagePublisher;
+  public RestaurantOutboxScheduler(
+    RestaurantOutboxHelper restaurantOutboxHelper,
+    RestaurantRequestMessagePublisher restaurantRequestMessagePublisher) {
+    this.restaurantOutboxHelper = restaurantOutboxHelper;
+    this.restaurantRequestMessagePublisher = restaurantRequestMessagePublisher;
   }
 
   @Override
@@ -34,7 +34,7 @@ public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
     initialDelayString = "${order-service.outbox-scheduler-initial-delay}")
   public void processOutboxMessage() {
     Optional<List<OrderRestaurantOutboxMessage>> outboxMessagesResponse =
-      approvalOutboxHelper.getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
+      restaurantOutboxHelper.getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.STARTED,
         SagaStatus.PROCESSING);
 
@@ -46,7 +46,7 @@ public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
           .map(outboxMessage -> outboxMessage.getId().toString()).collect(Collectors.joining(",")));
 
       outboxMessages.forEach(outboxMessage ->
-        restaurantApprovalRequestMessagePublisher.publish(outboxMessage, this::updateOutboxStatus));
+        restaurantRequestMessagePublisher.publish(outboxMessage, this::updateOutboxStatus));
       log.info("{} OrderApprovalOutboxMessage sent to message bus!", outboxMessages.size());
 
     }
@@ -54,7 +54,7 @@ public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
 
   private void updateOutboxStatus(OrderRestaurantOutboxMessage orderRestaurantOutboxMessage, OutboxStatus outboxStatus) {
     orderRestaurantOutboxMessage.setOutboxStatus(outboxStatus);
-    approvalOutboxHelper.save(orderRestaurantOutboxMessage);
+    restaurantOutboxHelper.save(orderRestaurantOutboxMessage);
     log.info("OrderApprovalOutboxMessage is updated with outbox status: {}", outboxStatus.name());
   }
 }

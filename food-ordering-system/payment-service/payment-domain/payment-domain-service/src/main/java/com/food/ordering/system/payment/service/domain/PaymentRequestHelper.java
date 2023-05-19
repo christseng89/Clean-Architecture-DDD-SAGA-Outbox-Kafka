@@ -10,7 +10,7 @@ import com.food.ordering.system.payment.service.domain.entity.Payment;
 import com.food.ordering.system.payment.service.domain.event.PaymentEvent;
 import com.food.ordering.system.payment.service.domain.exception.PaymentApplicationServiceException;
 import com.food.ordering.system.payment.service.domain.exception.PaymentNotFoundException;
-import com.food.ordering.system.payment.service.domain.outbox.mapper.PaymentDataMapper;
+import com.food.ordering.system.payment.service.domain.mapper.PaymentDataMapper;
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.payment.service.domain.outbox.scheduler.OrderOutboxHelper;
 import com.food.ordering.system.payment.service.domain.ports.output.message.publisher.PaymentResponseMessagePublisher;

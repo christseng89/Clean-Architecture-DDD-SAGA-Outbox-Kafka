@@ -1,7 +1,7 @@
 package com.food.ordering.system.order.service.domain;
 
 import com.food.ordering.system.order.service.domain.dto.message.RestaurantResponse;
-import com.food.ordering.system.order.service.domain.ports.input.message.listener.restaurantapproval.RestaurantApprovalResponseMessageListener;
+import com.food.ordering.system.order.service.domain.ports.input.message.listener.restaurant.RestaurantResponseMessageListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -11,7 +11,7 @@ import static com.food.ordering.system.order.service.domain.entity.Order.FAILURE
 @Slf4j
 @Validated
 @Service
-public class RestaurantResponseMessageListenerImpl implements RestaurantApprovalResponseMessageListener {
+public class RestaurantResponseMessageListenerImpl implements RestaurantResponseMessageListener {
 
   private final OrderRestaurantSaga orderRestaurantSaga;
 

@@ -10,8 +10,8 @@ import com.food.ordering.system.order.service.domain.exception.OrderDomainExcept
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
-import com.food.ordering.system.order.service.domain.outbox.scheduler.approval.ApprovalOutboxHelper;
 import com.food.ordering.system.order.service.domain.outbox.scheduler.payment.PaymentOutboxHelper;
+import com.food.ordering.system.order.service.domain.outbox.scheduler.restaurant.RestaurantOutboxHelper;
 import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
@@ -34,7 +34,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
   private final OrderDomainService orderDomainService;
   private final OrderRepository orderRepository;
   private final PaymentOutboxHelper paymentOutboxHelper;
-  private final ApprovalOutboxHelper approvalOutboxHelper;
+  private final RestaurantOutboxHelper restaurantOutboxHelper;
   private final OrderSagaHelper orderSagaHelper;
   private final OrderDataMapper orderDataMapper;
 
@@ -42,13 +42,13 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     OrderDomainService orderDomainService,
     OrderRepository orderRepository,
     PaymentOutboxHelper paymentOutboxHelper,
-    ApprovalOutboxHelper approvalOutboxHelper,
+    RestaurantOutboxHelper restaurantOutboxHelper,
     OrderSagaHelper orderSagaHelper,
     OrderDataMapper orderDataMapper) {
     this.orderDomainService = orderDomainService;
     this.orderRepository = orderRepository;
     this.paymentOutboxHelper = paymentOutboxHelper;
-    this.approvalOutboxHelper = approvalOutboxHelper;
+    this.restaurantOutboxHelper = restaurantOutboxHelper;
     this.orderSagaHelper = orderSagaHelper;
     this.orderDataMapper = orderDataMapper;
   }
@@ -76,7 +76,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
       orderPaymentOutboxMessage, domainEvent.getOrder().getOrderStatus(), sagaStatus));
 
     // Approval Outbox Message STARTED
-    approvalOutboxHelper
+    restaurantOutboxHelper
       .saveApprovalOutboxMessage(
         orderDataMapper.orderRestaurantEventPayload(domainEvent),
         domainEvent.getOrder().getOrderStatus(),
@@ -110,7 +110,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
 
     // Update Approval Outbox
     if (paymentResponse.getPaymentStatus() == PaymentStatus.CANCELLED) {
-      approvalOutboxHelper.save(getUpdatedApprovalOutboxMessage(
+      restaurantOutboxHelper.save(getUpdatedApprovalOutboxMessage(
         paymentResponse.getSagaId(), order.getOrderStatus(), sagaStatus));
     }
 
@@ -166,7 +166,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     OrderStatus orderStatus,
     SagaStatus sagaStatus) {
     Optional<OrderRestaurantOutboxMessage> orderApprovalOutboxMessageResponse =
-      approvalOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
+      restaurantOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
         UUID.fromString(sagaId),
         SagaStatus.COMPENSATING);
     if (orderApprovalOutboxMessageResponse.isEmpty()) {

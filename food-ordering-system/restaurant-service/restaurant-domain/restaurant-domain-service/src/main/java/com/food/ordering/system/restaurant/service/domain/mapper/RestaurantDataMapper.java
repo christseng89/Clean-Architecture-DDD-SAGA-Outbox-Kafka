@@ -4,7 +4,7 @@ import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.OrderStatus;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
+import com.food.ordering.system.restaurant.service.domain.dto.RestaurantRequest;
 import com.food.ordering.system.restaurant.service.domain.entity.OrderDetail;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
@@ -16,19 +16,19 @@ import java.util.UUID;
 
 @Component
 public class RestaurantDataMapper {
-  public Restaurant restaurant(RestaurantApprovalRequest restaurantApprovalRequest) {
+  public Restaurant restaurant(RestaurantRequest restaurantRequest) {
     return Restaurant.builder()
-      .restaurantId(new RestaurantId(UUID.fromString(restaurantApprovalRequest.getRestaurantId())))
+      .restaurantId(new RestaurantId(UUID.fromString(restaurantRequest.getRestaurantId())))
       .orderDetail(OrderDetail.builder()
-        .orderId(new OrderId(UUID.fromString(restaurantApprovalRequest.getOrderId())))
-        .products(restaurantApprovalRequest.getProducts().stream()
+        .orderId(new OrderId(UUID.fromString(restaurantRequest.getOrderId())))
+        .products(restaurantRequest.getProducts().stream()
           .map(product -> Product.builder()
             .productId(product.getId())
             .quantity(product.getQuantity())
             .build())
           .toList())
-        .totalAmount(new Money(restaurantApprovalRequest.getPrice()))
-        .orderStatus(OrderStatus.valueOf(restaurantApprovalRequest.getRestaurantOrderStatus().name()))
+        .totalAmount(new Money(restaurantRequest.getPrice()))
+        .orderStatus(OrderStatus.valueOf(restaurantRequest.getRestaurantOrderStatus().name()))
         .build())
       .build();
   }

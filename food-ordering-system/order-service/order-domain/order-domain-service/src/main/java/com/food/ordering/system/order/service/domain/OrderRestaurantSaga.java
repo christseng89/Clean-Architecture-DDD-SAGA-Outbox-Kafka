@@ -8,8 +8,8 @@ import com.food.ordering.system.order.service.domain.exception.OrderDomainExcept
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
-import com.food.ordering.system.order.service.domain.outbox.scheduler.approval.ApprovalOutboxHelper;
 import com.food.ordering.system.order.service.domain.outbox.scheduler.payment.PaymentOutboxHelper;
+import com.food.ordering.system.order.service.domain.outbox.scheduler.restaurant.RestaurantOutboxHelper;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
 import com.food.ordering.system.saga.SagaStep;
@@ -31,19 +31,19 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
   private final OrderDomainService orderDomainService;
   private final OrderSagaHelper orderSagaHelper;
   private final PaymentOutboxHelper paymentOutboxHelper;
-  private final ApprovalOutboxHelper approvalOutboxHelper;
+  private final RestaurantOutboxHelper restaurantOutboxHelper;
   private final OrderDataMapper orderDataMapper;
 
   public OrderRestaurantSaga(
     OrderDomainService orderDomainService,
     OrderSagaHelper orderSagaHelper,
     PaymentOutboxHelper paymentOutboxHelper,
-    ApprovalOutboxHelper approvalOutboxHelper,
+    RestaurantOutboxHelper restaurantOutboxHelper,
     OrderDataMapper orderDataMapper) {
     this.orderDomainService = orderDomainService;
     this.orderSagaHelper = orderSagaHelper;
     this.paymentOutboxHelper = paymentOutboxHelper;
-    this.approvalOutboxHelper = approvalOutboxHelper;
+    this.restaurantOutboxHelper = restaurantOutboxHelper;
     this.orderDataMapper = orderDataMapper;
   }
 
@@ -51,7 +51,7 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
   @Transactional
   public void process(RestaurantResponse restaurantResponse) {
     Optional<OrderRestaurantOutboxMessage> orderApprovalOutboxMessageResponse =
-      approvalOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
+      restaurantOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
         UUID.fromString(restaurantResponse.getSagaId()), SagaStatus.PROCESSING);
 
     if (orderApprovalOutboxMessageResponse.isEmpty()) {
@@ -66,7 +66,7 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
       order.getOrderStatus());
 
     // Update Approval Outbox
-    approvalOutboxHelper
+    restaurantOutboxHelper
       .save(getUpdatedApprovalOutboxMessage(
         orderRestaurantOutboxMessage, order.getOrderStatus(), sagaStatus));
 
@@ -82,7 +82,7 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
   @Transactional
   public void rollback(RestaurantResponse restaurantResponse) {
     Optional<OrderRestaurantOutboxMessage> orderApprovalOutboxMessageResponse =
-      approvalOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
+      restaurantOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
         UUID.fromString(restaurantResponse.getSagaId()), SagaStatus.PROCESSING);
 
     if (orderApprovalOutboxMessageResponse.isEmpty()) {
@@ -97,7 +97,7 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
       cancelledEvent.getOrder().getOrderStatus());
 
     // Update Approval Outbox
-    approvalOutboxHelper.save(getUpdatedApprovalOutboxMessage(
+    restaurantOutboxHelper.save(getUpdatedApprovalOutboxMessage(
       orderRestaurantOutboxMessage, cancelledEvent.getOrder().getOrderStatus(), sagaStatus));
 
     // Payment Outbox Message (Cancelled) STARTED

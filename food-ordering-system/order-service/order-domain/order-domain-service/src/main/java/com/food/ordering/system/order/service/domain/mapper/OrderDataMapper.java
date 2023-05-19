@@ -16,6 +16,7 @@ import com.food.ordering.system.order.service.domain.outbox.model.restaurant.Ord
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +41,8 @@ public class OrderDataMapper {
       .build();
   }
 
-  public CreateOrderResponse createOrderResponse(Order order, String message) {
+  public CreateOrderResponse createOrderResponse(
+    @Valid Order order, String message) {
     return CreateOrderResponse.builder()
       .orderTrackingId(order.getTrackingId().getValue())
       .orderStatus(order.getOrderStatus())
@@ -48,7 +50,8 @@ public class OrderDataMapper {
       .build();
   }
 
-  public TrackOrderResponse trackOrderResponse(Order order) {
+  public TrackOrderResponse trackOrderResponse(
+    @Valid Order order) {
     return TrackOrderResponse.builder()
       .orderTrackingId(order.getTrackingId().getValue())
       .orderStatus(order.getOrderStatus())

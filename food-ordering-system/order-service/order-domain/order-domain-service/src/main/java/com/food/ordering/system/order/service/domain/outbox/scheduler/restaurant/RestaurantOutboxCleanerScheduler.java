@@ -1,4 +1,4 @@
-package com.food.ordering.system.order.service.domain.outbox.scheduler.approval;
+package com.food.ordering.system.order.service.domain.outbox.scheduler.restaurant;
 
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
 import com.food.ordering.system.outbox.OutboxScheduler;
@@ -14,19 +14,19 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler {
+public class RestaurantOutboxCleanerScheduler implements OutboxScheduler {
 
-  private final ApprovalOutboxHelper approvalOutboxHelper;
+  private final RestaurantOutboxHelper restaurantOutboxHelper;
 
-  public RestaurantApprovalOutboxCleanerScheduler(ApprovalOutboxHelper approvalOutboxHelper) {
-    this.approvalOutboxHelper = approvalOutboxHelper;
+  public RestaurantOutboxCleanerScheduler(RestaurantOutboxHelper restaurantOutboxHelper) {
+    this.restaurantOutboxHelper = restaurantOutboxHelper;
   }
 
   @Override
   @Scheduled(cron = "@midnight")
   public void processOutboxMessage() {
     Optional<List<OrderRestaurantOutboxMessage>> outboxMessagesResponse =
-      approvalOutboxHelper.getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
+      restaurantOutboxHelper.getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.COMPLETED,
         SagaStatus.SUCCEEDED,
         SagaStatus.FAILED,
@@ -38,7 +38,7 @@ public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler
         outboxMessages.stream()
           .map(OrderRestaurantOutboxMessage::getPayload)
           .collect(Collectors.joining("\n")));
-      approvalOutboxHelper.deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(
+      restaurantOutboxHelper.deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.COMPLETED,
         SagaStatus.SUCCEEDED,
         SagaStatus.FAILED,

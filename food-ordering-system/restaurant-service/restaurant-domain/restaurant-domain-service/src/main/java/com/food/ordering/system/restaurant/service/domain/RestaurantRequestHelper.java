@@ -2,14 +2,14 @@ package com.food.ordering.system.restaurant.service.domain;
 
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.outbox.OutboxStatus;
-import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
+import com.food.ordering.system.restaurant.service.domain.dto.RestaurantRequest;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
 import com.food.ordering.system.restaurant.service.domain.event.RestaurantEvent;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantNotFoundException;
 import com.food.ordering.system.restaurant.service.domain.mapper.RestaurantDataMapper;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.restaurant.service.domain.outbox.scheduler.OrderOutboxHelper;
-import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantApprovalResponseMessagePublisher;
+import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantResponseMessagePublisher;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.OrderApprovalRepository;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,41 +23,41 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-public class RestaurantApprovalRequestHelper {
+public class RestaurantRequestHelper {
 
   private final RestaurantDomainService restaurantDomainService;
   private final RestaurantDataMapper restaurantDataMapper;
   private final RestaurantRepository restaurantRepository;
   private final OrderApprovalRepository orderApprovalRepository;
   private final OrderOutboxHelper orderOutboxHelper;
-  private final RestaurantApprovalResponseMessagePublisher restaurantApprovalResponseMessagePublisher;
+  private final RestaurantResponseMessagePublisher restaurantResponseMessagePublisher;
 
-  public RestaurantApprovalRequestHelper(
+  public RestaurantRequestHelper(
     RestaurantDomainService restaurantDomainService,
     RestaurantDataMapper restaurantDataMapper,
     RestaurantRepository restaurantRepository,
     OrderApprovalRepository orderApprovalRepository,
     OrderOutboxHelper orderOutboxHelper,
-    RestaurantApprovalResponseMessagePublisher restaurantApprovalResponseMessagePublisher) {
+    RestaurantResponseMessagePublisher restaurantResponseMessagePublisher) {
     this.restaurantDomainService = restaurantDomainService;
     this.restaurantDataMapper = restaurantDataMapper;
     this.restaurantRepository = restaurantRepository;
     this.orderApprovalRepository = orderApprovalRepository;
     this.orderOutboxHelper = orderOutboxHelper;
-    this.restaurantApprovalResponseMessagePublisher = restaurantApprovalResponseMessagePublisher;
+    this.restaurantResponseMessagePublisher = restaurantResponseMessagePublisher;
   }
 
   @Transactional
-  public void persistOrderApproval(RestaurantApprovalRequest restaurantApprovalRequest) {
-    if (publishIfOutboxMessageProcessed(restaurantApprovalRequest)) {
+  public void persistOrderApproval(RestaurantRequest restaurantRequest) {
+    if (publishIfOutboxMessageProcessed(restaurantRequest)) {
       log.info("An outbox message with saga id: {} already saved to database!",
-        restaurantApprovalRequest.getSagaId());
+        restaurantRequest.getSagaId());
       return;
     }
 
-    log.info("Processing restaurant approval for order id: {}", restaurantApprovalRequest.getOrderId());
+    log.info("Processing restaurant approval for order id: {}", restaurantRequest.getOrderId());
     List<String> failureMessages = new ArrayList<>();
-    Restaurant restaurant = findRestaurant(restaurantApprovalRequest);
+    Restaurant restaurant = findRestaurant(restaurantRequest);
     RestaurantEvent orderApprovalEvent =
       restaurantDomainService.validateOrder(
         restaurant,
@@ -68,13 +68,13 @@ public class RestaurantApprovalRequestHelper {
       .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(orderApprovalEvent),
         orderApprovalEvent.getOrderApproval().getApprovalStatus(),
         OutboxStatus.STARTED,
-        UUID.fromString(restaurantApprovalRequest.getSagaId()));
+        UUID.fromString(restaurantRequest.getSagaId()));
 
   }
 
-  private Restaurant findRestaurant(RestaurantApprovalRequest restaurantApprovalRequest) {
+  private Restaurant findRestaurant(RestaurantRequest restaurantRequest) {
     Restaurant restaurant = restaurantDataMapper
-      .restaurant(restaurantApprovalRequest);
+      .restaurant(restaurantRequest);
     Optional<Restaurant> restaurantResult = restaurantRepository.findRestaurantInformation(restaurant);
     if (restaurantResult.isEmpty()) {
       log.error("Restaurant with id " + restaurant.getId().getValue() + " not found!");
@@ -90,17 +90,17 @@ public class RestaurantApprovalRequestHelper {
           product.updateWithConfirmedNamePriceAndAvailability(p.getName(), p.getPrice(), p.isAvailable());
         }
       }));
-    restaurant.getOrderDetail().setId(new OrderId(UUID.fromString(restaurantApprovalRequest.getOrderId())));
+    restaurant.getOrderDetail().setId(new OrderId(UUID.fromString(restaurantRequest.getOrderId())));
 
     return restaurant;
   }
 
-  private boolean publishIfOutboxMessageProcessed(RestaurantApprovalRequest restaurantApprovalRequest) {
+  private boolean publishIfOutboxMessageProcessed(RestaurantRequest restaurantRequest) {
     Optional<OrderOutboxMessage> orderOutboxMessage =
       orderOutboxHelper.getCompletedOrderOutboxMessageBySagaIdAndOutboxStatus(UUID
-        .fromString(restaurantApprovalRequest.getSagaId()), OutboxStatus.COMPLETED);
+        .fromString(restaurantRequest.getSagaId()), OutboxStatus.COMPLETED);
     if (orderOutboxMessage.isPresent()) {
-      restaurantApprovalResponseMessagePublisher.publish(orderOutboxMessage.get(),
+      restaurantResponseMessagePublisher.publish(orderOutboxMessage.get(),
         orderOutboxHelper::updateOutboxStatus);
       return true;
     }

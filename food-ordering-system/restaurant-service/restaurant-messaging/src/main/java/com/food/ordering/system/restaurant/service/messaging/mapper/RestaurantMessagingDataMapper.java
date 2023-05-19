@@ -5,7 +5,7 @@ import com.food.ordering.system.domain.valueobject.RestaurantOrderStatus;
 import com.food.ordering.system.kafka.order.avro.model.OrderApprovalStatus;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
-import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
+import com.food.ordering.system.restaurant.service.domain.dto.RestaurantRequest;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderEventPayload;
 import org.springframework.stereotype.Component;
@@ -15,10 +15,10 @@ import java.util.UUID;
 @Component
 public class RestaurantMessagingDataMapper {
 
-  public RestaurantApprovalRequest
+  public RestaurantRequest
   restaurantApprovalRequestAvroModelToRestaurantApproval(
     RestaurantApprovalRequestAvroModel restaurantApprovalRequestAvroModel) {
-    return RestaurantApprovalRequest.builder()
+    return RestaurantRequest.builder()
       .id(restaurantApprovalRequestAvroModel.getId())
       .sagaId(restaurantApprovalRequestAvroModel.getSagaId())
       .restaurantId(restaurantApprovalRequestAvroModel.getRestaurantId())

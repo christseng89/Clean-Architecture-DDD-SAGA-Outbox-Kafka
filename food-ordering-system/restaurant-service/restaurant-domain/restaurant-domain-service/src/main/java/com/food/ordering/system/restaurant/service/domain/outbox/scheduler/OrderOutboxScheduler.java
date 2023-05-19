@@ -3,7 +3,7 @@ package com.food.ordering.system.restaurant.service.domain.outbox.scheduler;
 import com.food.ordering.system.outbox.OutboxScheduler;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutboxMessage;
-import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantApprovalResponseMessagePublisher;
+import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantResponseMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 public class OrderOutboxScheduler implements OutboxScheduler {
 
   private final OrderOutboxHelper orderOutboxHelper;
-  private final RestaurantApprovalResponseMessagePublisher responseMessagePublisher;
+  private final RestaurantResponseMessagePublisher responseMessagePublisher;
 
   public OrderOutboxScheduler(
     OrderOutboxHelper orderOutboxHelper,
-    RestaurantApprovalResponseMessagePublisher responseMessagePublisher) {
+    RestaurantResponseMessagePublisher responseMessagePublisher) {
     this.orderOutboxHelper = orderOutboxHelper;
     this.responseMessagePublisher = responseMessagePublisher;
   }
@@ -40,7 +40,7 @@ public class OrderOutboxScheduler implements OutboxScheduler {
       log.info("Received {} OrderOutboxMessage with ids {}, sending to message bus!", outboxMessages.size(),
         outboxMessages.stream()
           .map(outboxMessage -> outboxMessage.getId().toString()).collect(Collectors.joining(",")));
-      
+
       outboxMessages.forEach(orderOutboxMessage ->
         responseMessagePublisher.publish(orderOutboxMessage,
           orderOutboxHelper::updateOutboxStatus));
