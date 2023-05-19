@@ -301,6 +301,7 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
         this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
+      //noinspection ConstantValue
       if (isValidValue(fields()[1], other.quantity)) {
         this.quantity = data().deepCopy(fields()[1].schema(), other.quantity);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
@@ -318,6 +319,7 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
         this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = true;
       }
+      //noinspection ConstantValue
       if (isValidValue(fields()[1], other.quantity)) {
         this.quantity = data().deepCopy(fields()[1].schema(), other.quantity);
         fieldSetFlags()[1] = true;

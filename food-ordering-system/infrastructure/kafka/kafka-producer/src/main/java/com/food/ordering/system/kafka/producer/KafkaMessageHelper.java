@@ -37,6 +37,7 @@ public class KafkaMessageHelper {
     BiConsumer<U, OutboxStatus> outboxCallback,
     String orderId, String avroModelName) {
     return new ListenableFutureCallback<SendResult<String, T>>() {
+      @SuppressWarnings("NullableProblems")
       @Override
       public void onFailure(Throwable throwable) {
         log.error("Error while sending {} with message: {} and outbox type: {} to topic {}",

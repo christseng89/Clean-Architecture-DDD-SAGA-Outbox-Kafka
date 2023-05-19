@@ -59,6 +59,7 @@ public class CustomerCreatedEventKafkaPublisher implements CustomerMessagePublis
   private ListenableFutureCallback<SendResult<String, CustomerAvroModel>>
   getCallback(String topicName, CustomerAvroModel message) {
     return new ListenableFutureCallback<>() {
+      @SuppressWarnings("NullableProblems")
       @Override
       public void onFailure(Throwable throwable) {
         log.error("Error while sending message {} to topic {}", message.toString(), topicName, throwable);
