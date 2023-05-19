@@ -1,6 +1,7 @@
 package com.food.ordering.system.order.service.domain.outbox.model.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.food.ordering.system.order.service.domain.dto.create.OrderProduct;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class OrderRestaurantEventPayload {
   @JsonProperty
   private String restaurantOrderStatus;
   @JsonProperty
-  private List<OrderRestaurantEventProduct> products;
+  private List<OrderProduct> products;
 
 }
 

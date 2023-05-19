@@ -4,6 +4,7 @@ import com.food.ordering.system.domain.valueobject.*;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.create.OrderAddress;
+import com.food.ordering.system.order.service.domain.dto.create.OrderProduct;
 import com.food.ordering.system.order.service.domain.dto.message.CustomerRequest;
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.entity.*;
@@ -12,7 +13,6 @@ import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventPayload;
-import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventProduct;
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import org.springframework.stereotype.Component;
 
@@ -87,7 +87,7 @@ public class OrderDataMapper {
       .restaurantId(orderPaidEvent.getOrder().getRestaurantId().getValue().toString())
       .restaurantOrderStatus(RestaurantOrderStatus.PAID.name())
       .products(orderPaidEvent.getOrder().getItems().stream()
-        .map(orderItem -> OrderRestaurantEventProduct.builder()
+        .map(orderItem -> OrderProduct.builder()
           .id(orderItem.getProduct().getId().getValue().toString())
           .quantity(orderItem.getQuantity())
           .build()).toList())

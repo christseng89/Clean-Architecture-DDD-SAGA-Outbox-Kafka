@@ -1,4 +1,4 @@
-package com.food.ordering.system.order.service.domain.outbox.model.restaurant;
+package com.food.ordering.system.order.service.domain.dto.create;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class OrderRestaurantEventProduct {
+public class OrderProduct {
   @JsonProperty
   private String id;
   @JsonProperty
