@@ -1,6 +1,6 @@
 package com.food.ordering.system.payment.service.dataaccess.outbox.adapter;
 
-import com.food.ordering.system.domain.valueobject.PaymentStatus;
+import com.food.ordering.system.domain.outbox.PaymentStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.payment.service.dataaccess.outbox.exception.OrderOutboxNotFoundException;
 import com.food.ordering.system.payment.service.dataaccess.outbox.mapper.OrderOutboxDataAccessMapper;

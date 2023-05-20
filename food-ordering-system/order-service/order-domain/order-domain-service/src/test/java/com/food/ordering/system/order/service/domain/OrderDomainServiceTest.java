@@ -2,6 +2,8 @@ package com.food.ordering.system.order.service.domain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.food.ordering.system.domain.outbox.OrderStatus;
+import com.food.ordering.system.domain.outbox.PaymentOrderStatus;
 import com.food.ordering.system.domain.valueobject.*;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;

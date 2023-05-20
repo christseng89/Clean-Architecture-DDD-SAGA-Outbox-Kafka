@@ -1,7 +1,7 @@
 package com.food.ordering.system.restaurant.service.messaging.mapper;
 
+import com.food.ordering.system.domain.outbox.RestaurantOrderStatus;
 import com.food.ordering.system.domain.valueobject.ProductId;
-import com.food.ordering.system.domain.valueobject.RestaurantOrderStatus;
 import com.food.ordering.system.kafka.order.avro.model.OrderApprovalStatus;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;

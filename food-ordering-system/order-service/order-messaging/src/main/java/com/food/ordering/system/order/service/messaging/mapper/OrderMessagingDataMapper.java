@@ -1,5 +1,6 @@
 package com.food.ordering.system.order.service.messaging.mapper;
 
+import com.food.ordering.system.domain.outbox.OrderApprovalStatus;
 import com.food.ordering.system.kafka.order.avro.model.*;
 import com.food.ordering.system.order.service.domain.dto.message.CustomerCreated;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
@@ -23,7 +24,7 @@ public class OrderMessagingDataMapper {
       .orderId(paymentResponseAvroModel.getOrderId())
       .price(paymentResponseAvroModel.getPrice())
       .createdAt(paymentResponseAvroModel.getCreatedAt())
-      .paymentStatus(com.food.ordering.system.domain.valueobject.PaymentStatus.valueOf(
+      .paymentStatus(com.food.ordering.system.domain.outbox.PaymentStatus.valueOf(
         paymentResponseAvroModel.getPaymentStatus().name()))
       .failureMessages(paymentResponseAvroModel.getFailureMessages())
       .build();
@@ -37,7 +38,7 @@ public class OrderMessagingDataMapper {
       .restaurantId(restaurantApprovalResponseAvroModel.getRestaurantId())
       .orderId(restaurantApprovalResponseAvroModel.getOrderId())
       .createdAt(restaurantApprovalResponseAvroModel.getCreatedAt())
-      .orderApprovalStatus(com.food.ordering.system.domain.valueobject.OrderApprovalStatus.valueOf(
+      .orderApprovalStatus(OrderApprovalStatus.valueOf(
         restaurantApprovalResponseAvroModel.getOrderApprovalStatus().name()))
       .failureMessages(restaurantApprovalResponseAvroModel.getFailureMessages())
       .build();

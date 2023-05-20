@@ -1,9 +1,9 @@
 package com.food.ordering.system.restaurant.service.domain.entity;
 
 import com.food.ordering.system.domain.entity.AggregateRoot;
+import com.food.ordering.system.domain.outbox.OrderApprovalStatus;
+import com.food.ordering.system.domain.outbox.OrderStatus;
 import com.food.ordering.system.domain.valueobject.Money;
-import com.food.ordering.system.domain.valueobject.OrderApprovalStatus;
-import com.food.ordering.system.domain.valueobject.OrderStatus;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.valueobject.OrderApprovalId;
 

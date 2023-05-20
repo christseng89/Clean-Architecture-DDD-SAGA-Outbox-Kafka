@@ -2,7 +2,7 @@ package com.food.ordering.system.payment.service.domain.outbox.scheduler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.food.ordering.system.domain.valueobject.PaymentStatus;
+import com.food.ordering.system.domain.outbox.PaymentStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.payment.service.domain.exception.PaymentDomainException;
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderEventPayload;

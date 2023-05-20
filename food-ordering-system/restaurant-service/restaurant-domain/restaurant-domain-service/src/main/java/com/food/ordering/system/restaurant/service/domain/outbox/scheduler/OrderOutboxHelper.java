@@ -2,7 +2,7 @@ package com.food.ordering.system.restaurant.service.domain.outbox.scheduler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.food.ordering.system.domain.valueobject.OrderApprovalStatus;
+import com.food.ordering.system.domain.outbox.OrderApprovalStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantDomainException;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderEventPayload;

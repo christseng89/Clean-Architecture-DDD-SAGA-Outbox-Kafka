@@ -1,6 +1,6 @@
 package com.food.ordering.system.restaurant.service.domain.outbox.model;
 
-import com.food.ordering.system.domain.valueobject.OrderApprovalStatus;
+import com.food.ordering.system.domain.outbox.OrderApprovalStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
 package com.food.ordering.system.payment.service.domain;
 
+import com.food.ordering.system.domain.outbox.PaymentStatus;
 import com.food.ordering.system.domain.valueobject.Money;
-import com.food.ordering.system.domain.valueobject.PaymentStatus;
 import com.food.ordering.system.payment.service.domain.entity.CreditEntry;
 import com.food.ordering.system.payment.service.domain.entity.CreditHistory;
 import com.food.ordering.system.payment.service.domain.entity.Payment;

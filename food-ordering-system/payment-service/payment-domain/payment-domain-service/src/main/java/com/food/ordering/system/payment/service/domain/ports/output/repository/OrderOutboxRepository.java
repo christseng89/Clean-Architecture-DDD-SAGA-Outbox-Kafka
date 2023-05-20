@@ -1,6 +1,6 @@
 package com.food.ordering.system.payment.service.domain.ports.output.repository;
 
-import com.food.ordering.system.domain.valueobject.PaymentStatus;
+import com.food.ordering.system.domain.outbox.PaymentStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderOutboxMessage;
 

@@ -1,7 +1,7 @@
 package com.food.ordering.system.order.service.domain;
 
+import com.food.ordering.system.domain.outbox.OrderStatus;
 import com.food.ordering.system.domain.valueobject.OrderId;
-import com.food.ordering.system.domain.valueobject.OrderStatus;
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
