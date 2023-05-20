@@ -7,6 +7,6 @@ import javax.validation.Valid;
 
 public interface CustomerApplicationService {
 
-  CreateCustomerResponse createCustomerResponse(@Valid CreateCustomerRequest createCustomerRequest);
+  CreateCustomerResponse createCustomer(@Valid CreateCustomerRequest createCustomerRequest);
 
 }

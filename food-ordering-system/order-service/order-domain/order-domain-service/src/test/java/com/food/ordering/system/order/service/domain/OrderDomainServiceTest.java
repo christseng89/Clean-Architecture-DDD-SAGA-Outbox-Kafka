@@ -169,7 +169,7 @@ public class OrderDomainServiceTest {
 
   @Test
   public void testCreateOrder() {
-    CreateOrderResponse createOrderResponse = orderApplicationService.createOrderResponse(createOrderRequestCommand);
+    CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderRequestCommand);
     assertEquals(createOrderResponse.getOrderStatus(), OrderStatus.PENDING);
     assertEquals(createOrderResponse.getMessage(), "Order created successfully");
 
@@ -181,7 +181,7 @@ public class OrderDomainServiceTest {
   public void testCreateOrderWithWrongTotalPrice() {
     OrderDomainException orderDomainException =
       assertThrows(OrderDomainException.class,
-        () -> orderApplicationService.createOrderResponse(createOrderRequestCommandWrongPrice));
+        () -> orderApplicationService.createOrder(createOrderRequestCommandWrongPrice));
 
     System.out.println("\nWrong total price...\n");
     assertEquals(orderDomainException.getMessage(),
@@ -192,7 +192,7 @@ public class OrderDomainServiceTest {
   public void testCreateOrderWithWrongProductPrice() {
     OrderDomainException orderDomainException = assertThrows(
       OrderDomainException.class,
-      () -> orderApplicationService.createOrderResponse(createOrderRequestCommandWrongProductPrice));
+      () -> orderApplicationService.createOrder(createOrderRequestCommandWrongProductPrice));
 
     System.out.println("\nWrong product ID " + PRODUCT_ID + " price...\n");
     assertEquals(orderDomainException.getMessage(),
@@ -215,7 +215,7 @@ public class OrderDomainServiceTest {
 
     OrderDomainException orderDomainException = assertThrows(
       OrderDomainException.class,
-      () -> orderApplicationService.createOrderResponse(createOrderRequestCommand));
+      () -> orderApplicationService.createOrder(createOrderRequestCommand));
 
     System.out.println("\nInactive restaurant ID " + RESTAURANT_ID + "...\n");
     assertEquals(orderDomainException.getMessage(),

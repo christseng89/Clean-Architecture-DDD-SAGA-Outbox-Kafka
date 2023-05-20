@@ -26,7 +26,7 @@ public class CustomerController {
     log.info("Creating customer with username: {}", createCustomerRequest.getUsername());
 
     CreateCustomerResponse response = customerApplicationService.
-      createCustomerResponse(createCustomerRequest);
+      createCustomer(createCustomerRequest);
     return ResponseEntity.ok(response);
   }
 

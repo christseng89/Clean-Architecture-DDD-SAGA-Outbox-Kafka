@@ -26,7 +26,7 @@ public class OrderController {
   public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody CreateOrderRequest createOrderRequestCommand) {
     log.info("Creating order for customer: {} at restaurant: {}", createOrderRequestCommand.getCustomerId(),
       createOrderRequestCommand.getRestaurantId());
-    CreateOrderResponse createOrderResponse = orderApplicationService.createOrderResponse(createOrderRequestCommand);
+    CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderRequestCommand);
     log.info("Order created with tracking id: {}", createOrderResponse.getOrderTrackingId());
     return ResponseEntity.ok(createOrderResponse);
   }
@@ -34,7 +34,7 @@ public class OrderController {
   @GetMapping("/{trackingId}")
   public ResponseEntity<TrackOrderResponse> getOrderByTrackingId(@PathVariable UUID trackingId) {
     TrackOrderResponse trackOrderResponse =
-      orderApplicationService.trackOrderResponse(TrackOrderRequest.builder().orderTrackingId(trackingId).build());
+      orderApplicationService.trackOrder(TrackOrderRequest.builder().orderTrackingId(trackingId).build());
     log.info("Returning order status with tracking id: {}", trackOrderResponse.getOrderTrackingId());
     return ResponseEntity.ok(trackOrderResponse);
   }
