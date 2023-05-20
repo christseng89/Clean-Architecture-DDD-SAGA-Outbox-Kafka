@@ -6,7 +6,7 @@ import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.ProductId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity.OrderApprovalEntity;
+import com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity.RestaurantApprovalEntity;
 import com.food.ordering.system.restaurant.service.domain.entity.OrderDetail;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
@@ -49,8 +49,8 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public OrderApprovalEntity orderApprovalToOrderApprovalEntity(RestaurantApproval restaurantApproval) {
-    return OrderApprovalEntity.builder()
+  public RestaurantApprovalEntity orderApprovalToOrderApprovalEntity(RestaurantApproval restaurantApproval) {
+    return RestaurantApprovalEntity.builder()
       .id(restaurantApproval.getId().getValue())
       .restaurantId(restaurantApproval.getRestaurantId().getValue())
       .orderId(restaurantApproval.getOrderId().getValue())
@@ -58,12 +58,12 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantApproval orderApprovalEntityToOrderApproval(OrderApprovalEntity orderApprovalEntity) {
+  public RestaurantApproval orderApprovalEntityToOrderApproval(RestaurantApprovalEntity restaurantApprovalEntity) {
     return RestaurantApproval.builder()
-      .orderApprovalId(new RestaurantApprovalId(orderApprovalEntity.getId()))
-      .restaurantId(new RestaurantId(orderApprovalEntity.getRestaurantId()))
-      .orderId(new OrderId(orderApprovalEntity.getOrderId()))
-      .approvalStatus(orderApprovalEntity.getStatus())
+      .orderApprovalId(new RestaurantApprovalId(restaurantApprovalEntity.getId()))
+      .restaurantId(new RestaurantId(restaurantApprovalEntity.getRestaurantId()))
+      .orderId(new OrderId(restaurantApprovalEntity.getOrderId()))
+      .approvalStatus(restaurantApprovalEntity.getStatus())
       .build();
   }
 
