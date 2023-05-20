@@ -57,7 +57,7 @@ public class OrderCreateHelper {
 
   private Restaurant checkRestaurant(CreateOrderRequest createOrderRequestCommand) {
     Restaurant restaurant = orderDataMapper.restaurant(createOrderRequestCommand);
-    Optional<Restaurant> optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant);
+    Optional<Restaurant> optionalRestaurant = restaurantRepository.findRestaurant(restaurant);
     if (optionalRestaurant.isEmpty()) {
       log.warn("Could not find restaurant with restaurant id: {}", createOrderRequestCommand.getRestaurantId());
       throw new OrderDomainException("Could not find restaurant with restaurant id: " +
@@ -67,20 +67,19 @@ public class OrderCreateHelper {
   }
 
   private void checkCustomer(UUID customerId) {
-    Optional<Customer> customer = customerRepository.findCustomer(customerId);
+    Optional<Customer> customer = customerRepository.findCustomerById(customerId);
     if (customer.isEmpty()) {
       log.warn("Could not find customer with customer id: {}", customerId);
       throw new OrderDomainException("Could not find customer with customer id: " + customer);
     }
   }
 
-  private Order saveOrder(Order order) {
+  private void saveOrder(Order order) throws OrderDomainException {
     Order orderResult = orderRepository.save(order);
     if (orderResult == null) {
       log.error("Could not save order!");
       throw new OrderDomainException("Could not save order!");
     }
     log.info("Order is saved with id: {}", orderResult.getId().getValue());
-    return orderResult;
   }
 }

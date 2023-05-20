@@ -11,7 +11,9 @@ import java.util.UUID;
 public interface OrderOutboxRepository {
   OrderOutboxMessage save(OrderOutboxMessage orderOutboxMessage);
 
-  Optional<List<OrderOutboxMessage>> findByTypeAndOutboxStatus(String type, OutboxStatus status);
+  Optional<List<OrderOutboxMessage>> findByTypeAndOutboxStatus(
+    String type,
+    OutboxStatus status);
 
   Optional<OrderOutboxMessage> findByTypeAndSagaIdAndPaymentStatusAndOutboxStatus(
     String type,
@@ -19,5 +21,7 @@ public interface OrderOutboxRepository {
     PaymentStatus paymentStatus,
     OutboxStatus outboxStatus);
 
-  void deleteByTypeAndOutboxStatus(String type, OutboxStatus status);
+  void deleteByTypeAndOutboxStatus(
+    String type,
+    OutboxStatus status);
 }
