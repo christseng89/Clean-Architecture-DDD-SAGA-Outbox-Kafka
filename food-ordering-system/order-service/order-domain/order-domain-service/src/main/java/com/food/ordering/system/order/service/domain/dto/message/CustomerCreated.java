@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class CustomerRequest {
+public class CustomerCreated {
   private String id;
   private String username;
   private String firstName;
