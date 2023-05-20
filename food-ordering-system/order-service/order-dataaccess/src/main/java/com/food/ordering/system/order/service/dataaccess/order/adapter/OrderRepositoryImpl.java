@@ -30,7 +30,7 @@ public class OrderRepositoryImpl implements OrderRepository {
   }
 
   @Override
-  public Optional<Order> findById(OrderId orderId) {
+  public Optional<Order> findByOrderId(OrderId orderId) {
     return orderJpaRepository.findById(orderId.getValue())
       .map(orderDataAccessMapper::orderEntityToOrder);
   }
