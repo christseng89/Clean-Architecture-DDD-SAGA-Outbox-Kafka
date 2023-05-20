@@ -46,6 +46,20 @@ public class Product extends BaseEntity<ProductId> {
     return available;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Product product = (Product) o;
+    return quantity == product.quantity && available == product.available && Objects.equals(name, product.name) && Objects.equals(price, product.price);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), quantity, name, price, available);
+  }
+
   public static final class Builder {
     private ProductId productId;
     private String name;
@@ -84,19 +98,5 @@ public class Product extends BaseEntity<ProductId> {
     public Product build() {
       return new Product(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    Product product = (Product) o;
-    return quantity == product.quantity && available == product.available && Objects.equals(name, product.name) && Objects.equals(price, product.price);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), quantity, name, price, available);
   }
 }

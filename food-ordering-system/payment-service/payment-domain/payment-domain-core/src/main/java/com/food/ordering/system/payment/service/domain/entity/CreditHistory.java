@@ -37,6 +37,20 @@ public class CreditHistory extends BaseEntity<CreditHistoryId> {
     return paymentType;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    CreditHistory that = (CreditHistory) o;
+    return Objects.equals(customerId, that.customerId) && Objects.equals(amount, that.amount) && paymentType == that.paymentType;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), customerId, amount, paymentType);
+  }
+
   public static final class Builder {
     private CreditHistoryId creditHistoryId;
     private CustomerId customerId;
@@ -69,19 +83,5 @@ public class CreditHistory extends BaseEntity<CreditHistoryId> {
     public CreditHistory build() {
       return new CreditHistory(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    CreditHistory that = (CreditHistory) o;
-    return Objects.equals(customerId, that.customerId) && Objects.equals(amount, that.amount) && paymentType == that.paymentType;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), customerId, amount, paymentType);
   }
 }

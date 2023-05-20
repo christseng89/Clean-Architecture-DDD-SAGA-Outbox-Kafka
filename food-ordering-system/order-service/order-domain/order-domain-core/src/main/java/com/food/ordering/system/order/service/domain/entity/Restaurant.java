@@ -28,6 +28,20 @@ public class Restaurant extends BaseEntity<RestaurantId> {
     return active;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Restaurant that = (Restaurant) o;
+    return active == that.active && Objects.equals(products, that.products);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), products, active);
+  }
+
   public static final class Builder {
     private RestaurantId restaurantId;
     private List<Product> products;
@@ -54,19 +68,5 @@ public class Restaurant extends BaseEntity<RestaurantId> {
     public Restaurant build() {
       return new Restaurant(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    Restaurant that = (Restaurant) o;
-    return active == that.active && Objects.equals(products, that.products);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), products, active);
   }
 }

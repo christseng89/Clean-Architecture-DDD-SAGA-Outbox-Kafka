@@ -5,9 +5,9 @@ metadata:
   namespace: default
 spec:
   containers:
-  - name: kafka-client
-    image: confluentinc/cp-enterprise-kafka:6.1.0
-    command:
-      - sh
-      - -c
-      - "exec tail -f /dev/null"
+    - name: kafka-client
+      image: confluentinc/cp-enterprise-kafka:6.1.0
+      command:
+        - sh
+        - -c
+        - "exec tail -f /dev/null"

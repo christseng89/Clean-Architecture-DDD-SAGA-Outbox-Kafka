@@ -36,6 +36,20 @@ public class OrderDetail extends BaseEntity<OrderId> {
     return products;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    OrderDetail that = (OrderDetail) o;
+    return Objects.equals(products, that.products) && orderStatus == that.orderStatus && Objects.equals(totalAmount, that.totalAmount);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), products, orderStatus, totalAmount);
+  }
+
   public static final class Builder {
     private OrderId orderId;
     private OrderStatus orderStatus;
@@ -68,19 +82,5 @@ public class OrderDetail extends BaseEntity<OrderId> {
     public OrderDetail build() {
       return new OrderDetail(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    OrderDetail that = (OrderDetail) o;
-    return Objects.equals(products, that.products) && orderStatus == that.orderStatus && Objects.equals(totalAmount, that.totalAmount);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), products, orderStatus, totalAmount);
   }
 }

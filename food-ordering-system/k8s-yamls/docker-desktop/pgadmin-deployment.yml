@@ -14,15 +14,15 @@ spec:
     metadata:
       labels:
         app: pgadmin-deployment
-    spec:               
+    spec:
       containers:
         - name: pgadmin4
           image: dpage/pgadmin4
           env:
-          - name: PGADMIN_DEFAULT_EMAIL
-            value: chris@chinasystems.com
-          - name: PGADMIN_DEFAULT_PASSWORD
-            value: admin             
+            - name: PGADMIN_DEFAULT_EMAIL
+              value: chris@chinasystems.com
+            - name: PGADMIN_DEFAULT_PASSWORD
+              value: admin
 ---
 apiVersion: v1
 kind: Service

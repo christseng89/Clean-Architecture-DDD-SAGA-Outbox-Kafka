@@ -70,6 +70,20 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     return orderDetail;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Restaurant that = (Restaurant) o;
+    return active == that.active && Objects.equals(orderDetail, that.orderDetail) && Objects.equals(orderApproval, that.orderApproval);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), orderDetail, orderApproval, active);
+  }
+
   public static final class Builder {
     private RestaurantId restaurantId;
     private OrderApproval orderApproval;
@@ -102,19 +116,5 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     public Restaurant build() {
       return new Restaurant(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    Restaurant that = (Restaurant) o;
-    return active == that.active && Objects.equals(orderDetail, that.orderDetail) && Objects.equals(orderApproval, that.orderApproval);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), orderDetail, orderApproval, active);
   }
 }

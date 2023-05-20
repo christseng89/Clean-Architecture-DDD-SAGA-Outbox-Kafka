@@ -169,6 +169,20 @@ public class Order extends AggregateRoot<OrderId> {
     return failureMessages;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Order order = (Order) o;
+    return Objects.equals(customerId, order.customerId) && Objects.equals(restaurantId, order.restaurantId) && Objects.equals(deliveryAddress, order.deliveryAddress) && Objects.equals(price, order.price) && Objects.equals(items, order.items) && Objects.equals(trackingId, order.trackingId) && orderStatus == order.orderStatus && Objects.equals(failureMessages, order.failureMessages);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), customerId, restaurantId, deliveryAddress, price, items, trackingId, orderStatus, failureMessages);
+  }
+
   public static final class Builder {
     private OrderId orderId;
     private CustomerId customerId;
@@ -231,19 +245,5 @@ public class Order extends AggregateRoot<OrderId> {
     public Order build() {
       return new Order(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    Order order = (Order) o;
-    return Objects.equals(customerId, order.customerId) && Objects.equals(restaurantId, order.restaurantId) && Objects.equals(deliveryAddress, order.deliveryAddress) && Objects.equals(price, order.price) && Objects.equals(items, order.items) && Objects.equals(trackingId, order.trackingId) && orderStatus == order.orderStatus && Objects.equals(failureMessages, order.failureMessages);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), customerId, restaurantId, deliveryAddress, price, items, trackingId, orderStatus, failureMessages);
   }
 }

@@ -57,6 +57,20 @@ public class OrderItem extends BaseEntity<OrderItemId> {
     return subTotal;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    OrderItem orderItem = (OrderItem) o;
+    return quantity == orderItem.quantity && Objects.equals(product, orderItem.product) && Objects.equals(price, orderItem.price) && Objects.equals(subTotal, orderItem.subTotal) && Objects.equals(orderId, orderItem.orderId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), product, quantity, price, subTotal, orderId);
+  }
+
   public static final class Builder {
     private OrderItemId orderItemId;
     private Product product;
@@ -95,19 +109,5 @@ public class OrderItem extends BaseEntity<OrderItemId> {
     public OrderItem build() {
       return new OrderItem(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    OrderItem orderItem = (OrderItem) o;
-    return quantity == orderItem.quantity && Objects.equals(product, orderItem.product) && Objects.equals(price, orderItem.price) && Objects.equals(subTotal, orderItem.subTotal) && Objects.equals(orderId, orderItem.orderId);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), product, quantity, price, subTotal, orderId);
   }
 }

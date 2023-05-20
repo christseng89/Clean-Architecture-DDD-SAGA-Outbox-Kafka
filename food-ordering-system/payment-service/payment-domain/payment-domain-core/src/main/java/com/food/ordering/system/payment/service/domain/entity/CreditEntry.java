@@ -38,6 +38,20 @@ public class CreditEntry extends BaseEntity<CreditEntryId> {
     return totalCreditAmount;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    CreditEntry that = (CreditEntry) o;
+    return Objects.equals(customerId, that.customerId) && Objects.equals(totalCreditAmount, that.totalCreditAmount);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), customerId, totalCreditAmount);
+  }
+
   public static final class Builder {
     private CreditEntryId creditEntryId;
     private CustomerId customerId;
@@ -64,19 +78,5 @@ public class CreditEntry extends BaseEntity<CreditEntryId> {
     public CreditEntry build() {
       return new CreditEntry(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    CreditEntry that = (CreditEntry) o;
-    return Objects.equals(customerId, that.customerId) && Objects.equals(totalCreditAmount, that.totalCreditAmount);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), customerId, totalCreditAmount);
   }
 }

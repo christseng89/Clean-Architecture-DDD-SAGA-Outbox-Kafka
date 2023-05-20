@@ -72,6 +72,20 @@ public class Payment extends AggregateRoot<PaymentId> {
     return createdAt;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Payment payment = (Payment) o;
+    return Objects.equals(orderId, payment.orderId) && Objects.equals(customerId, payment.customerId) && Objects.equals(price, payment.price) && paymentStatus == payment.paymentStatus && Objects.equals(createdAt, payment.createdAt);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), orderId, customerId, price, paymentStatus, createdAt);
+  }
+
   public static final class Builder {
     private PaymentId paymentId;
     private OrderId orderId;
@@ -116,19 +130,5 @@ public class Payment extends AggregateRoot<PaymentId> {
     public Payment build() {
       return new Payment(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    Payment payment = (Payment) o;
-    return Objects.equals(orderId, payment.orderId) && Objects.equals(customerId, payment.customerId) && Objects.equals(price, payment.price) && paymentStatus == payment.paymentStatus && Objects.equals(createdAt, payment.createdAt);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), orderId, customerId, price, paymentStatus, createdAt);
   }
 }
