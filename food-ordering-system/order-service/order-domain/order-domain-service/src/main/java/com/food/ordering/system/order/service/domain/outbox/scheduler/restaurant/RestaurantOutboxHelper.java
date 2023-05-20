@@ -6,7 +6,7 @@ import com.food.ordering.system.domain.valueobject.OrderStatus;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventPayload;
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantOutboxMessage;
-import com.food.ordering.system.order.service.domain.ports.output.repository.ApprovalOutboxRepository;
+import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantOutboxRepository;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +23,13 @@ import static com.food.ordering.system.saga.order.SagaConstants.ORDER_SAGA_NAME;
 @Component
 public class RestaurantOutboxHelper {
 
-  private final ApprovalOutboxRepository approvalOutboxRepository;
+  private final RestaurantOutboxRepository restaurantOutboxRepository;
   private final ObjectMapper objectMapper;
 
   public RestaurantOutboxHelper(
-    ApprovalOutboxRepository approvalOutboxRepository,
+    RestaurantOutboxRepository restaurantOutboxRepository,
     ObjectMapper objectMapper) {
-    this.approvalOutboxRepository = approvalOutboxRepository;
+    this.restaurantOutboxRepository = restaurantOutboxRepository;
     this.objectMapper = objectMapper;
   }
 
@@ -37,7 +37,7 @@ public class RestaurantOutboxHelper {
   public Optional<List<OrderRestaurantOutboxMessage>>
   getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
     OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
-    return approvalOutboxRepository.findByTypeAndOutboxStatusAndSagaStatus(
+    return restaurantOutboxRepository.findByTypeAndOutboxStatusAndSagaStatus(
       ORDER_SAGA_NAME, outboxStatus, sagaStatus);
   }
 
@@ -45,13 +45,13 @@ public class RestaurantOutboxHelper {
   public Optional<OrderRestaurantOutboxMessage>
   getApprovalOutboxMessageBySagaIdAndSagaStatus(
     UUID sagaId, SagaStatus... sagaStatus) {
-    return approvalOutboxRepository.findByTypeAndSagaIdAndSagaStatus(
+    return restaurantOutboxRepository.findByTypeAndSagaIdAndSagaStatus(
       ORDER_SAGA_NAME, sagaId, sagaStatus);
   }
 
   @Transactional
   public void save(OrderRestaurantOutboxMessage orderRestaurantOutboxMessage) {
-    OrderRestaurantOutboxMessage response = approvalOutboxRepository
+    OrderRestaurantOutboxMessage response = restaurantOutboxRepository
       .save(orderRestaurantOutboxMessage);
     if (response == null) {
       log.error("Could not save OrderApprovalOutboxMessage with outbox id: {}",
@@ -85,7 +85,7 @@ public class RestaurantOutboxHelper {
   public void deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(
     OutboxStatus outboxStatus,
     SagaStatus... sagaStatus) {
-    approvalOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(
+    restaurantOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(
       ORDER_SAGA_NAME, outboxStatus, sagaStatus);
   }
 

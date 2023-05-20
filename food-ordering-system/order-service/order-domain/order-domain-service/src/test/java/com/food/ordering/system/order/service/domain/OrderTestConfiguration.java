@@ -41,8 +41,8 @@ public class OrderTestConfiguration {
   }
 
   @Bean
-  public ApprovalOutboxRepository approvalOutboxRepository() {
-    return Mockito.mock(ApprovalOutboxRepository.class);
+  public RestaurantOutboxRepository approvalOutboxRepository() {
+    return Mockito.mock(RestaurantOutboxRepository.class);
   }
 
   @Bean
