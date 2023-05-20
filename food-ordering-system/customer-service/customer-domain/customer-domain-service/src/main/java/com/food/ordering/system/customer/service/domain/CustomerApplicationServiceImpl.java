@@ -31,7 +31,7 @@ class CustomerApplicationServiceImpl implements CustomerApplicationService {
   }
 
   @Override
-  public CreateCustomerResponse createCustomer(CreateCustomerRequest createCustomerRequest) {
+  public CreateCustomerResponse createCustomerResponse(CreateCustomerRequest createCustomerRequest) {
     CustomerCreatedEvent customerCreatedEvent = customerCreateRequestHandler.createCustomer(createCustomerRequest);
     customerMessagePublisher.publish(customerCreatedEvent);
     return customerDataMapper
