@@ -1,7 +1,7 @@
 package com.food.ordering.system.restaurant.service.messaging.listener.kafka;
 
 import com.food.ordering.system.kafka.consumer.KafkaConsumer;
-import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
+import com.food.ordering.system.kafka.order.avro.model.RestaurantRequestAvroModel;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantApplicationServiceException;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantNotFoundException;
 import com.food.ordering.system.restaurant.service.domain.ports.input.message.listener.RestaurantRequestMessageListener;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class RestaurantRequestKafkaListener implements KafkaConsumer<RestaurantApprovalRequestAvroModel> {
+public class RestaurantRequestKafkaListener implements KafkaConsumer<RestaurantRequestAvroModel> {
 
   private final RestaurantRequestMessageListener restaurantRequestMessageListener;
   private final RestaurantMessagingDataMapper restaurantMessagingDataMapper;
@@ -36,7 +36,7 @@ public class RestaurantRequestKafkaListener implements KafkaConsumer<RestaurantA
   @KafkaListener(id = "${kafka-consumer-config.restaurant-approval-consumer-group-id}",
     topics = "${restaurant-service.restaurant-approval-request-topic-name}")
   public void receive(
-    @Payload List<RestaurantApprovalRequestAvroModel> messages,
+    @Payload List<RestaurantRequestAvroModel> messages,
     @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
     @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
     @Header(KafkaHeaders.OFFSET) List<Long> offsets) {

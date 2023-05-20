@@ -22,8 +22,8 @@ public class RestaurantApprovalRepositoryImpl implements RestaurantApprovalRepos
   @Override
   public void save(RestaurantApproval restaurantApproval) {
     restaurantDataAccessMapper
-      .orderApprovalEntityToOrderApproval(restaurantApprovalJpaRepository
-        .save(restaurantDataAccessMapper.orderApprovalToOrderApprovalEntity(restaurantApproval)));
+      .restaurantApprovalEntityToRestaurantApproval(restaurantApprovalJpaRepository
+        .save(restaurantDataAccessMapper.restaurantApprovalToRestaurantApprovalEntity(restaurantApproval)));
   }
 
 }

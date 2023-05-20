@@ -23,7 +23,7 @@ public class OrderEventPayload {
   private ZonedDateTime createdAt;
 
   @JsonProperty
-  private String orderApprovalStatus;
+  private String restaurantApprovalStatus;
 
   @JsonProperty
   private List<String> failureMessages;

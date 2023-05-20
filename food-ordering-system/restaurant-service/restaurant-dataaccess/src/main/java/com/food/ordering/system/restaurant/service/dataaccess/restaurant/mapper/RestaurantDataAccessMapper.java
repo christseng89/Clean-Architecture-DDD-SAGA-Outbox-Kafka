@@ -49,7 +49,7 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantApprovalEntity orderApprovalToOrderApprovalEntity(RestaurantApproval restaurantApproval) {
+  public RestaurantApprovalEntity restaurantApprovalToRestaurantApprovalEntity(RestaurantApproval restaurantApproval) {
     return RestaurantApprovalEntity.builder()
       .id(restaurantApproval.getId().getValue())
       .restaurantId(restaurantApproval.getRestaurantId().getValue())
@@ -58,9 +58,9 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantApproval orderApprovalEntityToOrderApproval(RestaurantApprovalEntity restaurantApprovalEntity) {
+  public RestaurantApproval restaurantApprovalEntityToRestaurantApproval(RestaurantApprovalEntity restaurantApprovalEntity) {
     return RestaurantApproval.builder()
-      .orderApprovalId(new RestaurantApprovalId(restaurantApprovalEntity.getId()))
+      .restaurantApprovalId(new RestaurantApprovalId(restaurantApprovalEntity.getId()))
       .restaurantId(new RestaurantId(restaurantApprovalEntity.getRestaurantId()))
       .orderId(new OrderId(restaurantApprovalEntity.getOrderId()))
       .approvalStatus(restaurantApprovalEntity.getStatus())

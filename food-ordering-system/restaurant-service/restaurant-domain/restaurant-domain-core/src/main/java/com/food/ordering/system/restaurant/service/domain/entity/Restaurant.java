@@ -1,8 +1,8 @@
 package com.food.ordering.system.restaurant.service.domain.entity;
 
 import com.food.ordering.system.domain.entity.AggregateRoot;
-import com.food.ordering.system.domain.outbox.OrderApprovalStatus;
 import com.food.ordering.system.domain.outbox.OrderStatus;
+import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantApprovalId;
@@ -45,16 +45,16 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     }
   }
 
-  public void constructOrderApproval(OrderApprovalStatus orderApprovalStatus) {
+  public void constructRestaurantApproval(RestaurantApprovalStatus restaurantApprovalStatus) {
     this.restaurantApproval = RestaurantApproval.builder()
-      .orderApprovalId(new RestaurantApprovalId(UUID.randomUUID()))
+      .restaurantApprovalId(new RestaurantApprovalId(UUID.randomUUID()))
       .restaurantId(this.getId())
       .orderId(this.getOrderDetail().getId())
-      .approvalStatus(orderApprovalStatus)
+      .approvalStatus(restaurantApprovalStatus)
       .build();
   }
 
-  public RestaurantApproval getOrderApproval() {
+  public RestaurantApproval getRestaurantApproval() {
     return restaurantApproval;
   }
 
@@ -98,7 +98,7 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
       return this;
     }
 
-    public Builder orderApproval(RestaurantApproval val) {
+    public Builder restaurantApproval(RestaurantApproval val) {
       restaurantApproval = val;
       return this;
     }

@@ -48,7 +48,7 @@ public class RestaurantRequestHelper {
   }
 
   @Transactional
-  public void persistOrderApproval(RestaurantRequest restaurantRequest) {
+  public void persistRestaurantApproval(RestaurantRequest restaurantRequest) {
     if (publishIfOutboxMessageProcessed(restaurantRequest)) {
       log.info("An outbox message with saga id: {} already saved to database!",
         restaurantRequest.getSagaId());
@@ -58,15 +58,15 @@ public class RestaurantRequestHelper {
     log.info("Processing restaurant approval for order id: {}", restaurantRequest.getOrderId());
     List<String> failureMessages = new ArrayList<>();
     Restaurant restaurant = findRestaurant(restaurantRequest);
-    RestaurantEvent orderApprovalEvent =
+    RestaurantEvent restaurantApprovalEvent =
       restaurantDomainService.validateOrder(
         restaurant,
         failureMessages);
-    restaurantApprovalRepository.save(restaurant.getOrderApproval());
+    restaurantApprovalRepository.save(restaurant.getRestaurantApproval());
 
     orderOutboxHelper
-      .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(orderApprovalEvent),
-        orderApprovalEvent.getOrderApproval().getApprovalStatus(),
+      .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(restaurantApprovalEvent),
+        restaurantApprovalEvent.getRestaurantApproval().getApprovalStatus(),
         OutboxStatus.STARTED,
         UUID.fromString(restaurantRequest.getSagaId()));
 

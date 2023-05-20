@@ -54,12 +54,12 @@ public class RestaurantOutboxHelper {
     OrderRestaurantOutboxMessage response = restaurantOutboxRepository
       .save(orderRestaurantOutboxMessage);
     if (response == null) {
-      log.error("Could not save OrderApprovalOutboxMessage with outbox id: {}",
+      log.error("Could not save RestaurantApprovalOutboxMessage with outbox id: {}",
         orderRestaurantOutboxMessage.getId());
-      throw new OrderDomainException("Could not save OrderApprovalOutboxMessage with outbox id: " +
+      throw new OrderDomainException("Could not save RestaurantApprovalOutboxMessage with outbox id: " +
         orderRestaurantOutboxMessage.getId());
     }
-    log.info("OrderApprovalOutboxMessage saved with outbox id: {}", orderRestaurantOutboxMessage.getId());
+    log.info("RestaurantApprovalOutboxMessage saved with outbox id: {}", orderRestaurantOutboxMessage.getId());
   }
 
   @Transactional
@@ -93,9 +93,9 @@ public class RestaurantOutboxHelper {
     try {
       return objectMapper.writeValueAsString(orderRestaurantEventPayload);
     } catch (JsonProcessingException e) {
-      log.error("Could not create OrderApprovalEventPayload for order id: {}",
+      log.error("Could not create RestaurantApprovalEventPayload for order id: {}",
         orderRestaurantEventPayload.getOrderId(), e);
-      throw new OrderDomainException("Could not create OrderApprovalEventPayload for order id: " +
+      throw new OrderDomainException("Could not create RestaurantApprovalEventPayload for order id: " +
         orderRestaurantEventPayload.getOrderId(), e);
     }
   }

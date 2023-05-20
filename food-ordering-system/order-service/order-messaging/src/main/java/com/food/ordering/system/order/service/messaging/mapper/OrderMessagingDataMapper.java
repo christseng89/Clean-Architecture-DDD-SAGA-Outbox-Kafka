@@ -1,6 +1,6 @@
 package com.food.ordering.system.order.service.messaging.mapper;
 
-import com.food.ordering.system.domain.outbox.OrderApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
 import com.food.ordering.system.kafka.order.avro.model.*;
 import com.food.ordering.system.order.service.domain.dto.message.CustomerCreated;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
@@ -31,16 +31,16 @@ public class OrderMessagingDataMapper {
   }
 
   public RestaurantResponse restaurantResponse(
-    RestaurantApprovalResponseAvroModel restaurantApprovalResponseAvroModel) {
+    RestaurantResponseAvroModel restaurantResponseAvroModel) {
     return RestaurantResponse.builder()
-      .id(restaurantApprovalResponseAvroModel.getId())
-      .sagaId(restaurantApprovalResponseAvroModel.getSagaId())
-      .restaurantId(restaurantApprovalResponseAvroModel.getRestaurantId())
-      .orderId(restaurantApprovalResponseAvroModel.getOrderId())
-      .createdAt(restaurantApprovalResponseAvroModel.getCreatedAt())
-      .orderApprovalStatus(OrderApprovalStatus.valueOf(
-        restaurantApprovalResponseAvroModel.getOrderApprovalStatus().name()))
-      .failureMessages(restaurantApprovalResponseAvroModel.getFailureMessages())
+      .id(restaurantResponseAvroModel.getId())
+      .sagaId(restaurantResponseAvroModel.getSagaId())
+      .restaurantId(restaurantResponseAvroModel.getRestaurantId())
+      .orderId(restaurantResponseAvroModel.getOrderId())
+      .createdAt(restaurantResponseAvroModel.getCreatedAt())
+      .restaurantApprovalStatus(RestaurantApprovalStatus.valueOf(
+        restaurantResponseAvroModel.getRestaurantApprovalStatus().name()))
+      .failureMessages(restaurantResponseAvroModel.getFailureMessages())
       .build();
   }
 
@@ -57,9 +57,9 @@ public class OrderMessagingDataMapper {
       .build();
   }
 
-  public RestaurantApprovalRequestAvroModel restaurantApprovalRequestAvroModel(
+  public RestaurantRequestAvroModel restaurantApprovalRequestAvroModel(
     String sagaId, OrderRestaurantEventPayload orderRestaurantEventPayload) {
-    return RestaurantApprovalRequestAvroModel.newBuilder()
+    return RestaurantRequestAvroModel.newBuilder()
       .setId(UUID.randomUUID().toString())
       .setSagaId(sagaId)
       .setOrderId(orderRestaurantEventPayload.getOrderId())
@@ -67,9 +67,9 @@ public class OrderMessagingDataMapper {
       .setRestaurantOrderStatus(RestaurantOrderStatus
         .valueOf(orderRestaurantEventPayload.getRestaurantOrderStatus()))
       .setProducts(orderRestaurantEventPayload.getProducts().stream()
-        .map(orderApprovalEventProduct -> com.food.ordering.system.kafka.order.avro.model.Product.newBuilder()
-          .setId(orderApprovalEventProduct.getId())
-          .setQuantity(orderApprovalEventProduct.getQuantity())
+        .map(restaurantApprovalEventProduct -> Product.newBuilder()
+          .setId(restaurantApprovalEventProduct.getId())
+          .setQuantity(restaurantApprovalEventProduct.getQuantity())
           .build()).toList())
       .setPrice(orderRestaurantEventPayload.getPrice())
       .setCreatedAt(orderRestaurantEventPayload.getCreatedAt().toInstant())

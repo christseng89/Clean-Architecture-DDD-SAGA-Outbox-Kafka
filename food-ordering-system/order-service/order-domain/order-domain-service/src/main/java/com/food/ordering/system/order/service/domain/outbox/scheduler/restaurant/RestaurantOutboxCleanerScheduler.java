@@ -33,7 +33,7 @@ public class RestaurantOutboxCleanerScheduler implements OutboxScheduler {
         SagaStatus.COMPENSATED);
     if (outboxMessagesResponse.isPresent()) {
       List<OrderRestaurantOutboxMessage> outboxMessages = outboxMessagesResponse.get();
-      log.info("Received {} OrderApprovalOutboxMessage for clean-up. The payloads: {}",
+      log.info("Received {} RestaurantApprovalOutboxMessage for clean-up. The payloads: {}",
         outboxMessages.size(),
         outboxMessages.stream()
           .map(OrderRestaurantOutboxMessage::getPayload)
@@ -43,7 +43,7 @@ public class RestaurantOutboxCleanerScheduler implements OutboxScheduler {
         SagaStatus.SUCCEEDED,
         SagaStatus.FAILED,
         SagaStatus.COMPENSATED);
-      log.info("{} OrderApprovalOutboxMessage deleted!", outboxMessages.size());
+      log.info("{} RestaurantApprovalOutboxMessage deleted!", outboxMessages.size());
     }
 
   }

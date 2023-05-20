@@ -1,6 +1,6 @@
 package com.food.ordering.system.restaurant.service.messaging.publisher.kafka;
 
-import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
+import com.food.ordering.system.kafka.order.avro.model.RestaurantResponseAvroModel;
 import com.food.ordering.system.kafka.producer.KafkaMessageHelper;
 import com.food.ordering.system.kafka.producer.service.KafkaProducer;
 import com.food.ordering.system.outbox.OutboxStatus;
@@ -19,13 +19,13 @@ import java.util.function.BiConsumer;
 public class RestaurantEventKafkaPublisher implements RestaurantResponseMessagePublisher {
 
   private final RestaurantMessagingDataMapper restaurantMessagingDataMapper;
-  private final KafkaProducer<String, RestaurantApprovalResponseAvroModel> kafkaProducer;
+  private final KafkaProducer<String, RestaurantResponseAvroModel> kafkaProducer;
   private final RestaurantServiceConfigData restaurantServiceConfigData;
   private final KafkaMessageHelper kafkaMessageHelper;
 
   public RestaurantEventKafkaPublisher(
     RestaurantMessagingDataMapper dataMapper,
-    KafkaProducer<String, RestaurantApprovalResponseAvroModel> kafkaProducer,
+    KafkaProducer<String, RestaurantResponseAvroModel> kafkaProducer,
     RestaurantServiceConfigData restaurantServiceConfigData,
     KafkaMessageHelper kafkaMessageHelper) {
     this.restaurantMessagingDataMapper = dataMapper;
@@ -48,9 +48,9 @@ public class RestaurantEventKafkaPublisher implements RestaurantResponseMessageP
     log.info("Received OrderOutboxMessage for order id: {} and saga id: {}",
       orderEventPayload.getOrderId(), sagaId);
     try {
-      RestaurantApprovalResponseAvroModel restaurantApprovalResponseAvroModel =
+      RestaurantResponseAvroModel restaurantResponseAvroModel =
         restaurantMessagingDataMapper
-          .orderEventPayloadToRestaurantApprovalResponseAvroModel(sagaId, orderEventPayload);
+          .orderEventPayloadToRestaurantResponseAvroModel(sagaId, orderEventPayload);
 
       // Approval Response
       String topicName = restaurantServiceConfigData.getRestaurantApprovalResponseTopicName();
@@ -58,19 +58,19 @@ public class RestaurantEventKafkaPublisher implements RestaurantResponseMessageP
       kafkaProducer.send(
         topicName,
         sagaId,
-        restaurantApprovalResponseAvroModel,
+        restaurantResponseAvroModel,
         kafkaMessageHelper.getKafkaCallback(
           topicName,
-          restaurantApprovalResponseAvroModel,
+          restaurantResponseAvroModel,
           orderOutboxMessage,
           outboxCallback,
           orderEventPayload.getOrderId(),
-          "RestaurantApprovalResponseAvroModel"));
+          "RestaurantResponseAvroModel"));
 
-      log.info("RestaurantApprovalResponseAvroModel sent to Kafka for order id: {} and saga id: {}",
-        restaurantApprovalResponseAvroModel.getOrderId(), sagaId);
+      log.info("RestaurantResponseAvroModel sent to Kafka for order id: {} and saga id: {}",
+        restaurantResponseAvroModel.getOrderId(), sagaId);
     } catch (Exception e) {
-      log.error("Error while sending RestaurantApprovalResponseAvroModel message" +
+      log.error("Error while sending RestaurantResponseAvroModel message" +
           " to kafka with order id: {} and saga id: {}, error: {}",
         orderEventPayload.getOrderId(), sagaId, e.getMessage());
     }

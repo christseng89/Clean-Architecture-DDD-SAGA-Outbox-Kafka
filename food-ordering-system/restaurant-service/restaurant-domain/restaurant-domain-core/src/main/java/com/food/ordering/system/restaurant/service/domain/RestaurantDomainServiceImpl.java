@@ -1,6 +1,6 @@
 package com.food.ordering.system.restaurant.service.domain;
 
-import com.food.ordering.system.domain.outbox.OrderApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
 import com.food.ordering.system.restaurant.service.domain.event.RestaurantApprovedEvent;
 import com.food.ordering.system.restaurant.service.domain.event.RestaurantEvent;
@@ -23,17 +23,17 @@ public class RestaurantDomainServiceImpl implements RestaurantDomainService {
 
     if (failureMessages.isEmpty()) { // APPROVED
       log.info("Order is approved for order id: {}", restaurant.getOrderDetail().getId().getValue());
-      restaurant.constructOrderApproval(OrderApprovalStatus.APPROVED);
+      restaurant.constructRestaurantApproval(RestaurantApprovalStatus.APPROVED);
       return new RestaurantApprovedEvent(
-        restaurant.getOrderApproval(),
+        restaurant.getRestaurantApproval(),
         restaurant.getId(),
         failureMessages,
         ZonedDateTime.now(ZoneId.of(UTC)));
     } else { // REJECTED
       log.info("Order is rejected for order id: {}", restaurant.getOrderDetail().getId().getValue());
-      restaurant.constructOrderApproval(OrderApprovalStatus.REJECTED);
+      restaurant.constructRestaurantApproval(RestaurantApprovalStatus.REJECTED);
       return new RestaurantRejectedEvent(
-        restaurant.getOrderApproval(),
+        restaurant.getRestaurantApproval(),
         restaurant.getId(),
         failureMessages,
         ZonedDateTime.now(ZoneId.of(UTC)));

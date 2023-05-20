@@ -12,44 +12,21 @@ import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
 public class Product extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Product\",\"namespace\":\"com.food.ordering.system.kafka.order.avro.model\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"logicalType\":\"uuid\"},{\"name\":\"quantity\",\"type\":\"int\"}]}");
   private static final long serialVersionUID = -6511580554663840009L;
-  private static final SpecificData MODEL$ = new SpecificData();
-  private static final BinaryMessageEncoder<Product> ENCODER =
-    new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
-  private static final BinaryMessageDecoder<Product> DECODER =
-    new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
-  @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<Product>
-    WRITER$ = (org.apache.avro.io.DatumWriter<Product>) MODEL$.createDatumWriter(SCHEMA$);
-  @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<Product>
-    READER$ = (org.apache.avro.io.DatumReader<Product>) MODEL$.createDatumReader(SCHEMA$);
-  private java.lang.String id;
-  private int quantity;
 
-  /**
-   * Default constructor.  Note that this does not initialize fields to their
-   * default values from the schema.  If that is desired then one should use
-   * <code>newBuilder()</code>.
-   */
-  public Product() {
-  }
-
-  /**
-   * All-args constructor.
-   *
-   * @param id       The new value for id
-   * @param quantity The new value for quantity
-   */
-  public Product(java.lang.String id, java.lang.Integer quantity) {
-    this.id = id;
-    this.quantity = quantity;
-  }
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Product\",\"namespace\":\"com.food.ordering.system.kafka.order.avro.model\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"logicalType\":\"uuid\"},{\"name\":\"quantity\",\"type\":\"int\"}]}");
 
   public static org.apache.avro.Schema getClassSchema() {
     return SCHEMA$;
   }
+
+  private static final SpecificData MODEL$ = new SpecificData();
+
+  private static final BinaryMessageEncoder<Product> ENCODER =
+    new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
+
+  private static final BinaryMessageDecoder<Product> DECODER =
+    new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
@@ -82,6 +59,17 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
+   * Serializes this Product to a ByteBuffer.
+   *
+   * @return a buffer holding the serialized data for this instance
+   *
+   * @throws java.io.IOException if this instance could not be serialized
+   */
+  public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
+    return ENCODER.encode(this);
+  }
+
+  /**
    * Deserializes a Product from a ByteBuffer.
    *
    * @param b a byte buffer holding serialized data for an instance of this
@@ -96,53 +84,26 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
     return DECODER.decode(b);
   }
 
+  private java.lang.String id;
+  private int quantity;
+
   /**
-   * Creates a new Product RecordBuilder.
-   *
-   * @return A new Product RecordBuilder
+   * Default constructor.  Note that this does not initialize fields to their
+   * default values from the schema.  If that is desired then one should use
+   * <code>newBuilder()</code>.
    */
-  public static com.food.ordering.system.kafka.order.avro.model.Product.Builder newBuilder() {
-    return new com.food.ordering.system.kafka.order.avro.model.Product.Builder();
+  public Product() {
   }
 
   /**
-   * Creates a new Product RecordBuilder by copying an existing Builder.
+   * All-args constructor.
    *
-   * @param other The existing builder to copy.
-   * @return A new Product RecordBuilder
+   * @param id       The new value for id
+   * @param quantity The new value for quantity
    */
-  public static com.food.ordering.system.kafka.order.avro.model.Product.Builder newBuilder(com.food.ordering.system.kafka.order.avro.model.Product.Builder other) {
-    if (other == null) {
-      return new com.food.ordering.system.kafka.order.avro.model.Product.Builder();
-    } else {
-      return new com.food.ordering.system.kafka.order.avro.model.Product.Builder(other);
-    }
-  }
-
-  /**
-   * Creates a new Product RecordBuilder by copying an existing Product
-   * instance.
-   *
-   * @param other The existing instance to copy.
-   * @return A new Product RecordBuilder
-   */
-  public static com.food.ordering.system.kafka.order.avro.model.Product.Builder newBuilder(com.food.ordering.system.kafka.order.avro.model.Product other) {
-    if (other == null) {
-      return new com.food.ordering.system.kafka.order.avro.model.Product.Builder();
-    } else {
-      return new com.food.ordering.system.kafka.order.avro.model.Product.Builder(other);
-    }
-  }
-
-  /**
-   * Serializes this Product to a ByteBuffer.
-   *
-   * @return a buffer holding the serialized data for this instance
-   *
-   * @throws java.io.IOException if this instance could not be serialized
-   */
-  public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
-    return ENCODER.encode(this);
+  public Product(java.lang.String id, java.lang.Integer quantity) {
+    this.id = id;
+    this.quantity = quantity;
   }
 
   @Override
@@ -220,11 +181,207 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
     this.quantity = value;
   }
 
+  /**
+   * Creates a new Product RecordBuilder.
+   *
+   * @return A new Product RecordBuilder
+   */
+  public static Product.Builder newBuilder() {
+    return new Product.Builder();
+  }
+
+  /**
+   * Creates a new Product RecordBuilder by copying an existing Builder.
+   *
+   * @param other The existing builder to copy.
+   * @return A new Product RecordBuilder
+   */
+  public static Product.Builder newBuilder(Product.Builder other) {
+    if (other == null) {
+      return new Product.Builder();
+    } else {
+      return new Product.Builder(other);
+    }
+  }
+
+  /**
+   * Creates a new Product RecordBuilder by copying an existing Product
+   * instance.
+   *
+   * @param other The existing instance to copy.
+   * @return A new Product RecordBuilder
+   */
+  public static Product.Builder newBuilder(Product other) {
+    if (other == null) {
+      return new Product.Builder();
+    } else {
+      return new Product.Builder(other);
+    }
+  }
+
+  /**
+   * RecordBuilder for Product instances.
+   */
+  @org.apache.avro.specific.AvroGenerated
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Product>
+    implements org.apache.avro.data.RecordBuilder<Product> {
+
+    private java.lang.String id;
+    private int quantity;
+
+    /**
+     * Creates a new Builder
+     */
+    private Builder() {
+      super(SCHEMA$, MODEL$);
+    }
+
+    /**
+     * Creates a Builder by copying an existing Builder.
+     *
+     * @param other The existing Builder to copy.
+     */
+    private Builder(Product.Builder other) {
+      super(other);
+      if (isValidValue(fields()[0], other.id)) {
+        this.id = data().deepCopy(fields()[0].schema(), other.id);
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
+      }
+      if (isValidValue(fields()[1], other.quantity)) {
+        this.quantity = data().deepCopy(fields()[1].schema(), other.quantity);
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
+      }
+    }
+
+    /**
+     * Creates a Builder by copying an existing Product instance
+     *
+     * @param other The existing instance to copy.
+     */
+    private Builder(Product other) {
+      super(SCHEMA$, MODEL$);
+      if (isValidValue(fields()[0], other.id)) {
+        this.id = data().deepCopy(fields()[0].schema(), other.id);
+        fieldSetFlags()[0] = true;
+      }
+      if (isValidValue(fields()[1], other.quantity)) {
+        this.quantity = data().deepCopy(fields()[1].schema(), other.quantity);
+        fieldSetFlags()[1] = true;
+      }
+    }
+
+    /**
+     * Gets the value of the 'id' field.
+     *
+     * @return The value.
+     */
+    public java.lang.String getId() {
+      return id;
+    }
+
+    /**
+     * Sets the value of the 'id' field.
+     *
+     * @param value The value of 'id'.
+     * @return This builder.
+     */
+    public Product.Builder setId(java.lang.String value) {
+      validate(fields()[0], value);
+      this.id = value;
+      fieldSetFlags()[0] = true;
+      return this;
+    }
+
+    /**
+     * Checks whether the 'id' field has been set.
+     *
+     * @return True if the 'id' field has been set, false otherwise.
+     */
+    public boolean hasId() {
+      return fieldSetFlags()[0];
+    }
+
+    /**
+     * Clears the value of the 'id' field.
+     *
+     * @return This builder.
+     */
+    public Product.Builder clearId() {
+      id = null;
+      fieldSetFlags()[0] = false;
+      return this;
+    }
+
+    /**
+     * Gets the value of the 'quantity' field.
+     *
+     * @return The value.
+     */
+    public int getQuantity() {
+      return quantity;
+    }
+
+    /**
+     * Sets the value of the 'quantity' field.
+     *
+     * @param value The value of 'quantity'.
+     * @return This builder.
+     */
+    public Product.Builder setQuantity(int value) {
+      validate(fields()[1], value);
+      this.quantity = value;
+      fieldSetFlags()[1] = true;
+      return this;
+    }
+
+    /**
+     * Checks whether the 'quantity' field has been set.
+     *
+     * @return True if the 'quantity' field has been set, false otherwise.
+     */
+    public boolean hasQuantity() {
+      return fieldSetFlags()[1];
+    }
+
+    /**
+     * Clears the value of the 'quantity' field.
+     *
+     * @return This builder.
+     */
+    public Product.Builder clearQuantity() {
+      fieldSetFlags()[1] = false;
+      return this;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Product build() {
+      try {
+        Product record = new Product();
+        record.id = fieldSetFlags()[0] ? this.id : (java.lang.String) defaultValue(fields()[0]);
+        record.quantity = fieldSetFlags()[1] ? this.quantity : (java.lang.Integer) defaultValue(fields()[1]);
+        return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
+      } catch (java.lang.Exception e) {
+        throw new org.apache.avro.AvroRuntimeException(e);
+      }
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private static final org.apache.avro.io.DatumWriter<Product>
+    WRITER$ = (org.apache.avro.io.DatumWriter<Product>) MODEL$.createDatumWriter(SCHEMA$);
+
   @Override
   public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
     WRITER$.write(this, SpecificData.getEncoder(out));
   }
+
+  @SuppressWarnings("unchecked")
+  private static final org.apache.avro.io.DatumReader<Product>
+    READER$ = (org.apache.avro.io.DatumReader<Product>) MODEL$.createDatumReader(SCHEMA$);
 
   @Override
   public void readExternal(java.io.ObjectInput in)
@@ -269,158 +426,6 @@ public class Product extends org.apache.avro.specific.SpecificRecordBase impleme
           default:
             throw new java.io.IOException("Corrupt ResolvingDecoder.");
         }
-      }
-    }
-  }
-
-  /**
-   * RecordBuilder for Product instances.
-   */
-  @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Product>
-    implements org.apache.avro.data.RecordBuilder<Product> {
-
-    private java.lang.String id;
-    private int quantity;
-
-    /**
-     * Creates a new Builder
-     */
-    private Builder() {
-      super(SCHEMA$, MODEL$);
-    }
-
-    /**
-     * Creates a Builder by copying an existing Builder.
-     *
-     * @param other The existing Builder to copy.
-     */
-    private Builder(com.food.ordering.system.kafka.order.avro.model.Product.Builder other) {
-      super(other);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
-        fieldSetFlags()[0] = other.fieldSetFlags()[0];
-      }
-      //noinspection ConstantValue
-      if (isValidValue(fields()[1], other.quantity)) {
-        this.quantity = data().deepCopy(fields()[1].schema(), other.quantity);
-        fieldSetFlags()[1] = other.fieldSetFlags()[1];
-      }
-    }
-
-    /**
-     * Creates a Builder by copying an existing Product instance
-     *
-     * @param other The existing instance to copy.
-     */
-    private Builder(com.food.ordering.system.kafka.order.avro.model.Product other) {
-      super(SCHEMA$, MODEL$);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
-        fieldSetFlags()[0] = true;
-      }
-      //noinspection ConstantValue
-      if (isValidValue(fields()[1], other.quantity)) {
-        this.quantity = data().deepCopy(fields()[1].schema(), other.quantity);
-        fieldSetFlags()[1] = true;
-      }
-    }
-
-    /**
-     * Gets the value of the 'id' field.
-     *
-     * @return The value.
-     */
-    public java.lang.String getId() {
-      return id;
-    }
-
-    /**
-     * Sets the value of the 'id' field.
-     *
-     * @param value The value of 'id'.
-     * @return This builder.
-     */
-    public com.food.ordering.system.kafka.order.avro.model.Product.Builder setId(java.lang.String value) {
-      validate(fields()[0], value);
-      this.id = value;
-      fieldSetFlags()[0] = true;
-      return this;
-    }
-
-    /**
-     * Checks whether the 'id' field has been set.
-     *
-     * @return True if the 'id' field has been set, false otherwise.
-     */
-    public boolean hasId() {
-      return fieldSetFlags()[0];
-    }
-
-    /**
-     * Clears the value of the 'id' field.
-     *
-     * @return This builder.
-     */
-    public com.food.ordering.system.kafka.order.avro.model.Product.Builder clearId() {
-      id = null;
-      fieldSetFlags()[0] = false;
-      return this;
-    }
-
-    /**
-     * Gets the value of the 'quantity' field.
-     *
-     * @return The value.
-     */
-    public int getQuantity() {
-      return quantity;
-    }
-
-    /**
-     * Sets the value of the 'quantity' field.
-     *
-     * @param value The value of 'quantity'.
-     * @return This builder.
-     */
-    public com.food.ordering.system.kafka.order.avro.model.Product.Builder setQuantity(int value) {
-      validate(fields()[1], value);
-      this.quantity = value;
-      fieldSetFlags()[1] = true;
-      return this;
-    }
-
-    /**
-     * Checks whether the 'quantity' field has been set.
-     *
-     * @return True if the 'quantity' field has been set, false otherwise.
-     */
-    public boolean hasQuantity() {
-      return fieldSetFlags()[1];
-    }
-
-    /**
-     * Clears the value of the 'quantity' field.
-     *
-     * @return This builder.
-     */
-    public com.food.ordering.system.kafka.order.avro.model.Product.Builder clearQuantity() {
-      fieldSetFlags()[1] = false;
-      return this;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Product build() {
-      try {
-        Product record = new Product();
-        record.id = fieldSetFlags()[0] ? this.id : (java.lang.String) defaultValue(fields()[0]);
-        record.quantity = fieldSetFlags()[1] ? this.quantity : (java.lang.Integer) defaultValue(fields()[1]);
-        return record;
-      } catch (org.apache.avro.AvroMissingFieldException e) {
-        throw e;
-      } catch (java.lang.Exception e) {
-        throw new org.apache.avro.AvroRuntimeException(e);
       }
     }
   }
