@@ -1,7 +1,7 @@
 package com.food.ordering.system.restaurant.service.domain.ports.output.repository;
 
-import com.food.ordering.system.restaurant.service.domain.entity.OrderApproval;
+import com.food.ordering.system.restaurant.service.domain.entity.RestaurantApproval;
 
 public interface OrderApprovalRepository {
-  void save(OrderApproval orderApproval);
+  void save(RestaurantApproval restaurantApproval);
 }

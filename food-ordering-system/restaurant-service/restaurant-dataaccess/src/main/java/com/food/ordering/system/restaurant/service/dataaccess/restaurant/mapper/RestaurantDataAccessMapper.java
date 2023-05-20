@@ -7,11 +7,11 @@ import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.ProductId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity.OrderApprovalEntity;
-import com.food.ordering.system.restaurant.service.domain.entity.OrderApproval;
 import com.food.ordering.system.restaurant.service.domain.entity.OrderDetail;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
-import com.food.ordering.system.restaurant.service.domain.valueobject.OrderApprovalId;
+import com.food.ordering.system.restaurant.service.domain.entity.RestaurantApproval;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantApprovalId;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -49,18 +49,18 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public OrderApprovalEntity orderApprovalToOrderApprovalEntity(OrderApproval orderApproval) {
+  public OrderApprovalEntity orderApprovalToOrderApprovalEntity(RestaurantApproval restaurantApproval) {
     return OrderApprovalEntity.builder()
-      .id(orderApproval.getId().getValue())
-      .restaurantId(orderApproval.getRestaurantId().getValue())
-      .orderId(orderApproval.getOrderId().getValue())
-      .status(orderApproval.getApprovalStatus())
+      .id(restaurantApproval.getId().getValue())
+      .restaurantId(restaurantApproval.getRestaurantId().getValue())
+      .orderId(restaurantApproval.getOrderId().getValue())
+      .status(restaurantApproval.getApprovalStatus())
       .build();
   }
 
-  public OrderApproval orderApprovalEntityToOrderApproval(OrderApprovalEntity orderApprovalEntity) {
-    return OrderApproval.builder()
-      .orderApprovalId(new OrderApprovalId(orderApprovalEntity.getId()))
+  public RestaurantApproval orderApprovalEntityToOrderApproval(OrderApprovalEntity orderApprovalEntity) {
+    return RestaurantApproval.builder()
+      .orderApprovalId(new RestaurantApprovalId(orderApprovalEntity.getId()))
       .restaurantId(new RestaurantId(orderApprovalEntity.getRestaurantId()))
       .orderId(new OrderId(orderApprovalEntity.getOrderId()))
       .approvalStatus(orderApprovalEntity.getStatus())
