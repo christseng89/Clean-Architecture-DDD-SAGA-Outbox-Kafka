@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
-class CustomerCreateRequestHandler {
+class CustomerCreateHandler {
 
   private final CustomerDomainService customerDomainService;
 
@@ -20,7 +20,7 @@ class CustomerCreateRequestHandler {
 
   private final CustomerDataMapper customerDataMapper;
 
-  public CustomerCreateRequestHandler(
+  public CustomerCreateHandler(
     CustomerDomainService customerDomainService,
     CustomerRepository customerRepository,
     CustomerDataMapper customerDataMapper) {

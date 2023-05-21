@@ -14,24 +14,24 @@ import org.springframework.validation.annotation.Validated;
 @Service
 class OrderApplicationServiceImpl implements OrderApplicationService {
 
-  private final OrderCreateRequestHandler orderCreateRequestHandler;
+  private final OrderCreateHandler orderCreateHandler;
 
-  private final OrderTrackRequestHandler orderTrackRequestHandler;
+  private final OrderTrackHandler orderTrackHandler;
 
   public OrderApplicationServiceImpl(
-    OrderCreateRequestHandler orderCreateRequestHandler,
-    OrderTrackRequestHandler orderTrackRequestHandler) {
-    this.orderCreateRequestHandler = orderCreateRequestHandler;
-    this.orderTrackRequestHandler = orderTrackRequestHandler;
+    OrderCreateHandler orderCreateHandler,
+    OrderTrackHandler orderTrackHandler) {
+    this.orderCreateHandler = orderCreateHandler;
+    this.orderTrackHandler = orderTrackHandler;
   }
 
   @Override
   public CreateOrderResponse createOrderResponse(CreateOrderRequest createOrderRequestCommand) {
-    return orderCreateRequestHandler.createOrderResponse(createOrderRequestCommand);
+    return orderCreateHandler.createOrderResponse(createOrderRequestCommand);
   }
 
   @Override
   public TrackOrderResponse trackOrderResponse(TrackOrderRequest trackOrderRequest) {
-    return orderTrackRequestHandler.trackOrderResponse(trackOrderRequest);
+    return orderTrackHandler.trackOrderResponse(trackOrderRequest);
   }
 }

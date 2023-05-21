@@ -15,24 +15,24 @@ import org.springframework.validation.annotation.Validated;
 @Service
 class CustomerApplicationServiceImpl implements CustomerApplicationService {
 
-  private final CustomerCreateRequestHandler customerCreateRequestHandler;
+  private final CustomerCreateHandler customerCreateHandler;
 
   private final CustomerDataMapper customerDataMapper;
 
   private final CustomerMessagePublisher customerMessagePublisher;
 
   public CustomerApplicationServiceImpl(
-    CustomerCreateRequestHandler customerCreateRequestHandler,
+    CustomerCreateHandler customerCreateHandler,
     CustomerDataMapper customerDataMapper,
     CustomerMessagePublisher customerMessagePublisher) {
-    this.customerCreateRequestHandler = customerCreateRequestHandler;
+    this.customerCreateHandler = customerCreateHandler;
     this.customerDataMapper = customerDataMapper;
     this.customerMessagePublisher = customerMessagePublisher;
   }
 
   @Override
   public CreateCustomerResponse createCustomerResponse(CreateCustomerRequest createCustomerRequest) {
-    CustomerCreatedEvent customerCreatedEvent = customerCreateRequestHandler.createCustomerResponse(createCustomerRequest);
+    CustomerCreatedEvent customerCreatedEvent = customerCreateHandler.createCustomerResponse(createCustomerRequest);
     customerMessagePublisher.publish(customerCreatedEvent);
     return customerDataMapper
       .customerToCreateCustomerResponse(customerCreatedEvent.getCustomer(),

@@ -15,13 +15,13 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-public class OrderTrackRequestHandler {
+public class OrderTrackHandler {
 
   private final OrderDataMapper orderDataMapper;
 
   private final OrderRepository orderRepository;
 
-  public OrderTrackRequestHandler(
+  public OrderTrackHandler(
     OrderDataMapper orderDataMapper,
     OrderRepository orderRepository) {
     this.orderDataMapper = orderDataMapper;
@@ -32,11 +32,13 @@ public class OrderTrackRequestHandler {
   public TrackOrderResponse trackOrderResponse(TrackOrderRequest trackOrderRequest) {
     Optional<Order> orderResult =
       orderRepository.findByTrackingId(new TrackingId(trackOrderRequest.getOrderTrackingId()));
+
     if (orderResult.isEmpty()) {
       log.warn("Could not find order with tracking id: {}", trackOrderRequest.getOrderTrackingId());
       throw new OrderDomainException("Could not find order with tracking id: " +
         trackOrderRequest.getOrderTrackingId());
     }
+
     return orderDataMapper.trackOrderResponse(orderResult.get());
   }
 }

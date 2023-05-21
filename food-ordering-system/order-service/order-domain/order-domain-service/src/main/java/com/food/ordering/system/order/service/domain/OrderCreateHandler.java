@@ -14,14 +14,14 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-public class OrderCreateRequestHandler {
+public class OrderCreateHandler {
 
   private final OrderCreateHelper orderCreateHelper;
   private final OrderDataMapper orderDataMapper;
   private final PaymentOutboxHelper paymentOutboxHelper;
   private final OrderSagaHelper orderSagaHelper;
 
-  public OrderCreateRequestHandler(
+  public OrderCreateHandler(
     OrderCreateHelper orderCreateHelper,
     OrderDataMapper orderDataMapper,
     PaymentOutboxHelper paymentOutboxHelper,

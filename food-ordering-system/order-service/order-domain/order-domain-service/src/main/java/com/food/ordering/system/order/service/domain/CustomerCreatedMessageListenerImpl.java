@@ -27,11 +27,13 @@ public class CustomerCreatedMessageListenerImpl implements CustomerCreatedMessag
   public void customerCreated(CustomerCreated customerCreated) {
     Customer customer = customerRepository.save(
       orderDataMapper.customer(customerCreated));
+
     if (customer == null) {
       log.error("Customer could not be created in order database with id: {}", customerCreated.getId());
       throw new OrderDomainException("Customer could not be created in order database with id " +
         customerCreated.getId());
     }
+    
     log.info("Customer is created in order database with id: {}", customer.getId());
   }
 }
