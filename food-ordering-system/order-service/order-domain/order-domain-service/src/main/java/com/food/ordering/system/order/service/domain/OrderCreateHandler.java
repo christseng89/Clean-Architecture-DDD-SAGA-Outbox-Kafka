@@ -34,7 +34,7 @@ public class OrderCreateHandler {
 
   @Transactional
   public CreateOrderResponse createOrderResponse(CreateOrderRequest createOrderRequest) {
-    OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrder(createOrderRequest);
+    OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrderEvent(createOrderRequest);
     log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
     CreateOrderResponse createOrderResponse = orderDataMapper.createOrderResponse(
       orderCreatedEvent.getOrder(),

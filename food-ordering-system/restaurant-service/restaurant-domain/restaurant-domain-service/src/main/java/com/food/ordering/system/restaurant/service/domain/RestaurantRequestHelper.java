@@ -48,7 +48,7 @@ public class RestaurantRequestHelper {
   }
 
   @Transactional
-  public void persistRestaurantApproval(RestaurantRequest restaurantRequest) {
+  public void persistRestaurantResponse(RestaurantRequest restaurantRequest) {
     if (publishIfOutboxMessageProcessed(restaurantRequest)) {
       log.info("An outbox message with saga id: {} already saved to database!",
         restaurantRequest.getSagaId());

@@ -18,6 +18,6 @@ public class RestaurantRequestMessageListenerImpl implements RestaurantRequestMe
 
   @Override
   public void approveOrder(RestaurantRequest restaurantRequest) {
-    restaurantRequestHelper.persistRestaurantApproval(restaurantRequest);
+    restaurantRequestHelper.persistRestaurantResponse(restaurantRequest);
   }
 }
