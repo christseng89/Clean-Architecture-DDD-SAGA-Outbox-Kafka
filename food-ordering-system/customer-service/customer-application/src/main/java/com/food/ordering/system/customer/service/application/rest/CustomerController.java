@@ -21,13 +21,14 @@ public class CustomerController {
   }
 
   @PostMapping
-  public ResponseEntity<CreateCustomerResponse> createCustomer(
+  public ResponseEntity<CreateCustomerResponse> createCustomerResponse(
     @RequestBody CreateCustomerRequest createCustomerRequest) {
     log.info("Creating customer with username: {}", createCustomerRequest.getUsername());
+    CreateCustomerResponse createCustomerResponse = customerApplicationService.
+      createCustomerResponse(createCustomerRequest);
 
-    CreateCustomerResponse response = customerApplicationService.
-      createCustomer(createCustomerRequest);
-    return ResponseEntity.ok(response);
+    log.info("Customer created with customer id: {}", createCustomerResponse.getCustomerId());
+    return ResponseEntity.ok(createCustomerResponse);
   }
 
 }

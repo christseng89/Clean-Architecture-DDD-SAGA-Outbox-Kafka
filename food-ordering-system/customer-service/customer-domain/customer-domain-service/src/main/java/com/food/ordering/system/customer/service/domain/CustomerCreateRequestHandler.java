@@ -30,10 +30,10 @@ class CustomerCreateRequestHandler {
   }
 
   @Transactional
-  public CustomerCreatedEvent createCustomer(CreateCustomerRequest createCustomerRequest) {
+  public CustomerCreatedEvent createCustomerResponse(CreateCustomerRequest createCustomerRequest) {
     Customer customer = customerDataMapper.createCustomerCommandToCustomer(createCustomerRequest);
     CustomerCreatedEvent customerCreatedEvent = customerDomainService.validateAndInitiateCustomer(customer);
-    Customer savedCustomer = customerRepository.createCustomer(customer);
+    Customer savedCustomer = customerRepository.createCustomerResponse(customer);
     if (savedCustomer == null) {
       log.error("Could not save customer with id: {}", createCustomerRequest.getCustomerId());
       throw new CustomerDomainException("Could not save customer with id " +
