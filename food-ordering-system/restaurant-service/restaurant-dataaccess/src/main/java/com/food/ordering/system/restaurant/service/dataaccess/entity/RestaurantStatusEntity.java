@@ -1,4 +1,4 @@
-package com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity;
+package com.food.ordering.system.restaurant.service.dataaccess.entity;
 
 import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import lombok.*;
