@@ -33,39 +33,39 @@ public class RestaurantRequestKafkaListener implements KafkaConsumer<RestaurantR
   }
 
   @Override
-  @KafkaListener(id = "${kafka-consumer-config.restaurant-approved-consumer-group-id}",
-    topics = "${restaurant-service.restaurant-approved-request-topic-name}")
+  @KafkaListener(id = "${kafka-consumer-config.restaurant-status-consumer-group-id}",
+    topics = "${restaurant-service.restaurant-status-request-topic-name}")
   public void receive(
     @Payload List<RestaurantRequestAvroModel> messages,
     @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
     @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
     @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
-    log.info("{} number of orders approved requests received with keys {}, partitions {} and offsets {}" +
-        ", sending for restaurant approved",
+    log.info("{} number of orders status requests received with keys {}, partitions {} and offsets {}" +
+        ", sending for restaurant status",
       messages.size(), keys.toString(), partitions.toString(), offsets.toString());
 
-    messages.forEach(restaurantApprovedRequestAvroModel -> {
+    messages.forEach(restaurantStatusRequestAvroModel -> {
       try {
-        log.info("Processing order approved for order id: {}", restaurantApprovedRequestAvroModel.getOrderId());
+        log.info("Processing order status for order id: {}", restaurantStatusRequestAvroModel.getOrderId());
         restaurantRequestMessageListener.approveOrder(restaurantMessagingDataMapper.
-          restaurantApprovedRequestAvroModelToRestaurantApproved(restaurantApprovedRequestAvroModel));
+          restaurantStatusRequestAvroModelToRestaurantStatus(restaurantStatusRequestAvroModel));
       } catch (DataAccessException e) {
         SQLException sqlException = (SQLException) e.getRootCause();
         if (sqlException != null && sqlException.getSQLState() != null &&
           PSQLState.UNIQUE_VIOLATION.getState().equals(sqlException.getSQLState())) {
           //NO-OP for unique constraint exception
           log.error("Caught unique constraint exception with sql state: {} " +
-              "in RestaurantApprovedRequestKafkaListener for order id: {}",
-            sqlException.getSQLState(), restaurantApprovedRequestAvroModel.getOrderId());
+              "in RestaurantStatusRequestKafkaListener for order id: {}",
+            sqlException.getSQLState(), restaurantStatusRequestAvroModel.getOrderId());
         } else {
           throw new RestaurantApplicationServiceException("Throwing DataAccessException in" +
-            " RestaurantApprovedRequestKafkaListener: " + e.getMessage(), e);
+            " RestaurantStatusRequestKafkaListener: " + e.getMessage(), e);
         }
       } catch (RestaurantNotFoundException e) {
         //NO-OP for RestaurantNotFoundException
         log.error("No restaurant found for restaurant id: {}, and order id: {}",
-          restaurantApprovedRequestAvroModel.getRestaurantId(),
-          restaurantApprovedRequestAvroModel.getOrderId());
+          restaurantStatusRequestAvroModel.getRestaurantId(),
+          restaurantStatusRequestAvroModel.getOrderId());
       }
     });
   }

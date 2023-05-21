@@ -57,7 +57,7 @@ public class OrderMessagingDataMapper {
       .build();
   }
 
-  public RestaurantRequestAvroModel restaurantApprovedRequestAvroModel(
+  public RestaurantRequestAvroModel restaurantStatusRequestAvroModel(
     String sagaId, OrderRestaurantEventPayload orderRestaurantEventPayload) {
     return RestaurantRequestAvroModel.newBuilder()
       .setId(UUID.randomUUID().toString())

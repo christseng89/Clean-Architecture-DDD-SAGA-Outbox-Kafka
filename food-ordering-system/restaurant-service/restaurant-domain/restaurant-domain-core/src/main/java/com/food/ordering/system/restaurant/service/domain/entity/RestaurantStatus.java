@@ -1,23 +1,22 @@
 package com.food.ordering.system.restaurant.service.domain.entity;
 
 import com.food.ordering.system.domain.entity.BaseEntity;
-import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantApprovedId;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantStatusId;
 
 import java.util.Objects;
 
-public class RestaurantApproved extends BaseEntity<RestaurantApprovedId> {
+public class RestaurantStatus extends BaseEntity<RestaurantStatusId> {
   private final RestaurantId restaurantId;
   private final OrderId orderId;
-  private final RestaurantStatus approvedStatus;
+  private final com.food.ordering.system.domain.outbox.RestaurantStatus statusStatus;
 
-  private RestaurantApproved(Builder builder) {
-    setId(builder.restaurantApprovedId);
+  private RestaurantStatus(Builder builder) {
+    setId(builder.restaurantStatusId);
     restaurantId = builder.restaurantId;
     orderId = builder.orderId;
-    approvedStatus = builder.approvedStatus;
+    statusStatus = builder.statusStatus;
   }
 
   public static Builder builder() {
@@ -32,8 +31,8 @@ public class RestaurantApproved extends BaseEntity<RestaurantApprovedId> {
     return orderId;
   }
 
-  public RestaurantStatus getApprovedStatus() {
-    return approvedStatus;
+  public com.food.ordering.system.domain.outbox.RestaurantStatus getStatusStatus() {
+    return statusStatus;
   }
 
   @Override
@@ -41,26 +40,26 @@ public class RestaurantApproved extends BaseEntity<RestaurantApprovedId> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     if (!super.equals(o)) return false;
-    RestaurantApproved that = (RestaurantApproved) o;
-    return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && approvedStatus == that.approvedStatus;
+    RestaurantStatus that = (RestaurantStatus) o;
+    return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && statusStatus == that.statusStatus;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), restaurantId, orderId, approvedStatus);
+    return Objects.hash(super.hashCode(), restaurantId, orderId, statusStatus);
   }
 
   public static final class Builder {
-    private RestaurantApprovedId restaurantApprovedId;
+    private RestaurantStatusId restaurantStatusId;
     private RestaurantId restaurantId;
     private OrderId orderId;
-    private RestaurantStatus approvedStatus;
+    private com.food.ordering.system.domain.outbox.RestaurantStatus statusStatus;
 
     private Builder() {
     }
 
-    public Builder restaurantApprovedId(RestaurantApprovedId val) {
-      restaurantApprovedId = val;
+    public Builder restaurantStatusId(RestaurantStatusId val) {
+      restaurantStatusId = val;
       return this;
     }
 
@@ -74,13 +73,13 @@ public class RestaurantApproved extends BaseEntity<RestaurantApprovedId> {
       return this;
     }
 
-    public Builder approvedStatus(RestaurantStatus val) {
-      approvedStatus = val;
+    public Builder statusStatus(com.food.ordering.system.domain.outbox.RestaurantStatus val) {
+      statusStatus = val;
       return this;
     }
 
-    public RestaurantApproved build() {
-      return new RestaurantApproved(this);
+    public RestaurantStatus build() {
+      return new RestaurantStatus(this);
     }
   }
 }

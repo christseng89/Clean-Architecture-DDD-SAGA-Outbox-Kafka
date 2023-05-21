@@ -15,7 +15,7 @@ public class OrderOutboxDataAccessMapper {
       .type(orderOutboxMessage.getType())
       .payload(orderOutboxMessage.getPayload())
       .outboxStatus(orderOutboxMessage.getOutboxStatus())
-      .approvedStatus(orderOutboxMessage.getApprovedStatus())
+      .statusStatus(orderOutboxMessage.getStatusStatus())
       .version(orderOutboxMessage.getVersion())
       .build();
   }
@@ -28,7 +28,7 @@ public class OrderOutboxDataAccessMapper {
       .type(paymentOutboxEntity.getType())
       .payload(paymentOutboxEntity.getPayload())
       .outboxStatus(paymentOutboxEntity.getOutboxStatus())
-      .approvedStatus(paymentOutboxEntity.getApprovedStatus())
+      .statusStatus(paymentOutboxEntity.getStatusStatus())
       .version(paymentOutboxEntity.getVersion())
       .build();
   }

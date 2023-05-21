@@ -16,7 +16,7 @@ public class OrderTestConfiguration {
   }
 
   @Bean
-  public RestaurantRequestMessagePublisher restaurantApprovedRequestMessagePublisher() {
+  public RestaurantRequestMessagePublisher restaurantStatusRequestMessagePublisher() {
     return Mockito.mock(RestaurantRequestMessagePublisher.class);
   }
 
@@ -41,7 +41,7 @@ public class OrderTestConfiguration {
   }
 
   @Bean
-  public RestaurantOutboxRepository approvedOutboxRepository() {
+  public RestaurantOutboxRepository statusOutboxRepository() {
     return Mockito.mock(RestaurantOutboxRepository.class);
   }
 

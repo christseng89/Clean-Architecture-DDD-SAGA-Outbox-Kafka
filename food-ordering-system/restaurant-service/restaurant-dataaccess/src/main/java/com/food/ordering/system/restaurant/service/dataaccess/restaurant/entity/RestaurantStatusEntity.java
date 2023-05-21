@@ -11,9 +11,9 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_approved", schema = "restaurant")
+@Table(name = "order_status", schema = "restaurant")
 @Entity
-public class RestaurantApprovedEntity {
+public class RestaurantStatusEntity {
 
   @Id
   private UUID id;

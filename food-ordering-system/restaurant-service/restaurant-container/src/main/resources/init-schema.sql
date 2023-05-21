@@ -14,19 +14,19 @@ CREATE TABLE restaurant.restaurants
     CONSTRAINT restaurants_pkey PRIMARY KEY (id)
 );
 
-DROP TYPE IF EXISTS approved_status;
+DROP TYPE IF EXISTS status_status;
 
-CREATE TYPE approved_status AS ENUM ('APPROVED', 'REJECTED');
+CREATE TYPE status_status AS ENUM ('APPROVED', 'REJECTED');
 
-DROP TABLE IF EXISTS restaurant.order_approved CASCADE;
+DROP TABLE IF EXISTS restaurant.order_status CASCADE;
 
-CREATE TABLE restaurant.order_approved
+CREATE TABLE restaurant.order_status
 (
     id            uuid            NOT NULL,
     restaurant_id uuid            NOT NULL,
     order_id      uuid            NOT NULL,
-    status        approved_status NOT NULL,
-    CONSTRAINT order_approved_pkey PRIMARY KEY (id)
+    status        status_status NOT NULL,
+    CONSTRAINT order_status_pkey PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS restaurant.products CASCADE;
@@ -78,18 +78,18 @@ CREATE TABLE restaurant.order_outbox
     type            character varying COLLATE pg_catalog."default" NOT NULL,
     payload         jsonb                                          NOT NULL,
     outbox_status   outbox_status                                  NOT NULL,
-    approved_status approved_status                                NOT NULL,
+    status_status status_status                                NOT NULL,
     version         integer                                        NOT NULL,
     CONSTRAINT order_outbox_pkey PRIMARY KEY (id)
 );
 
 CREATE INDEX "restaurant_order_outbox_saga_status"
     ON "restaurant".order_outbox
-        (type, approved_status);
+        (type, status_status);
 
 CREATE UNIQUE INDEX "restaurant_order_outbox_saga_id"
     ON "restaurant".order_outbox
-        (type, saga_id, approved_status, outbox_status);
+        (type, saga_id, status_status, outbox_status);
 
 DROP MATERIALIZED VIEW IF EXISTS restaurant.order_restaurant_m_view;
 

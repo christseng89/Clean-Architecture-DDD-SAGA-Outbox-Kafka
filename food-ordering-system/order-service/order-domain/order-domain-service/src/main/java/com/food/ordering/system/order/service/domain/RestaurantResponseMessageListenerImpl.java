@@ -20,15 +20,15 @@ public class RestaurantResponseMessageListenerImpl implements RestaurantResponse
   }
 
   @Override
-  public void orderApproved(RestaurantResponse restaurantResponse) {
+  public void orderStatus(RestaurantResponse restaurantResponse) {
     orderRestaurantSaga.process(restaurantResponse);
-    log.info("Order is approved for order id: {}", restaurantResponse.getOrderId());
+    log.info("Order is status for order id: {}", restaurantResponse.getOrderId());
   }
 
   @Override
   public void orderRejected(RestaurantResponse restaurantResponse) {
     orderRestaurantSaga.rollback(restaurantResponse);
-    log.info("Order Approved Saga rollback operation is completed for order id: {} with failure messages: {}",
+    log.info("Order Status Saga rollback operation is completed for order id: {} with failure messages: {}",
       restaurantResponse.getOrderId(),
       String.join(FAILURE_MESSAGE_DELIMITER, restaurantResponse.getFailureMessages()));
   }

@@ -10,8 +10,8 @@ import com.food.ordering.system.restaurant.service.domain.mapper.RestaurantDataM
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.restaurant.service.domain.outbox.scheduler.OrderOutboxHelper;
 import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantResponseMessagePublisher;
-import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantApprovedRepository;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantRepository;
+import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantStatusRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class RestaurantRequestHelper {
   private final RestaurantDomainService restaurantDomainService;
   private final RestaurantDataMapper restaurantDataMapper;
   private final RestaurantRepository restaurantRepository;
-  private final RestaurantApprovedRepository restaurantApprovedRepository;
+  private final RestaurantStatusRepository restaurantStatusRepository;
   private final OrderOutboxHelper orderOutboxHelper;
   private final RestaurantResponseMessagePublisher restaurantResponseMessagePublisher;
 
@@ -36,13 +36,13 @@ public class RestaurantRequestHelper {
     RestaurantDomainService restaurantDomainService,
     RestaurantDataMapper restaurantDataMapper,
     RestaurantRepository restaurantRepository,
-    RestaurantApprovedRepository restaurantApprovedRepository,
+    RestaurantStatusRepository restaurantStatusRepository,
     OrderOutboxHelper orderOutboxHelper,
     RestaurantResponseMessagePublisher restaurantResponseMessagePublisher) {
     this.restaurantDomainService = restaurantDomainService;
     this.restaurantDataMapper = restaurantDataMapper;
     this.restaurantRepository = restaurantRepository;
-    this.restaurantApprovedRepository = restaurantApprovedRepository;
+    this.restaurantStatusRepository = restaurantStatusRepository;
     this.orderOutboxHelper = orderOutboxHelper;
     this.restaurantResponseMessagePublisher = restaurantResponseMessagePublisher;
   }
@@ -55,18 +55,18 @@ public class RestaurantRequestHelper {
       return;
     }
 
-    log.info("Processing restaurant approved for order id: {}", restaurantRequest.getOrderId());
+    log.info("Processing restaurant status for order id: {}", restaurantRequest.getOrderId());
     List<String> failureMessages = new ArrayList<>();
     Restaurant restaurant = findRestaurant(restaurantRequest);
     RestaurantEvent restaurantApprovedEvent =
       restaurantDomainService.validateOrder(
         restaurant,
         failureMessages);
-    restaurantApprovedRepository.save(restaurant.getRestaurantApproved());
+    restaurantStatusRepository.save(restaurant.getRestaurantStatus());
 
     orderOutboxHelper
       .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(restaurantApprovedEvent),
-        restaurantApprovedEvent.getRestaurantApproved().getApprovedStatus(),
+        restaurantApprovedEvent.getRestaurantStatus().getStatusStatus(),
         OutboxStatus.STARTED,
         UUID.fromString(restaurantRequest.getSagaId()));
 

@@ -22,18 +22,18 @@ public class RestaurantDomainServiceImpl implements RestaurantDomainService {
     log.info("Validating order with id: {}", restaurant.getOrderDetail().getId().getValue());
 
     if (failureMessages.isEmpty()) { // APPROVED
-      log.info("Order is approved for order id: {}", restaurant.getOrderDetail().getId().getValue());
-      restaurant.constructRestaurantApproved(RestaurantStatus.APPROVED);
+      log.info("Order is status for order id: {}", restaurant.getOrderDetail().getId().getValue());
+      restaurant.createRestaurantStatus(RestaurantStatus.APPROVED);
       return new RestaurantApprovedEvent(
-        restaurant.getRestaurantApproved(),
+        restaurant.getRestaurantStatus(),
         restaurant.getId(),
         failureMessages,
         ZonedDateTime.now(ZoneId.of(UTC)));
     } else { // REJECTED
       log.info("Order is rejected for order id: {}", restaurant.getOrderDetail().getId().getValue());
-      restaurant.constructRestaurantApproved(RestaurantStatus.REJECTED);
+      restaurant.createRestaurantStatus(RestaurantStatus.REJECTED);
       return new RestaurantRejectedEvent(
-        restaurant.getRestaurantApproved(),
+        restaurant.getRestaurantStatus(),
         restaurant.getId(),
         failureMessages,
         ZonedDateTime.now(ZoneId.of(UTC)));

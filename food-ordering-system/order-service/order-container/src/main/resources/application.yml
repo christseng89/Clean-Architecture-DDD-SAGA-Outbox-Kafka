@@ -8,8 +8,8 @@ logging:
 order-service:
   payment-request-topic-name: payment-request
   payment-response-topic-name: payment-response
-  restaurant-approved-request-topic-name: restaurant-approved-request
-  restaurant-approved-response-topic-name: restaurant-approved-response
+  restaurant-status-request-topic-name: restaurant-status-request
+  restaurant-status-response-topic-name: restaurant-status-response
   customer-topic-name: customer
   outbox-scheduler-fixed-rate: 10000
   outbox-scheduler-initial-delay: 10000
@@ -57,7 +57,7 @@ kafka-consumer-config:
   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
   payment-consumer-group-id: payment-topic-consumer
-  restaurant-approved-consumer-group-id: restaurant-approved-topic-consumer
+  restaurant-status-consumer-group-id: restaurant-status-topic-consumer
   customer-group-id: customer-topic-consumer
   auto-offset-reset: earliest
   specific-avro-reader-key: specific.avro.reader

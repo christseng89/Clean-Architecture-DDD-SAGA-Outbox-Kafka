@@ -3,7 +3,7 @@
 kafka-consumer-config:
   ...
   payment-consumer-group-id: payment-topic-consumer
-  restaurant-approved-consumer-group-id: restaurant-approved-topic-consumer
+  restaurant-status-consumer-group-id: restaurant-status-topic-consumer
   customer-group-id: customer-topic-consumer
 
 ### Customer service/publisher
@@ -15,8 +15,8 @@ customer-service:
 order-service:
   payment-request-topic-name: payment-request
   payment-response-topic-name: payment-response
-  restaurant-approved-request-topic-name: restaurant-approved-request
-  restaurant-approved-response-topic-name: restaurant-approved-response
+  restaurant-status-request-topic-name: restaurant-status-request
+  restaurant-status-response-topic-name: restaurant-status-response
   customer-topic-name: customer
 
 id = "${kafka-consumer-config.customer-group-id}",
@@ -25,8 +25,8 @@ topics = "${order-service.customer-topic-name}"
 id = "${kafka-consumer-config.payment-consumer-group-id}",
 topics = "${order-service.payment-response-topic-name}"
 
-id = "${kafka-consumer-config.restaurant-approved-consumer-group-id}",
-topics = "${order-service.restaurant-approved-response-topic-name}"
+id = "${kafka-consumer-config.restaurant-status-consumer-group-id}",
+topics = "${order-service.restaurant-status-response-topic-name}"
 
 
 ### Payment service/listener
@@ -39,11 +39,11 @@ topics = "${payment-service.payment-request-topic-name}"
 
 ### Restaurant service/listener
 restaurant-service:
-  restaurant-approved-request-topic-name: restaurant-approved-request
-  restaurant-approved-response-topic-name: restaurant-approved-response
+  restaurant-status-request-topic-name: restaurant-status-request
+  restaurant-status-response-topic-name: restaurant-status-response
 
-id = "${kafka-consumer-config.restaurant-approved-consumer-group-id}",
-topics = "${restaurant-service.restaurant-approved-request-topic-name}"
+id = "${kafka-consumer-config.restaurant-status-consumer-group-id}",
+topics = "${restaurant-service.restaurant-status-request-topic-name}"
 
 ### Helm Install Kafka
 helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0

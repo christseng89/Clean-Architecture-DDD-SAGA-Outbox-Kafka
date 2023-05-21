@@ -36,7 +36,7 @@ public class OrderEventKafkaPublisher implements RestaurantRequestMessagePublish
 
   @Override
   public void publish(
-    // Order Restaurant Approved Outbox
+    // Order Restaurant Status Outbox
     OrderRestaurantOutboxMessage orderRestaurantOutboxMessage,
     BiConsumer<OrderRestaurantOutboxMessage, OutboxStatus> outboxCallback) {
     OrderRestaurantEventPayload orderRestaurantEventPayload =
@@ -45,18 +45,18 @@ public class OrderEventKafkaPublisher implements RestaurantRequestMessagePublish
 
     String sagaId = orderRestaurantOutboxMessage.getSagaId().toString();
 
-    log.info("Received RestaurantApprovedOutboxMessage for order id: {} and saga id: {}",
+    log.info("Received RestaurantStatusOutboxMessage for order id: {} and saga id: {}",
       orderRestaurantEventPayload.getOrderId(), sagaId);
 
     try {
       RestaurantRequestAvroModel restaurantRequestAvroModel =
         orderMessagingDataMapper
-          .restaurantApprovedRequestAvroModel(sagaId,
+          .restaurantStatusRequestAvroModel(sagaId,
             orderRestaurantEventPayload);
 
-      // Approved Request
+      // Status Request
       String topicName =
-        orderServiceConfigData.getRestaurantApprovedRequestTopicName();
+        orderServiceConfigData.getRestaurantStatusRequestTopicName();
 
       kafkaProducer.send(
         topicName,

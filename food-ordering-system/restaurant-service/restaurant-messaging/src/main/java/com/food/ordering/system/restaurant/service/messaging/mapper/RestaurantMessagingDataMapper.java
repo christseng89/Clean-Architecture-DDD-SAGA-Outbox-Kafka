@@ -16,7 +16,7 @@ import java.util.UUID;
 public class RestaurantMessagingDataMapper {
 
   public RestaurantRequest
-  restaurantApprovedRequestAvroModelToRestaurantApproved(
+  restaurantStatusRequestAvroModelToRestaurantStatus(
     RestaurantRequestAvroModel restaurantRequestAvroModel) {
     return RestaurantRequest.builder()
       .id(restaurantRequestAvroModel.getId())

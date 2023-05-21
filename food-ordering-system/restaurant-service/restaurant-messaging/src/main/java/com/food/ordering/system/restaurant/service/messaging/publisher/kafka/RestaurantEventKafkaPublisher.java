@@ -52,8 +52,8 @@ public class RestaurantEventKafkaPublisher implements RestaurantResponseMessageP
         restaurantMessagingDataMapper
           .orderEventPayloadToRestaurantResponseAvroModel(sagaId, orderEventPayload);
 
-      // Approved Response
-      String topicName = restaurantServiceConfigData.getRestaurantApprovedResponseTopicName();
+      // Status Response
+      String topicName = restaurantServiceConfigData.getRestaurantStatusResponseTopicName();
 
       kafkaProducer.send(
         topicName,

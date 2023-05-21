@@ -91,9 +91,9 @@ CREATE INDEX "payment_outbox_saga_status"
 --    ON "order".payment_outbox
 --    (type, saga_id, saga_status);
 
-DROP TABLE IF EXISTS "order".restaurant_approved_outbox CASCADE;
+DROP TABLE IF EXISTS "order".restaurant_status_outbox CASCADE;
 
-CREATE TABLE "order".restaurant_approved_outbox
+CREATE TABLE "order".restaurant_status_outbox
 (
     id            uuid                                           NOT NULL,
     saga_id       uuid                                           NOT NULL,
@@ -105,15 +105,15 @@ CREATE TABLE "order".restaurant_approved_outbox
     saga_status   saga_status                                    NOT NULL,
     order_status  order_status                                   NOT NULL,
     version       integer                                        NOT NULL,
-    CONSTRAINT restaurant_approved_outbox_pkey PRIMARY KEY (id)
+    CONSTRAINT restaurant_status_outbox_pkey PRIMARY KEY (id)
 );
 
-CREATE INDEX "restaurant_approved_outbox_saga_status"
-    ON "order".restaurant_approved_outbox
+CREATE INDEX "restaurant_status_outbox_saga_status"
+    ON "order".restaurant_status_outbox
         (type, outbox_status, saga_status);
 
---CREATE UNIQUE INDEX "restaurant_approved_outbox_saga_id"
---    ON "order".restaurant_approved_outbox
+--CREATE UNIQUE INDEX "restaurant_status_outbox_saga_id"
+--    ON "order".restaurant_status_outbox
 --    (type, saga_id, saga_status);
 
 -- CQRS

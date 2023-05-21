@@ -26,24 +26,24 @@ public class RestaurantOutboxCleanerScheduler implements OutboxScheduler {
   @Scheduled(cron = "@midnight")
   public void processOutboxMessage() {
     Optional<List<OrderRestaurantOutboxMessage>> outboxMessagesResponse =
-      restaurantOutboxHelper.getApprovedOutboxMessageByOutboxStatusAndSagaStatus(
+      restaurantOutboxHelper.getStatusOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.COMPLETED,
         SagaStatus.SUCCEEDED,
         SagaStatus.FAILED,
         SagaStatus.COMPENSATED);
     if (outboxMessagesResponse.isPresent()) {
       List<OrderRestaurantOutboxMessage> outboxMessages = outboxMessagesResponse.get();
-      log.info("Received {} RestaurantApprovedOutboxMessage for clean-up. The payloads: {}",
+      log.info("Received {} RestaurantStatusOutboxMessage for clean-up. The payloads: {}",
         outboxMessages.size(),
         outboxMessages.stream()
           .map(OrderRestaurantOutboxMessage::getPayload)
           .collect(Collectors.joining("\n")));
-      restaurantOutboxHelper.deleteApprovedOutboxMessageByOutboxStatusAndSagaStatus(
+      restaurantOutboxHelper.deleteStatusOutboxMessageByOutboxStatusAndSagaStatus(
         OutboxStatus.COMPLETED,
         SagaStatus.SUCCEEDED,
         SagaStatus.FAILED,
         SagaStatus.COMPENSATED);
-      log.info("{} RestaurantApprovedOutboxMessage deleted!", outboxMessages.size());
+      log.info("{} RestaurantStatusOutboxMessage deleted!", outboxMessages.size());
     }
 
   }

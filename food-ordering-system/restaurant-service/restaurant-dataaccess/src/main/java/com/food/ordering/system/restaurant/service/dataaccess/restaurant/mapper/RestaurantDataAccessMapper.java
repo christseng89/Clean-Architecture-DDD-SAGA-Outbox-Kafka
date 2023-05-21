@@ -6,12 +6,12 @@ import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.ProductId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity.RestaurantApprovedEntity;
+import com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity.RestaurantStatusEntity;
 import com.food.ordering.system.restaurant.service.domain.entity.OrderDetail;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
-import com.food.ordering.system.restaurant.service.domain.entity.RestaurantApproved;
-import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantApprovedId;
+import com.food.ordering.system.restaurant.service.domain.entity.RestaurantStatus;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantStatusId;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -49,21 +49,21 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantApprovedEntity restaurantApprovedToRestaurantApprovedEntity(RestaurantApproved restaurantApproved) {
-    return RestaurantApprovedEntity.builder()
-      .id(restaurantApproved.getId().getValue())
-      .restaurantId(restaurantApproved.getRestaurantId().getValue())
-      .orderId(restaurantApproved.getOrderId().getValue())
-      .status(restaurantApproved.getApprovedStatus())
+  public RestaurantStatusEntity restaurantStatusToRestaurantStatusEntity(RestaurantStatus restaurantStatus) {
+    return RestaurantStatusEntity.builder()
+      .id(restaurantStatus.getId().getValue())
+      .restaurantId(restaurantStatus.getRestaurantId().getValue())
+      .orderId(restaurantStatus.getOrderId().getValue())
+      .status(restaurantStatus.getStatusStatus())
       .build();
   }
 
-  public RestaurantApproved restaurantApprovedEntityToRestaurantApproved(RestaurantApprovedEntity restaurantApprovedEntity) {
-    return RestaurantApproved.builder()
-      .restaurantApprovedId(new RestaurantApprovedId(restaurantApprovedEntity.getId()))
-      .restaurantId(new RestaurantId(restaurantApprovedEntity.getRestaurantId()))
-      .orderId(new OrderId(restaurantApprovedEntity.getOrderId()))
-      .approvedStatus(restaurantApprovedEntity.getStatus())
+  public RestaurantStatus restaurantStatusEntityToRestaurantStatus(RestaurantStatusEntity restaurantStatusEntity) {
+    return RestaurantStatus.builder()
+      .restaurantStatusId(new RestaurantStatusId(restaurantStatusEntity.getId()))
+      .restaurantId(new RestaurantId(restaurantStatusEntity.getRestaurantId()))
+      .orderId(new OrderId(restaurantStatusEntity.getOrderId()))
+      .statusStatus(restaurantStatusEntity.getStatus())
       .build();
   }
 

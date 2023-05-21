@@ -37,7 +37,7 @@ public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
   @Override
   public Optional<List<OrderOutboxMessage>> findByTypeAndOutboxStatus(String sagaType, OutboxStatus outboxStatus) {
     return Optional.of(orderOutboxJpaRepository.findByTypeAndOutboxStatus(sagaType, outboxStatus)
-      .orElseThrow(() -> new OrderOutboxNotFoundException("Approved outbox object " +
+      .orElseThrow(() -> new OrderOutboxNotFoundException("Status outbox object " +
         "cannot be found for saga type " + sagaType))
       .stream()
       .map(orderOutboxDataAccessMapper::orderOutboxEntityToOrderOutboxMessage)
