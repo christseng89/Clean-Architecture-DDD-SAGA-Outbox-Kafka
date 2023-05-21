@@ -33,7 +33,7 @@ public class OrderCreateRequestHandler {
   }
 
   @Transactional
-  public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequestCommand) {
+  public CreateOrderResponse createOrderResponse(CreateOrderRequest createOrderRequestCommand) {
     OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrder(createOrderRequestCommand);
     log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
     CreateOrderResponse createOrderResponse = orderDataMapper.createOrderResponse(

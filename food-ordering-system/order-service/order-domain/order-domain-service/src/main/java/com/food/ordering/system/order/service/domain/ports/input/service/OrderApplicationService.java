@@ -8,7 +8,7 @@ import com.food.ordering.system.order.service.domain.dto.track.TrackOrderRespons
 import javax.validation.Valid;
 
 public interface OrderApplicationService {
-  CreateOrderResponse createOrder(@Valid CreateOrderRequest createOrderRequestCommand);
+  CreateOrderResponse createOrderResponse(@Valid CreateOrderRequest createOrderRequestCommand);
 
   TrackOrderResponse trackOrder(@Valid TrackOrderRequest trackOrderRequest);
 }
