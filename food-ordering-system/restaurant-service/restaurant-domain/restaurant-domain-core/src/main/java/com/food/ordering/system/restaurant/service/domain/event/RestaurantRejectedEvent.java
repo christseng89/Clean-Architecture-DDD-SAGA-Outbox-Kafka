@@ -1,7 +1,7 @@
 package com.food.ordering.system.restaurant.service.domain.event;
 
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.domain.entity.RestaurantApproval;
+import com.food.ordering.system.restaurant.service.domain.entity.RestaurantApproved;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -9,11 +9,11 @@ import java.util.List;
 public class RestaurantRejectedEvent extends RestaurantEvent {
 
   public RestaurantRejectedEvent(
-    RestaurantApproval restaurantApproval,
+    RestaurantApproved restaurantApproved,
     RestaurantId restaurantId,
     List<String> failureMessages,
     ZonedDateTime createdAt) {
-    super(restaurantApproval, restaurantId, failureMessages, createdAt);
+    super(restaurantApproved, restaurantId, failureMessages, createdAt);
   }
 
 }
