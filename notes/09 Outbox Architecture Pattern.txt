@@ -57,7 +57,7 @@ OrderStatus == COMPLETED && SagaStatus == PROCESSING
 
 OrderCreateCommandHandler
   @Transactional
-  public CreateOrderResponse createOrderResponse(CreateOrderCommand createOrderCommand) {
+  public CreateOrderResponse createOrderResponse(CreateOrder createOrder) {
     ...
 
     // Save payment outbox

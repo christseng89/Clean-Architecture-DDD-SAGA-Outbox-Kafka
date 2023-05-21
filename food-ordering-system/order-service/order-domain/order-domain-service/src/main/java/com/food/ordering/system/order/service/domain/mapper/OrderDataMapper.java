@@ -28,21 +28,21 @@ import java.util.UUID;
 @Component
 public class OrderDataMapper {
 
-  public Restaurant restaurant(CreateOrderRequest createOrderRequestCommand) {
+  public Restaurant restaurant(CreateOrderRequest createOrderRequest) {
     return Restaurant.builder()
-      .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
-      .products(createOrderRequestCommand.getItems().stream()
+      .restaurantId(new RestaurantId(createOrderRequest.getRestaurantId()))
+      .products(createOrderRequest.getItems().stream()
         .map(orderItem -> new Product(new ProductId(orderItem.getProductId())))
         .toList()).build();
   }
 
-  public Order order(CreateOrderRequest createOrderRequestCommand) {
+  public Order order(CreateOrderRequest createOrderRequest) {
     return Order.builder()
-      .customerId(new CustomerId(createOrderRequestCommand.getCustomerId()))
-      .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
-      .deliveryAddress(streetAddress(createOrderRequestCommand.getAddress()))
-      .price(new Money(createOrderRequestCommand.getPrice()))
-      .items(orderItemList(createOrderRequestCommand.getItems()))
+      .customerId(new CustomerId(createOrderRequest.getCustomerId()))
+      .restaurantId(new RestaurantId(createOrderRequest.getRestaurantId()))
+      .deliveryAddress(streetAddress(createOrderRequest.getAddress()))
+      .price(new Money(createOrderRequest.getPrice()))
+      .items(orderItemList(createOrderRequest.getItems()))
       .build();
   }
 

@@ -65,13 +65,13 @@ public class OrderDomainServiceTest {
   private PaymentOutboxRepository paymentOutboxRepository;
   @Autowired
   private ObjectMapper objectMapper;
-  private CreateOrderRequest createOrderRequestCommand;
-  private CreateOrderRequest createOrderRequestCommandWrongPrice;
-  private CreateOrderRequest createOrderRequestCommandWrongProductPrice;
+  private CreateOrderRequest createOrderRequest;
+  private CreateOrderRequest createOrderRequestWrongPrice;
+  private CreateOrderRequest createOrderRequestWrongProductPrice;
 
   @BeforeAll
   public void init() {
-    createOrderRequestCommand = CreateOrderRequest.builder()
+    createOrderRequest = CreateOrderRequest.builder()
       .customerId(CUSTOMER_ID)
       .restaurantId(RESTAURANT_ID)
       .address(OrderAddress.builder()
@@ -94,7 +94,7 @@ public class OrderDomainServiceTest {
           .build()))
       .build();
 
-    createOrderRequestCommandWrongPrice = CreateOrderRequest.builder()
+    createOrderRequestWrongPrice = CreateOrderRequest.builder()
       .customerId(CUSTOMER_ID)
       .restaurantId(RESTAURANT_ID)
       .address(OrderAddress.builder()
@@ -117,7 +117,7 @@ public class OrderDomainServiceTest {
           .build()))
       .build();
 
-    createOrderRequestCommandWrongProductPrice = CreateOrderRequest.builder()
+    createOrderRequestWrongProductPrice = CreateOrderRequest.builder()
       .customerId(CUSTOMER_ID)
       .restaurantId(RESTAURANT_ID)
       .address(OrderAddress.builder()
@@ -143,7 +143,7 @@ public class OrderDomainServiceTest {
     Customer customer = new Customer(new CustomerId(CUSTOMER_ID));
 
     Restaurant restaurantResponse = Restaurant.builder()
-      .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
+      .restaurantId(new RestaurantId(createOrderRequest.getRestaurantId()))
       .products(List.of(
         new Product(new ProductId(PRODUCT_ID), "product-1",
           new Money(new BigDecimal("50.00"))),
@@ -152,13 +152,13 @@ public class OrderDomainServiceTest {
       .active(true)
       .build();
 
-    Order order = orderDataMapper.order(createOrderRequestCommand);
+    Order order = orderDataMapper.order(createOrderRequest);
     order.setId(new OrderId(ORDER_ID));
 
     when(customerRepository.findCustomerById(CUSTOMER_ID))
       .thenReturn(Optional.of(customer));
     when(restaurantRepository
-      .findRestaurant(orderDataMapper.restaurant(createOrderRequestCommand)))
+      .findRestaurant(orderDataMapper.restaurant(createOrderRequest)))
       .thenReturn(Optional.of(restaurantResponse));
     when(orderRepository.save(any(Order.class)))
       .thenReturn(order);
@@ -169,7 +169,7 @@ public class OrderDomainServiceTest {
 
   @Test
   public void testCreateOrder() {
-    CreateOrderResponse createOrderResponse = orderApplicationService.createOrderResponse(createOrderRequestCommand);
+    CreateOrderResponse createOrderResponse = orderApplicationService.createOrderResponse(createOrderRequest);
     assertEquals(createOrderResponse.getOrderStatus(), OrderStatus.PENDING);
     assertEquals(createOrderResponse.getMessage(), "Order created successfully");
 
@@ -181,7 +181,7 @@ public class OrderDomainServiceTest {
   public void testCreateOrderWithWrongTotalPrice() {
     OrderDomainException orderDomainException =
       assertThrows(OrderDomainException.class,
-        () -> orderApplicationService.createOrderResponse(createOrderRequestCommandWrongPrice));
+        () -> orderApplicationService.createOrderResponse(createOrderRequestWrongPrice));
 
     System.out.println("\nWrong total price...\n");
     assertEquals(orderDomainException.getMessage(),
@@ -192,7 +192,7 @@ public class OrderDomainServiceTest {
   public void testCreateOrderWithWrongProductPrice() {
     OrderDomainException orderDomainException = assertThrows(
       OrderDomainException.class,
-      () -> orderApplicationService.createOrderResponse(createOrderRequestCommandWrongProductPrice));
+      () -> orderApplicationService.createOrderResponse(createOrderRequestWrongProductPrice));
 
     System.out.println("\nWrong product ID " + PRODUCT_ID + " price...\n");
     assertEquals(orderDomainException.getMessage(),
@@ -202,7 +202,7 @@ public class OrderDomainServiceTest {
   @Test
   public void testCreateOrderWithPassiveRestaurant() {
     Restaurant restaurantResponse = Restaurant.builder()
-      .restaurantId(new RestaurantId(createOrderRequestCommand.getRestaurantId()))
+      .restaurantId(new RestaurantId(createOrderRequest.getRestaurantId()))
       .products(List.of(
         new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
         new Product(new ProductId(PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
@@ -210,12 +210,12 @@ public class OrderDomainServiceTest {
       .build();
 
     when(restaurantRepository
-      .findRestaurant(orderDataMapper.restaurant(createOrderRequestCommand)))
+      .findRestaurant(orderDataMapper.restaurant(createOrderRequest)))
       .thenReturn(Optional.of(restaurantResponse));
 
     OrderDomainException orderDomainException = assertThrows(
       OrderDomainException.class,
-      () -> orderApplicationService.createOrderResponse(createOrderRequestCommand));
+      () -> orderApplicationService.createOrderResponse(createOrderRequest));
 
     System.out.println("\nInactive restaurant ID " + RESTAURANT_ID + "...\n");
     assertEquals(orderDomainException.getMessage(),
