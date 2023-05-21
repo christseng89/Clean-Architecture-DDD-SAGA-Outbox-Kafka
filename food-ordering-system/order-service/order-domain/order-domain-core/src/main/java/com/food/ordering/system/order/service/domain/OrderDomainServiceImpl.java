@@ -4,8 +4,8 @@ import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.entity.Product;
 import com.food.ordering.system.order.service.domain.entity.Restaurant;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
-import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
+import com.food.ordering.system.order.service.domain.event.OrderPendingEvent;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,13 +19,13 @@ import static com.food.ordering.system.domain.DomainConstants.UTC;
 public class OrderDomainServiceImpl implements OrderDomainService {
 
   @Override
-  public OrderCreatedEvent validateAndInitiateOrder(Order order, Restaurant restaurant) {
+  public OrderPendingEvent validateAndInitiateOrder(Order order, Restaurant restaurant) {
     validateRestaurant(restaurant);
     setOrderProductInformation(order, restaurant);
     order.validateOrder();
     order.initializeOrder();
     log.info("Order with id: {} is initiated", order.getId().getValue());
-    return new OrderCreatedEvent(
+    return new OrderPendingEvent(
       order,
       ZonedDateTime.now(ZoneId.of(UTC)));
   }

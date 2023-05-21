@@ -13,8 +13,8 @@ import com.food.ordering.system.order.service.domain.dto.message.CustomerCreated
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.entity.*;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
-import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
+import com.food.ordering.system.order.service.domain.event.OrderPendingEvent;
 import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderProductEventPayload;
 import com.food.ordering.system.order.service.domain.outbox.model.restaurant.OrderRestaurantEventPayload;
@@ -65,12 +65,12 @@ public class OrderDataMapper {
   }
 
   public OrderPaymentEventPayload orderPaymentEventCreatedPayload(
-    OrderCreatedEvent orderCreatedEvent) {
+    OrderPendingEvent orderPendingEvent) {
     return OrderPaymentEventPayload.builder()
-      .customerId(orderCreatedEvent.getOrder().getCustomerId().getValue().toString())
-      .orderId(orderCreatedEvent.getOrder().getId().getValue().toString())
-      .price(orderCreatedEvent.getOrder().getPrice().getAmount())
-      .createdAt(orderCreatedEvent.getCreatedAt())
+      .customerId(orderPendingEvent.getOrder().getCustomerId().getValue().toString())
+      .orderId(orderPendingEvent.getOrder().getId().getValue().toString())
+      .price(orderPendingEvent.getOrder().getPrice().getAmount())
+      .createdAt(orderPendingEvent.getCreatedAt())
       .paymentOrderStatus(PaymentOrderStatus.PENDING.name())
       .build();
   }

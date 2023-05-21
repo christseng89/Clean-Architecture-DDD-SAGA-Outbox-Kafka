@@ -2,7 +2,7 @@ package com.food.ordering.system.order.service.domain;
 
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRequest;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
-import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
+import com.food.ordering.system.order.service.domain.event.OrderPendingEvent;
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
 import com.food.ordering.system.order.service.domain.outbox.scheduler.payment.PaymentOutboxHelper;
 import com.food.ordering.system.outbox.OutboxStatus;
@@ -34,20 +34,20 @@ public class OrderCreateHandler {
 
   @Transactional
   public CreateOrderResponse createOrderResponse(CreateOrderRequest createOrderRequest) {
-    OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrderEvent(createOrderRequest);
-    log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
+    OrderPendingEvent orderPendingEvent = orderCreateHelper.persistOrderEvent(createOrderRequest);
+    log.info("Order is created with id: {}", orderPendingEvent.getOrder().getId().getValue());
     CreateOrderResponse createOrderResponse = orderDataMapper.createOrderResponse(
-      orderCreatedEvent.getOrder(),
+      orderPendingEvent.getOrder(),
       "Order created successfully");
 
     paymentOutboxHelper.savePaymentOutboxMessage(
-      orderDataMapper.orderPaymentEventCreatedPayload(orderCreatedEvent),
-      orderCreatedEvent.getOrder().getOrderStatus(),
-      orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrder().getOrderStatus()),
+      orderDataMapper.orderPaymentEventCreatedPayload(orderPendingEvent),
+      orderPendingEvent.getOrder().getOrderStatus(),
+      orderSagaHelper.orderStatusToSagaStatus(orderPendingEvent.getOrder().getOrderStatus()),
       OutboxStatus.STARTED,
       UUID.randomUUID());
 
-    log.info("Returning CreateOrderResponse with order id: {}", orderCreatedEvent.getOrder().getId());
+    log.info("Returning CreateOrderResponse with order id: {}", orderPendingEvent.getOrder().getId());
 
     return createOrderResponse;
   }

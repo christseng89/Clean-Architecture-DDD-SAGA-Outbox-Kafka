@@ -62,13 +62,13 @@ OrderCreateCommandHandler
 
     // Save payment outbox
     paymentOutboxHelper.savePaymentOutboxMessage(
-      orderDataMapper.orderPaymentEventCreatedPayload(orderCreatedEvent),
-      orderCreatedEvent.getOrder().getOrderStatus(),
-      orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrder().getOrderStatus()),
+      orderDataMapper.orderPaymentEventCreatedPayload(orderPendingEvent),
+      orderPendingEvent.getOrder().getOrderStatus(),
+      orderSagaHelper.orderStatusToSagaStatus(orderPendingEvent.getOrder().getOrderStatus()),
       OutboxStatus.STARTED,
       UUID.randomUUID());
 
-    log.info("Returning CreateOrderResponse with order id: {}", orderCreatedEvent.getOrder().getId());
+    log.info("Returning CreateOrderResponse with order id: {}", orderPendingEvent.getOrder().getId());
 
     return createOrderResponse;
   }
