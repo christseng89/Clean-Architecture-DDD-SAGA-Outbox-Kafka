@@ -50,24 +50,24 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
   @Override
   @Transactional
   public void process(RestaurantResponse restaurantResponse) {
-    Optional<OrderRestaurantOutboxMessage> restaurantApprovalOutboxMessageResponse =
-      restaurantOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
+    Optional<OrderRestaurantOutboxMessage> restaurantApprovedOutboxMessageResponse =
+      restaurantOutboxHelper.getApprovedOutboxMessageBySagaIdAndSagaStatus(
         UUID.fromString(restaurantResponse.getSagaId()), SagaStatus.PROCESSING);
 
-    if (restaurantApprovalOutboxMessageResponse.isEmpty()) {
+    if (restaurantApprovedOutboxMessageResponse.isEmpty()) {
       log.info("An outbox message with saga id: {} is already processed!",
         restaurantResponse.getSagaId());
       return;
     }
 
-    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage = restaurantApprovalOutboxMessageResponse.get();
+    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage = restaurantApprovedOutboxMessageResponse.get();
     Order order = approveOrder(restaurantResponse);
     SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(
       order.getOrderStatus());
 
-    // Update Approval Outbox
+    // Update Approved Outbox
     restaurantOutboxHelper
-      .save(getUpdatedApprovalOutboxMessage(
+      .save(getUpdatedApprovedOutboxMessage(
         orderRestaurantOutboxMessage, order.getOrderStatus(), sagaStatus));
 
     // Update Payment Outbox
@@ -81,23 +81,23 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
   @Override
   @Transactional
   public void rollback(RestaurantResponse restaurantResponse) {
-    Optional<OrderRestaurantOutboxMessage> restaurantApprovalOutboxMessageResponse =
-      restaurantOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
+    Optional<OrderRestaurantOutboxMessage> restaurantApprovedOutboxMessageResponse =
+      restaurantOutboxHelper.getApprovedOutboxMessageBySagaIdAndSagaStatus(
         UUID.fromString(restaurantResponse.getSagaId()), SagaStatus.PROCESSING);
 
-    if (restaurantApprovalOutboxMessageResponse.isEmpty()) {
+    if (restaurantApprovedOutboxMessageResponse.isEmpty()) {
       log.info("An outbox message with saga id: {} is already roll backed!",
         restaurantResponse.getSagaId());
       return;
     }
 
-    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage = restaurantApprovalOutboxMessageResponse.get();
+    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage = restaurantApprovedOutboxMessageResponse.get();
     OrderCancelledEvent cancelledEvent = rollbackOrder(restaurantResponse);
     SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(
       cancelledEvent.getOrder().getOrderStatus());
 
-    // Update Approval Outbox
-    restaurantOutboxHelper.save(getUpdatedApprovalOutboxMessage(
+    // Update Approved Outbox
+    restaurantOutboxHelper.save(getUpdatedApprovedOutboxMessage(
       orderRestaurantOutboxMessage, cancelledEvent.getOrder().getOrderStatus(), sagaStatus));
 
     // Payment Outbox Message (Cancelled) STARTED
@@ -119,7 +119,7 @@ public class OrderRestaurantSaga implements SagaStep<RestaurantResponse> {
     return order;
   }
 
-  private OrderRestaurantOutboxMessage getUpdatedApprovalOutboxMessage(
+  private OrderRestaurantOutboxMessage getUpdatedApprovedOutboxMessage(
     OrderRestaurantOutboxMessage orderRestaurantOutboxMessage,
     OrderStatus orderStatus,
     SagaStatus sagaStatus) {

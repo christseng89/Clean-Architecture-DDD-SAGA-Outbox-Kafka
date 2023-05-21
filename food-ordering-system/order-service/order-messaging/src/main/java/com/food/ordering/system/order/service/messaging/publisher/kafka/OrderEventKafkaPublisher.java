@@ -36,7 +36,7 @@ public class OrderEventKafkaPublisher implements RestaurantRequestMessagePublish
 
   @Override
   public void publish(
-    // Order Restaurant Approval Outbox
+    // Order Restaurant Approved Outbox
     OrderRestaurantOutboxMessage orderRestaurantOutboxMessage,
     BiConsumer<OrderRestaurantOutboxMessage, OutboxStatus> outboxCallback) {
     OrderRestaurantEventPayload orderRestaurantEventPayload =
@@ -45,18 +45,18 @@ public class OrderEventKafkaPublisher implements RestaurantRequestMessagePublish
 
     String sagaId = orderRestaurantOutboxMessage.getSagaId().toString();
 
-    log.info("Received RestaurantApprovalOutboxMessage for order id: {} and saga id: {}",
+    log.info("Received RestaurantApprovedOutboxMessage for order id: {} and saga id: {}",
       orderRestaurantEventPayload.getOrderId(), sagaId);
 
     try {
       RestaurantRequestAvroModel restaurantRequestAvroModel =
         orderMessagingDataMapper
-          .restaurantApprovalRequestAvroModel(sagaId,
+          .restaurantApprovedRequestAvroModel(sagaId,
             orderRestaurantEventPayload);
 
-      // Approval Request
+      // Approved Request
       String topicName =
-        orderServiceConfigData.getRestaurantApprovalRequestTopicName();
+        orderServiceConfigData.getRestaurantApprovedRequestTopicName();
 
       kafkaProducer.send(
         topicName,
@@ -70,10 +70,10 @@ public class OrderEventKafkaPublisher implements RestaurantRequestMessagePublish
           orderRestaurantEventPayload.getOrderId(),
           "RestaurantRequestAvroModel"));
 
-      log.info("RestaurantApprovalEventPayload sent to Kafka for order id: {} and saga id: {}",
+      log.info("RestaurantApprovedEventPayload sent to Kafka for order id: {} and saga id: {}",
         restaurantRequestAvroModel.getOrderId(), sagaId);
     } catch (Exception e) {
-      log.error("Error while sending RestaurantApprovalEventPayload to kafka for order id: {} and saga id: {}," +
+      log.error("Error while sending RestaurantApprovedEventPayload to kafka for order id: {} and saga id: {}," +
         " error: {}", orderRestaurantEventPayload.getOrderId(), sagaId, e.getMessage());
     }
   }

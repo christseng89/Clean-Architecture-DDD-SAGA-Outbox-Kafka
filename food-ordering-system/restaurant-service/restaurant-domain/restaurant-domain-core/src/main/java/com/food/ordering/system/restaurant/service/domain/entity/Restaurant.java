@@ -45,16 +45,16 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     }
   }
 
-  public void constructRestaurantApproval(RestaurantStatus restaurantStatus) {
+  public void constructRestaurantApproved(RestaurantStatus restaurantStatus) {
     this.restaurantApproved = RestaurantApproved.builder()
-      .restaurantApprovalId(new RestaurantApprovedId(UUID.randomUUID()))
+      .restaurantApprovedId(new RestaurantApprovedId(UUID.randomUUID()))
       .restaurantId(this.getId())
       .orderId(this.getOrderDetail().getId())
-      .approvalStatus(restaurantStatus)
+      .approvedStatus(restaurantStatus)
       .build();
   }
 
-  public RestaurantApproved getRestaurantApproval() {
+  public RestaurantApproved getRestaurantApproved() {
     return restaurantApproved;
   }
 
@@ -98,7 +98,7 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
       return this;
     }
 
-    public Builder restaurantApproval(RestaurantApproved val) {
+    public Builder restaurantApproved(RestaurantApproved val) {
       restaurantApproved = val;
       return this;
     }

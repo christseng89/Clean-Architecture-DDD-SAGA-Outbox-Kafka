@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_approval", schema = "restaurant")
+@Table(name = "order_approved", schema = "restaurant")
 @Entity
 public class RestaurantApprovedEntity {
 

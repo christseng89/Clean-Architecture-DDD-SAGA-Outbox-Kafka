@@ -55,18 +55,18 @@ public class RestaurantRequestHelper {
       return;
     }
 
-    log.info("Processing restaurant approval for order id: {}", restaurantRequest.getOrderId());
+    log.info("Processing restaurant approved for order id: {}", restaurantRequest.getOrderId());
     List<String> failureMessages = new ArrayList<>();
     Restaurant restaurant = findRestaurant(restaurantRequest);
-    RestaurantEvent restaurantApprovalEvent =
+    RestaurantEvent restaurantApprovedEvent =
       restaurantDomainService.validateOrder(
         restaurant,
         failureMessages);
-    restaurantApprovedRepository.save(restaurant.getRestaurantApproval());
+    restaurantApprovedRepository.save(restaurant.getRestaurantApproved());
 
     orderOutboxHelper
-      .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(restaurantApprovalEvent),
-        restaurantApprovalEvent.getRestaurantApproval().getApprovalStatus(),
+      .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(restaurantApprovedEvent),
+        restaurantApprovedEvent.getRestaurantApproved().getApprovedStatus(),
         OutboxStatus.STARTED,
         UUID.fromString(restaurantRequest.getSagaId()));
 

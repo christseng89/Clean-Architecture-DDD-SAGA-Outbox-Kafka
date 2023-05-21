@@ -11,13 +11,13 @@ import java.util.Objects;
 public class RestaurantApproved extends BaseEntity<RestaurantApprovedId> {
   private final RestaurantId restaurantId;
   private final OrderId orderId;
-  private final RestaurantStatus approvalStatus;
+  private final RestaurantStatus approvedStatus;
 
   private RestaurantApproved(Builder builder) {
     setId(builder.restaurantApprovedId);
     restaurantId = builder.restaurantId;
     orderId = builder.orderId;
-    approvalStatus = builder.approvalStatus;
+    approvedStatus = builder.approvedStatus;
   }
 
   public static Builder builder() {
@@ -32,8 +32,8 @@ public class RestaurantApproved extends BaseEntity<RestaurantApprovedId> {
     return orderId;
   }
 
-  public RestaurantStatus getApprovalStatus() {
-    return approvalStatus;
+  public RestaurantStatus getApprovedStatus() {
+    return approvedStatus;
   }
 
   @Override
@@ -42,24 +42,24 @@ public class RestaurantApproved extends BaseEntity<RestaurantApprovedId> {
     if (o == null || getClass() != o.getClass()) return false;
     if (!super.equals(o)) return false;
     RestaurantApproved that = (RestaurantApproved) o;
-    return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && approvalStatus == that.approvalStatus;
+    return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && approvedStatus == that.approvedStatus;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), restaurantId, orderId, approvalStatus);
+    return Objects.hash(super.hashCode(), restaurantId, orderId, approvedStatus);
   }
 
   public static final class Builder {
     private RestaurantApprovedId restaurantApprovedId;
     private RestaurantId restaurantId;
     private OrderId orderId;
-    private RestaurantStatus approvalStatus;
+    private RestaurantStatus approvedStatus;
 
     private Builder() {
     }
 
-    public Builder restaurantApprovalId(RestaurantApprovedId val) {
+    public Builder restaurantApprovedId(RestaurantApprovedId val) {
       restaurantApprovedId = val;
       return this;
     }
@@ -74,8 +74,8 @@ public class RestaurantApproved extends BaseEntity<RestaurantApprovedId> {
       return this;
     }
 
-    public Builder approvalStatus(RestaurantStatus val) {
-      approvalStatus = val;
+    public Builder approvedStatus(RestaurantStatus val) {
+      approvedStatus = val;
       return this;
     }
 

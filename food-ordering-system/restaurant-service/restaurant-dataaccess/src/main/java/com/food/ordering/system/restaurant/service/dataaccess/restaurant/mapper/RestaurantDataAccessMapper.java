@@ -49,21 +49,21 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantApprovedEntity restaurantApprovalToRestaurantApprovalEntity(RestaurantApproved restaurantApproved) {
+  public RestaurantApprovedEntity restaurantApprovedToRestaurantApprovedEntity(RestaurantApproved restaurantApproved) {
     return RestaurantApprovedEntity.builder()
       .id(restaurantApproved.getId().getValue())
       .restaurantId(restaurantApproved.getRestaurantId().getValue())
       .orderId(restaurantApproved.getOrderId().getValue())
-      .status(restaurantApproved.getApprovalStatus())
+      .status(restaurantApproved.getApprovedStatus())
       .build();
   }
 
-  public RestaurantApproved restaurantApprovalEntityToRestaurantApproval(RestaurantApprovedEntity restaurantApprovedEntity) {
+  public RestaurantApproved restaurantApprovedEntityToRestaurantApproved(RestaurantApprovedEntity restaurantApprovedEntity) {
     return RestaurantApproved.builder()
-      .restaurantApprovalId(new RestaurantApprovedId(restaurantApprovedEntity.getId()))
+      .restaurantApprovedId(new RestaurantApprovedId(restaurantApprovedEntity.getId()))
       .restaurantId(new RestaurantId(restaurantApprovedEntity.getRestaurantId()))
       .orderId(new OrderId(restaurantApprovedEntity.getOrderId()))
-      .approvalStatus(restaurantApprovedEntity.getStatus())
+      .approvedStatus(restaurantApprovedEntity.getStatus())
       .build();
   }
 

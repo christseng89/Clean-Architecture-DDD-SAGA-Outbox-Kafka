@@ -20,7 +20,7 @@ public class OrderOutboxMessage {
   private String type;
   private String payload;
   private OutboxStatus outboxStatus;
-  private RestaurantStatus approvalStatus;
+  private RestaurantStatus approvedStatus;
   private int version;
 
   public void setOutboxStatus(OutboxStatus status) {

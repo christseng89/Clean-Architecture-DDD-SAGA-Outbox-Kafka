@@ -35,7 +35,7 @@ public class RestaurantOutboxHelper {
 
   @Transactional(readOnly = true)
   public Optional<List<OrderRestaurantOutboxMessage>>
-  getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
+  getApprovedOutboxMessageByOutboxStatusAndSagaStatus(
     OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
     return restaurantOutboxRepository.findByTypeAndOutboxStatusAndSagaStatus(
       ORDER_SAGA_NAME, outboxStatus, sagaStatus);
@@ -43,7 +43,7 @@ public class RestaurantOutboxHelper {
 
   @Transactional(readOnly = true)
   public Optional<OrderRestaurantOutboxMessage>
-  getApprovalOutboxMessageBySagaIdAndSagaStatus(
+  getApprovedOutboxMessageBySagaIdAndSagaStatus(
     UUID sagaId, SagaStatus... sagaStatus) {
     return restaurantOutboxRepository.findByTypeAndSagaIdAndSagaStatus(
       ORDER_SAGA_NAME, sagaId, sagaStatus);
@@ -54,16 +54,16 @@ public class RestaurantOutboxHelper {
     OrderRestaurantOutboxMessage response = restaurantOutboxRepository
       .save(orderRestaurantOutboxMessage);
     if (response == null) {
-      log.error("Could not save RestaurantApprovalOutboxMessage with outbox id: {}",
+      log.error("Could not save RestaurantApprovedOutboxMessage with outbox id: {}",
         orderRestaurantOutboxMessage.getId());
-      throw new OrderDomainException("Could not save RestaurantApprovalOutboxMessage with outbox id: " +
+      throw new OrderDomainException("Could not save RestaurantApprovedOutboxMessage with outbox id: " +
         orderRestaurantOutboxMessage.getId());
     }
-    log.info("RestaurantApprovalOutboxMessage saved with outbox id: {}", orderRestaurantOutboxMessage.getId());
+    log.info("RestaurantApprovedOutboxMessage saved with outbox id: {}", orderRestaurantOutboxMessage.getId());
   }
 
   @Transactional
-  public void saveApprovalOutboxMessage(
+  public void saveApprovedOutboxMessage(
     OrderRestaurantEventPayload orderRestaurantEventPayload,
     OrderStatus orderStatus,
     SagaStatus sagaStatus,
@@ -82,7 +82,7 @@ public class RestaurantOutboxHelper {
   }
 
   @Transactional
-  public void deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(
+  public void deleteApprovedOutboxMessageByOutboxStatusAndSagaStatus(
     OutboxStatus outboxStatus,
     SagaStatus... sagaStatus) {
     restaurantOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(
@@ -93,9 +93,9 @@ public class RestaurantOutboxHelper {
     try {
       return objectMapper.writeValueAsString(orderRestaurantEventPayload);
     } catch (JsonProcessingException e) {
-      log.error("Could not create RestaurantApprovalEventPayload for order id: {}",
+      log.error("Could not create RestaurantApprovedEventPayload for order id: {}",
         orderRestaurantEventPayload.getOrderId(), e);
-      throw new OrderDomainException("Could not create RestaurantApprovalEventPayload for order id: " +
+      throw new OrderDomainException("Could not create RestaurantApprovedEventPayload for order id: " +
         orderRestaurantEventPayload.getOrderId(), e);
     }
   }

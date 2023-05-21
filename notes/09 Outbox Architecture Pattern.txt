@@ -21,7 +21,7 @@ https://medium.com/skyler-record/%E5%BE%AE%E6%9C%8D%E5%8B%99%E6%9E%B6%E7%9A%84%E
 
 68. Refactoring Order domain layer: Adding Outbox models & Updating ports
 - PaymentOutbox = Payment Outbox
-- ApprovalOutbox = Restaurant Approval Outbox
+- ApprovedOutbox = Restaurant Approved Outbox
 
 ### Delete Interfaces later on
 - OrderCancelledPaymentRequestMessagePublisher
@@ -44,7 +44,7 @@ OrderStatus == COMPLETED && SagaStatus... (All records fullfil with conditions)
   SagaStatus.COMPENSATED, or
   SagaStatus.FAILED);
 
-71. Refactoring Order domain layer: Adding Outbox schedulers for Approval
+71. Refactoring Order domain layer: Adding Outbox schedulers for Approved
 OrderStatus == COMPLETED && SagaStatus == PROCESSING
   OutboxStatus.STARTED,
   SagaStatus.PROCESSING;
@@ -90,7 +90,7 @@ JPA Optimistic locking => https://www.byteslounge.com/tutorials/jpa-entity-versi
   AND VERSION = 3;
 
 
-A.  @Version (OrderOutboxEntity, PaymentOutboxEntity, ApprovalOutboxEntity)
+A.  @Version (OrderOutboxEntity, PaymentOutboxEntity, ApprovedOutboxEntity)
     private int version;
     ...
 B.  UNIQUE INDEXES
@@ -103,8 +103,8 @@ B.  UNIQUE INDEXES
 
     // type = ORDER_SAGA_NAME = "OrderProcessingSaga";
 
-    CREATE UNIQUE INDEX "restaurant_approval_outbox_saga_id"
-        ON "order".restaurant_approval_outbox
+    CREATE UNIQUE INDEX "restaurant_approved_outbox_saga_id"
+        ON "order".restaurant_approved_outbox
             (type, saga_id, saga_status);
 
     * Payment Container
@@ -115,7 +115,7 @@ B.  UNIQUE INDEXES
     * Restaurant Container
     CREATE UNIQUE INDEX "restaurant_order_outbox_saga_id"
         ON "restaurant".order_outbox
-            (type, saga_id, approval_status, outbox_status);
+            (type, saga_id, approved_status, outbox_status);
 
 76. Updating the Order Application Service Test for Outbox pattern
 OrderPaymentOutboxMessage Payload...
@@ -134,7 +134,7 @@ OrderPaymentSagaTest - testDoublePayment()
 Hibernate: select paymentout0_.id as id1_5_, paymentout0_.created_at as created_2_5_, paymentout0_.order_status as order_st3_5_, paymentout0_.outbox_status as outbox_s4_5_, paymentout0_.payload as payload5_5_, paymentout0_.processed_at as processe6_5_, paymentout0_.saga_id as saga_id7_5_, paymentout0_.saga_status as saga_sta8_5_, paymentout0_.type as type9_5_, paymentout0_.version as version10_5_ from payment_outbox paymentout0_ 
   where paymentout0_.type=? and paymentout0_.saga_id=? and (paymentout0_.saga_status in (?))
 ...
-Hibernate: insert into restaurant_approval_outbox (created_at, order_status, outbox_status, payload, processed_at, saga_id, saga_status, type, version, id) 
+Hibernate: insert into restaurant_approved_outbox (created_at, order_status, outbox_status, payload, processed_at, saga_id, saga_status, type, version, id) 
   values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: update payment_outbox set created_at=?, order_status=?, outbox_status=?, payload=?, processed_at=?, saga_id=?, saga_status=?, type=?, version=? 
   where id=? and version=?
@@ -149,7 +149,7 @@ Hibernate: select paymentout0_.id as id1_5_, paymentout0_.created_at as created_
 
 ### PostgreSQL
 order
- - restaurant_approval_outbox => 3 records
+ - restaurant_approved_outbox => 3 records
 
 86. Testing Payment Request Message Listener for double payment
 PaymentRequestMessageListenerTest
@@ -190,13 +190,13 @@ Tracking Order
 ### PostgreSQL
 SELECT * FROM "order".orders ORDER BY id ASC 
 SELECT * FROM "order".payment_outbox ORDER BY id ASC 
-SELECT * FROM "order".restaurant_approval_outbox ORDER BY id ASC 
+SELECT * FROM "order".restaurant_approved_outbox ORDER BY id ASC 
 
 SELECT * FROM payment.credit_entry ORDER BY id ASC 
 SELECT * FROM payment.credit_history ORDER BY id ASC 
 SELECT * FROM payment.order_outbox ORDER BY id ASC 
 SELECT * FROM payment.payments ORDER BY id ASC 
 
-SELECT * FROM restaurant.order_approval ORDER BY id ASC 
+SELECT * FROM restaurant.order_approved ORDER BY id ASC 
 SELECT * FROM restaurant.order_outbox ORDER BY id ASC 
 

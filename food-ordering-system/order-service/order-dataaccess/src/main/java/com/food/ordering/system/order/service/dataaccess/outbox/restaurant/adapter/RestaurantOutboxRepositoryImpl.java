@@ -30,7 +30,7 @@ public class RestaurantOutboxRepositoryImpl implements RestaurantOutboxRepositor
   @Override
   public OrderRestaurantOutboxMessage save(OrderRestaurantOutboxMessage orderRestaurantOutboxMessage) {
     return restaurantOutboxDataAccessMapper
-      .approvalOutboxEntityToRestaurantApprovalOutboxMessage(restaurantOutboxJpaRepository
+      .approvedOutboxEntityToRestaurantApprovedOutboxMessage(restaurantOutboxJpaRepository
         .save(restaurantOutboxDataAccessMapper
           .orderCreatedOutboxMessageToOutboxEntity(orderRestaurantOutboxMessage)));
   }
@@ -40,10 +40,10 @@ public class RestaurantOutboxRepositoryImpl implements RestaurantOutboxRepositor
     String sagaType, OutboxStatus outboxStatus, SagaStatus... sagaStatus) {
     return Optional.of(restaurantOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(
         sagaType, outboxStatus, Arrays.asList(sagaStatus))
-      .orElseThrow(() -> new RestaurantOutboxNotFoundException("Approval outbox object " +
+      .orElseThrow(() -> new RestaurantOutboxNotFoundException("Approved outbox object " +
         "could be found for saga type " + sagaType))
       .stream()
-      .map(restaurantOutboxDataAccessMapper::approvalOutboxEntityToRestaurantApprovalOutboxMessage)
+      .map(restaurantOutboxDataAccessMapper::approvedOutboxEntityToRestaurantApprovedOutboxMessage)
       .toList());
   }
 
@@ -53,7 +53,7 @@ public class RestaurantOutboxRepositoryImpl implements RestaurantOutboxRepositor
     return restaurantOutboxJpaRepository
       .findByTypeAndSagaIdAndSagaStatusIn(type, sagaId,
         Arrays.asList(sagaStatus))
-      .map(restaurantOutboxDataAccessMapper::approvalOutboxEntityToRestaurantApprovalOutboxMessage);
+      .map(restaurantOutboxDataAccessMapper::approvedOutboxEntityToRestaurantApprovedOutboxMessage);
 
   }
 

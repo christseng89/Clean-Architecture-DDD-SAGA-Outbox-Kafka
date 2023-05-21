@@ -35,9 +35,9 @@ public class RestaurantDataMapper {
 
   public OrderEventPayload orderEventPayload(RestaurantEvent restaurantEvent) {
     return OrderEventPayload.builder()
-      .orderId(restaurantEvent.getRestaurantApproval().getOrderId().getValue().toString())
+      .orderId(restaurantEvent.getRestaurantApproved().getOrderId().getValue().toString())
       .restaurantId(restaurantEvent.getRestaurantId().getValue().toString())
-      .restaurantStatus(restaurantEvent.getRestaurantApproval().getApprovalStatus().name())
+      .restaurantStatus(restaurantEvent.getRestaurantApproved().getApprovedStatus().name())
       .createdAt(restaurantEvent.getCreatedAt())
       .failureMessages(restaurantEvent.getFailureMessages())
       .build();

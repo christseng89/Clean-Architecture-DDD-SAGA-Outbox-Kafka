@@ -24,7 +24,7 @@ public abstract class RestaurantEvent implements DomainEvent<RestaurantApproved>
     this.createdAt = createdAt;
   }
 
-  public RestaurantApproved getRestaurantApproval() {
+  public RestaurantApproved getRestaurantApproved() {
     return restaurantApproved;
   }
 

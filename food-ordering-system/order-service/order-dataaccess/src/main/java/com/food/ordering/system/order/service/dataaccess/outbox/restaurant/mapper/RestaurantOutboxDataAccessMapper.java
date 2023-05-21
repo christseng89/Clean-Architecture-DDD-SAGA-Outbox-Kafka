@@ -22,7 +22,7 @@ public class RestaurantOutboxDataAccessMapper {
       .build();
   }
 
-  public OrderRestaurantOutboxMessage approvalOutboxEntityToRestaurantApprovalOutboxMessage(
+  public OrderRestaurantOutboxMessage approvedOutboxEntityToRestaurantApprovedOutboxMessage(
     RestaurantOutboxEntity restaurantOutboxEntity) {
     return OrderRestaurantOutboxMessage.builder()
       .id(restaurantOutboxEntity.getId())

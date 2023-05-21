@@ -56,7 +56,7 @@ public class OrderOutboxHelper {
   @Transactional
   public void saveOrderOutboxMessage(
     OrderEventPayload orderEventPayload,
-    RestaurantStatus approvalStatus,
+    RestaurantStatus approvedStatus,
     OutboxStatus outboxStatus,
     UUID sagaId) {
     save(OrderOutboxMessage.builder()
@@ -66,7 +66,7 @@ public class OrderOutboxHelper {
       .processedAt(ZonedDateTime.now(ZoneId.of(UTC)))
       .type(ORDER_SAGA_NAME)
       .payload(createPayload(orderEventPayload))
-      .approvalStatus(approvalStatus)
+      .approvedStatus(approvedStatus)
       .outboxStatus(outboxStatus)
       .build());
   }

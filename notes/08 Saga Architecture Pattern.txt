@@ -1,4 +1,4 @@
-63. Using Order Payment Saga in Messaging & Implementing Order Approval Saga
+63. Using Order Payment Saga in Messaging & Implementing Order Approved Saga
 cd food-ordering-system
 mvn clean install
 

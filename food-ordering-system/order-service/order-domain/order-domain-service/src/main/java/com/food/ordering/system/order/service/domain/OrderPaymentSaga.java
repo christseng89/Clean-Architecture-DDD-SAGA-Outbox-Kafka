@@ -75,9 +75,9 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(
       orderPaymentOutboxMessage, domainEvent.getOrder().getOrderStatus(), sagaStatus));
 
-    // Approval Outbox Message STARTED
+    // Approved Outbox Message STARTED
     restaurantOutboxHelper
-      .saveApprovalOutboxMessage(
+      .saveApprovedOutboxMessage(
         orderDataMapper.orderRestaurantEventPayload(domainEvent),
         domainEvent.getOrder().getOrderStatus(),
         sagaStatus,
@@ -108,9 +108,9 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(
       orderPaymentOutboxMessage, order.getOrderStatus(), sagaStatus));
 
-    // Update Approval Outbox
+    // Update Approved Outbox
     if (paymentResponse.getPaymentStatus() == PaymentStatus.CANCELLED) {
-      restaurantOutboxHelper.save(getUpdatedApprovalOutboxMessage(
+      restaurantOutboxHelper.save(getUpdatedApprovedOutboxMessage(
         paymentResponse.getSagaId(), order.getOrderStatus(), sagaStatus));
     }
 
@@ -161,19 +161,19 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     return order;
   }
 
-  private OrderRestaurantOutboxMessage getUpdatedApprovalOutboxMessage(
+  private OrderRestaurantOutboxMessage getUpdatedApprovedOutboxMessage(
     String sagaId,
     OrderStatus orderStatus,
     SagaStatus sagaStatus) {
-    Optional<OrderRestaurantOutboxMessage> restaurantApprovalOutboxMessageResponse =
-      restaurantOutboxHelper.getApprovalOutboxMessageBySagaIdAndSagaStatus(
+    Optional<OrderRestaurantOutboxMessage> restaurantApprovedOutboxMessageResponse =
+      restaurantOutboxHelper.getApprovedOutboxMessageBySagaIdAndSagaStatus(
         UUID.fromString(sagaId),
         SagaStatus.COMPENSATING);
-    if (restaurantApprovalOutboxMessageResponse.isEmpty()) {
-      throw new OrderDomainException("Approval outbox message could not be found in " +
+    if (restaurantApprovedOutboxMessageResponse.isEmpty()) {
+      throw new OrderDomainException("Approved outbox message could not be found in " +
         SagaStatus.COMPENSATING.name() + " status!");
     }
-    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage = restaurantApprovalOutboxMessageResponse.get();
+    OrderRestaurantOutboxMessage orderRestaurantOutboxMessage = restaurantApprovedOutboxMessageResponse.get();
     orderRestaurantOutboxMessage.setProcessedAt(ZonedDateTime.now(ZoneId.of(UTC)));
     orderRestaurantOutboxMessage.setOrderStatus(orderStatus);
     orderRestaurantOutboxMessage.setSagaStatus(sagaStatus);

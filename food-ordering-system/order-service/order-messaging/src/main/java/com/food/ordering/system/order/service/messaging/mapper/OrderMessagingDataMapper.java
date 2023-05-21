@@ -57,7 +57,7 @@ public class OrderMessagingDataMapper {
       .build();
   }
 
-  public RestaurantRequestAvroModel restaurantApprovalRequestAvroModel(
+  public RestaurantRequestAvroModel restaurantApprovedRequestAvroModel(
     String sagaId, OrderRestaurantEventPayload orderRestaurantEventPayload) {
     return RestaurantRequestAvroModel.newBuilder()
       .setId(UUID.randomUUID().toString())
@@ -67,9 +67,9 @@ public class OrderMessagingDataMapper {
       .setRestaurantOrderStatus(RestaurantOrderStatus
         .valueOf(orderRestaurantEventPayload.getRestaurantOrderStatus()))
       .setProducts(orderRestaurantEventPayload.getProducts().stream()
-        .map(restaurantApprovalEventProduct -> Product.newBuilder()
-          .setId(restaurantApprovalEventProduct.getId())
-          .setQuantity(restaurantApprovalEventProduct.getQuantity())
+        .map(restaurantApprovedEventProduct -> Product.newBuilder()
+          .setId(restaurantApprovedEventProduct.getId())
+          .setQuantity(restaurantApprovedEventProduct.getQuantity())
           .build()).toList())
       .setPrice(orderRestaurantEventPayload.getPrice())
       .setCreatedAt(orderRestaurantEventPayload.getCreatedAt().toInstant())

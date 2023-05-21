@@ -9,5 +9,5 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "order-service")
 public class OrderServiceConfigData {
   private String paymentRequestTopicName;
-  private String restaurantApprovalRequestTopicName;
+  private String restaurantApprovedRequestTopicName;
 }

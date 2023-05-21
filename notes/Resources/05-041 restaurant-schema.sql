@@ -14,19 +14,19 @@ CREATE TABLE restaurant.restaurants
     CONSTRAINT restaurants_pkey PRIMARY KEY (id)
 );
 
-DROP TYPE IF EXISTS approval_status;
+DROP TYPE IF EXISTS approved_status;
 
-CREATE TYPE approval_status AS ENUM ('APPROVED', 'REJECTED');
+CREATE TYPE approved_status AS ENUM ('APPROVED', 'REJECTED');
 
-DROP TABLE IF EXISTS restaurant.order_approval CASCADE;
+DROP TABLE IF EXISTS restaurant.order_approved CASCADE;
 
-CREATE TABLE restaurant.order_approval
+CREATE TABLE restaurant.order_approved
 (
     id uuid NOT NULL,
     restaurant_id uuid NOT NULL,
     order_id uuid NOT NULL,
-    status approval_status NOT NULL,
-    CONSTRAINT order_approval_pkey PRIMARY KEY (id)
+    status approved_status NOT NULL,
+    CONSTRAINT order_approved_pkey PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS restaurant.products CASCADE;
