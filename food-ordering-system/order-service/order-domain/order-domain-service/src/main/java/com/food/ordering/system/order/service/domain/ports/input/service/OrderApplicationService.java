@@ -10,5 +10,5 @@ import javax.validation.Valid;
 public interface OrderApplicationService {
   CreateOrderResponse createOrderResponse(@Valid CreateOrderRequest createOrderRequestCommand);
 
-  TrackOrderResponse trackOrder(@Valid TrackOrderRequest trackOrderRequest);
+  TrackOrderResponse trackOrderResponse(@Valid TrackOrderRequest trackOrderRequest);
 }

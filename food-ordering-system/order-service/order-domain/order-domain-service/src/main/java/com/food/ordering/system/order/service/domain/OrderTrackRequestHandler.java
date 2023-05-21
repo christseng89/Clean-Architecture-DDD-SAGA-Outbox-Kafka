@@ -29,7 +29,7 @@ public class OrderTrackRequestHandler {
   }
 
   @Transactional(readOnly = true)
-  public TrackOrderResponse trackOrder(TrackOrderRequest trackOrderRequest) {
+  public TrackOrderResponse trackOrderResponse(TrackOrderRequest trackOrderRequest) {
     Optional<Order> orderResult =
       orderRepository.findByTrackingId(new TrackingId(trackOrderRequest.getOrderTrackingId()));
     if (orderResult.isEmpty()) {
