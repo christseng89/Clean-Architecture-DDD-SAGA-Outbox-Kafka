@@ -39,10 +39,10 @@
       }
     },
     {
-      "name": "restaurantApprovalStatus",
+      "name": "restaurantStatus",
       "type": {
         "type": "enum",
-        "name": "RestaurantApprovalStatus",
+        "name": "RestaurantStatus",
         "symbols": [
           "APPROVED",
           "REJECTED"

@@ -1,6 +1,6 @@
 package com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity;
 
-import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,5 +20,5 @@ public class RestaurantApprovalEntity {
   private UUID restaurantId;
   private UUID orderId;
   @Enumerated(EnumType.STRING)
-  private RestaurantApprovalStatus status;
+  private RestaurantStatus status;
 }

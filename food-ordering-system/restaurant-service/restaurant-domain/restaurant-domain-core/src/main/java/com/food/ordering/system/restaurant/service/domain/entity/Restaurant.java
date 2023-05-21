@@ -2,7 +2,7 @@ package com.food.ordering.system.restaurant.service.domain.entity;
 
 import com.food.ordering.system.domain.entity.AggregateRoot;
 import com.food.ordering.system.domain.outbox.OrderStatus;
-import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantApprovalId;
@@ -45,12 +45,12 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     }
   }
 
-  public void constructRestaurantApproval(RestaurantApprovalStatus restaurantApprovalStatus) {
+  public void constructRestaurantApproval(RestaurantStatus restaurantStatus) {
     this.restaurantApproval = RestaurantApproval.builder()
       .restaurantApprovalId(new RestaurantApprovalId(UUID.randomUUID()))
       .restaurantId(this.getId())
       .orderId(this.getOrderDetail().getId())
-      .approvalStatus(restaurantApprovalStatus)
+      .approvalStatus(restaurantStatus)
       .build();
   }
 

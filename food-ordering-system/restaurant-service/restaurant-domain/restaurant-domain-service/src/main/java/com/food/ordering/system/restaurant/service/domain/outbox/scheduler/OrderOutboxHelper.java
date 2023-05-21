@@ -2,7 +2,7 @@ package com.food.ordering.system.restaurant.service.domain.outbox.scheduler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantDomainException;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderEventPayload;
@@ -56,7 +56,7 @@ public class OrderOutboxHelper {
   @Transactional
   public void saveOrderOutboxMessage(
     OrderEventPayload orderEventPayload,
-    RestaurantApprovalStatus approvalStatus,
+    RestaurantStatus approvalStatus,
     OutboxStatus outboxStatus,
     UUID sagaId) {
     save(OrderOutboxMessage.builder()

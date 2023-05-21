@@ -12,7 +12,7 @@ import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
 public class RestaurantResponseAvroModel extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"RestaurantResponseAvroModel\",\"namespace\":\"com.food.ordering.system.kafka.order.avro.model\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"sagaId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"restaurantId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"orderId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"createdAt\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}},{\"name\":\"restaurantApprovalStatus\",\"type\":{\"type\":\"enum\",\"name\":\"RestaurantApprovalStatus\",\"symbols\":[\"APPROVED\",\"REJECTED\"]}},{\"name\":\"failureMessages\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"RestaurantResponseAvroModel\",\"namespace\":\"com.food.ordering.system.kafka.order.avro.model\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"sagaId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"restaurantId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"orderId\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"createdAt\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}},{\"name\":\"restaurantStatus\",\"type\":{\"type\":\"enum\",\"name\":\"RestaurantStatus\",\"symbols\":[\"APPROVED\",\"REJECTED\"]}},{\"name\":\"failureMessages\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}}]}");
   private static final long serialVersionUID = -3431989201238018220L;
   private static final SpecificData MODEL$ = new SpecificData();
   private static final BinaryMessageEncoder<RestaurantResponseAvroModel> ENCODER =
@@ -46,7 +46,7 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
   private java.lang.String restaurantId;
   private java.lang.String orderId;
   private java.time.Instant createdAt;
-  private RestaurantApprovalStatus restaurantApprovalStatus;
+  private RestaurantStatus restaurantStatus;
   private java.util.List<java.lang.String> failureMessages;
 
   /**
@@ -60,21 +60,21 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
   /**
    * All-args constructor.
    *
-   * @param id                       The new value for id
-   * @param sagaId                   The new value for sagaId
-   * @param restaurantId             The new value for restaurantId
-   * @param orderId                  The new value for orderId
-   * @param createdAt                The new value for createdAt
-   * @param restaurantApprovalStatus The new value for restaurantApprovalStatus
-   * @param failureMessages          The new value for failureMessages
+   * @param id               The new value for id
+   * @param sagaId           The new value for sagaId
+   * @param restaurantId     The new value for restaurantId
+   * @param orderId          The new value for orderId
+   * @param createdAt        The new value for createdAt
+   * @param restaurantStatus The new value for restaurantStatus
+   * @param failureMessages  The new value for failureMessages
    */
-  public RestaurantResponseAvroModel(java.lang.String id, java.lang.String sagaId, java.lang.String restaurantId, java.lang.String orderId, java.time.Instant createdAt, RestaurantApprovalStatus restaurantApprovalStatus, java.util.List<java.lang.String> failureMessages) {
+  public RestaurantResponseAvroModel(java.lang.String id, java.lang.String sagaId, java.lang.String restaurantId, java.lang.String orderId, java.time.Instant createdAt, RestaurantStatus restaurantStatus, java.util.List<java.lang.String> failureMessages) {
     this.id = id;
     this.sagaId = sagaId;
     this.restaurantId = restaurantId;
     this.orderId = orderId;
     this.createdAt = createdAt.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
-    this.restaurantApprovalStatus = restaurantApprovalStatus;
+    this.restaurantStatus = restaurantStatus;
     this.failureMessages = failureMessages;
   }
 
@@ -117,8 +117,8 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
    *
    * @param b a byte buffer holding serialized data for an instance of this
    *          class
-   * @return a RestaurantResponseAvroModel instance decoded from the
-   * given buffer
+   * @return a RestaurantResponseAvroModel instance decoded from the given
+   * buffer
    *
    * @throws java.io.IOException if the given bytes could not be deserialized
    *                             into an instance of this class
@@ -138,8 +138,8 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
   }
 
   /**
-   * Creates a new RestaurantResponseAvroModel RecordBuilder by copying
-   * an existing Builder.
+   * Creates a new RestaurantResponseAvroModel RecordBuilder by copying an
+   * existing Builder.
    *
    * @param other The existing builder to copy.
    * @return A new RestaurantResponseAvroModel RecordBuilder
@@ -153,8 +153,8 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
   }
 
   /**
-   * Creates a new RestaurantResponseAvroModel RecordBuilder by copying
-   * an existing RestaurantResponseAvroModel instance.
+   * Creates a new RestaurantResponseAvroModel RecordBuilder by copying an
+   * existing RestaurantResponseAvroModel instance.
    *
    * @param other The existing instance to copy.
    * @return A new RestaurantResponseAvroModel RecordBuilder
@@ -200,7 +200,7 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
       case 4:
         return createdAt;
       case 5:
-        return restaurantApprovalStatus;
+        return restaurantStatus;
       case 6:
         return failureMessages;
       default:
@@ -233,7 +233,7 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
         createdAt = (java.time.Instant) value$;
         break;
       case 5:
-        restaurantApprovalStatus = (RestaurantApprovalStatus) value$;
+        restaurantStatus = (RestaurantStatus) value$;
         break;
       case 6:
         failureMessages = (java.util.List<java.lang.String>) value$;
@@ -334,21 +334,21 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
   }
 
   /**
-   * Gets the value of the 'restaurantApprovalStatus' field.
+   * Gets the value of the 'restaurantStatus' field.
    *
-   * @return The value of the 'restaurantApprovalStatus' field.
+   * @return The value of the 'restaurantStatus' field.
    */
-  public RestaurantApprovalStatus getRestaurantApprovalStatus() {
-    return restaurantApprovalStatus;
+  public RestaurantStatus getRestaurantStatus() {
+    return restaurantStatus;
   }
 
   /**
-   * Sets the value of the 'restaurantApprovalStatus' field.
+   * Sets the value of the 'restaurantStatus' field.
    *
    * @param value the value to set.
    */
-  public void setRestaurantApprovalStatus(RestaurantApprovalStatus value) {
-    this.restaurantApprovalStatus = value;
+  public void setRestaurantStatus(RestaurantStatus value) {
+    this.restaurantStatus = value;
   }
 
   /**
@@ -393,7 +393,7 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
     private java.lang.String restaurantId;
     private java.lang.String orderId;
     private java.time.Instant createdAt;
-    private RestaurantApprovalStatus restaurantApprovalStatus;
+    private RestaurantStatus restaurantStatus;
     private java.util.List<java.lang.String> failureMessages;
 
     /**
@@ -430,8 +430,8 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
         this.createdAt = data().deepCopy(fields()[4].schema(), other.createdAt);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.restaurantApprovalStatus)) {
-        this.restaurantApprovalStatus = data().deepCopy(fields()[5].schema(), other.restaurantApprovalStatus);
+      if (isValidValue(fields()[5], other.restaurantStatus)) {
+        this.restaurantStatus = data().deepCopy(fields()[5].schema(), other.restaurantStatus);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
       if (isValidValue(fields()[6], other.failureMessages)) {
@@ -441,8 +441,8 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
     }
 
     /**
-     * Creates a Builder by copying an existing
-     * RestaurantResponseAvroModel instance
+     * Creates a Builder by copying an existing RestaurantResponseAvroModel
+     * instance
      *
      * @param other The existing instance to copy.
      */
@@ -468,8 +468,8 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
         this.createdAt = data().deepCopy(fields()[4].schema(), other.createdAt);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.restaurantApprovalStatus)) {
-        this.restaurantApprovalStatus = data().deepCopy(fields()[5].schema(), other.restaurantApprovalStatus);
+      if (isValidValue(fields()[5], other.restaurantStatus)) {
+        this.restaurantStatus = data().deepCopy(fields()[5].schema(), other.restaurantStatus);
         fieldSetFlags()[5] = true;
       }
       if (isValidValue(fields()[6], other.failureMessages)) {
@@ -688,44 +688,44 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
     }
 
     /**
-     * Gets the value of the 'restaurantApprovalStatus' field.
+     * Gets the value of the 'restaurantStatus' field.
      *
      * @return The value.
      */
-    public RestaurantApprovalStatus getRestaurantApprovalStatus() {
-      return restaurantApprovalStatus;
+    public RestaurantStatus getRestaurantStatus() {
+      return restaurantStatus;
     }
 
     /**
-     * Sets the value of the 'restaurantApprovalStatus' field.
+     * Sets the value of the 'restaurantStatus' field.
      *
-     * @param value The value of 'restaurantApprovalStatus'.
+     * @param value The value of 'restaurantStatus'.
      * @return This builder.
      */
-    public RestaurantResponseAvroModel.Builder setRestaurantApprovalStatus(RestaurantApprovalStatus value) {
+    public RestaurantResponseAvroModel.Builder setRestaurantStatus(RestaurantStatus value) {
       validate(fields()[5], value);
-      this.restaurantApprovalStatus = value;
+      this.restaurantStatus = value;
       fieldSetFlags()[5] = true;
       return this;
     }
 
     /**
-     * Checks whether the 'restaurantApprovalStatus' field has been set.
+     * Checks whether the 'restaurantStatus' field has been set.
      *
-     * @return True if the 'restaurantApprovalStatus' field has been set, false
+     * @return True if the 'restaurantStatus' field has been set, false
      * otherwise.
      */
-    public boolean hasRestaurantApprovalStatus() {
+    public boolean hasRestaurantStatus() {
       return fieldSetFlags()[5];
     }
 
     /**
-     * Clears the value of the 'restaurantApprovalStatus' field.
+     * Clears the value of the 'restaurantStatus' field.
      *
      * @return This builder.
      */
-    public RestaurantResponseAvroModel.Builder clearRestaurantApprovalStatus() {
-      restaurantApprovalStatus = null;
+    public RestaurantResponseAvroModel.Builder clearRestaurantStatus() {
+      restaurantStatus = null;
       fieldSetFlags()[5] = false;
       return this;
     }
@@ -783,7 +783,7 @@ public class RestaurantResponseAvroModel extends org.apache.avro.specific.Specif
         record.restaurantId = fieldSetFlags()[2] ? this.restaurantId : (java.lang.String) defaultValue(fields()[2]);
         record.orderId = fieldSetFlags()[3] ? this.orderId : (java.lang.String) defaultValue(fields()[3]);
         record.createdAt = fieldSetFlags()[4] ? this.createdAt : (java.time.Instant) defaultValue(fields()[4]);
-        record.restaurantApprovalStatus = fieldSetFlags()[5] ? this.restaurantApprovalStatus : (RestaurantApprovalStatus) defaultValue(fields()[5]);
+        record.restaurantStatus = fieldSetFlags()[5] ? this.restaurantStatus : (RestaurantStatus) defaultValue(fields()[5]);
         record.failureMessages = fieldSetFlags()[6] ? this.failureMessages : (java.util.List<java.lang.String>) defaultValue(fields()[6]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {

@@ -1,6 +1,6 @@
 package com.food.ordering.system.restaurant.service.domain.outbox.model;
 
-import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +20,7 @@ public class OrderOutboxMessage {
   private String type;
   private String payload;
   private OutboxStatus outboxStatus;
-  private RestaurantApprovalStatus approvalStatus;
+  private RestaurantStatus approvalStatus;
   private int version;
 
   public void setOutboxStatus(OutboxStatus status) {

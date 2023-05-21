@@ -1,6 +1,6 @@
 package com.food.ordering.system.restaurant.service.dataaccess.restaurant.outbox.entity;
 
-import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import lombok.*;
 
@@ -28,7 +28,7 @@ public class OrderOutboxEntity {
   @Enumerated(EnumType.STRING)
   private OutboxStatus outboxStatus;
   @Enumerated(EnumType.STRING)
-  private RestaurantApprovalStatus approvalStatus;
+  private RestaurantStatus approvalStatus;
   private int version;
 
   @Override

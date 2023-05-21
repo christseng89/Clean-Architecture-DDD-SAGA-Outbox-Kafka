@@ -1,7 +1,7 @@
 package com.food.ordering.system.restaurant.service.domain.entity;
 
 import com.food.ordering.system.domain.entity.BaseEntity;
-import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantApprovalId;
@@ -11,7 +11,7 @@ import java.util.Objects;
 public class RestaurantApproval extends BaseEntity<RestaurantApprovalId> {
   private final RestaurantId restaurantId;
   private final OrderId orderId;
-  private final RestaurantApprovalStatus approvalStatus;
+  private final RestaurantStatus approvalStatus;
 
   private RestaurantApproval(Builder builder) {
     setId(builder.restaurantApprovalId);
@@ -32,7 +32,7 @@ public class RestaurantApproval extends BaseEntity<RestaurantApprovalId> {
     return orderId;
   }
 
-  public RestaurantApprovalStatus getApprovalStatus() {
+  public RestaurantStatus getApprovalStatus() {
     return approvalStatus;
   }
 
@@ -54,7 +54,7 @@ public class RestaurantApproval extends BaseEntity<RestaurantApprovalId> {
     private RestaurantApprovalId restaurantApprovalId;
     private RestaurantId restaurantId;
     private OrderId orderId;
-    private RestaurantApprovalStatus approvalStatus;
+    private RestaurantStatus approvalStatus;
 
     private Builder() {
     }
@@ -74,7 +74,7 @@ public class RestaurantApproval extends BaseEntity<RestaurantApprovalId> {
       return this;
     }
 
-    public Builder approvalStatus(RestaurantApprovalStatus val) {
+    public Builder approvalStatus(RestaurantStatus val) {
       approvalStatus = val;
       return this;
     }

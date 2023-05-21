@@ -2,9 +2,9 @@ package com.food.ordering.system.restaurant.service.messaging.mapper;
 
 import com.food.ordering.system.domain.outbox.RestaurantOrderStatus;
 import com.food.ordering.system.domain.valueobject.ProductId;
-import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalStatus;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantRequestAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantResponseAvroModel;
+import com.food.ordering.system.kafka.order.avro.model.RestaurantStatus;
 import com.food.ordering.system.restaurant.service.domain.dto.RestaurantRequest;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderEventPayload;
@@ -45,7 +45,7 @@ public class RestaurantMessagingDataMapper {
       .setOrderId(orderEventPayload.getOrderId())
       .setRestaurantId(orderEventPayload.getRestaurantId())
       .setCreatedAt(orderEventPayload.getCreatedAt().toInstant())
-      .setRestaurantApprovalStatus(RestaurantApprovalStatus.valueOf(orderEventPayload.getRestaurantApprovalStatus()))
+      .setRestaurantStatus(RestaurantStatus.valueOf(orderEventPayload.getRestaurantStatus()))
       .setFailureMessages(orderEventPayload.getFailureMessages())
       .build();
   }

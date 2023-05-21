@@ -1,6 +1,6 @@
 package com.food.ordering.system.order.service.messaging.mapper;
 
-import com.food.ordering.system.domain.outbox.RestaurantApprovalStatus;
+import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.kafka.order.avro.model.*;
 import com.food.ordering.system.order.service.domain.dto.message.CustomerCreated;
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
@@ -38,8 +38,8 @@ public class OrderMessagingDataMapper {
       .restaurantId(restaurantResponseAvroModel.getRestaurantId())
       .orderId(restaurantResponseAvroModel.getOrderId())
       .createdAt(restaurantResponseAvroModel.getCreatedAt())
-      .restaurantApprovalStatus(RestaurantApprovalStatus.valueOf(
-        restaurantResponseAvroModel.getRestaurantApprovalStatus().name()))
+      .restaurantStatus(RestaurantStatus.valueOf(
+        restaurantResponseAvroModel.getRestaurantStatus().name()))
       .failureMessages(restaurantResponseAvroModel.getFailureMessages())
       .build();
   }
