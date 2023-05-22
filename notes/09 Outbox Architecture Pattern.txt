@@ -10,8 +10,8 @@ https://microservices.io/patterns/data/transactional-outbox.html
    - Pulling Outbox Table: Pull the events with a scheduler
    - Change Data Capture: Listen transaction logs
 - Keep track of Saga and order status in Outbox Table
-- Ensure Idempotency: Do not consume the same data 
-  在数学计算或者计算机科学中，幂等性（Idempotency）是指相同操作或资源在一次或
+- Ensure Idempotence: Do not consume the same data 
+  在数学计算或者计算机科学中，幂等性（Idempotence）是指相同操作或资源在一次或
   多次请求中具有同样效果的作用。 幂等性在分布式系统设计中具有十分重要的地位。
   https://iter01.com/566612.html
 
