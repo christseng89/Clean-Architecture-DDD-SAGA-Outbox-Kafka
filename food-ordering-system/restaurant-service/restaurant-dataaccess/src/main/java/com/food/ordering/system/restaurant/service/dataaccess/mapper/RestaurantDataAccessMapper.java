@@ -54,16 +54,16 @@ public class RestaurantDataAccessMapper {
       .id(restaurantReplyStatus.getId().getValue())
       .restaurantId(restaurantReplyStatus.getRestaurantId().getValue())
       .orderId(restaurantReplyStatus.getOrderId().getValue())
-      .status(restaurantReplyStatus.getStatusStatus())
+      .status(restaurantReplyStatus.getRestaurantStatus())
       .build();
   }
 
   public void restaurantStatusEntityToRestaurantStatus(RestaurantReplyStatusEntity restaurantReplyStatusEntity) {
     RestaurantReplyStatus.builder()
-      .restaurantStatusId(new RestaurantReplyStatusId(restaurantReplyStatusEntity.getId()))
+      .restaurantReplyStatusId(new RestaurantReplyStatusId(restaurantReplyStatusEntity.getId()))
       .restaurantId(new RestaurantId(restaurantReplyStatusEntity.getRestaurantId()))
       .orderId(new OrderId(restaurantReplyStatusEntity.getOrderId()))
-      .statusStatus(restaurantReplyStatusEntity.getStatus())
+      .restaurantStatus(restaurantReplyStatusEntity.getStatus())
       .build();
   }
 

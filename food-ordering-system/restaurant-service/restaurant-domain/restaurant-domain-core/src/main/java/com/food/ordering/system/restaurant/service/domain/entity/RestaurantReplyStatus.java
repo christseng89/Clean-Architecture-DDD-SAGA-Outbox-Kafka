@@ -11,13 +11,13 @@ import java.util.Objects;
 public class RestaurantReplyStatus extends BaseEntity<RestaurantReplyStatusId> {
   private final RestaurantId restaurantId;
   private final OrderId orderId;
-  private final RestaurantStatus statusStatus;
+  private final RestaurantStatus restaurantStatus;
 
   private RestaurantReplyStatus(Builder builder) {
     setId(builder.restaurantReplyStatusId);
     restaurantId = builder.restaurantId;
     orderId = builder.orderId;
-    statusStatus = builder.statusStatus;
+    restaurantStatus = builder.restaurantStatus;
   }
 
   public static Builder builder() {
@@ -32,8 +32,8 @@ public class RestaurantReplyStatus extends BaseEntity<RestaurantReplyStatusId> {
     return orderId;
   }
 
-  public RestaurantStatus getStatusStatus() {
-    return statusStatus;
+  public RestaurantStatus getRestaurantStatus() {
+    return restaurantStatus;
   }
 
   @Override
@@ -42,24 +42,24 @@ public class RestaurantReplyStatus extends BaseEntity<RestaurantReplyStatusId> {
     if (o == null || getClass() != o.getClass()) return false;
     if (!super.equals(o)) return false;
     RestaurantReplyStatus that = (RestaurantReplyStatus) o;
-    return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && statusStatus == that.statusStatus;
+    return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && restaurantStatus == that.restaurantStatus;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), restaurantId, orderId, statusStatus);
+    return Objects.hash(super.hashCode(), restaurantId, orderId, restaurantStatus);
   }
 
   public static final class Builder {
     private RestaurantReplyStatusId restaurantReplyStatusId;
     private RestaurantId restaurantId;
     private OrderId orderId;
-    private RestaurantStatus statusStatus;
+    private RestaurantStatus restaurantStatus;
 
     private Builder() {
     }
 
-    public Builder restaurantStatusId(RestaurantReplyStatusId val) {
+    public Builder restaurantReplyStatusId(RestaurantReplyStatusId val) {
       restaurantReplyStatusId = val;
       return this;
     }
@@ -74,8 +74,8 @@ public class RestaurantReplyStatus extends BaseEntity<RestaurantReplyStatusId> {
       return this;
     }
 
-    public Builder statusStatus(RestaurantStatus val) {
-      statusStatus = val;
+    public Builder restaurantStatus(RestaurantStatus val) {
+      restaurantStatus = val;
       return this;
     }
 

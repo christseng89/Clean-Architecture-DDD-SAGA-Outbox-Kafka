@@ -28,7 +28,7 @@ public class OrderOutboxEntity {
   @Enumerated(EnumType.STRING)
   private OutboxStatus outboxStatus;
   @Enumerated(EnumType.STRING)
-  private RestaurantStatus statusStatus;
+  private RestaurantStatus restaurantStatus;
   private int version;
 
   @Override

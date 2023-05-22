@@ -66,7 +66,7 @@ public class RestaurantRequestHelper {
 
     orderOutboxHelper
       .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(restaurantApprovedEvent),
-        restaurantApprovedEvent.getRestaurantStatus().getStatusStatus(),
+        restaurantApprovedEvent.getRestaurantStatus().getRestaurantStatus(),
         OutboxStatus.STARTED,
         UUID.fromString(restaurantRequest.getSagaId()));
 
