@@ -2,7 +2,7 @@ package com.food.ordering.system.restaurant.service.dataaccess.adapter;
 
 import com.food.ordering.system.restaurant.service.dataaccess.mapper.RestaurantDataAccessMapper;
 import com.food.ordering.system.restaurant.service.dataaccess.repository.RestaurantStatusJpaRepository;
-import com.food.ordering.system.restaurant.service.domain.entity.RestaurantStatus;
+import com.food.ordering.system.restaurant.service.domain.entity.RestaurantReplyStatus;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantStatusRepository;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +20,10 @@ public class RestaurantStatusRepositoryImpl implements RestaurantStatusRepositor
   }
 
   @Override
-  public void save(RestaurantStatus restaurantStatus) {
+  public void save(RestaurantReplyStatus restaurantReplyStatus) {
     restaurantDataAccessMapper
       .restaurantStatusEntityToRestaurantStatus(restaurantStatusJpaRepository
-        .save(restaurantDataAccessMapper.restaurantStatusToRestaurantStatusEntity(restaurantStatus)));
+        .save(restaurantDataAccessMapper.restaurantStatusToRestaurantStatusEntity(restaurantReplyStatus)));
   }
 
 }

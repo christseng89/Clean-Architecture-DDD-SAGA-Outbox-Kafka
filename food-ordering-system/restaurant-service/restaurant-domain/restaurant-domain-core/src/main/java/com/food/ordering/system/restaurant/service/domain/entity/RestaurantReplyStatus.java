@@ -1,18 +1,19 @@
 package com.food.ordering.system.restaurant.service.domain.entity;
 
 import com.food.ordering.system.domain.entity.BaseEntity;
+import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantStatusId;
 
 import java.util.Objects;
 
-public class RestaurantStatus extends BaseEntity<RestaurantStatusId> {
+public class RestaurantReplyStatus extends BaseEntity<RestaurantStatusId> {
   private final RestaurantId restaurantId;
   private final OrderId orderId;
-  private final com.food.ordering.system.domain.outbox.RestaurantStatus statusStatus;
+  private final RestaurantStatus statusStatus;
 
-  private RestaurantStatus(Builder builder) {
+  private RestaurantReplyStatus(Builder builder) {
     setId(builder.restaurantStatusId);
     restaurantId = builder.restaurantId;
     orderId = builder.orderId;
@@ -31,7 +32,7 @@ public class RestaurantStatus extends BaseEntity<RestaurantStatusId> {
     return orderId;
   }
 
-  public com.food.ordering.system.domain.outbox.RestaurantStatus getStatusStatus() {
+  public RestaurantStatus getStatusStatus() {
     return statusStatus;
   }
 
@@ -40,7 +41,7 @@ public class RestaurantStatus extends BaseEntity<RestaurantStatusId> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     if (!super.equals(o)) return false;
-    RestaurantStatus that = (RestaurantStatus) o;
+    RestaurantReplyStatus that = (RestaurantReplyStatus) o;
     return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && statusStatus == that.statusStatus;
   }
 
@@ -53,7 +54,7 @@ public class RestaurantStatus extends BaseEntity<RestaurantStatusId> {
     private RestaurantStatusId restaurantStatusId;
     private RestaurantId restaurantId;
     private OrderId orderId;
-    private com.food.ordering.system.domain.outbox.RestaurantStatus statusStatus;
+    private RestaurantStatus statusStatus;
 
     private Builder() {
     }
@@ -73,13 +74,13 @@ public class RestaurantStatus extends BaseEntity<RestaurantStatusId> {
       return this;
     }
 
-    public Builder statusStatus(com.food.ordering.system.domain.outbox.RestaurantStatus val) {
+    public Builder statusStatus(RestaurantStatus val) {
       statusStatus = val;
       return this;
     }
 
-    public RestaurantStatus build() {
-      return new RestaurantStatus(this);
+    public RestaurantReplyStatus build() {
+      return new RestaurantReplyStatus(this);
     }
   }
 }

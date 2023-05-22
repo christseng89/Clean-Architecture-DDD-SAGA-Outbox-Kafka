@@ -39,7 +39,7 @@
       }
     },
     {
-      "name": "restaurantStatus",
+      "name": "restaurantReplyStatus",
       "type": {
         "type": "enum",
         "name": "RestaurantStatus",

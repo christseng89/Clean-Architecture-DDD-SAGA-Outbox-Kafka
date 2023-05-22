@@ -10,7 +10,7 @@ import com.food.ordering.system.restaurant.service.dataaccess.entity.RestaurantS
 import com.food.ordering.system.restaurant.service.domain.entity.OrderDetail;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
-import com.food.ordering.system.restaurant.service.domain.entity.RestaurantStatus;
+import com.food.ordering.system.restaurant.service.domain.entity.RestaurantReplyStatus;
 import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantStatusId;
 import org.springframework.stereotype.Component;
 
@@ -49,17 +49,17 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantStatusEntity restaurantStatusToRestaurantStatusEntity(RestaurantStatus restaurantStatus) {
+  public RestaurantStatusEntity restaurantStatusToRestaurantStatusEntity(RestaurantReplyStatus restaurantReplyStatus) {
     return RestaurantStatusEntity.builder()
-      .id(restaurantStatus.getId().getValue())
-      .restaurantId(restaurantStatus.getRestaurantId().getValue())
-      .orderId(restaurantStatus.getOrderId().getValue())
-      .status(restaurantStatus.getStatusStatus())
+      .id(restaurantReplyStatus.getId().getValue())
+      .restaurantId(restaurantReplyStatus.getRestaurantId().getValue())
+      .orderId(restaurantReplyStatus.getOrderId().getValue())
+      .status(restaurantReplyStatus.getStatusStatus())
       .build();
   }
 
-  public RestaurantStatus restaurantStatusEntityToRestaurantStatus(RestaurantStatusEntity restaurantStatusEntity) {
-    return RestaurantStatus.builder()
+  public void restaurantStatusEntityToRestaurantStatus(RestaurantStatusEntity restaurantStatusEntity) {
+    RestaurantReplyStatus.builder()
       .restaurantStatusId(new RestaurantStatusId(restaurantStatusEntity.getId()))
       .restaurantId(new RestaurantId(restaurantStatusEntity.getRestaurantId()))
       .orderId(new OrderId(restaurantStatusEntity.getOrderId()))
