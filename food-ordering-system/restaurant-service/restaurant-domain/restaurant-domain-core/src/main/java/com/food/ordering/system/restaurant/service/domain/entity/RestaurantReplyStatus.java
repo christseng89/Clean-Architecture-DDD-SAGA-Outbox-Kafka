@@ -4,17 +4,17 @@ import com.food.ordering.system.domain.entity.BaseEntity;
 import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantStatusId;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantReplyStatusId;
 
 import java.util.Objects;
 
-public class RestaurantReplyStatus extends BaseEntity<RestaurantStatusId> {
+public class RestaurantReplyStatus extends BaseEntity<RestaurantReplyStatusId> {
   private final RestaurantId restaurantId;
   private final OrderId orderId;
   private final RestaurantStatus statusStatus;
 
   private RestaurantReplyStatus(Builder builder) {
-    setId(builder.restaurantStatusId);
+    setId(builder.restaurantReplyStatusId);
     restaurantId = builder.restaurantId;
     orderId = builder.orderId;
     statusStatus = builder.statusStatus;
@@ -51,7 +51,7 @@ public class RestaurantReplyStatus extends BaseEntity<RestaurantStatusId> {
   }
 
   public static final class Builder {
-    private RestaurantStatusId restaurantStatusId;
+    private RestaurantReplyStatusId restaurantReplyStatusId;
     private RestaurantId restaurantId;
     private OrderId orderId;
     private RestaurantStatus statusStatus;
@@ -59,8 +59,8 @@ public class RestaurantReplyStatus extends BaseEntity<RestaurantStatusId> {
     private Builder() {
     }
 
-    public Builder restaurantStatusId(RestaurantStatusId val) {
-      restaurantStatusId = val;
+    public Builder restaurantStatusId(RestaurantReplyStatusId val) {
+      restaurantReplyStatusId = val;
       return this;
     }
 

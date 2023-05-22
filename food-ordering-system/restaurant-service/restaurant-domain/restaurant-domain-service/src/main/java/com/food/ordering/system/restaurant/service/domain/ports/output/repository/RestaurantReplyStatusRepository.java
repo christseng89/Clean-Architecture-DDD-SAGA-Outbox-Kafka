@@ -2,6 +2,6 @@ package com.food.ordering.system.restaurant.service.domain.ports.output.reposito
 
 import com.food.ordering.system.restaurant.service.domain.entity.RestaurantReplyStatus;
 
-public interface RestaurantStatusRepository {
+public interface RestaurantReplyStatusRepository {
   void save(RestaurantReplyStatus restaurantReplyStatus);
 }

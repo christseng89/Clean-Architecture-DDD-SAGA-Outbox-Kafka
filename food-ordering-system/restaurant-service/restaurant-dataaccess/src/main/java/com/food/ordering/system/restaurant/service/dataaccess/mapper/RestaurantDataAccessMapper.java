@@ -6,12 +6,12 @@ import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.ProductId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.dataaccess.entity.RestaurantStatusEntity;
+import com.food.ordering.system.restaurant.service.dataaccess.entity.RestaurantReplyStatusEntity;
 import com.food.ordering.system.restaurant.service.domain.entity.OrderDetail;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
 import com.food.ordering.system.restaurant.service.domain.entity.RestaurantReplyStatus;
-import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantStatusId;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantReplyStatusId;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -49,8 +49,8 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantStatusEntity restaurantStatusToRestaurantStatusEntity(RestaurantReplyStatus restaurantReplyStatus) {
-    return RestaurantStatusEntity.builder()
+  public RestaurantReplyStatusEntity restaurantStatusToRestaurantStatusEntity(RestaurantReplyStatus restaurantReplyStatus) {
+    return RestaurantReplyStatusEntity.builder()
       .id(restaurantReplyStatus.getId().getValue())
       .restaurantId(restaurantReplyStatus.getRestaurantId().getValue())
       .orderId(restaurantReplyStatus.getOrderId().getValue())
@@ -58,12 +58,12 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public void restaurantStatusEntityToRestaurantStatus(RestaurantStatusEntity restaurantStatusEntity) {
+  public void restaurantStatusEntityToRestaurantStatus(RestaurantReplyStatusEntity restaurantReplyStatusEntity) {
     RestaurantReplyStatus.builder()
-      .restaurantStatusId(new RestaurantStatusId(restaurantStatusEntity.getId()))
-      .restaurantId(new RestaurantId(restaurantStatusEntity.getRestaurantId()))
-      .orderId(new OrderId(restaurantStatusEntity.getOrderId()))
-      .statusStatus(restaurantStatusEntity.getStatus())
+      .restaurantStatusId(new RestaurantReplyStatusId(restaurantReplyStatusEntity.getId()))
+      .restaurantId(new RestaurantId(restaurantReplyStatusEntity.getRestaurantId()))
+      .orderId(new OrderId(restaurantReplyStatusEntity.getOrderId()))
+      .statusStatus(restaurantReplyStatusEntity.getStatus())
       .build();
   }
 

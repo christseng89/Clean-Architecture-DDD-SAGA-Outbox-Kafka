@@ -10,8 +10,8 @@ import com.food.ordering.system.restaurant.service.domain.mapper.RestaurantDataM
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.restaurant.service.domain.outbox.scheduler.OrderOutboxHelper;
 import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantResponseMessagePublisher;
+import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantReplyStatusRepository;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantRepository;
-import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantStatusRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class RestaurantRequestHelper {
   private final RestaurantDomainService restaurantDomainService;
   private final RestaurantDataMapper restaurantDataMapper;
   private final RestaurantRepository restaurantRepository;
-  private final RestaurantStatusRepository restaurantStatusRepository;
+  private final RestaurantReplyStatusRepository restaurantReplyStatusRepository;
   private final OrderOutboxHelper orderOutboxHelper;
   private final RestaurantResponseMessagePublisher restaurantResponseMessagePublisher;
 
@@ -36,13 +36,13 @@ public class RestaurantRequestHelper {
     RestaurantDomainService restaurantDomainService,
     RestaurantDataMapper restaurantDataMapper,
     RestaurantRepository restaurantRepository,
-    RestaurantStatusRepository restaurantStatusRepository,
+    RestaurantReplyStatusRepository restaurantReplyStatusRepository,
     OrderOutboxHelper orderOutboxHelper,
     RestaurantResponseMessagePublisher restaurantResponseMessagePublisher) {
     this.restaurantDomainService = restaurantDomainService;
     this.restaurantDataMapper = restaurantDataMapper;
     this.restaurantRepository = restaurantRepository;
-    this.restaurantStatusRepository = restaurantStatusRepository;
+    this.restaurantReplyStatusRepository = restaurantReplyStatusRepository;
     this.orderOutboxHelper = orderOutboxHelper;
     this.restaurantResponseMessagePublisher = restaurantResponseMessagePublisher;
   }
@@ -62,7 +62,7 @@ public class RestaurantRequestHelper {
       restaurantDomainService.validateOrder(
         restaurant,
         failureMessages);
-    restaurantStatusRepository.save(restaurant.getRestaurantStatus());
+    restaurantReplyStatusRepository.save(restaurant.getRestaurantStatus());
 
     orderOutboxHelper
       .saveOrderOutboxMessage(restaurantDataMapper.orderEventPayload(restaurantApprovedEvent),

@@ -5,7 +5,7 @@ import com.food.ordering.system.domain.outbox.OrderStatus;
 import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantStatusId;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantReplyStatusId;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +47,7 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
 
   public void createRestaurantStatus(RestaurantStatus restaurantStatus) {
     this.restaurantReplyStatus = RestaurantReplyStatus.builder()
-      .restaurantStatusId(new RestaurantStatusId(UUID.randomUUID()))
+      .restaurantStatusId(new RestaurantReplyStatusId(UUID.randomUUID()))
       .restaurantId(this.getId())
       .orderId(this.getOrderDetail().getId())
       .statusStatus(restaurantStatus)

@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "order_status", schema = "restaurant")
 @Entity
-public class RestaurantStatusEntity {
+public class RestaurantReplyStatusEntity {
 
   @Id
   private UUID id;

@@ -1,28 +1,28 @@
 package com.food.ordering.system.restaurant.service.dataaccess.adapter;
 
 import com.food.ordering.system.restaurant.service.dataaccess.mapper.RestaurantDataAccessMapper;
-import com.food.ordering.system.restaurant.service.dataaccess.repository.RestaurantStatusJpaRepository;
+import com.food.ordering.system.restaurant.service.dataaccess.outbox.repository.RestaurantReplyStatusJpaRepository;
 import com.food.ordering.system.restaurant.service.domain.entity.RestaurantReplyStatus;
-import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantStatusRepository;
+import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantReplyStatusRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RestaurantStatusRepositoryImpl implements RestaurantStatusRepository {
+public class RestaurantReplyStatusRepositoryImpl implements RestaurantReplyStatusRepository {
 
-  private final RestaurantStatusJpaRepository restaurantStatusJpaRepository;
+  private final RestaurantReplyStatusJpaRepository restaurantReplyStatusJpaRepository;
   private final RestaurantDataAccessMapper restaurantDataAccessMapper;
 
-  public RestaurantStatusRepositoryImpl(
-    RestaurantStatusJpaRepository restaurantStatusJpaRepository,
+  public RestaurantReplyStatusRepositoryImpl(
+    RestaurantReplyStatusJpaRepository restaurantReplyStatusJpaRepository,
     RestaurantDataAccessMapper restaurantDataAccessMapper) {
-    this.restaurantStatusJpaRepository = restaurantStatusJpaRepository;
+    this.restaurantReplyStatusJpaRepository = restaurantReplyStatusJpaRepository;
     this.restaurantDataAccessMapper = restaurantDataAccessMapper;
   }
 
   @Override
   public void save(RestaurantReplyStatus restaurantReplyStatus) {
     restaurantDataAccessMapper
-      .restaurantStatusEntityToRestaurantStatus(restaurantStatusJpaRepository
+      .restaurantStatusEntityToRestaurantStatus(restaurantReplyStatusJpaRepository
         .save(restaurantDataAccessMapper.restaurantStatusToRestaurantStatusEntity(restaurantReplyStatus)));
   }
 
