@@ -1,6 +1,7 @@
 //package com.food.ordering.system.order.service.domain;
 //
-//import com.food.ordering.system.domain.valueobject.PaymentStatus;
+//import com.food.ordering.system.domain.outbox.PaymentStatus;
+//import com.food.ordering.system.order.service.container.OrderServiceApplication;
 //import com.food.ordering.system.order.service.dataaccess.outbox.payment.entity.PaymentOutboxEntity;
 //import com.food.ordering.system.order.service.dataaccess.outbox.payment.repository.PaymentOutboxJpaRepository;
 //import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;

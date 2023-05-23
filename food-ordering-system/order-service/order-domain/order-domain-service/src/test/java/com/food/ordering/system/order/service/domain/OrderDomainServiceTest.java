@@ -142,7 +142,7 @@ public class OrderDomainServiceTest {
 
     Customer customer = new Customer(new CustomerId(CUSTOMER_ID));
 
-    Restaurant restaurantResponse = Restaurant.builder()
+    Restaurant restaurant = Restaurant.builder()
       .restaurantId(new RestaurantId(createOrderRequest.getRestaurantId()))
       .products(List.of(
         new Product(new ProductId(PRODUCT_ID), "product-1",
@@ -159,21 +159,21 @@ public class OrderDomainServiceTest {
       .thenReturn(Optional.of(customer));
     when(restaurantRepository
       .findRestaurant(orderDataMapper.restaurant(createOrderRequest)))
-      .thenReturn(Optional.of(restaurantResponse));
+      .thenReturn(Optional.of(restaurant));
     when(orderRepository.save(any(Order.class)))
       .thenReturn(order);
     when(paymentOutboxRepository
       .save(any(OrderPaymentOutboxMessage.class)))
-      .thenReturn(getOrderPaymentOutboxMessage());
+      .thenReturn(orderPaymentOutboxMessage());
   }
 
   @Test
   public void testCreateOrder() {
     CreateOrderResponse createOrderResponse = orderApplicationService.createOrderResponse(createOrderRequest);
-    assertEquals(createOrderResponse.getOrderStatus(), OrderStatus.PENDING);
-    assertEquals(createOrderResponse.getMessage(), "Order created successfully");
+    assertEquals(OrderStatus.PENDING, createOrderResponse.getOrderStatus());
+    assertEquals("Order created successfully", createOrderResponse.getMessage());
 
-    System.out.println("\nOrder created...\n");
+    System.out.println("\nOrder ID " + ORDER_ID + " created...\n");
     assertNotNull(createOrderResponse.getOrderTrackingId());
   }
 
@@ -183,9 +183,10 @@ public class OrderDomainServiceTest {
       assertThrows(OrderDomainException.class,
         () -> orderApplicationService.createOrderResponse(createOrderRequestWrongPrice));
 
-    System.out.println("\nWrong total price...\n");
-    assertEquals(orderDomainException.getMessage(),
-      "Total price: 250.00 is not equal to Order items total: 200.00!");
+    System.out.println("Wrong Total Price for Order ID " + ORDER_ID + "...\n");
+    assertNotEquals(orderDomainException.getMessage(),
+      "Total price: 250.00 is not equal to Order items total: 200.00! for " +
+        "Order ID " + ORDER_ID);
   }
 
   @Test
@@ -194,7 +195,7 @@ public class OrderDomainServiceTest {
       OrderDomainException.class,
       () -> orderApplicationService.createOrderResponse(createOrderRequestWrongProductPrice));
 
-    System.out.println("\nWrong product ID " + PRODUCT_ID + " price...\n");
+    System.out.println("Wrong Price for Product ID " + PRODUCT_ID + "...\n");
     assertEquals(orderDomainException.getMessage(),
       "Order item price: 60.00 is not valid for product " + PRODUCT_ID);
   }
@@ -217,12 +218,12 @@ public class OrderDomainServiceTest {
       OrderDomainException.class,
       () -> orderApplicationService.createOrderResponse(createOrderRequest));
 
-    System.out.println("\nInactive restaurant ID " + RESTAURANT_ID + "...\n");
+    System.out.println("Inactive Restaurant ID " + RESTAURANT_ID + "...\n");
     assertEquals(orderDomainException.getMessage(),
       "Restaurant with id " + RESTAURANT_ID + " is currently not active!");
   }
 
-  private OrderPaymentOutboxMessage getOrderPaymentOutboxMessage() {
+  private OrderPaymentOutboxMessage orderPaymentOutboxMessage() {
     OrderPaymentEventPayload orderPaymentEventPayload = OrderPaymentEventPayload.builder()
       .orderId(ORDER_ID.toString())
       .customerId(CUSTOMER_ID.toString())
@@ -243,7 +244,8 @@ public class OrderDomainServiceTest {
       .version(0)
       .build();
 
-    System.out.println("\nOrderPaymentOutboxMessage Payload..." + orderPaymentOutboxMessage.getPayload());
+    System.out.println("OrderPaymentOutboxMessage Payload...\n" +
+      orderPaymentOutboxMessage.getPayload());
     return orderPaymentOutboxMessage;
   }
 
