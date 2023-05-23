@@ -29,9 +29,12 @@ https://github.com/bidoudan/food-ordering-system
 ### Jars
 - lombok => https://projectlombok.org/#
   Lombok is a java library that automatically plugs into your editor and build tools, spicing up your java.
+  Lombok is used to reduce boilerplate code for model/data objects, e.g., it can generate getters and setters 
+  for those object automatically.
 
 - mockito => https://site.mockito.org/  https://www.javatpoint.com/mockito
   Mockito is a mocking framework, JAVA-based library that is used for effective unit testing of JAVA applications.
+  Mockito is used to mock interfaces so that a dummy functionality can be added to a mock interface that can be used.
   
 - avro => https://kapilsreed.medium.com/apache-avro-demystified-66d80426c752
   Avro is a row-oriented remote procedure call and data serialization framework that produces a compact binary format.

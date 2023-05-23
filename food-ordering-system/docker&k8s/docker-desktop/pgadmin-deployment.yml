@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin-deployment
+  namespace: default
+  labels:
+    app: pgadmin-deployment
+spec:
+  selector:
+    matchLabels:
+      app: pgadmin-deployment
+  template:
+    metadata:
+      labels:
+        app: pgadmin-deployment
+    spec:
+      containers:
+        - name: pgadmin4
+          image: dpage/pgadmin4
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              value: chris@chinasystems.com
+            - name: PGADMIN_DEFAULT_PASSWORD
+              value: admin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin-service
+  namespace: default
+  labels:
+    app: pgadmin-deployment
+spec:
+  selector:
+    app: pgadmin-deployment
+  ports:
+    - name: pgadmin-service-port
+      protocol: TCP
+      port: 80
+  type: LoadBalancer
+  #loadBalancerIP: ""           

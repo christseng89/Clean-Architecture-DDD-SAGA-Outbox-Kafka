@@ -1,2 +1,14 @@
 #1 => 23. Testing Order Service domain logic
 - order-domain-service
+
+#2 => 26. Running Apache Kafka using Docker
+// Git Bash
+cd food-ordering-system\infrastructure\docker-compose
+docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
+
+// Data folder
+food-ordering-system\infrastructure\docker-compose\volumes
+
+docker volume rm "./volumes/kafka/broker-1"
+docker volume rm "./volumes/kafka/broker-2"
+docker volume rm "./volumes/kafka/broker-3"
