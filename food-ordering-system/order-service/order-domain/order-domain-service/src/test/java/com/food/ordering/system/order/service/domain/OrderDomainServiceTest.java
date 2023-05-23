@@ -183,10 +183,13 @@ public class OrderDomainServiceTest {
       assertThrows(OrderDomainException.class,
         () -> orderApplicationService.createOrderResponse(createOrderRequestWrongPrice));
 
-    System.out.println("Wrong Total Price for Order ID " + ORDER_ID + "...\n");
+    System.out.println("\nWrong Total Price " +
+      createOrderRequestWrongPrice.getPrice() +
+      " for Order ID " + ORDER_ID + "...\n");
     assertNotEquals(orderDomainException.getMessage(),
-      "Total price: 250.00 is not equal to Order items total: 200.00! for " +
-        "Order ID " + ORDER_ID);
+      "Total price: " + createOrderRequestWrongPrice.getPrice() +
+        " is not equal to Order items total: 200.00! for " +
+        " Order ID " + ORDER_ID);
   }
 
   @Test
