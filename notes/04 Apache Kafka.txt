@@ -15,6 +15,11 @@ http://localhost:9000/
 
 // Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => Save
 
+27. Implementing Kafka config data generic module
+// KafkaConfigData         Related to the service-container->resources->application.yml file ("kafka-config")
+// KafkaConsumerConfigData Related to the service-container->resources->application.yml file ("kafka-producer-config")
+// KafkaProducerConfigData Related to the service-container->resources->application.yml file ("kafka-consumer-config")
+
 28. Implementing Kafka model generic module
 https://avro.apache.org/docs/1.11.1/specification/#logical-types
 

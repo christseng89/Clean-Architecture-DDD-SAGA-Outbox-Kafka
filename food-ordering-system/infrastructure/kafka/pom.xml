@@ -39,7 +39,8 @@
         <groupId>io.confluent</groupId>
         <artifactId>kafka-avro-serializer</artifactId>
         <version>${kafka-avro-serializer.version}</version>
-        <!-- Exclude slf4j-log4j12 to avoid version conflicts -->
+
+        <!-- Exclusion slf4j-log4j12 to avoid version conflicts -->
         <exclusions>
           <exclusion>
             <groupId>org.slf4j</groupId>
@@ -58,6 +59,7 @@
             <artifactId>swagger-core</artifactId>
           </exclusion>
         </exclusions>
+        <!-- End of Exclusion slf4j-log4j12 -->
       </dependency>
 
       <dependency>

@@ -1,3 +1,4 @@
+# 2 Kafka Cluster Setup (using current folder volumes/kafka/broker-1, volumes/kafka/broker-2, volumes/kafka/broker-3)
 version: '3.7'
 services:
   schema-registry:

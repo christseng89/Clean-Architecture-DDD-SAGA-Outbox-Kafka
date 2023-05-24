@@ -2,13 +2,107 @@
 - order-domain-service
 
 #2 => 26. Running Apache Kafka using Docker
-// Git Bash
-cd food-ordering-system\infrastructure\docker-compose
-docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
+// IntelliJ local (WSL2)
 
-// Data folder
+To run kafka cluster, you can use below commands in order in DIFFERENT terminals.
+### Data folder
 food-ordering-system\infrastructure\docker-compose\volumes
 
-docker volume rm "./volumes/kafka/broker-1"
-docker volume rm "./volumes/kafka/broker-2"
-docker volume rm "./volumes/kafka/broker-3"
+cd food-ordering-system\infrastructure\docker-compose
+
+### Folder permissions (WSL2)
+chmod -R +x ./volumes/zookeeper/data
+chmod -R +x ./volumes/zookeeper/transactions
+chmod -R +x ./volumes/kafka/broker-1
+chmod -R +x ./volumes/kafka/broker-2
+chmod -R +x ./volumes/kafka/broker-3
+
+cd food-ordering-system/infrastructure/ 
+chmod -R +x ./volumes/zookeeper/data
+chmod -R +x ./volumes/zookeeper/transactions
+chmod -R +x ./volumes/kafka/broker-1
+chmod -R +x ./volumes/kafka/broker-2
+chmod -R +x ./volumes/kafka/broker-3
+
+### Run
+// Step 1 = Setup Zookeeper
+docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
+    ...
+    docker-compose-zookeeper-1  | [2023-05-24 11:15:17,963] INFO The list of enabled four letter word commands is : [[ruok, srvr]] (org.apache.zookeeper.server.command.FourLetterCommands)
+    docker-compose-zookeeper-1  | [2023-05-24 11:15:17,963] INFO Processing ruok command from /172.19.0.1:54862 (org.apache.zookeeper.server.NIOServerCnxn)
+    docker-compose-zookeeper-1  | [2023-05-24 11:17:02,755] INFO Creating new log file: log.1 (org.apache.zookeeper.server.persistence.FileTxnLog)
+
+// Step 2 = Setup Kafka Cluster
+echo ruok | ncat localhost 2181
+    imok
+
+cd food-ordering-system\infrastructure\docker-compose
+docker-compose -f common.yml -f kafka_cluster.yml up
+    [+] Running 13/5
+    - kafka-broker-2 11 layers [⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀]      0B/0B      Pulling                                                                                        194.8s 
+    - kafka-manager 7 layers [⣷⣿⣿⣿⣿⣶⣀] 111.3MB/191.9MB Pulling                                                                                              194.7s 
+    ...
+    docker-compose-kafka-broker-1-1   | [2023-05-24 11:17:26,230] INFO Created log for partition __consumer_offsets-15 in /var/lib/kafka/data/__consumer_offsets-15 with properties {cleanup.policy=compact, compression.type="producer", segment.bytes=104857600} (kafka.log.LogManager)
+    docker-compose-kafka-broker-1-1   | [2023-05-24 11:17:26,230] INFO [Partition __consumer_offsets-15 broker=1] No checkpointed highwatermark is found for partition __consumer_offsets-15 (kafka.cluster.Partition)
+    docker-compose-kafka-broker-1-1   | [2023-05-24 11:17:26,230] INFO [Partition __consumer_offsets-15 broker=1] Log loaded for partition __consumer_offsets-15 with initial high watermark 0 (kafka.cluster.Partition)
+    docker-compose-kafka-broker-1-1   | [2023-05-24 11:17:26,231] INFO [Broker id=1] Follower __consumer_offsets-15 starts at leader epoch 0 from offset 0 with high watermark 0. Previous leader epoch was -1. (state.change.logger)
+    docker-compose-kafka-broker-3-1   | [2023-05-24 11:17:26,234] INFO [LogLoader partition=__consumer_offsets-26, dir=/var/lib/kafka/data] Loading producer state till offset 0 with message format version 2 (kafka.log.Log$)
+    docker-compose-kafka-broker-3-1   | [2023-05-24 11:17:26,238] INFO Created log for partition __consumer_offsets-26 in /var/lib/kafka/data/__consumer_offsets-26 with properties {cleanup.policy=compact, compression.type="producer", segment.bytes=104857600} (kafka.log.LogManager)
+    docker-compose-kafka-broker-3-1   | [2023-05-24 11:17:26,239] INFO [Partition __consumer_offsets-26 broker=3] No checkpointed highwatermark is found for partition __consumer_offsets-26 (kafka.cluster.Partition)
+    ...
+ 
+// Step 3 = Setup Kafka Topics (Run ONLY once)
+cd food-ordering-system\infrastructure\docker-compose
+docker-compose -f common.yml -f init_kafka.yml up
+    [+] Running 1/1
+    ✔ Container docker-compose-init-kafka-1  Created                                                                                                          0.1s 
+    Attaching to docker-compose-init-kafka-1
+    docker-compose-init-kafka-1  | __consumer_offsets
+    docker-compose-init-kafka-1  | _schemas
+    docker-compose-init-kafka-1  | Deleting kafka topics
+    docker-compose-init-kafka-1  | Creating kafka topics
+    ...
+
+// Step 4 Shutdown Kafka Cluster
+    [+] Running 5/5
+    ✔ Container docker-compose-kafka-manager-1    Stopped                                                                                                     1.1s 
+    ✔ Container docker-compose-schema-registry-1  Stopped                                                                                                     1.2s 
+    ✔ Container docker-compose-kafka-broker-3-1   Stopped                                                                                                     6.1s 
+    ✔ Container docker-compose-kafka-broker-1-1   Stopped                                                                                                    11.2s 
+    ✔ Container docker-compose-kafka-broker-2-1   Stopped                                                                                                    11.0s 
+    canceled
+
+// Step 5 Shutdown Zookeeper
+    [+] Running 1/1
+    ✔ Container docker-compose-zookeeper-1  Stopped                                                                                                           0.7s 
+    canceled
+
+// Step 6 Restart Zookeeper
+docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
+    [+] Running 7/7
+    ✔ Container docker-compose-kafka-manager-1    Removed                                                                                                     0.1s 
+    ✔ Container docker-compose-schema-registry-1  Removed                                                                                                     0.1s 
+    ✔ Container docker-compose-kafka-broker-3-1   Removed                                                                                                     0.1s 
+    ✔ Container docker-compose-kafka-broker-1-1   Removed                                                                                                     0.1s 
+    ✔ Container docker-compose-init-kafka-1       Removed                                                                                                     0.0s 
+    ✔ Container docker-compose-kafka-broker-2-1   Removed                                                                                                     0.1s 
+    ✔ Container docker-compose-zookeeper-1        Started 
+
+// Step 7 Restart Kafka Cluster
+docker-compose -f common.yml -f kafka_cluster.yml up -d
+    [+] Running 5/5
+    ✔ Container docker-compose-kafka-manager-1    Started                                                                                                     1.3s 
+    ✔ Container docker-compose-kafka-broker-2-1   Started                                                                                                     1.8s 
+    ✔ Container docker-compose-kafka-broker-1-1   Started                                                                                                     1.8s 
+    ✔ Container docker-compose-kafka-broker-3-1   Started                                                                                                     1.6s 
+    ✔ Container docker-compose-schema-registry-1  Started 
+
+http://localhost:9000
+
+### Shutdown
+docker-compose -f common.yml -f kafka_cluster.yml down
+docker-compose -f common.yml -f zookeeper.yml down
+
+## Kafka Manager => http://localhost:9000/
+Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => Save => 
+Topics	7 /	Brokers	3

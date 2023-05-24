@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "kafka-config")
+// Related to the service-container->resources->application.yml file ("kafka-config")
+
 public class KafkaConfigData {
   private String bootstrapServers;
   private String schemaRegistryUrlKey;

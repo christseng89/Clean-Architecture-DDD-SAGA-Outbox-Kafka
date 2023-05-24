@@ -1,3 +1,5 @@
+# 1 Zookeeper Setup (using current folder volumes/zookeeper/data and volumes/zookeeper/transactions), 
+# NOTES: KIP-500 Zookeeper will be removed in Kafka 3.0.0
 version: '3.7'
 services:
   zookeeper:
@@ -12,7 +14,7 @@ services:
       ZOOKEEPER_INIT_LIMIT: 5
       ZOOKEEPER_SYNC_LIMIT: 2
       ZOOKEEPER_SERVERS: zookeeper:2888:3888
-      KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=ruok"
+      KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=ruok" # echo ruok | ncat localhost 2181
     volumes:
       - "./volumes/zookeeper/data:/var/lib/zookeeper/data"
       - "./volumes/zookeeper/transactions:/var/lib/zookeeper/log"
