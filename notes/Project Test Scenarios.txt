@@ -26,7 +26,7 @@ chmod -R +x ./volumes/kafka/broker-3
 
 ### Run
 // Step 1 = Setup Zookeeper
-docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
+docker compose -f common.yml -f zookeeper.yml up --remove-orphans
     ...
     docker-compose-zookeeper-1  | [2023-05-24 11:15:17,963] INFO The list of enabled four letter word commands is : [[ruok, srvr]] (org.apache.zookeeper.server.command.FourLetterCommands)
     docker-compose-zookeeper-1  | [2023-05-24 11:15:17,963] INFO Processing ruok command from /172.19.0.1:54862 (org.apache.zookeeper.server.NIOServerCnxn)
@@ -37,7 +37,7 @@ echo ruok | ncat localhost 2181
     imok
 
 cd food-ordering-system\infrastructure\docker-compose
-docker-compose -f common.yml -f kafka_cluster.yml up
+docker-compose -f common.yml -f kafka_cluster.yml up 
     [+] Running 13/5
     - kafka-broker-2 11 layers [⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀]      0B/0B      Pulling                                                                                        194.8s 
     - kafka-manager 7 layers [⣷⣿⣿⣿⣿⣶⣀] 111.3MB/191.9MB Pulling                                                                                              194.7s 
@@ -78,7 +78,7 @@ docker-compose -f common.yml -f init_kafka.yml up
     canceled
 
 // Step 6 Restart Zookeeper
-docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
+docker compose -f common.yml -f zookeeper.yml up --remove-orphans
     [+] Running 7/7
     ✔ Container docker-compose-kafka-manager-1    Removed                                                                                                     0.1s 
     ✔ Container docker-compose-schema-registry-1  Removed                                                                                                     0.1s 
@@ -89,7 +89,7 @@ docker compose -f common.yml -f zookeeper.yml up -d --remove-orphans
     ✔ Container docker-compose-zookeeper-1        Started 
 
 // Step 7 Restart Kafka Cluster
-docker-compose -f common.yml -f kafka_cluster.yml up -d
+docker-compose -f common.yml -f kafka_cluster.yml up 
     [+] Running 5/5
     ✔ Container docker-compose-kafka-manager-1    Started                                                                                                     1.3s 
     ✔ Container docker-compose-kafka-broker-2-1   Started                                                                                                     1.8s 
@@ -99,10 +99,23 @@ docker-compose -f common.yml -f kafka_cluster.yml up -d
 
 http://localhost:9000
 
+
+## Kafka Manager => http://localhost:9000/
+Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => 
+Enable Active OffsetCache => Save => Topics	7 /	Brokers	3
+
 ### Shutdown
 docker-compose -f common.yml -f kafka_cluster.yml down
 docker-compose -f common.yml -f zookeeper.yml down
 
-## Kafka Manager => http://localhost:9000/
-Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => Save => 
-Topics	7 /	Brokers	3
+### Restart
+cd food-ordering-system\infrastructure\docker-compose
+docker compose -f common.yml -f zookeeper.yml up --remove-orphans
+docker-compose -f common.yml -f kafka_cluster.yml up 
+
+http://localhost:9000
+
+### Trouble Shooting (An attempt was made to access a socket in a way forbidden by its access permissions)
+// DOS Command - Administrator
+net stop winnat
+net start winnat
