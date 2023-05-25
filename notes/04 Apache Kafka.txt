@@ -15,15 +15,39 @@ http://localhost:9000/
 
 // Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => Save
 
-27. Implementing Kafka config data generic module
-// KafkaConfigData         Related to the service-container->resources->application.yml file ("kafka-config")
-// KafkaConsumerConfigData Related to the service-container->resources->application.yml file ("kafka-producer-config")
-// KafkaProducerConfigData Related to the service-container->resources->application.yml file ("kafka-consumer-config")
+27. Implementing Kafka Config-data generic module
+// KafkaConfigData         Related to the x service-container->resources->application.yml file ("kafka-config")
+// KafkaConsumerConfigData Related to the x service-container->resources->application.yml file ("kafka-producer-config")
+// KafkaProducerConfigData Related to the x service-container->resources->application.yml file ("kafka-consumer-config")
 
 28. Implementing Kafka model generic module
 https://avro.apache.org/docs/1.11.1/specification/#logical-types
 
-### kafka-model> 
+kafka-model> pom.xml
+   ...
+   <executions>
+      <execution>
+      <phase>generate-sources</phase>
+      <goals>
+         <goal>schema</goal>
+      </goals>
+      <configuration>
+         <sourceDirectory>src/main/resources/avro ### 
+         </sourceDirectory>
+         <outputDirectory>src/main/java</outputDirectory> ###
+      </configuration>
+      </execution>
+   </executions>
+   ...
+
+// kafka-model> src/main/resources/avro
+- customer.avsc
+- payment_request.avsc
+- payment_response.avsc
+- restaurant_approval_request.avsc
+- restaurant_approval_response.avsc   
+
+cd food-ordering-system\infrastructure\kafka\kafka-model
 mvn clean install
 
 ### Stop Kafka

@@ -28,8 +28,8 @@
         <configuration>
           <stringType>String</stringType>
           <enableDecimalLogicalType>true</enableDecimalLogicalType>
-          <!--          <customConversions>org.apache.avro.Conversions$UUIDConversion-->
-          <!--          </customConversions>-->
+          <customConversions>org.apache.avro.Conversions$UUIDConversion
+          </customConversions>
         </configuration>
 
         <executions>

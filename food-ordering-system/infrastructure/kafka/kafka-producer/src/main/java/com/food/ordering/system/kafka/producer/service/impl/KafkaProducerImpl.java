@@ -31,16 +31,17 @@ public class KafkaProducerImpl<K extends Serializable, V extends SpecificRecordB
       ListenableFuture<SendResult<K, V>> kafkaResultFuture = kafkaTemplate.send(topicName, key, message);
       kafkaResultFuture.addCallback(callback);
     } catch (KafkaException e) {
-      log.error("Error on kafka producer with key: {}, message: {} and exception: {}", key, message,
-        e.getMessage());
-      throw new KafkaProducerException("Error on kafka producer with key: " + key + " and message: " + message);
+      log.error("Error on Kafka producer with key: {}, message: {} and " +
+        "exception: {}", key, message, e.getMessage());
+      throw new KafkaProducerException("Error on kafka producer with key: " +
+        key + " and message: " + message);
     }
   }
 
   @PreDestroy
   public void close() {
     if (kafkaTemplate != null) {
-      log.info("Closing kafka producer!");
+      log.info("Closing Kafka producer!");
       kafkaTemplate.destroy();
     }
   }
