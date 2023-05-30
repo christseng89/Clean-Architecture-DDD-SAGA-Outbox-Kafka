@@ -42,11 +42,11 @@
       }
     },
     {
-      "name": "products",
+      "name": "productAvroModels",
       "type": {
         "type": "array",
         "items": {
-          "name": "Product",
+          "name": "ProductAvroModel",
           "type": "record",
           "fields": [
             {

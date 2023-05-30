@@ -22,16 +22,16 @@ DROP TABLE IF EXISTS restaurant.order_status CASCADE;
 
 CREATE TABLE restaurant.order_status
 (
-    id            uuid            NOT NULL,
-    restaurant_id uuid            NOT NULL,
-    order_id      uuid            NOT NULL,
+    id            uuid          NOT NULL,
+    restaurant_id uuid          NOT NULL,
+    order_id      uuid          NOT NULL,
     status        status_status NOT NULL,
     CONSTRAINT order_status_pkey PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS restaurant.products CASCADE;
+DROP TABLE IF EXISTS restaurant.productAvroModels CASCADE;
 
-CREATE TABLE restaurant.products
+CREATE TABLE restaurant.productAvroModels
 (
     id        uuid                                           NOT NULL,
     name      character varying COLLATE pg_catalog."default" NOT NULL,
@@ -59,7 +59,7 @@ ALTER TABLE restaurant.restaurant_products
 
 ALTER TABLE restaurant.restaurant_products
     ADD CONSTRAINT "FK_PRODUCT_ID" FOREIGN KEY (product_id)
-        REFERENCES restaurant.products (id) MATCH SIMPLE
+        REFERENCES restaurant.productAvroModels (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE RESTRICT
         NOT VALID;
@@ -71,15 +71,15 @@ DROP TABLE IF EXISTS restaurant.order_outbox CASCADE;
 
 CREATE TABLE restaurant.order_outbox
 (
-    id              uuid                                           NOT NULL,
-    saga_id         uuid                                           NOT NULL,
-    created_at      TIMESTAMP WITH TIME ZONE                       NOT NULL,
-    processed_at    TIMESTAMP WITH TIME ZONE,
-    type            character varying COLLATE pg_catalog."default" NOT NULL,
-    payload         jsonb                                          NOT NULL,
-    outbox_status   outbox_status                                  NOT NULL,
-    status_status status_status                                NOT NULL,
-    version         integer                                        NOT NULL,
+    id            uuid                                           NOT NULL,
+    saga_id       uuid                                           NOT NULL,
+    created_at    TIMESTAMP WITH TIME ZONE                       NOT NULL,
+    processed_at  TIMESTAMP WITH TIME ZONE,
+    type          character varying COLLATE pg_catalog."default" NOT NULL,
+    payload       jsonb                                          NOT NULL,
+    outbox_status outbox_status                                  NOT NULL,
+    status_status status_status                                  NOT NULL,
+    version       integer                                        NOT NULL,
     CONSTRAINT order_outbox_pkey PRIMARY KEY (id)
 );
 
@@ -104,7 +104,7 @@ SELECT r.id        AS restaurant_id,
        p.price     AS product_price,
        p.available AS product_available
 FROM restaurant.restaurants r,
-     restaurant.products p,
+     restaurant.productAvroModels p,
      restaurant.restaurant_products rp
 WHERE r.id = rp.restaurant_id
   AND p.id = rp.product_id

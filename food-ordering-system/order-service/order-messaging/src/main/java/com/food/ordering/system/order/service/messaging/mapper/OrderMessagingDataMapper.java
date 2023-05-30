@@ -67,7 +67,7 @@ public class OrderMessagingDataMapper {
       .setRestaurantOrderStatus(RestaurantOrderStatus
         .valueOf(orderRestaurantEventPayload.getRestaurantOrderStatus()))
       .setProducts(orderRestaurantEventPayload.getProducts().stream()
-        .map(restaurantApprovedEventProduct -> Product.newBuilder()
+        .map(restaurantApprovedEventProduct -> ProductAvroModel.newBuilder()
           .setId(restaurantApprovedEventProduct.getId())
           .setQuantity(restaurantApprovedEventProduct.getQuantity())
           .build()).toList())
