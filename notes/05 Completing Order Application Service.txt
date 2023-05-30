@@ -1,3 +1,7 @@
+33. Data access module: Adding Order JPA Entity
+https://www.baeldung.com/jpa-one-to-one
+https://openhome.cc/Gossip/EJB3Gossip/CascadeTypeFetchType.html
+
 39. Container module: Adding spring boot starter class and config
 https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html
 

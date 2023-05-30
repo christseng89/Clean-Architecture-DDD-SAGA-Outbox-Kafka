@@ -20,6 +20,7 @@ public class CreditEntryEntity {
 
   @Id
   private UUID id;
+  
   private UUID customerId;
   private BigDecimal totalCreditAmount;
 

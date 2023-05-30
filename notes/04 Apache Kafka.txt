@@ -94,3 +94,6 @@ docker compose -f common.yml -f kafka_cluster.yml up -d
    http://localhost:9000/
 
    * Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => Save
+
+### Spring Boot Annotations
+https://lightrun.com/the-complete-list-of-spring-boot-annotations-you-must-know/

@@ -17,8 +17,10 @@ public class RestaurantReplyStatusEntity {
 
   @Id
   private UUID id;
+
   private UUID restaurantId;
   private UUID orderId;
+  
   @Enumerated(EnumType.STRING)
   private RestaurantStatus status;
 }

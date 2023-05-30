@@ -18,6 +18,7 @@ public class CustomerEntity {
 
   @Id
   private UUID id;
+  
   private String username;
   private String firstName;
   private String lastName;

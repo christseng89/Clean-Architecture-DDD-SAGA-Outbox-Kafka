@@ -14,20 +14,24 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Table(name = "orders")
 @Entity
 public class OrderEntity {
   @Id
   private UUID id;
+
   private UUID customerId;
   private UUID restaurantId;
   private UUID trackingId;
   private BigDecimal price;
+
   @Enumerated(EnumType.STRING)
   private OrderStatus orderStatus;
   private String failureMessages;
 
   @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
   private OrderAddressEntity address;
 
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

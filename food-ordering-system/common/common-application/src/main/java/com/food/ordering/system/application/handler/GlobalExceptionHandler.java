@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
   @ResponseBody
   @ExceptionHandler(value = {Exception.class})
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ErrorDTO handleException(Exception exception) {
+  public ErrorDTO internalServerException(Exception exception) {
     log.error(exception.getMessage(), exception);
     return ErrorDTO.builder()
       .code(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
   @ResponseBody
   @ExceptionHandler(value = {ValidationException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorDTO handleException(ValidationException validationException) {
+  public ErrorDTO badRequestException(ValidationException validationException) {
     ErrorDTO errorDTO;
     if (validationException instanceof ConstraintViolationException) {
       String violations = extractViolationsFromException((ConstraintViolationException) validationException);
