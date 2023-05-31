@@ -1,6 +1,6 @@
-package com.food.ordering.system.restaurant.service.dataaccess.outbox.repository;
+package com.food.ordering.system.restaurant.service.dataaccess.restaurant.repository;
 
-import com.food.ordering.system.restaurant.service.dataaccess.entity.RestaurantRespStatusEntity;
+import com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity.RestaurantRespStatusEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
