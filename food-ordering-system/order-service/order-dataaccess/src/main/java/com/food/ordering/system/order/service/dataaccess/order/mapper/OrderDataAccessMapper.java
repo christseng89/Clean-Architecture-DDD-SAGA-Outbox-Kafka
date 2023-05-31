@@ -36,9 +36,30 @@ public class OrderDataAccessMapper {
       .build();
 
     orderEntity.getAddress().setOrder(orderEntity);
-    orderEntity.getItems().forEach(orderItemEntity -> orderItemEntity.setOrder(orderEntity));
+    orderEntity.getItems().forEach(
+      orderItemEntity -> orderItemEntity.setOrder(orderEntity));
 
     return orderEntity;
+  }
+
+  private OrderAddressEntity deliveryAddressToAddressEntity(StreetAddress deliveryAddress) {
+    return OrderAddressEntity.builder()
+      .id(deliveryAddress.getId())
+      .street(deliveryAddress.getStreet())
+      .postalCode(deliveryAddress.getPostalCode())
+      .city(deliveryAddress.getCity())
+      .build();
+  }
+  
+  private List<OrderItemEntity> orderItemsToOrderItemEntities(List<OrderItem> items) {
+    return items.stream()
+      .map(orderItem -> OrderItemEntity.builder()
+        .id(orderItem.getId().getValue())
+        .productId(orderItem.getProduct().getId().getValue())
+        .price(orderItem.getPrice().getAmount())
+        .quantity(orderItem.getQuantity())
+        .subTotal(orderItem.getSubTotal().getAmount())
+        .build()).toList();
   }
 
   public Order orderEntityToOrder(OrderEntity orderEntity) {
@@ -58,6 +79,11 @@ public class OrderDataAccessMapper {
       .build();
   }
 
+  private StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address) {
+    return new StreetAddress(
+      address.getId(), address.getStreet(), address.getPostalCode(), address.getCity());
+  }
+
   private List<OrderItem> orderItemEntitiesToOrderItems(List<OrderItemEntity> items) {
     return items.stream()
       .map(orderItemEntity -> OrderItem.builder()
@@ -67,30 +93,5 @@ public class OrderDataAccessMapper {
         .quantity(orderItemEntity.getQuantity())
         .subTotal(new Money(orderItemEntity.getSubTotal()))
         .build()).toList();
-  }
-
-  private StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address) {
-    return new StreetAddress(
-      address.getId(), address.getStreet(), address.getPostalCode(), address.getCity());
-  }
-
-  private List<OrderItemEntity> orderItemsToOrderItemEntities(List<OrderItem> items) {
-    return items.stream()
-      .map(orderItem -> OrderItemEntity.builder()
-        .id(orderItem.getId().getValue())
-        .productId(orderItem.getProduct().getId().getValue())
-        .price(orderItem.getPrice().getAmount())
-        .quantity(orderItem.getQuantity())
-        .subTotal(orderItem.getSubTotal().getAmount())
-        .build()).toList();
-  }
-
-  private OrderAddressEntity deliveryAddressToAddressEntity(StreetAddress deliveryAddress) {
-    return OrderAddressEntity.builder()
-      .id(deliveryAddress.getId())
-      .street(deliveryAddress.getStreet())
-      .postalCode(deliveryAddress.getPostalCode())
-      .city(deliveryAddress.getCity())
-      .build();
   }
 }

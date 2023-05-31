@@ -26,18 +26,19 @@ public class RestaurantDataAccessMapper {
       .toList();
   }
 
-  public Restaurant restaurantEntityToRestaurant(List<RestaurantEntity> restaurantEntities) {
+  public Restaurant restaurantEntityToRestaurant(
+    List<RestaurantEntity> restaurantEntities) {
     RestaurantEntity restaurantEntity =
       restaurantEntities.stream().findFirst().orElseThrow(() ->
         new RestaurantDataAccessException("No restaurants found!"));
 
-    List<Product> restaurantProducts = restaurantEntities.stream().map(entity ->
-        Product.builder()
-          .productId(new ProductId(entity.getProductId()))
-          .name(entity.getProductName())
-          .price(new Money(entity.getProductPrice()))
-          .available(entity.getProductAvailable())
-          .build())
+    List<Product> restaurantProducts = restaurantEntities.stream()
+      .map(entity -> Product.builder()
+        .productId(new ProductId(entity.getProductId()))
+        .name(entity.getProductName())
+        .price(new Money(entity.getProductPrice()))
+        .available(entity.getProductAvailable())
+        .build())
       .toList();
 
     return Restaurant.builder()
@@ -49,7 +50,8 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantRespStatusEntity restaurantStatusToRestaurantStatusEntity(RestaurantRespStatus restaurantRespStatus) {
+  public RestaurantRespStatusEntity restaurantRespStatusToRestaurantRespStatusEntity(
+    RestaurantRespStatus restaurantRespStatus) {
     return RestaurantRespStatusEntity.builder()
       .id(restaurantRespStatus.getId().getValue())
       .restaurantId(restaurantRespStatus.getRestaurantId().getValue())
@@ -58,13 +60,13 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public void restaurantStatusEntityToRestaurantStatus(RestaurantRespStatusEntity restaurantRespStatusEntity) {
+  public void restaurantRespStatusEntityToRestaurantRespStatus(
+    RestaurantRespStatusEntity restaurantRespStatusEntity) {
     RestaurantRespStatus.builder()
-      .restaurantReplyStatusId(new RestaurantRespStatusId(restaurantRespStatusEntity.getId()))
+      .restaurantRespStatusId(new RestaurantRespStatusId(restaurantRespStatusEntity.getId()))
       .restaurantId(new RestaurantId(restaurantRespStatusEntity.getRestaurantId()))
       .orderId(new OrderId(restaurantRespStatusEntity.getOrderId()))
       .restaurantStatus(restaurantRespStatusEntity.getStatus())
       .build();
   }
-
 }

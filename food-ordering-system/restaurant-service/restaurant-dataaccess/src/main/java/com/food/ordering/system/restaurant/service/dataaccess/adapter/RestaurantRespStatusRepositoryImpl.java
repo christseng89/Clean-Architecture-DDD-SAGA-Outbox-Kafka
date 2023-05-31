@@ -21,9 +21,9 @@ public class RestaurantRespStatusRepositoryImpl implements RestaurantRespStatusR
 
   @Override
   public void save(RestaurantRespStatus restaurantRespStatus) {
-    restaurantDataAccessMapper
-      .restaurantStatusEntityToRestaurantStatus(restaurantRespStatusJpaRepository
-        .save(restaurantDataAccessMapper.restaurantStatusToRestaurantStatusEntity(restaurantRespStatus)));
+    restaurantDataAccessMapper.restaurantRespStatusEntityToRestaurantRespStatus(
+      restaurantRespStatusJpaRepository.save(
+        restaurantDataAccessMapper.restaurantRespStatusToRestaurantRespStatusEntity(restaurantRespStatus)));
   }
 
 }

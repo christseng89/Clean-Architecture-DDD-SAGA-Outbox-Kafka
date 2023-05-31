@@ -47,7 +47,7 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
 
   public void createRestaurantStatus(RestaurantStatus restaurantStatus) {
     this.restaurantRespStatus = RestaurantRespStatus.builder()
-      .restaurantReplyStatusId(new RestaurantRespStatusId(UUID.randomUUID()))
+      .restaurantRespStatusId(new RestaurantRespStatusId(UUID.randomUUID()))
       .restaurantId(this.getId())
       .orderId(this.getOrderDetail().getId())
       .restaurantStatus(restaurantStatus)

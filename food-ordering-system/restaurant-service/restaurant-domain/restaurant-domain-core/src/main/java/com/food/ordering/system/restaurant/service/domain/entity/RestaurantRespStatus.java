@@ -59,7 +59,7 @@ public class RestaurantRespStatus extends BaseEntity<RestaurantRespStatusId> {
     private Builder() {
     }
 
-    public Builder restaurantReplyStatusId(RestaurantRespStatusId val) {
+    public Builder restaurantRespStatusId(RestaurantRespStatusId val) {
       restaurantRespStatusId = val;
       return this;
     }

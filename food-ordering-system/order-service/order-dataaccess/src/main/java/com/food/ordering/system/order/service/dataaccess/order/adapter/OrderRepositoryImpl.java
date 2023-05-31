@@ -25,19 +25,22 @@ public class OrderRepositoryImpl implements OrderRepository {
 
   @Override
   public Order save(Order order) {
-    return orderDataAccessMapper.orderEntityToOrder(orderJpaRepository
-      .save(orderDataAccessMapper.orderToOrderEntity(order)));
+    return orderDataAccessMapper.orderEntityToOrder(
+      orderJpaRepository.save(
+        orderDataAccessMapper.orderToOrderEntity(order)));
   }
 
   @Override
   public Optional<Order> findByOrderId(OrderId orderId) {
-    return orderJpaRepository.findById(orderId.getValue())
+    return orderJpaRepository
+      .findById(orderId.getValue())
       .map(orderDataAccessMapper::orderEntityToOrder);
   }
 
   @Override
   public Optional<Order> findByTrackingId(TrackingId trackingId) {
-    return orderJpaRepository.findByTrackingId(trackingId.getValue())
+    return orderJpaRepository
+      .findByTrackingId(trackingId.getValue())
       .map(orderDataAccessMapper::orderEntityToOrder);
   }
 }

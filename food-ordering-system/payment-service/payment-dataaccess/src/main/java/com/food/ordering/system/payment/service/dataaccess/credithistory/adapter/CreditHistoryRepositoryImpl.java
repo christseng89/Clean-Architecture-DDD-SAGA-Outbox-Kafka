@@ -26,14 +26,16 @@ public class CreditHistoryRepositoryImpl implements CreditHistoryRepository {
 
   @Override
   public CreditHistory save(CreditHistory creditHistory) {
-    return creditHistoryDataAccessMapper.creditHistoryEntityToCreditHistory(creditHistoryJpaRepository
-      .save(creditHistoryDataAccessMapper.creditHistoryToCreditHistoryEntity(creditHistory)));
+    return creditHistoryDataAccessMapper.creditHistoryEntityToCreditHistory(
+      creditHistoryJpaRepository.save(
+        creditHistoryDataAccessMapper.creditHistoryToCreditHistoryEntity(creditHistory)));
   }
 
   @Override
   public Optional<List<CreditHistory>> findByCustomerId(CustomerId customerId) {
     Optional<List<CreditHistoryEntity>> creditHistory =
       creditHistoryJpaRepository.findByCustomerId(customerId.getValue());
+
     return creditHistory
       .map(creditHistoryList ->
         creditHistoryList.stream()
