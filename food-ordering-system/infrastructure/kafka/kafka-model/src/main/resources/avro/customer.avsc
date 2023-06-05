@@ -5,9 +5,8 @@
   "fields": [
     {
       "name": "id",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
+      "type":{  
+        "type":"string"
       }
     },
     {

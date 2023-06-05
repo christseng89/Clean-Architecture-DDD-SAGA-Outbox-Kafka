@@ -4,7 +4,12 @@
 #2 => 26. Running Apache Kafka using Docker
 // IntelliJ local (WSL2)
 
-To run kafka cluster, you can use below commands in order in DIFFERENT terminals.
+// Generate Avro classes
+cd food-ordering-system\infrastructure\kafka\kafka-model
+mvn clean install
+
+// Run Kafka Cluster
+To run Kafka cluster, you can use below commands in order in DIFFERENT terminals.
 ### Data folder
 food-ordering-system\infrastructure\docker-compose\volumes
 

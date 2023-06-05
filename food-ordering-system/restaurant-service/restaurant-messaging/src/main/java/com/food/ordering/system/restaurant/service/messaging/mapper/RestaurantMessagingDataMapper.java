@@ -25,7 +25,7 @@ public class RestaurantMessagingDataMapper {
       .orderId(restaurantRequestAvroModel.getOrderId())
       .restaurantOrderStatus(RestaurantOrderStatus.valueOf(restaurantRequestAvroModel
         .getRestaurantOrderStatus().name()))
-      .products(restaurantRequestAvroModel.getProducts()
+      .products(restaurantRequestAvroModel.getProductAvroModels()
         .stream()
         .map(avroModel -> Product.builder()
           .productId(new ProductId(UUID.fromString(avroModel.getId())))
@@ -45,7 +45,7 @@ public class RestaurantMessagingDataMapper {
       .setOrderId(orderEventPayload.getOrderId())
       .setRestaurantId(orderEventPayload.getRestaurantId())
       .setCreatedAt(orderEventPayload.getCreatedAt().toInstant())
-      .setRestaurantStatus(RestaurantStatus.valueOf(orderEventPayload.getRestaurantStatus()))
+      .setRestaurantRespStatus(RestaurantStatus.valueOf(orderEventPayload.getRestaurantStatus()))
       .setFailureMessages(orderEventPayload.getFailureMessages())
       .build();
   }

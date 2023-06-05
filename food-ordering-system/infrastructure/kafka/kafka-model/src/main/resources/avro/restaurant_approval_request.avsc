@@ -5,30 +5,26 @@
   "fields": [
     {
       "name": "id",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
+      "type":{  
+        "type":"string"
       }
     },
     {
       "name": "sagaId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
+      "type":{  
+        "type":"string"
       }
     },
     {
       "name": "restaurantId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
+      "type":{  
+        "type":"string"
       }
     },
     {
       "name": "orderId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
+      "type":{  
+        "type":"string"
       }
     },
     {
@@ -51,8 +47,9 @@
           "fields": [
             {
               "name": "id",
-              "type": "string",
-              "logicalType": "uuid"
+              "type":{  
+                "type":"string"
+              }
             },
             {
               "name": "quantity",
