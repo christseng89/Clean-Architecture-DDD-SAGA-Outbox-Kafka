@@ -3,7 +3,7 @@ package com.food.ordering.system.restaurant.service.domain.outbox.scheduler;
 import com.food.ordering.system.outbox.OutboxScheduler;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutboxMessage;
-import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantResponseMessagePublisher;
+import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantOrderStatusMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 public class OrderOutboxScheduler implements OutboxScheduler {
 
   private final OrderOutboxHelper orderOutboxHelper;
-  private final RestaurantResponseMessagePublisher responseMessagePublisher;
+  private final RestaurantOrderStatusMessagePublisher responseMessagePublisher;
 
   public OrderOutboxScheduler(
     OrderOutboxHelper orderOutboxHelper,
-    RestaurantResponseMessagePublisher responseMessagePublisher) {
+    RestaurantOrderStatusMessagePublisher responseMessagePublisher) {
     this.orderOutboxHelper = orderOutboxHelper;
     this.responseMessagePublisher = responseMessagePublisher;
   }

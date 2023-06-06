@@ -29,9 +29,9 @@ CREATE TABLE restaurant.order_status
     CONSTRAINT order_status_pkey PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS restaurant.productAvroModels CASCADE;
+DROP TABLE IF EXISTS restaurant.products CASCADE;
 
-CREATE TABLE restaurant.productAvroModels
+CREATE TABLE restaurant.products
 (
     id        uuid                                           NOT NULL,
     name      character varying COLLATE pg_catalog."default" NOT NULL,
@@ -59,7 +59,7 @@ ALTER TABLE restaurant.restaurant_products
 
 ALTER TABLE restaurant.restaurant_products
     ADD CONSTRAINT "FK_PRODUCT_ID" FOREIGN KEY (product_id)
-        REFERENCES restaurant.productAvroModels (id) MATCH SIMPLE
+        REFERENCES restaurant.products (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE RESTRICT
         NOT VALID;
@@ -104,7 +104,7 @@ SELECT r.id        AS restaurant_id,
        p.price     AS product_price,
        p.available AS product_available
 FROM restaurant.restaurants r,
-     restaurant.productAvroModels p,
+     restaurant.products p,
      restaurant.restaurant_products rp
 WHERE r.id = rp.restaurant_id
   AND p.id = rp.product_id

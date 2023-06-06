@@ -5,7 +5,7 @@ import com.food.ordering.system.domain.outbox.OrderStatus;
 import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantRespStatusId;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantOrderStatusId;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,12 +13,12 @@ import java.util.UUID;
 
 public class Restaurant extends AggregateRoot<RestaurantId> {
   private final OrderDetail orderDetail;
-  private RestaurantRespStatus restaurantRespStatus;
+  private RestaurantOrderStatus restaurantOrderStatus;
   private boolean active;
 
   private Restaurant(Builder builder) {
     setId(builder.restaurantId);
-    restaurantRespStatus = builder.restaurantRespStatus;
+    restaurantOrderStatus = builder.restaurantOrderStatus;
     active = builder.active;
     orderDetail = builder.orderDetail;
   }
@@ -46,16 +46,16 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
   }
 
   public void createRestaurantStatus(RestaurantStatus restaurantStatus) {
-    this.restaurantRespStatus = RestaurantRespStatus.builder()
-      .restaurantRespStatusId(new RestaurantRespStatusId(UUID.randomUUID()))
+    this.restaurantOrderStatus = RestaurantOrderStatus.builder()
+      .restaurantRespStatusId(new RestaurantOrderStatusId(UUID.randomUUID()))
       .restaurantId(this.getId())
       .orderId(this.getOrderDetail().getId())
       .restaurantStatus(restaurantStatus)
       .build();
   }
 
-  public RestaurantRespStatus getRestaurantStatus() {
-    return restaurantRespStatus;
+  public RestaurantOrderStatus getRestaurantStatus() {
+    return restaurantOrderStatus;
   }
 
   public boolean isActive() {
@@ -76,17 +76,17 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     if (o == null || getClass() != o.getClass()) return false;
     if (!super.equals(o)) return false;
     Restaurant that = (Restaurant) o;
-    return active == that.active && Objects.equals(orderDetail, that.orderDetail) && Objects.equals(restaurantRespStatus, that.restaurantRespStatus);
+    return active == that.active && Objects.equals(orderDetail, that.orderDetail) && Objects.equals(restaurantOrderStatus, that.restaurantOrderStatus);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), orderDetail, restaurantRespStatus, active);
+    return Objects.hash(super.hashCode(), orderDetail, restaurantOrderStatus, active);
   }
 
   public static final class Builder {
     private RestaurantId restaurantId;
-    private RestaurantRespStatus restaurantRespStatus;
+    private RestaurantOrderStatus restaurantOrderStatus;
     private boolean active;
     private OrderDetail orderDetail;
 
@@ -98,8 +98,8 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
       return this;
     }
 
-    public Builder restaurantStatus(RestaurantRespStatus val) {
-      restaurantRespStatus = val;
+    public Builder restaurantStatus(RestaurantOrderStatus val) {
+      restaurantOrderStatus = val;
       return this;
     }
 

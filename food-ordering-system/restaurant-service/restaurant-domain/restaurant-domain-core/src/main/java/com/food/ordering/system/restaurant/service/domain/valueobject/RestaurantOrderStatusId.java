@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class
 
-RestaurantRespStatusId extends BaseId<UUID> {
-  public RestaurantRespStatusId(UUID value) {
+RestaurantOrderStatusId extends BaseId<UUID> {
+  public RestaurantOrderStatusId(UUID value) {
     super(value);
   }
 }

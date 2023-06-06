@@ -1,3 +1,16 @@
+### PostgreSQL / tnnnnXxxxx (Master password)
+#1 Login PostgreSQL
+psql -U postgres
+    Password for user postgres: // admin
+    psql (15.2)
+    Type "help" for help.
+
+    postgres=# exit
+
+#2 Create database 
+
+
+### Kafka Cluster
 #1 => 23. Testing Order Service domain logic
 - order-domain-service
 
@@ -52,8 +65,6 @@ docker-compose -f common.yml -f kafka_cluster.yml up
     docker-compose-kafka-broker-1-1   | [2023-05-24 11:17:26,230] INFO [Partition __consumer_offsets-15 broker=1] Log loaded for partition __consumer_offsets-15 with initial high watermark 0 (kafka.cluster.Partition)
     docker-compose-kafka-broker-1-1   | [2023-05-24 11:17:26,231] INFO [Broker id=1] Follower __consumer_offsets-15 starts at leader epoch 0 from offset 0 with high watermark 0. Previous leader epoch was -1. (state.change.logger)
     docker-compose-kafka-broker-3-1   | [2023-05-24 11:17:26,234] INFO [LogLoader partition=__consumer_offsets-26, dir=/var/lib/kafka/data] Loading producer state till offset 0 with message format version 2 (kafka.log.Log$)
-    docker-compose-kafka-broker-3-1   | [2023-05-24 11:17:26,238] INFO Created log for partition __consumer_offsets-26 in /var/lib/kafka/data/__consumer_offsets-26 with properties {cleanup.policy=compact, compression.type="producer", segment.bytes=104857600} (kafka.log.LogManager)
-    docker-compose-kafka-broker-3-1   | [2023-05-24 11:17:26,239] INFO [Partition __consumer_offsets-26 broker=3] No checkpointed highwatermark is found for partition __consumer_offsets-26 (kafka.cluster.Partition)
     ...
  
 // Step 3 = Setup Kafka Topics (Run ONLY once)
@@ -104,7 +115,6 @@ docker-compose -f common.yml -f kafka_cluster.yml up
 
 http://localhost:9000
 
-
 ## Kafka Manager => http://localhost:9000/
 Add Cluster => Cluster Name (food-ordering-system-cluster) / Cluster Zookeeper Hosts (zookeeper:2181) => 
 Enable Active OffsetCache => Save => Topics	7 /	Brokers	3
@@ -126,3 +136,23 @@ http://localhost:9000
 // DOS Command - Administrator
 net stop winnat
 net start winnat
+
+40. Container module: Explaining kafka consumer properties
+41. Container module: Adding Order database schema file
+
+cd food-ordering-system\order-service\order-container\src\main\resources
+// application.yml
+- server
+- logging
+- order-service
+- spring
+  = jpa
+  = datasource
+  = sql
+    * init-schema.sql (pgAdmin)
+- kafka  
+  = kafka-config
+  = kafka-producer-config
+  = kafka-consumer-config
+
+42. Creating Customer Service & Running Order Service

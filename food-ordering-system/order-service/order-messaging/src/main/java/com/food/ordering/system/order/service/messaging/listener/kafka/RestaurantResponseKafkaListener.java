@@ -49,11 +49,11 @@ public class RestaurantResponseKafkaListener implements KafkaConsumer<Restaurant
         RestaurantResponse restaurantResponse = orderMessagingDataMapper
           .restaurantResponse(restaurantStatusResponseAvroModel);
 
-        if (RestaurantStatus.APPROVED == restaurantStatusResponseAvroModel.getRestaurantRespStatus()) {
+        if (RestaurantStatus.APPROVED == restaurantStatusResponseAvroModel.getRestaurantOrderStatus()) {
           log.info("Processing status order for order id: {}",
             restaurantStatusResponseAvroModel.getOrderId());
           restaurantResponseMessageListener.orderStatus(restaurantResponse);
-        } else if (RestaurantStatus.REJECTED == restaurantStatusResponseAvroModel.getRestaurantRespStatus()) {
+        } else if (RestaurantStatus.REJECTED == restaurantStatusResponseAvroModel.getRestaurantOrderStatus()) {
           log.info("Processing rejected order for order id: {}, with failure messages: {}",
             restaurantStatusResponseAvroModel.getOrderId(),
             String.join(FAILURE_MESSAGE_DELIMITER,

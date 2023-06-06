@@ -4,17 +4,17 @@ import com.food.ordering.system.domain.entity.BaseEntity;
 import com.food.ordering.system.domain.outbox.RestaurantStatus;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantRespStatusId;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantOrderStatusId;
 
 import java.util.Objects;
 
-public class RestaurantRespStatus extends BaseEntity<RestaurantRespStatusId> {
+public class RestaurantOrderStatus extends BaseEntity<RestaurantOrderStatusId> {
   private final RestaurantId restaurantId;
   private final OrderId orderId;
   private final RestaurantStatus restaurantStatus;
 
-  private RestaurantRespStatus(Builder builder) {
-    setId(builder.restaurantRespStatusId);
+  private RestaurantOrderStatus(Builder builder) {
+    setId(builder.restaurantOrderStatusId);
     restaurantId = builder.restaurantId;
     orderId = builder.orderId;
     restaurantStatus = builder.restaurantStatus;
@@ -41,7 +41,7 @@ public class RestaurantRespStatus extends BaseEntity<RestaurantRespStatusId> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     if (!super.equals(o)) return false;
-    RestaurantRespStatus that = (RestaurantRespStatus) o;
+    RestaurantOrderStatus that = (RestaurantOrderStatus) o;
     return Objects.equals(restaurantId, that.restaurantId) && Objects.equals(orderId, that.orderId) && restaurantStatus == that.restaurantStatus;
   }
 
@@ -51,7 +51,7 @@ public class RestaurantRespStatus extends BaseEntity<RestaurantRespStatusId> {
   }
 
   public static final class Builder {
-    private RestaurantRespStatusId restaurantRespStatusId;
+    private RestaurantOrderStatusId restaurantOrderStatusId;
     private RestaurantId restaurantId;
     private OrderId orderId;
     private RestaurantStatus restaurantStatus;
@@ -59,8 +59,8 @@ public class RestaurantRespStatus extends BaseEntity<RestaurantRespStatusId> {
     private Builder() {
     }
 
-    public Builder restaurantRespStatusId(RestaurantRespStatusId val) {
-      restaurantRespStatusId = val;
+    public Builder restaurantRespStatusId(RestaurantOrderStatusId val) {
+      restaurantOrderStatusId = val;
       return this;
     }
 
@@ -79,8 +79,8 @@ public class RestaurantRespStatus extends BaseEntity<RestaurantRespStatusId> {
       return this;
     }
 
-    public RestaurantRespStatus build() {
-      return new RestaurantRespStatus(this);
+    public RestaurantOrderStatus build() {
+      return new RestaurantOrderStatus(this);
     }
   }
 }

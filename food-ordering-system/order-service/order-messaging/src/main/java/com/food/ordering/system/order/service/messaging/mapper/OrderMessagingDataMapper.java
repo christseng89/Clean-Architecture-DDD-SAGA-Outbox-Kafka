@@ -40,7 +40,7 @@ public class OrderMessagingDataMapper {
       .orderId(restaurantResponseAvroModel.getOrderId())
       .createdAt(restaurantResponseAvroModel.getCreatedAt())
       .restaurantStatus(RestaurantStatus.valueOf(
-        restaurantResponseAvroModel.getRestaurantRespStatus().name()))
+        restaurantResponseAvroModel.getRestaurantOrderStatus().name()))
       .failureMessages(restaurantResponseAvroModel.getFailureMessages())
       .build();
   }

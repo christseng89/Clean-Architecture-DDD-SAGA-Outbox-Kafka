@@ -5,7 +5,7 @@ import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutb
 
 import java.util.function.BiConsumer;
 
-public interface RestaurantResponseMessagePublisher {
+public interface RestaurantOrderStatusMessagePublisher {
 
   void publish(
     OrderOutboxMessage orderOutboxMessage,

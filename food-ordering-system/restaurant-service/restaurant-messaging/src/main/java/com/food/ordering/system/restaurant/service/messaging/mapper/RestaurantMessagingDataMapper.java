@@ -45,7 +45,7 @@ public class RestaurantMessagingDataMapper {
       .setOrderId(orderEventPayload.getOrderId())
       .setRestaurantId(orderEventPayload.getRestaurantId())
       .setCreatedAt(orderEventPayload.getCreatedAt().toInstant())
-      .setRestaurantRespStatus(RestaurantStatus.valueOf(orderEventPayload.getRestaurantStatus()))
+      .setRestaurantOrderStatus(RestaurantStatus.valueOf(orderEventPayload.getRestaurantStatus()))
       .setFailureMessages(orderEventPayload.getFailureMessages())
       .build();
   }

@@ -6,12 +6,12 @@ import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.domain.valueobject.ProductId;
 import com.food.ordering.system.domain.valueobject.RestaurantId;
-import com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity.RestaurantRespStatusEntity;
+import com.food.ordering.system.restaurant.service.dataaccess.restaurant.entity.RestaurantOrderStatusEntity;
 import com.food.ordering.system.restaurant.service.domain.entity.OrderDetail;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
-import com.food.ordering.system.restaurant.service.domain.entity.RestaurantRespStatus;
-import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantRespStatusId;
+import com.food.ordering.system.restaurant.service.domain.entity.RestaurantOrderStatus;
+import com.food.ordering.system.restaurant.service.domain.valueobject.RestaurantOrderStatusId;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -50,23 +50,23 @@ public class RestaurantDataAccessMapper {
       .build();
   }
 
-  public RestaurantRespStatusEntity restaurantRespStatusToRestaurantRespStatusEntity(
-    RestaurantRespStatus restaurantRespStatus) {
-    return RestaurantRespStatusEntity.builder()
-      .id(restaurantRespStatus.getId().getValue())
-      .restaurantId(restaurantRespStatus.getRestaurantId().getValue())
-      .orderId(restaurantRespStatus.getOrderId().getValue())
-      .status(restaurantRespStatus.getRestaurantStatus())
+  public RestaurantOrderStatusEntity restaurantRespStatusToRestaurantRespStatusEntity(
+    RestaurantOrderStatus restaurantOrderStatus) {
+    return RestaurantOrderStatusEntity.builder()
+      .id(restaurantOrderStatus.getId().getValue())
+      .restaurantId(restaurantOrderStatus.getRestaurantId().getValue())
+      .orderId(restaurantOrderStatus.getOrderId().getValue())
+      .status(restaurantOrderStatus.getRestaurantStatus())
       .build();
   }
 
   public void restaurantRespStatusEntityToRestaurantRespStatus(
-    RestaurantRespStatusEntity restaurantRespStatusEntity) {
-    RestaurantRespStatus.builder()
-      .restaurantRespStatusId(new RestaurantRespStatusId(restaurantRespStatusEntity.getId()))
-      .restaurantId(new RestaurantId(restaurantRespStatusEntity.getRestaurantId()))
-      .orderId(new OrderId(restaurantRespStatusEntity.getOrderId()))
-      .restaurantStatus(restaurantRespStatusEntity.getStatus())
+    RestaurantOrderStatusEntity restaurantOrderStatusEntity) {
+    RestaurantOrderStatus.builder()
+      .restaurantRespStatusId(new RestaurantOrderStatusId(restaurantOrderStatusEntity.getId()))
+      .restaurantId(new RestaurantId(restaurantOrderStatusEntity.getRestaurantId()))
+      .orderId(new OrderId(restaurantOrderStatusEntity.getOrderId()))
+      .restaurantStatus(restaurantOrderStatusEntity.getStatus())
       .build();
   }
 }
