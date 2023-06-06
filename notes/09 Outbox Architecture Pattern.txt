@@ -115,7 +115,7 @@ B.  UNIQUE INDEXES
     * Restaurant Container
     CREATE UNIQUE INDEX "restaurant_order_outbox_saga_id"
         ON "restaurant".order_outbox
-            (type, saga_id, status_status, outbox_status);
+            (type, saga_id, restaurant_status, outbox_status);
 
 76. Updating the Order Application Service Test for Outbox pattern
 OrderPaymentOutboxMessage Payload...

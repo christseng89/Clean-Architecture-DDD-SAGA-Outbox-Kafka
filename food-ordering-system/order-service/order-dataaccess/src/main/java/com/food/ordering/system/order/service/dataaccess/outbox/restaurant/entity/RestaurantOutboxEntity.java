@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "restaurant_outbox")
+@Table(name = "restaurant_outbox", schema = "order")
 @Entity
 public class RestaurantOutboxEntity {
 

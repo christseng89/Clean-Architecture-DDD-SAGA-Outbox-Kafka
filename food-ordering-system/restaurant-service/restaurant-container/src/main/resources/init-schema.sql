@@ -14,18 +14,18 @@ CREATE TABLE restaurant.restaurants
     CONSTRAINT restaurants_pkey PRIMARY KEY (id)
 );
 
-DROP TYPE IF EXISTS status_status;
+DROP TYPE IF EXISTS restaurant_status CASCADE;
 
-CREATE TYPE status_status AS ENUM ('APPROVED', 'REJECTED');
+CREATE TYPE restaurant_status AS ENUM ('APPROVED', 'REJECTED');
 
 DROP TABLE IF EXISTS restaurant.order_status CASCADE;
 
 CREATE TABLE restaurant.order_status
 (
-    id            uuid          NOT NULL,
-    restaurant_id uuid          NOT NULL,
-    order_id      uuid          NOT NULL,
-    status        status_status NOT NULL,
+    id            uuid              NOT NULL,
+    restaurant_id uuid              NOT NULL,
+    order_id      uuid              NOT NULL,
+    status        restaurant_status NOT NULL,
     CONSTRAINT order_status_pkey PRIMARY KEY (id)
 );
 
@@ -64,32 +64,32 @@ ALTER TABLE restaurant.restaurant_products
         ON DELETE RESTRICT
         NOT VALID;
 
-DROP TYPE IF EXISTS outbox_status;
+DROP TYPE IF EXISTS outbox_status CASCADE;
 CREATE TYPE outbox_status AS ENUM ('STARTED', 'COMPLETED', 'FAILED');
 
 DROP TABLE IF EXISTS restaurant.order_outbox CASCADE;
 
 CREATE TABLE restaurant.order_outbox
 (
-    id            uuid                                           NOT NULL,
-    saga_id       uuid                                           NOT NULL,
-    created_at    TIMESTAMP WITH TIME ZONE                       NOT NULL,
-    processed_at  TIMESTAMP WITH TIME ZONE,
-    type          character varying COLLATE pg_catalog."default" NOT NULL,
-    payload       jsonb                                          NOT NULL,
-    outbox_status outbox_status                                  NOT NULL,
-    status_status status_status                                  NOT NULL,
-    version       integer                                        NOT NULL,
+    id                uuid                                           NOT NULL,
+    saga_id           uuid                                           NOT NULL,
+    created_at        TIMESTAMP WITH TIME ZONE                       NOT NULL,
+    processed_at      TIMESTAMP WITH TIME ZONE,
+    type              character varying COLLATE pg_catalog."default" NOT NULL,
+    payload           jsonb                                          NOT NULL,
+    outbox_status     outbox_status                                  NOT NULL,
+    restaurant_status restaurant_status                              NOT NULL,
+    version           integer                                        NOT NULL,
     CONSTRAINT order_outbox_pkey PRIMARY KEY (id)
 );
 
 CREATE INDEX "restaurant_order_outbox_saga_status"
     ON "restaurant".order_outbox
-        (type, status_status);
+        (type, restaurant_status);
 
 CREATE UNIQUE INDEX "restaurant_order_outbox_saga_id"
     ON "restaurant".order_outbox
-        (type, saga_id, status_status, outbox_status);
+        (type, saga_id, restaurant_status, outbox_status);
 
 DROP MATERIALIZED VIEW IF EXISTS restaurant.order_restaurant_m_view;
 

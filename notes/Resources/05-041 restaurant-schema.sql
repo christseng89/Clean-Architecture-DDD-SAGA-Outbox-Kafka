@@ -14,9 +14,9 @@ CREATE TABLE restaurant.restaurants
     CONSTRAINT restaurants_pkey PRIMARY KEY (id)
 );
 
-DROP TYPE IF EXISTS status_status;
+DROP TYPE IF EXISTS order_status;
 
-CREATE TYPE status_status AS ENUM ('APPROVED', 'REJECTED');
+CREATE TYPE order_status AS ENUM ('APPROVED', 'REJECTED');
 
 DROP TABLE IF EXISTS restaurant.order_status CASCADE;
 
@@ -25,7 +25,7 @@ CREATE TABLE restaurant.order_status
     id uuid NOT NULL,
     restaurant_id uuid NOT NULL,
     order_id uuid NOT NULL,
-    status status_status NOT NULL,
+    status order_status NOT NULL,
     CONSTRAINT order_status_pkey PRIMARY KEY (id)
 );
 
