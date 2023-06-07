@@ -1,5 +1,6 @@
 package com.food.ordering.system.payment.service.container;
 
+import com.food.ordering.system.domain.valueobject.PaymentOrderStatus;
 import com.food.ordering.system.domain.valueobject.PaymentStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.payment.service.dataaccess.outbox.entity.OrderOutboxEntity;
@@ -102,7 +103,7 @@ public class PaymentRequestMessageListenerTest {
       .id(UUID.randomUUID().toString())
       .sagaId(sagaId)
       .orderId(UUID.randomUUID().toString())
-      .paymentOrderStatus(com.food.ordering.system.domain.valueobject.PaymentOrderStatus.PENDING)
+      .paymentOrderStatus(PaymentOrderStatus.PENDING)
       .customerId(CUSTOMER_ID)
       .price(PRICE)
       .createdAt(Instant.now())

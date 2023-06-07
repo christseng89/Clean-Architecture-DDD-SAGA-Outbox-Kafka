@@ -8,20 +8,23 @@
 
 5. Setup Zookeeper
 
-   cd infrastructure\docker-compose
+   cd food-ordering-system\infrastructure\docker-compose
    docker compose -f common.yml -f zookeeper.yml up --remove-orphans
 
    // Check Zookeeper Status (WSL Only)
    echo ruok | ncat localhost 2181
       imok
+
 6. Setup Kafka Cluster
 
-   cd infrastructure\docker-compose
+   cd food-ordering-system\infrastructure\docker-compose
    docker-compose -f common.yml -f kafka_cluster.yml up
+
 7. Setup Kafka Topics (Run ONLY once)
 
-   cd infrastructure\docker-compose
+   cd food-ordering-system\infrastructure\docker-compose
    docker-compose -f common.yml -f init_kafka.yml up
+   
 8. Setup Kafka Manager
 
     http://localhost:9000

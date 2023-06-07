@@ -1,5 +1,6 @@
 package com.food.ordering.system.order.service.container;
 
+import com.food.ordering.system.domain.valueobject.PaymentStatus;
 import com.food.ordering.system.order.service.dataaccess.outbox.payment.entity.PaymentOutboxEntity;
 import com.food.ordering.system.order.service.dataaccess.outbox.payment.repository.PaymentOutboxJpaRepository;
 import com.food.ordering.system.order.service.domain.OrderPaymentSaga;
@@ -104,7 +105,7 @@ public class OrderPaymentSagaTest {
     return PaymentResponse.builder()
       .id(UUID.randomUUID().toString())
       .sagaId(SAGA_ID.toString())
-      .paymentStatus(com.food.ordering.system.domain.valueobject.PaymentStatus.COMPLETED)
+      .paymentStatus(PaymentStatus.COMPLETED)
       .paymentId(PAYMENT_ID.toString())
       .orderId(ORDER_ID.toString())
       .customerId(CUSTOMER_ID.toString())

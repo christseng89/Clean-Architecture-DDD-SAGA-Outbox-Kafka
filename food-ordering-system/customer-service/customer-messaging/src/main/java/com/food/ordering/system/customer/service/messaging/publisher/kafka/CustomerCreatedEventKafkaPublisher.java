@@ -1,8 +1,8 @@
 package com.food.ordering.system.customer.service.messaging.publisher.kafka;
 
 import com.food.ordering.system.customer.service.domain.config.CustomerServiceConfigData;
-import com.food.ordering.system.customer.service.domain.ports.output.message.publisher.CustomerMessagePublisher;
 import com.food.ordering.system.customer.service.domain.event.CustomerCreatedEvent;
+import com.food.ordering.system.customer.service.domain.ports.output.message.publisher.CustomerMessagePublisher;
 import com.food.ordering.system.customer.service.messaging.mapper.CustomerMessagingDataMapper;
 import com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel;
 import com.food.ordering.system.kafka.producer.service.KafkaProducer;
