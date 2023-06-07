@@ -2,17 +2,15 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <parent>
     <artifactId>infrastructure</artifactId>
     <groupId>com.food.ordering.system</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-
   <modelVersion>4.0.0</modelVersion>
+
   <artifactId>kafka</artifactId>
   <packaging>pom</packaging>
-
   <modules>
     <module>kafka-producer</module>
     <module>kafka-consumer</module>
@@ -34,13 +32,10 @@
         <artifactId>spring-kafka</artifactId>
         <version>${spring-kafka.version}</version>
       </dependency>
-
       <dependency>
         <groupId>io.confluent</groupId>
         <artifactId>kafka-avro-serializer</artifactId>
         <version>${kafka-avro-serializer.version}</version>
-
-        <!-- Exclusion slf4j-log4j12 to avoid version conflicts -->
         <exclusions>
           <exclusion>
             <groupId>org.slf4j</groupId>
@@ -59,9 +54,7 @@
             <artifactId>swagger-core</artifactId>
           </exclusion>
         </exclusions>
-        <!-- End of Exclusion slf4j-log4j12 -->
       </dependency>
-
       <dependency>
         <groupId>org.apache.avro</groupId>
         <artifactId>avro</artifactId>

@@ -1,8 +1,8 @@
 package com.food.ordering.system.customer.service.messaging.publisher.kafka;
 
 import com.food.ordering.system.customer.service.domain.config.CustomerServiceConfigData;
-import com.food.ordering.system.customer.service.domain.event.CustomerCreatedEvent;
 import com.food.ordering.system.customer.service.domain.ports.output.message.publisher.CustomerMessagePublisher;
+import com.food.ordering.system.customer.service.domain.event.CustomerCreatedEvent;
 import com.food.ordering.system.customer.service.messaging.mapper.CustomerMessagingDataMapper;
 import com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel;
 import com.food.ordering.system.kafka.producer.service.KafkaProducer;
@@ -37,18 +37,13 @@ public class CustomerCreatedEventKafkaPublisher implements CustomerMessagePublis
       customerCreatedEvent.getCustomer().getId().getValue());
     try {
       CustomerAvroModel customerAvroModel = customerMessagingDataMapper
-        .paymentResponse(customerCreatedEvent);
+        .paymentResponseAvroModelToPaymentResponse(customerCreatedEvent);
 
-      // Customer CQRS (Publish ONLY)
-      String topicName = customerServiceConfigData.getCustomerTopicName();
-
-      kafkaProducer.send(
-        topicName,
-        customerAvroModel.getId(),
+      kafkaProducer.send(customerServiceConfigData.getCustomerTopicName(), customerAvroModel.getId(),
         customerAvroModel,
-        getCallback(topicName, customerAvroModel));
+        getCallback(customerServiceConfigData.getCustomerTopicName(), customerAvroModel));
 
-      log.info("CustomerCreatedEvent sent to Kafka for customer id: {}",
+      log.info("CustomerCreatedEvent sent to kafka for customer id: {}",
         customerAvroModel.getId());
     } catch (Exception e) {
       log.error("Error while sending CustomerCreatedEvent to kafka for customer id: {}," +
@@ -59,7 +54,6 @@ public class CustomerCreatedEventKafkaPublisher implements CustomerMessagePublis
   private ListenableFutureCallback<SendResult<String, CustomerAvroModel>>
   getCallback(String topicName, CustomerAvroModel message) {
     return new ListenableFutureCallback<>() {
-      @SuppressWarnings("NullableProblems")
       @Override
       public void onFailure(Throwable throwable) {
         log.error("Error while sending message {} to topic {}", message.toString(), topicName, throwable);

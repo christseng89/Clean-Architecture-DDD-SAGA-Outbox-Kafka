@@ -1,51 +1,53 @@
 package com.food.ordering.system.restaurant.service.messaging.mapper;
 
-import com.food.ordering.system.domain.outbox.RestaurantOrderStatus;
 import com.food.ordering.system.domain.valueobject.ProductId;
-import com.food.ordering.system.kafka.order.avro.model.RestaurantRequestAvroModel;
-import com.food.ordering.system.kafka.order.avro.model.RestaurantResponseAvroModel;
-import com.food.ordering.system.kafka.order.avro.model.RestaurantStatus;
-import com.food.ordering.system.restaurant.service.domain.dto.RestaurantRequest;
+import com.food.ordering.system.domain.valueobject.RestaurantOrderStatus;
+import com.food.ordering.system.kafka.order.avro.model.OrderApprovalStatus;
+import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
+import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
+import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderEventPayload;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class RestaurantMessagingDataMapper {
 
-  public RestaurantRequest
-  restaurantStatusRequestAvroModelToRestaurantStatus(
-    RestaurantRequestAvroModel restaurantRequestAvroModel) {
-    return RestaurantRequest.builder()
-      .id(restaurantRequestAvroModel.getId())
-      .sagaId(restaurantRequestAvroModel.getSagaId())
-      .restaurantId(restaurantRequestAvroModel.getRestaurantId())
-      .orderId(restaurantRequestAvroModel.getOrderId())
-      .restaurantOrderStatus(RestaurantOrderStatus.valueOf(restaurantRequestAvroModel
+  public RestaurantApprovalRequest
+  restaurantApprovalRequestAvroModelToRestaurantApproval(
+    RestaurantApprovalRequestAvroModel
+      restaurantApprovalRequestAvroModel) {
+    return RestaurantApprovalRequest.builder()
+      .id(restaurantApprovalRequestAvroModel.getId())
+      .sagaId(restaurantApprovalRequestAvroModel.getSagaId())
+      .restaurantId(restaurantApprovalRequestAvroModel.getRestaurantId())
+      .orderId(restaurantApprovalRequestAvroModel.getOrderId())
+      .restaurantOrderStatus(RestaurantOrderStatus.valueOf(restaurantApprovalRequestAvroModel
         .getRestaurantOrderStatus().name()))
-      .products(restaurantRequestAvroModel.getProductAvroModels()
-        .stream()
-        .map(avroModel -> Product.builder()
-          .productId(new ProductId(UUID.fromString(avroModel.getId())))
-          .quantity(avroModel.getQuantity())
-          .build())
-        .toList())
-      .price(restaurantRequestAvroModel.getPrice())
-      .createdAt(restaurantRequestAvroModel.getCreatedAt())
+      .products(restaurantApprovalRequestAvroModel.getProducts()
+        .stream().map(avroModel ->
+          Product.builder()
+            .productId(new ProductId(UUID.fromString(avroModel.getId())))
+            .quantity(avroModel.getQuantity())
+            .build())
+        .collect(Collectors.toList()))
+      .price(restaurantApprovalRequestAvroModel.getPrice())
+      .createdAt(restaurantApprovalRequestAvroModel.getCreatedAt())
       .build();
   }
 
-  public RestaurantResponseAvroModel
-  orderEventPayloadToRestaurantResponseAvroModel(String sagaId, OrderEventPayload orderEventPayload) {
-    return RestaurantResponseAvroModel.newBuilder()
+  public RestaurantApprovalResponseAvroModel
+  orderEventPayloadToRestaurantApprovalResponseAvroModel(String sagaId, OrderEventPayload orderEventPayload) {
+    return RestaurantApprovalResponseAvroModel.newBuilder()
       .setId(UUID.randomUUID().toString())
       .setSagaId(sagaId)
       .setOrderId(orderEventPayload.getOrderId())
       .setRestaurantId(orderEventPayload.getRestaurantId())
       .setCreatedAt(orderEventPayload.getCreatedAt().toInstant())
-      .setRestaurantOrderStatus(RestaurantStatus.valueOf(orderEventPayload.getRestaurantStatus()))
+      .setOrderApprovalStatus(OrderApprovalStatus.valueOf(orderEventPayload.getOrderApprovalStatus()))
       .setFailureMessages(orderEventPayload.getFailureMessages())
       .build();
   }

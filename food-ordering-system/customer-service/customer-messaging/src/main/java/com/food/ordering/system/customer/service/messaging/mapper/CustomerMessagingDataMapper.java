@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerMessagingDataMapper {
 
-  public CustomerAvroModel paymentResponse(
-    CustomerCreatedEvent customerCreatedEvent) {
+  public CustomerAvroModel paymentResponseAvroModelToPaymentResponse(
+    CustomerCreatedEvent
+      customerCreatedEvent) {
     return CustomerAvroModel.newBuilder()
       .setId(customerCreatedEvent.getCustomer().getId().getValue().toString())
       .setUsername(customerCreatedEvent.getCustomer().getUsername())

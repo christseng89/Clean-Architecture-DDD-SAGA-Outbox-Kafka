@@ -17,6 +17,7 @@ import java.util.function.BiConsumer;
 @Slf4j
 @Component
 public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublisher {
+
   private final PaymentMessagingDataMapper paymentMessagingDataMapper;
   private final KafkaProducer<String, PaymentResponseAvroModel> kafkaProducer;
   private final PaymentServiceConfigData paymentServiceConfigData;
@@ -35,7 +36,6 @@ public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublish
 
   @Override
   public void publish(
-    // Payment Order Outbox
     OrderOutboxMessage orderOutboxMessage,
     BiConsumer<OrderOutboxMessage, OutboxStatus> outboxCallback) {
     OrderEventPayload orderEventPayload =
@@ -44,25 +44,24 @@ public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublish
     String sagaId = orderOutboxMessage.getSagaId().toString();
 
     log.info("Received OrderOutboxMessage for order id: {} and saga id: {}",
-      orderEventPayload.getOrderId(), sagaId);
+      orderEventPayload.getOrderId(),
+      sagaId);
 
     try {
       PaymentResponseAvroModel paymentResponseAvroModel = paymentMessagingDataMapper
         .orderEventPayloadToPaymentResponseAvroModel(sagaId, orderEventPayload);
 
-      // Payment Response
-      String topicName = paymentServiceConfigData.getPaymentResponseTopicName();
-
-      kafkaProducer.send(
-        topicName, sagaId, paymentResponseAvroModel, kafkaMessageHelper.getKafkaCallback(
-          topicName,
+      kafkaProducer.send(paymentServiceConfigData.getPaymentResponseTopicName(),
+        sagaId,
+        paymentResponseAvroModel,
+        kafkaMessageHelper.getKafkaCallback(paymentServiceConfigData.getPaymentResponseTopicName(),
           paymentResponseAvroModel,
           orderOutboxMessage,
           outboxCallback,
           orderEventPayload.getOrderId(),
           "PaymentResponseAvroModel"));
 
-      log.info("PaymentResponseAvroModel sent to Kafka for order id: {} and saga id: {}",
+      log.info("PaymentResponseAvroModel sent to kafka for order id: {} and saga id: {}",
         paymentResponseAvroModel.getOrderId(), sagaId);
     } catch (Exception e) {
       log.error("Error while sending PaymentRequestAvroModel message" +

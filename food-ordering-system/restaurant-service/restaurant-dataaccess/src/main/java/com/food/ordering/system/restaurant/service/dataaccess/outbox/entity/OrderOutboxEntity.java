@@ -1,6 +1,6 @@
 package com.food.ordering.system.restaurant.service.dataaccess.outbox.entity;
 
-import com.food.ordering.system.domain.outbox.RestaurantStatus;
+import com.food.ordering.system.domain.valueobject.OrderApprovalStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import lombok.*;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_outbox", schema = "restaurant")
+@Table(name = "order_outbox")
 @Entity
 public class OrderOutboxEntity {
 
@@ -28,7 +28,7 @@ public class OrderOutboxEntity {
   @Enumerated(EnumType.STRING)
   private OutboxStatus outboxStatus;
   @Enumerated(EnumType.STRING)
-  private RestaurantStatus restaurantStatus;
+  private OrderApprovalStatus approvalStatus;
   private int version;
 
   @Override

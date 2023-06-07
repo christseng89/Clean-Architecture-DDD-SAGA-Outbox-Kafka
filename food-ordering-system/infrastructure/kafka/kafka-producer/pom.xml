@@ -12,7 +12,10 @@
   <artifactId>kafka-producer</artifactId>
 
   <dependencies>
-    <!-- 0. Infrastructure -->
+    <dependency>
+      <groupId>com.food.ordering.system</groupId>
+      <artifactId>outbox</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>kafka-model</artifactId>
@@ -23,21 +26,12 @@
     </dependency>
     <dependency>
       <groupId>com.food.ordering.system</groupId>
-      <artifactId>outbox</artifactId>
+      <artifactId>order-domain-core</artifactId>
     </dependency>
-
-    <!-- 1. Common -->
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>common-domain</artifactId>
     </dependency>
-
-    <!-- Order Domain Core -->
-    <dependency>
-      <groupId>com.food.ordering.system</groupId>
-      <artifactId>order-domain-core</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>org.springframework.kafka</groupId>
       <artifactId>spring-kafka</artifactId>

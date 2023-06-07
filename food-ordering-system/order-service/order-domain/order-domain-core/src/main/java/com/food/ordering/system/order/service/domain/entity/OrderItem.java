@@ -5,8 +5,6 @@ import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 
-import java.util.Objects;
-
 public class OrderItem extends BaseEntity<OrderItemId> {
   private final Product product;
   private final int quantity;
@@ -55,20 +53,6 @@ public class OrderItem extends BaseEntity<OrderItemId> {
 
   public Money getSubTotal() {
     return subTotal;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    OrderItem orderItem = (OrderItem) o;
-    return quantity == orderItem.quantity && Objects.equals(product, orderItem.product) && Objects.equals(price, orderItem.price) && Objects.equals(subTotal, orderItem.subTotal) && Objects.equals(orderId, orderItem.orderId);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), product, quantity, price, subTotal, orderId);
   }
 
   public static final class Builder {

@@ -37,11 +37,10 @@ public class KafkaMessageHelper {
     BiConsumer<U, OutboxStatus> outboxCallback,
     String orderId, String avroModelName) {
     return new ListenableFutureCallback<SendResult<String, T>>() {
-      @SuppressWarnings("NullableProblems")
       @Override
-      public void onFailure(Throwable throwable) {
+      public void onFailure(Throwable ex) {
         log.error("Error while sending {} with message: {} and outbox type: {} to topic {}",
-          avroModelName, avroModel.toString(), outboxMessage.getClass().getName(), responseTopicName, throwable);
+          avroModelName, avroModel.toString(), outboxMessage.getClass().getName(), responseTopicName, ex);
         outboxCallback.accept(outboxMessage, OutboxStatus.FAILED);
       }
 

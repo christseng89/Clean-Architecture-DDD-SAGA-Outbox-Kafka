@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.food.ordering.system.order.service.domain.entity.Order.FAILURE_MESSAGE_DELIMITER;
 
@@ -34,32 +35,10 @@ public class OrderDataAccessMapper {
       .failureMessages(order.getFailureMessages() != null ?
         String.join(FAILURE_MESSAGE_DELIMITER, order.getFailureMessages()) : "")
       .build();
-
     orderEntity.getAddress().setOrder(orderEntity);
-    orderEntity.getItems().forEach(
-      orderItemEntity -> orderItemEntity.setOrder(orderEntity));
+    orderEntity.getItems().forEach(orderItemEntity -> orderItemEntity.setOrder(orderEntity));
 
     return orderEntity;
-  }
-
-  private OrderAddressEntity deliveryAddressToAddressEntity(StreetAddress deliveryAddress) {
-    return OrderAddressEntity.builder()
-      .id(deliveryAddress.getId())
-      .street(deliveryAddress.getStreet())
-      .postalCode(deliveryAddress.getPostalCode())
-      .city(deliveryAddress.getCity())
-      .build();
-  }
-  
-  private List<OrderItemEntity> orderItemsToOrderItemEntities(List<OrderItem> items) {
-    return items.stream()
-      .map(orderItem -> OrderItemEntity.builder()
-        .id(orderItem.getId().getValue())
-        .productId(orderItem.getProduct().getId().getValue())
-        .price(orderItem.getPrice().getAmount())
-        .quantity(orderItem.getQuantity())
-        .subTotal(orderItem.getSubTotal().getAmount())
-        .build()).toList();
   }
 
   public Order orderEntityToOrder(OrderEntity orderEntity) {
@@ -72,16 +51,10 @@ public class OrderDataAccessMapper {
       .items(orderItemEntitiesToOrderItems(orderEntity.getItems()))
       .trackingId(new TrackingId(orderEntity.getTrackingId()))
       .orderStatus(orderEntity.getOrderStatus())
-      .failureMessages(orderEntity.getFailureMessages().isEmpty() ?
-        new ArrayList<>() :
+      .failureMessages(orderEntity.getFailureMessages().isEmpty() ? new ArrayList<>() :
         new ArrayList<>(Arrays.asList(orderEntity.getFailureMessages()
           .split(FAILURE_MESSAGE_DELIMITER))))
       .build();
-  }
-
-  private StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address) {
-    return new StreetAddress(
-      address.getId(), address.getStreet(), address.getPostalCode(), address.getCity());
   }
 
   private List<OrderItem> orderItemEntitiesToOrderItems(List<OrderItemEntity> items) {
@@ -92,6 +65,35 @@ public class OrderDataAccessMapper {
         .price(new Money(orderItemEntity.getPrice()))
         .quantity(orderItemEntity.getQuantity())
         .subTotal(new Money(orderItemEntity.getSubTotal()))
-        .build()).toList();
+        .build())
+      .collect(Collectors.toList());
+  }
+
+  private StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address) {
+    return new StreetAddress(address.getId(),
+      address.getStreet(),
+      address.getPostalCode(),
+      address.getCity());
+  }
+
+  private List<OrderItemEntity> orderItemsToOrderItemEntities(List<OrderItem> items) {
+    return items.stream()
+      .map(orderItem -> OrderItemEntity.builder()
+        .id(orderItem.getId().getValue())
+        .productId(orderItem.getProduct().getId().getValue())
+        .price(orderItem.getPrice().getAmount())
+        .quantity(orderItem.getQuantity())
+        .subTotal(orderItem.getSubTotal().getAmount())
+        .build())
+      .collect(Collectors.toList());
+  }
+
+  private OrderAddressEntity deliveryAddressToAddressEntity(StreetAddress deliveryAddress) {
+    return OrderAddressEntity.builder()
+      .id(deliveryAddress.getId())
+      .street(deliveryAddress.getStreet())
+      .postalCode(deliveryAddress.getPostalCode())
+      .city(deliveryAddress.getCity())
+      .build();
   }
 }

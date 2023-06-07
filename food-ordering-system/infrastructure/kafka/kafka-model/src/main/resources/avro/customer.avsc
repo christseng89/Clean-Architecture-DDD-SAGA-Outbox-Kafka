@@ -5,8 +5,8 @@
   "fields": [
     {
       "name": "id",
-      "type":{  
-        "type":"string"
+      "type": {
+        "type": "string"
       }
     },
     {

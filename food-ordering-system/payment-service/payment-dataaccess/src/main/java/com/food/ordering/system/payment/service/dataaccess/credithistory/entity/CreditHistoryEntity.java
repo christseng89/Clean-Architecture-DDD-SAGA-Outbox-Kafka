@@ -1,6 +1,6 @@
 package com.food.ordering.system.payment.service.dataaccess.credithistory.entity;
 
-import com.food.ordering.system.payment.service.domain.valueobject.PaymentType;
+import com.food.ordering.system.payment.service.domain.valueobject.TransactionType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "credit_history", schema = "payment")
+@Table(name = "credit_history")
 @Entity
 public class CreditHistoryEntity {
 
@@ -22,7 +22,7 @@ public class CreditHistoryEntity {
   private UUID customerId;
   private BigDecimal amount;
   @Enumerated(EnumType.STRING)
-  private PaymentType type;
+  private TransactionType type;
 
   @Override
   public boolean equals(Object o) {

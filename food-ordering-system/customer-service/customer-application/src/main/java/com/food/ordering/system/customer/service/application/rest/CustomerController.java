@@ -1,7 +1,7 @@
 package com.food.ordering.system.customer.service.application.rest;
 
-import com.food.ordering.system.customer.service.domain.dto.CreateCustomerRequest;
-import com.food.ordering.system.customer.service.domain.dto.CreateCustomerResponse;
+import com.food.ordering.system.customer.service.domain.create.CreateCustomerCommand;
+import com.food.ordering.system.customer.service.domain.create.CreateCustomerResponse;
 import com.food.ordering.system.customer.service.domain.ports.input.service.CustomerApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/customers", produces = "application/vnd.api.v1+json")
 public class CustomerController {
+
   private final CustomerApplicationService customerApplicationService;
 
   public CustomerController(CustomerApplicationService customerApplicationService) {
@@ -21,14 +22,12 @@ public class CustomerController {
   }
 
   @PostMapping
-  public ResponseEntity<CreateCustomerResponse> createCustomerResponse(
-    @RequestBody CreateCustomerRequest createCustomerRequest) {
-    log.info("Creating customer with username: {}", createCustomerRequest.getUsername());
-    CreateCustomerResponse createCustomerResponse = customerApplicationService.
-      createCustomerResponse(createCustomerRequest);
-
-    log.info("Customer created with customer id: {}", createCustomerResponse.getCustomerId());
-    return ResponseEntity.ok(createCustomerResponse);
+  public ResponseEntity<CreateCustomerResponse> createCustomer(
+    @RequestBody CreateCustomerCommand
+      createCustomerCommand) {
+    log.info("Creating customer with username: {}", createCustomerCommand.getUsername());
+    CreateCustomerResponse response = customerApplicationService.createCustomer(createCustomerCommand);
+    return ResponseEntity.ok(response);
   }
 
 }

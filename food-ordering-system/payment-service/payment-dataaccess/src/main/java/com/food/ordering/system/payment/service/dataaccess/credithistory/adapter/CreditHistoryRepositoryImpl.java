@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class CreditHistoryRepositoryImpl implements CreditHistoryRepository {
@@ -25,21 +26,19 @@ public class CreditHistoryRepositoryImpl implements CreditHistoryRepository {
   }
 
   @Override
-  public CreditHistory save(CreditHistory creditHistory) {
-    return creditHistoryDataAccessMapper.creditHistoryEntityToCreditHistory(
-      creditHistoryJpaRepository.save(
-        creditHistoryDataAccessMapper.creditHistoryToCreditHistoryEntity(creditHistory)));
+  public void save(CreditHistory creditHistory) {
+    creditHistoryDataAccessMapper.creditHistoryEntityToCreditHistory(creditHistoryJpaRepository
+      .save(creditHistoryDataAccessMapper.creditHistoryToCreditHistoryEntity(creditHistory)));
   }
 
   @Override
   public Optional<List<CreditHistory>> findByCustomerId(CustomerId customerId) {
     Optional<List<CreditHistoryEntity>> creditHistory =
       creditHistoryJpaRepository.findByCustomerId(customerId.getValue());
-
     return creditHistory
       .map(creditHistoryList ->
         creditHistoryList.stream()
           .map(creditHistoryDataAccessMapper::creditHistoryEntityToCreditHistory)
-          .toList());
+          .collect(Collectors.toList()));
   }
 }

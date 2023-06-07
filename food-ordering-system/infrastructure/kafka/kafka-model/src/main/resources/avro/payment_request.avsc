@@ -5,26 +5,26 @@
   "fields": [
     {
       "name": "id",
-      "type":{  
-        "type":"string"
+      "type": {
+        "type": "string"
       }
     },
     {
       "name": "sagaId",
-      "type":{  
-        "type":"string"
+      "type": {
+        "type": "string"
       }
     },
     {
       "name": "customerId",
-      "type":{  
-        "type":"string"
+      "type": {
+        "type": "string"
       }
     },
     {
       "name": "orderId",
-      "type":{  
-        "type":"string"
+      "type": {
+        "type": "string"
       }
     },
     {

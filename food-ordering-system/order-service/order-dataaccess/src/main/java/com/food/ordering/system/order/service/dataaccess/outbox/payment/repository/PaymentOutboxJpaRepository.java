@@ -14,12 +14,18 @@ import java.util.UUID;
 public interface PaymentOutboxJpaRepository extends JpaRepository<PaymentOutboxEntity, UUID> {
 
   Optional<List<PaymentOutboxEntity>> findByTypeAndOutboxStatusAndSagaStatusIn(
-    String type, OutboxStatus outboxStatus, List<SagaStatus> sagaStatus);
+    String type,
+    OutboxStatus outboxStatus,
+    List<SagaStatus> sagaStatus);
 
   Optional<PaymentOutboxEntity> findByTypeAndSagaIdAndSagaStatusIn(
-    String type, UUID sagaId, List<SagaStatus> sagaStatus);
+    String type,
+    UUID sagaId,
+    List<SagaStatus> sagaStatus);
 
   void deleteByTypeAndOutboxStatusAndSagaStatusIn(
-    String type, OutboxStatus outboxStatus, List<SagaStatus> sagaStatus);
+    String type,
+    OutboxStatus outboxStatus,
+    List<SagaStatus> sagaStatus);
 
 }

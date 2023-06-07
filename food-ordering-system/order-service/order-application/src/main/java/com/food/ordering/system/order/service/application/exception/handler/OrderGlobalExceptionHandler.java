@@ -1,8 +1,9 @@
 package com.food.ordering.system.order.service.application.exception.handler;
 
-import com.food.ordering.system.application.handler.ErrorDTO;
-import com.food.ordering.system.application.handler.GlobalExceptionHandler;
+import com.food.ordering.system.application.ErrorDTO;
+import com.food.ordering.system.application.GlobalExceptionHandler;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
+import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +18,7 @@ public class OrderGlobalExceptionHandler extends GlobalExceptionHandler {
   @ResponseBody
   @ExceptionHandler(value = {OrderDomainException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorDTO badRequestException(OrderDomainException orderDomainException) {
+  public ErrorDTO handleException(OrderDomainException orderDomainException) {
     log.error(orderDomainException.getMessage(), orderDomainException);
     return ErrorDTO.builder()
       .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
@@ -26,14 +27,13 @@ public class OrderGlobalExceptionHandler extends GlobalExceptionHandler {
   }
 
   @ResponseBody
-  @ExceptionHandler(value = {OrderDomainException.class})
+  @ExceptionHandler(value = {OrderNotFoundException.class})
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ErrorDTO handleNotFoundException(OrderDomainException orderDomainException) {
-    log.error(orderDomainException.getMessage(), orderDomainException);
+  public ErrorDTO handleException(OrderNotFoundException orderNotFoundException) {
+    log.error(orderNotFoundException.getMessage(), orderNotFoundException);
     return ErrorDTO.builder()
       .code(HttpStatus.NOT_FOUND.getReasonPhrase())
-      .message(orderDomainException.getMessage())
+      .message(orderNotFoundException.getMessage())
       .build();
   }
 }
-

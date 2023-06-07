@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "kafka-producer-config")
-// Related to the service-container->resources->application.yml file ("kafka-producer-config")
-
 public class KafkaProducerConfigData {
   private String keySerializerClass;
   private String valueSerializerClass;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
@@ -36,11 +37,11 @@ public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
   @Override
   public Optional<List<OrderOutboxMessage>> findByTypeAndOutboxStatus(String sagaType, OutboxStatus outboxStatus) {
     return Optional.of(orderOutboxJpaRepository.findByTypeAndOutboxStatus(sagaType, outboxStatus)
-      .orElseThrow(() -> new OrderOutboxNotFoundException("Status outbox object " +
+      .orElseThrow(() -> new OrderOutboxNotFoundException("Approval outbox object " +
         "cannot be found for saga type " + sagaType))
       .stream()
       .map(orderOutboxDataAccessMapper::orderOutboxEntityToOrderOutboxMessage)
-      .toList());
+      .collect(Collectors.toList()));
   }
 
   @Override

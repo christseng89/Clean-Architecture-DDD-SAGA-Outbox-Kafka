@@ -1,6 +1,6 @@
 package com.food.ordering.system.payment.service.dataaccess.outbox.entity;
 
-import com.food.ordering.system.domain.outbox.PaymentStatus;
+import com.food.ordering.system.domain.valueobject.PaymentStatus;
 import com.food.ordering.system.outbox.OutboxStatus;
 import lombok.*;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_outbox", schema = "payment")
+@Table(name = "order_outbox")
 @Entity
 public class OrderOutboxEntity {
 

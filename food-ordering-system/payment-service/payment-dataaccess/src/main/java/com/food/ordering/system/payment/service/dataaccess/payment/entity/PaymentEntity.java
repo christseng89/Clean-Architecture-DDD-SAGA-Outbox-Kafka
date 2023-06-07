@@ -1,6 +1,6 @@
 package com.food.ordering.system.payment.service.dataaccess.payment.entity;
 
-import com.food.ordering.system.domain.outbox.PaymentStatus;
+import com.food.ordering.system.domain.valueobject.PaymentStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "payments", schema = "payment")
+@Table(name = "payments")
 @Entity
 public class PaymentEntity {
 

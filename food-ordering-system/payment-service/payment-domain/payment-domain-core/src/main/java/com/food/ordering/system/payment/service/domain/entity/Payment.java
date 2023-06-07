@@ -1,19 +1,16 @@
 package com.food.ordering.system.payment.service.domain.entity;
 
 import com.food.ordering.system.domain.entity.AggregateRoot;
-import com.food.ordering.system.domain.outbox.PaymentStatus;
 import com.food.ordering.system.domain.valueobject.CustomerId;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
+import com.food.ordering.system.domain.valueobject.PaymentStatus;
 import com.food.ordering.system.payment.service.domain.valueobject.PaymentId;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
-
-import static com.food.ordering.system.domain.DomainConstants.UTC;
 
 public class Payment extends AggregateRoot<PaymentId> {
 
@@ -39,7 +36,7 @@ public class Payment extends AggregateRoot<PaymentId> {
 
   public void initializePayment() {
     setId(new PaymentId(UUID.randomUUID()));
-    createdAt = ZonedDateTime.now(ZoneId.of(UTC));
+    createdAt = ZonedDateTime.now(ZoneId.of("UTC"));
   }
 
   public void validatePayment(List<String> failureMessages) {
@@ -70,20 +67,6 @@ public class Payment extends AggregateRoot<PaymentId> {
 
   public ZonedDateTime getCreatedAt() {
     return createdAt;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    Payment payment = (Payment) o;
-    return Objects.equals(orderId, payment.orderId) && Objects.equals(customerId, payment.customerId) && Objects.equals(price, payment.price) && paymentStatus == payment.paymentStatus && Objects.equals(createdAt, payment.createdAt);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode(), orderId, customerId, price, paymentStatus, createdAt);
   }
 
   public static final class Builder {
