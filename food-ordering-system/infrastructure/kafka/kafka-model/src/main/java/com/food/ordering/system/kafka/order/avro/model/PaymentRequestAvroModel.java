@@ -49,21 +49,24 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   private java.math.BigDecimal price;
   private java.time.Instant createdAt;
   private com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus paymentOrderStatus;
+
   /**
-   * Default constructor.  Note that this does not initialize fields
-   * to their default values from the schema.  If that is desired then
-   * one should use <code>newBuilder()</code>.
+   * Default constructor.  Note that this does not initialize fields to their
+   * default values from the schema.  If that is desired then one should use
+   * <code>newBuilder()</code>.
    */
   public PaymentRequestAvroModel() {
   }
+
   /**
    * All-args constructor.
-   * @param id The new value for id
-   * @param sagaId The new value for sagaId
-   * @param customerId The new value for customerId
-   * @param orderId The new value for orderId
-   * @param price The new value for price
-   * @param createdAt The new value for createdAt
+   *
+   * @param id                 The new value for id
+   * @param sagaId             The new value for sagaId
+   * @param customerId         The new value for customerId
+   * @param orderId            The new value for orderId
+   * @param price              The new value for price
+   * @param createdAt          The new value for createdAt
    * @param paymentOrderStatus The new value for paymentOrderStatus
    */
   public PaymentRequestAvroModel(java.lang.String id, java.lang.String sagaId, java.lang.String customerId, java.lang.String orderId, java.math.BigDecimal price, java.time.Instant createdAt, com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus paymentOrderStatus) {
@@ -82,6 +85,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
+   *
    * @return the message encoder used by this class
    */
   public static BinaryMessageEncoder<PaymentRequestAvroModel> getEncoder() {
@@ -90,6 +94,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Return the BinaryMessageDecoder instance used by this class.
+   *
    * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<PaymentRequestAvroModel> getDecoder() {
@@ -97,9 +102,12 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   }
 
   /**
-   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * Create a new BinaryMessageDecoder instance for this class that uses the
+   * specified {@link SchemaStore}.
+   *
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
-   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
+   * @return a BinaryMessageDecoder instance for this class backed by the given
+   * SchemaStore
    */
   public static BinaryMessageDecoder<PaymentRequestAvroModel> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
@@ -107,9 +115,13 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Deserializes a PaymentRequestAvroModel from a ByteBuffer.
-   * @param b a byte buffer holding serialized data for an instance of this class
+   *
+   * @param b a byte buffer holding serialized data for an instance of this
+   *          class
    * @return a PaymentRequestAvroModel instance decoded from the given buffer
-   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   *
+   * @throws java.io.IOException if the given bytes could not be deserialized
+   *                             into an instance of this class
    */
   public static PaymentRequestAvroModel fromByteBuffer(
     java.nio.ByteBuffer b) throws java.io.IOException {
@@ -118,6 +130,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Creates a new PaymentRequestAvroModel RecordBuilder.
+   *
    * @return A new PaymentRequestAvroModel RecordBuilder
    */
   public static com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder newBuilder() {
@@ -125,7 +138,9 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   }
 
   /**
-   * Creates a new PaymentRequestAvroModel RecordBuilder by copying an existing Builder.
+   * Creates a new PaymentRequestAvroModel RecordBuilder by copying an existing
+   * Builder.
+   *
    * @param other The existing builder to copy.
    * @return A new PaymentRequestAvroModel RecordBuilder
    */
@@ -138,7 +153,9 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
   }
 
   /**
-   * Creates a new PaymentRequestAvroModel RecordBuilder by copying an existing PaymentRequestAvroModel instance.
+   * Creates a new PaymentRequestAvroModel RecordBuilder by copying an existing
+   * PaymentRequestAvroModel instance.
+   *
    * @param other The existing instance to copy.
    * @return A new PaymentRequestAvroModel RecordBuilder
    */
@@ -152,7 +169,9 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Serializes this PaymentRequestAvroModel to a ByteBuffer.
+   *
    * @return a buffer holding the serialized data for this instance
+   *
    * @throws java.io.IOException if this instance could not be serialized
    */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
@@ -230,6 +249,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Gets the value of the 'id' field.
+   *
    * @return The value of the 'id' field.
    */
   public java.lang.String getId() {
@@ -238,6 +258,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Sets the value of the 'id' field.
+   *
    * @param value the value to set.
    */
   public void setId(java.lang.String value) {
@@ -246,6 +267,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Gets the value of the 'sagaId' field.
+   *
    * @return The value of the 'sagaId' field.
    */
   public java.lang.String getSagaId() {
@@ -254,6 +276,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Sets the value of the 'sagaId' field.
+   *
    * @param value the value to set.
    */
   public void setSagaId(java.lang.String value) {
@@ -262,6 +285,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Gets the value of the 'customerId' field.
+   *
    * @return The value of the 'customerId' field.
    */
   public java.lang.String getCustomerId() {
@@ -270,6 +294,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Sets the value of the 'customerId' field.
+   *
    * @param value the value to set.
    */
   public void setCustomerId(java.lang.String value) {
@@ -278,6 +303,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Gets the value of the 'orderId' field.
+   *
    * @return The value of the 'orderId' field.
    */
   public java.lang.String getOrderId() {
@@ -286,6 +312,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Sets the value of the 'orderId' field.
+   *
    * @param value the value to set.
    */
   public void setOrderId(java.lang.String value) {
@@ -294,6 +321,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Gets the value of the 'price' field.
+   *
    * @return The value of the 'price' field.
    */
   public java.math.BigDecimal getPrice() {
@@ -302,6 +330,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Sets the value of the 'price' field.
+   *
    * @param value the value to set.
    */
   public void setPrice(java.math.BigDecimal value) {
@@ -310,6 +339,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Gets the value of the 'createdAt' field.
+   *
    * @return The value of the 'createdAt' field.
    */
   public java.time.Instant getCreatedAt() {
@@ -318,6 +348,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Sets the value of the 'createdAt' field.
+   *
    * @param value the value to set.
    */
   public void setCreatedAt(java.time.Instant value) {
@@ -326,6 +357,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Gets the value of the 'paymentOrderStatus' field.
+   *
    * @return The value of the 'paymentOrderStatus' field.
    */
   public com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus getPaymentOrderStatus() {
@@ -334,6 +366,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
   /**
    * Sets the value of the 'paymentOrderStatus' field.
+   *
    * @param value the value to set.
    */
   public void setPaymentOrderStatus(com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus value) {
@@ -367,13 +400,16 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
     private java.time.Instant createdAt;
     private com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus paymentOrderStatus;
 
-    /** Creates a new Builder */
+    /**
+     * Creates a new Builder
+     */
     private Builder() {
       super(SCHEMA$, MODEL$);
     }
 
     /**
      * Creates a Builder by copying an existing Builder.
+     *
      * @param other The existing Builder to copy.
      */
     private Builder(com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder other) {
@@ -409,7 +445,9 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
     }
 
     /**
-     * Creates a Builder by copying an existing PaymentRequestAvroModel instance
+     * Creates a Builder by copying an existing PaymentRequestAvroModel
+     * instance
+     *
      * @param other The existing instance to copy.
      */
     private Builder(com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel other) {
@@ -446,6 +484,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Gets the value of the 'id' field.
+     *
      * @return The value.
      */
     public java.lang.String getId() {
@@ -454,6 +493,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Sets the value of the 'id' field.
+     *
      * @param value The value of 'id'.
      * @return This builder.
      */
@@ -466,6 +506,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Checks whether the 'id' field has been set.
+     *
      * @return True if the 'id' field has been set, false otherwise.
      */
     public boolean hasId() {
@@ -474,6 +515,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Clears the value of the 'id' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder clearId() {
@@ -484,6 +526,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Gets the value of the 'sagaId' field.
+     *
      * @return The value.
      */
     public java.lang.String getSagaId() {
@@ -492,6 +535,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Sets the value of the 'sagaId' field.
+     *
      * @param value The value of 'sagaId'.
      * @return This builder.
      */
@@ -504,6 +548,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Checks whether the 'sagaId' field has been set.
+     *
      * @return True if the 'sagaId' field has been set, false otherwise.
      */
     public boolean hasSagaId() {
@@ -512,6 +557,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Clears the value of the 'sagaId' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder clearSagaId() {
@@ -522,6 +568,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Gets the value of the 'customerId' field.
+     *
      * @return The value.
      */
     public java.lang.String getCustomerId() {
@@ -530,6 +577,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Sets the value of the 'customerId' field.
+     *
      * @param value The value of 'customerId'.
      * @return This builder.
      */
@@ -542,6 +590,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Checks whether the 'customerId' field has been set.
+     *
      * @return True if the 'customerId' field has been set, false otherwise.
      */
     public boolean hasCustomerId() {
@@ -550,6 +599,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Clears the value of the 'customerId' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder clearCustomerId() {
@@ -560,6 +610,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Gets the value of the 'orderId' field.
+     *
      * @return The value.
      */
     public java.lang.String getOrderId() {
@@ -568,6 +619,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Sets the value of the 'orderId' field.
+     *
      * @param value The value of 'orderId'.
      * @return This builder.
      */
@@ -580,6 +632,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Checks whether the 'orderId' field has been set.
+     *
      * @return True if the 'orderId' field has been set, false otherwise.
      */
     public boolean hasOrderId() {
@@ -588,6 +641,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Clears the value of the 'orderId' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder clearOrderId() {
@@ -598,6 +652,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Gets the value of the 'price' field.
+     *
      * @return The value.
      */
     public java.math.BigDecimal getPrice() {
@@ -606,6 +661,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Sets the value of the 'price' field.
+     *
      * @param value The value of 'price'.
      * @return This builder.
      */
@@ -618,6 +674,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Checks whether the 'price' field has been set.
+     *
      * @return True if the 'price' field has been set, false otherwise.
      */
     public boolean hasPrice() {
@@ -626,6 +683,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Clears the value of the 'price' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder clearPrice() {
@@ -636,6 +694,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Gets the value of the 'createdAt' field.
+     *
      * @return The value.
      */
     public java.time.Instant getCreatedAt() {
@@ -644,6 +703,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Sets the value of the 'createdAt' field.
+     *
      * @param value The value of 'createdAt'.
      * @return This builder.
      */
@@ -656,6 +716,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Checks whether the 'createdAt' field has been set.
+     *
      * @return True if the 'createdAt' field has been set, false otherwise.
      */
     public boolean hasCreatedAt() {
@@ -664,6 +725,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Clears the value of the 'createdAt' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder clearCreatedAt() {
@@ -673,6 +735,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Gets the value of the 'paymentOrderStatus' field.
+     *
      * @return The value.
      */
     public com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus getPaymentOrderStatus() {
@@ -681,6 +744,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Sets the value of the 'paymentOrderStatus' field.
+     *
      * @param value The value of 'paymentOrderStatus'.
      * @return This builder.
      */
@@ -693,7 +757,9 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Checks whether the 'paymentOrderStatus' field has been set.
-     * @return True if the 'paymentOrderStatus' field has been set, false otherwise.
+     *
+     * @return True if the 'paymentOrderStatus' field has been set, false
+     * otherwise.
      */
     public boolean hasPaymentOrderStatus() {
       return fieldSetFlags()[6];
@@ -701,6 +767,7 @@ public class PaymentRequestAvroModel extends org.apache.avro.specific.SpecificRe
 
     /**
      * Clears the value of the 'paymentOrderStatus' field.
+     *
      * @return This builder.
      */
     public com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel.Builder clearPaymentOrderStatus() {
