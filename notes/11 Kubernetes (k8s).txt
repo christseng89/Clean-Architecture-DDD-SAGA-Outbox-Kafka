@@ -34,21 +34,21 @@ helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
 helm repo update 
 
 ### IMPORTANT NOTES: Update poddisruptionbudget.yaml file in helm folder and use v1 instead of v1beta1...
-helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
+helm install kafka confluentinc/cp-helm-charts --version 0.6.0
 
 kubectl get po
 NAME                                                        READY     STATUS    RESTARTS        AGE
-  local-confluent-kafka-cp-control-center-6bc59c488f-hb5gz    1/1       Running   7 (6m14s ago)   12m
-  local-confluent-kafka-cp-kafka-0                            2/2       Running   0               12m
-  local-confluent-kafka-cp-kafka-1                            2/2       Running   0               2m32s
-  local-confluent-kafka-cp-kafka-2                            2/2       Running   0               2m30s
-  local-confluent-kafka-cp-kafka-connect-56bc67cc6d-xt774     2/2       Running   7 (6m2s ago)    12m
-  local-confluent-kafka-cp-kafka-rest-66f866bcb8-sphzr        2/2       Running   4 (3m23s ago)   12m
-  local-confluent-kafka-cp-ksql-server-5566858456-4bnx5       2/2       Running   7 (6m24s ago)   12m
-  local-confluent-kafka-cp-schema-registry-7b9f6ff677-d6zqw   2/2       Running   7 (6m21s ago)   12m
-  local-confluent-kafka-cp-zookeeper-0                        2/2       Running   0               12m
-  local-confluent-kafka-cp-zookeeper-1                        2/2       Running   0               12m
-  local-confluent-kafka-cp-zookeeper-2                        2/2       Running   0               12m
+  kafka-cp-control-center-6bc59c488f-hb5gz    1/1       Running   7 (6m14s ago)   12m
+  kafka-cp-kafka-0                            2/2       Running   0               12m
+  kafka-cp-kafka-1                            2/2       Running   0               2m32s
+  kafka-cp-kafka-2                            2/2       Running   0               2m30s
+  kafka-cp-kafka-connect-56bc67cc6d-xt774     2/2       Running   7 (6m2s ago)    12m
+  kafka-cp-kafka-rest-66f866bcb8-sphzr        2/2       Running   4 (3m23s ago)   12m
+  kafka-cp-ksql-server-5566858456-4bnx5       2/2       Running   7 (6m24s ago)   12m
+  kafka-cp-schema-registry-7b9f6ff677-d6zqw   2/2       Running   7 (6m21s ago)   12m
+  kafka-cp-zookeeper-0                        2/2       Running   0               12m
+  kafka-cp-zookeeper-1                        2/2       Running   0               12m
+  kafka-cp-zookeeper-2                        2/2       Running   0               12m
 
 ### Install Kafka Client
 kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\kafka-client.yml
@@ -56,30 +56,30 @@ kubectl get po | grep kafka-client
   kafka-client                                                1/1       Running   0             39s
 
 kubectl exec -it kafka-client -- /bin/bash
-#local-confluent-kafka-cp-zookeeper-headless
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic payment-request --delete --if-exists
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic payment-response --delete --if-exists
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic restaurant-status-request --delete --if-exists
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic restaurant-status-response --delete --if-exists
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic customer --delete --if-exists
+#kafka-cp-zookeeper-headless
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic payment-request --delete --if-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic payment-response --delete --if-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic restaurant-status-request --delete --if-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic restaurant-status-response --delete --if-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic customer --delete --if-exists
 
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic payment-request --create --partitions 3 --replication-factor 3 --if-not-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic payment-request --create --partitions 3 --replication-factor 3 --if-not-exists
     Created topic payment-request.
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic payment-response --create --partitions 3 --replication-factor 3 --if-not-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic payment-response --create --partitions 3 --replication-factor 3 --if-not-exists
     Created topic payment-response.
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic restaurant-status-request --create --partitions 3 --replication-factor 3 --if-not-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic restaurant-status-request --create --partitions 3 --replication-factor 3 --if-not-exists
     Created topic restaurant-status-request.
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic restaurant-status-response --create --partitions 3 --replication-factor 3 --if-not-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic restaurant-status-response --create --partitions 3 --replication-factor 3 --if-not-exists
     Created topic restaurant-status-response.
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic customer --create --partitions 3 --replication-factor 3 --if-not-exists
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic customer --create --partitions 3 --replication-factor 3 --if-not-exists
     Created topic customer.
 
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --list
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --list
     ...
     customer
-    local-confluent-kafka-cp-kafka-connect-config
-    local-confluent-kafka-cp-kafka-connect-offset
-    local-confluent-kafka-cp-kafka-connect-status
+    kafka-cp-kafka-connect-config
+    kafka-cp-kafka-connect-offset
+    kafka-cp-kafka-connect-status
     payment-request
     payment-response
     restaurant-status-request
@@ -88,8 +88,8 @@ kubectl exec -it kafka-client -- /bin/bash
   exit
 
 ### Uninstall Kafka
-helm uninstall local-confluent-kafka
-  release "local-confluent-kafka" uninstalled
+helm uninstall kafka
+  release "kafka" uninstalled
 
 kubectl delete -f food-ordering-system\k8s-yamls\docker-desktop\kafka-client.yml
   pod "kafka-client" deleted
@@ -128,18 +128,18 @@ mvn clean install
   [INFO]     [creator]         Downloading from https://github.com/bell-sw/Liberica/releases/download/17.0.5+8/bellsoft-jre17.0.5+8-linux-amd64.tar.gz
   ...
 
-helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
+helm install kafka confluentinc/cp-helm-charts --version 0.6.0
 kubectl get po
   NAME                                                        READY     STATUS    RESTARTS   AGE
-  local-confluent-kafka-cp-control-center-6bc59c488f-886mn    1/1       Running   0          10s
-  local-confluent-kafka-cp-kafka-0                            2/2       Running   0          10s
-  local-confluent-kafka-cp-kafka-1                            0/2       Pending   0          2s
-  local-confluent-kafka-cp-kafka-connect-56bc67cc6d-hj926     2/2       Running   0          10s
-  local-confluent-kafka-cp-kafka-rest-66f866bcb8-2hcdm        2/2       Running   0          10s
-  local-confluent-kafka-cp-ksql-server-5566858456-lxfpz       2/2       Running   0          10s
-  local-confluent-kafka-cp-schema-registry-7b9f6ff677-ql2xk   2/2       Running   0          10s
-  local-confluent-kafka-cp-zookeeper-0                        2/2       Running   0          10s
-  local-confluent-kafka-cp-zookeeper-1                        0/2       Pending   0          0s
+  kafka-cp-control-center-6bc59c488f-886mn    1/1       Running   0          10s
+  kafka-cp-kafka-0                            2/2       Running   0          10s
+  kafka-cp-kafka-1                            0/2       Pending   0          2s
+  kafka-cp-kafka-connect-56bc67cc6d-hj926     2/2       Running   0          10s
+  kafka-cp-kafka-rest-66f866bcb8-2hcdm        2/2       Running   0          10s
+  kafka-cp-ksql-server-5566858456-lxfpz       2/2       Running   0          10s
+  kafka-cp-schema-registry-7b9f6ff677-ql2xk   2/2       Running   0          10s
+  kafka-cp-zookeeper-0                        2/2       Running   0          10s
+  kafka-cp-zookeeper-1                        0/2       Pending   0          0s
 
 ### Install Food ordering services
 kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\application-deployment-local.yml
@@ -179,9 +179,9 @@ kubectl logs restaurant-deployment-76579fffc-wd5lg
 
 100. Deploying Postgres to local Kubernetes using Postgres docker image
 kubectl delete -f food-ordering-system\k8s-yamls\docker-desktop\application-deployment-local.yml
-helm uninstall local-confluent-kafka 
+helm uninstall kafka 
 
-helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
+helm install kafka confluentinc/cp-helm-charts --version 0.6.0
 kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\postgres-deployment.yml
   service/postgres-service created
 
@@ -198,17 +198,17 @@ kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\application-deplo
 kubectl get po
   NAME                                                        READY     STATUS    RESTARTS      AGE
   customer-deployment-7584b74679-w2vrf                        1/1       Running   0             40s
-  local-confluent-kafka-cp-control-center-6bc59c488f-xzjt8    1/1       Running   1 (94s ago)   105s
-  local-confluent-kafka-cp-kafka-0                            2/2       Running   1 (46s ago)   105s
-  local-confluent-kafka-cp-kafka-1                            2/2       Running   1 (45s ago)   95s
-  local-confluent-kafka-cp-kafka-2                            2/2       Running   1             87s
-  local-confluent-kafka-cp-kafka-connect-56bc67cc6d-lhnwh     2/2       Running   2 (81s ago)   105s
-  local-confluent-kafka-cp-kafka-rest-66f866bcb8-gnv2g        2/2       Running   3 (31s ago)   105s
-  local-confluent-kafka-cp-ksql-server-5566858456-2xq6r       2/2       Running   3 (69s ago)   105s
-  local-confluent-kafka-cp-schema-registry-7b9f6ff677-2sm2l   2/2       Running   2 (49s ago)   105s
-  local-confluent-kafka-cp-zookeeper-0                        2/2       Running   0             105s
-  local-confluent-kafka-cp-zookeeper-1                        2/2       Running   0             94s
-  local-confluent-kafka-cp-zookeeper-2                        2/2       Running   0             83s
+  kafka-cp-control-center-6bc59c488f-xzjt8    1/1       Running   1 (94s ago)   105s
+  kafka-cp-kafka-0                            2/2       Running   1 (46s ago)   105s
+  kafka-cp-kafka-1                            2/2       Running   1 (45s ago)   95s
+  kafka-cp-kafka-2                            2/2       Running   1             87s
+  kafka-cp-kafka-connect-56bc67cc6d-lhnwh     2/2       Running   2 (81s ago)   105s
+  kafka-cp-kafka-rest-66f866bcb8-gnv2g        2/2       Running   3 (31s ago)   105s
+  kafka-cp-ksql-server-5566858456-2xq6r       2/2       Running   3 (69s ago)   105s
+  kafka-cp-schema-registry-7b9f6ff677-2sm2l   2/2       Running   2 (49s ago)   105s
+  kafka-cp-zookeeper-0                        2/2       Running   0             105s
+  kafka-cp-zookeeper-1                        2/2       Running   0             94s
+  kafka-cp-zookeeper-2                        2/2       Running   0             83s
   order-deployment-5769c69f97-gdx2p                           1/1       Running   0             40s
   payment-deployment-748c988cfc-n7cxm                         1/1       Running   0             40s
   postgres-deployment-86d5c5dd7c-f9z22                        1/1       Running   0             41s
@@ -217,12 +217,12 @@ kubectl get po
 ### Check Kafka topics
 kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\kafka-client.yml
 kubectl exec -it kafka-client -- /bin/bash
-  kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --list
+  kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --list
     ...
     customer
-    local-confluent-kafka-cp-kafka-connect-config
-    local-confluent-kafka-cp-kafka-connect-offset
-    local-confluent-kafka-cp-kafka-connect-status
+    kafka-cp-kafka-connect-config
+    kafka-cp-kafka-connect-offset
+    kafka-cp-kafka-connect-status
     payment-request
     payment-response
     restaurant-status-request
