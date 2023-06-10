@@ -4,6 +4,7 @@
    md food-ordering-system-infra\helm
    cd food-ordering-system-infra\helm
    git clone https://github.com/confluentinc/cp-helm-charts.git
+   cd ..\..
 
    // Update helm\cp-helm-charts\charts\cp-zookeeper\templates\poddisruptionbudget.yaml from v1beta to v1
 
@@ -40,21 +41,19 @@
    ...
 
 3. Install Kafka Client
-   cd ..\..
    kubectl apply -f food-ordering-system\k8s-yamls\docker-desktop\kafka-client.yml
-   
 4. Create Kafka topics
    kubectl exec -it kafka-client -- bash
 
-   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic customer --create --partitions 3 --replication-factor 3 --if-not-exists
+   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic customer --create --partitions 1 --replication-factor 1 --if-not-exists
 
-   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic payment-request --create --partitions 3 --replication-factor 3 --if-not-exists
+   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic payment-request --create --partitions 1 --replication-factor 1 --if-not-exists
 
-   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic payment-response --create --partitions 3 --replication-factor 3 --if-not-exists
+   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic payment-response --create --partitions 1 --replication-factor 1 --if-not-exists
 
-   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic restaurant-approval-request --create --partitions 3 --replication-factor 3 --if-not-exists
+   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic restaurant-approval-request --create --partitions 1 --replication-factor 1 --if-not-exists
 
-   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic restaurant-approval-response --create --partitions 3 --replication-factor 3 --if-not-exists
+   kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic restaurant-approval-response --create --partitions 1 --replication-factor 1 --if-not-exists
 
    kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --list
    ...
@@ -69,7 +68,6 @@
    ...
 
    exit
-
 5. Install Food Ordering Microservices to k8s
    docker images | grep food
 
@@ -83,4 +81,3 @@
    - Tracking Order
    - Post an Order - CANCELLED
    - Tracking Order  
- 

@@ -2,7 +2,7 @@ yamlApplicationConfig:
   kafka:
     clusters:
       - name: yaml
-        bootstrapServers: local-confluent-kafka-cp-kafka-headless:9092
+        bootstrapServers: kafka-cp-kafka-headless:9092
   auth:
     type: disabled
   management:

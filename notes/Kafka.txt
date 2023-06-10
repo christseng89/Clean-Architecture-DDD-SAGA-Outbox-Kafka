@@ -15,8 +15,8 @@ customer-service:
 order-service:
   payment-request-topic-name: payment-request
   payment-response-topic-name: payment-response
-  restaurant-status-request-topic-name: restaurant-status-request
-  restaurant-status-response-topic-name: restaurant-status-response
+  restaurant-approval-request-topic-name: restaurant-approval-request
+  restaurant-approval-response-topic-name: restaurant-approval-response
   customer-topic-name: customer
 
 id = "${kafka-consumer-config.customer-group-id}",
@@ -26,7 +26,7 @@ id = "${kafka-consumer-config.payment-consumer-group-id}",
 topics = "${order-service.payment-response-topic-name}"
 
 id = "${kafka-consumer-config.restaurant-status-consumer-group-id}",
-topics = "${order-service.restaurant-status-response-topic-name}"
+topics = "${order-service.restaurant-approval-response-topic-name}"
 
 
 ### Payment service/listener
@@ -39,16 +39,16 @@ topics = "${payment-service.payment-request-topic-name}"
 
 ### Restaurant service/listener
 restaurant-service:
-  restaurant-status-request-topic-name: restaurant-status-request
-  restaurant-status-response-topic-name: restaurant-status-response
+  restaurant-approval-request-topic-name: restaurant-approval-request
+  restaurant-approval-response-topic-name: restaurant-approval-response
 
 id = "${kafka-consumer-config.restaurant-status-consumer-group-id}",
-topics = "${restaurant-service.restaurant-status-request-topic-name}"
+topics = "${restaurant-service.restaurant-approval-request-topic-name}"
 
 ### Helm Install Kafka
-helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
+helm install kafka confluentinc/cp-helm-charts --version 0.6.0
   =========
-  NAME: local-confluent-kafka
+  NAME: kafka
   LAST DEPLOYED: Tue Nov  1 14:41:33 2022
   NAMESPACE: default
   STATUS: deployed
@@ -77,20 +77,20 @@ helm install local-confluent-kafka confluentinc/cp-helm-charts --version 0.6.0
   3. Explore with kafka commands:
 
     # Create the topic
-    kafka-topics --zookeeper local-confluent-kafka-cp-zookeeper-headless:2181 --topic local-confluent-kafka-topic --create --partitions 1 --replication-factor 1 --if-not-exists
+    kafka-topics --zookeeper kafka-cp-zookeeper-headless:2181 --topic kafka-topic --create --partitions 1 --replication-factor 1 --if-not-exists
 
     # Create a message
     MESSAGE="`date -u`"
 
     # Produce a test message to the topic
-    echo "$MESSAGE" | kafka-console-producer --broker-list local-confluent-kafka-cp-kafka-headless:9092 --topic local-confluent-kafka-topic
+    echo "$MESSAGE" | kafka-console-producer --broker-list kafka-cp-kafka-headless:9092 --topic kafka-topic
 
     # Consume a test message from the topic
-    kafka-console-consumer --bootstrap-server local-confluent-kafka-cp-kafka-headless:9092 --topic local-confluent-kafka-topic --from-beginning --timeout-ms 2000 --max-messages 1 | grep "$MESSAGE"
+    kafka-console-consumer --bootstrap-server kafka-cp-kafka-headless:9092 --topic kafka-topic --from-beginning --timeout-ms 2000 --max-messages 1 | grep "$MESSAGE"
   =========
 
 ### Uninstall Kafka
-helm uninstall local-confluent-kafka
+helm uninstall kafka
 
 ### Kafka-UI
 https://github.com/provectus/kafka-ui/blob/master/helm_chart.md

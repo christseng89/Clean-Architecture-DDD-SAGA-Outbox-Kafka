@@ -24,9 +24,9 @@ spec:
               # value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
               # host.docker.internal = Local, postgres-service = k8s service
             - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
-              value: "local-confluent-kafka-cp-kafka-headless:9092"
+              value: "kafka-cp-kafka-headless:9092"
             - name: KAFKA-CONFIG_SCHEMA-REGISTRY-URL
-              value: "http://local-confluent-kafka-cp-schema-registry:8081"
+              value: "http://kafka-cp-schema-registry:8081"
           resources:
             limits:
               cpu: "500m"
@@ -76,9 +76,9 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://host.docker.internal:5432/postgres?currentSchema=payment&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
             - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
-              value: "local-confluent-kafka-cp-kafka-headless:9092"
+              value: "kafka-cp-kafka-headless:9092"
             - name: KAFKA-CONFIG_SCHEMA-REGISTRY-URL
-              value: "http://local-confluent-kafka-cp-schema-registry:8081"
+              value: "http://kafka-cp-schema-registry:8081"
           resources:
             limits:
               cpu: "500m"
@@ -128,9 +128,9 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://host.docker.internal:5432/postgres?currentSchema=restaurant&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
             - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
-              value: "local-confluent-kafka-cp-kafka-headless:9092"
+              value: "kafka-cp-kafka-headless:9092"
             - name: KAFKA-CONFIG_SCHEMA-REGISTRY-URL
-              value: "http://local-confluent-kafka-cp-schema-registry:8081"
+              value: "http://kafka-cp-schema-registry:8081"
           resources:
             limits:
               cpu: "500m"
@@ -179,9 +179,9 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://host.docker.internal:5432/postgres?currentSchema=customer&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
             - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
-              value: "local-confluent-kafka-cp-kafka-headless:9092"
+              value: "kafka-cp-kafka-headless:9092"
             - name: KAFKA-CONFIG_SCHEMA-REGISTRY-URL
-              value: "http://local-confluent-kafka-cp-schema-registry:8081"
+              value: "http://kafka-cp-schema-registry:8081"
           resources:
             limits:
               cpu: "500m"
