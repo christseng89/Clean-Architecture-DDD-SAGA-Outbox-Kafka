@@ -6,17 +6,15 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    meta.helm.sh/release-name: helm-release-name
+    meta.helm.sh/release-name: kafka-ui
     meta.helm.sh/release-namespace: default
   labels:
-    app.kubernetes.io/instance: helm-release-name
+    app.kubernetes.io/instance: kafka-ui
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kafka-ui
-    app.kubernetes.io/version: v0.4.0
-    helm.sh/chart: kafka-ui-0.4.4
-    manager: helm
-    operation: Update
-  name: helm-release-name-kafka-ui
+    app.kubernetes.io/version: v0.7.0
+    helm.sh/chart: kafka-ui-0.7.0
+  name: kafka-ui
   namespace: default
 spec:
   ports:
@@ -25,7 +23,7 @@ spec:
       protocol: TCP
       targetPort: http
   selector:
-    app.kubernetes.io/instance: helm-release-name
+    app.kubernetes.io/instance: kafka-ui
     app.kubernetes.io/name: kafka-ui
   sessionAffinity: None
   type: LoadBalancer
