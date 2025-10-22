@@ -13,9 +13,16 @@ import com.food.ordering.system.restaurant.service.domain.ports.output.message.p
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.OrderApprovalRepository;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +30,7 @@ import java.util.UUID;
 
 @Slf4j
 @Component
+@Validated
 public class RestaurantApprovalRequestHelper {
 
   private final RestaurantDomainService restaurantDomainService;
@@ -48,8 +56,23 @@ public class RestaurantApprovalRequestHelper {
     this.restaurantApprovalResponseMessagePublisher = restaurantApprovalResponseMessagePublisher;
   }
 
-  @Transactional
-  public void persistOrderApproval(RestaurantApprovalRequest restaurantApprovalRequest) {
+  @Transactional(isolation = Isolation.READ_COMMITTED)
+  @Retryable(
+    retryFor = {OptimisticLockingFailureException.class},
+    maxAttempts = 3,
+    backoff = @Backoff(delay = 100, multiplier = 2)
+  )
+  public void persistOrderApproval(@Valid @NotNull RestaurantApprovalRequest restaurantApprovalRequest) {
+    
+    // Validate input size to prevent resource exhaustion
+    if (restaurantApprovalRequest.getProducts().size() > 100) {
+      throw new IllegalArgumentException("Too many products in request. Maximum allowed: 100");
+    }
+    
+    // Validate price to prevent overflow
+    if (restaurantApprovalRequest.getPrice().scale() > 2) {
+      throw new IllegalArgumentException("Price cannot have more than 2 decimal places");
+    }
     if (publishIfOutboxMessageProcessed(restaurantApprovalRequest)) {
       log.info("An outbox message with saga id: {} already saved to database!",
         restaurantApprovalRequest.getSagaId());
