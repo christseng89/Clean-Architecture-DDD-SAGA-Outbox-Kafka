@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -12,12 +14,18 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 public class OrderItem {
-  @NotNull
+  @NotNull(message = "Product ID cannot be null")
   private final UUID productId;
-  @NotNull
+  
+  @NotNull(message = "Quantity cannot be null")
+  @Min(value = 1, message = "Quantity must be at least 1")
   private final Integer quantity;
-  @NotNull
+  
+  @NotNull(message = "Price cannot be null")
+  @DecimalMin(value = "0.01", message = "Price must be greater than 0")
   private final BigDecimal price;
-  @NotNull
+  
+  @NotNull(message = "Subtotal cannot be null")
+  @DecimalMin(value = "0.01", message = "Subtotal must be greater than 0")
   private final BigDecimal subTotal;
 }

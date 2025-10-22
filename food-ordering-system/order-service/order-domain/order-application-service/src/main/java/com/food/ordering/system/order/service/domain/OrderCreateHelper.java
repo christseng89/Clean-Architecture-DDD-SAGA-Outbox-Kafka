@@ -11,7 +11,11 @@ import com.food.ordering.system.order.service.domain.ports.output.repository.Cus
 import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
 import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -44,7 +48,12 @@ public class OrderCreateHelper {
     this.orderDataMapper = orderDataMapper;
   }
 
-  @Transactional
+  @Transactional(isolation = Isolation.READ_COMMITTED)
+  @Retryable(
+    retryFor = {OptimisticLockingFailureException.class},
+    maxAttempts = 3,
+    backoff = @Backoff(delay = 100, multiplier = 2)
+  )
   public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
     checkCustomer(createOrderCommand.getCustomerId());
     Restaurant restaurant = checkRestaurant(createOrderCommand);
