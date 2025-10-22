@@ -11,55 +11,10 @@
 
   <artifactId>restaurant-domain-core</artifactId>
 
-  <properties>
-    <!-- Override vulnerable Spring versions with secure versions -->
-    <spring.version>6.1.14</spring.version>
-    <spring-security.version>6.3.4</spring-security.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.food.ordering.system</groupId>
       <artifactId>common-domain</artifactId>
-    </dependency>
-    
-    <!-- Security overrides for vulnerable Spring dependencies -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-beans</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-expression</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-aop</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    
-    <!-- Security-focused dependencies -->
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-core</artifactId>
-      <version>${spring-security.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-config</artifactId>
-      <version>${spring-security.version}</version>
     </dependency>
     
     <!-- Input validation -->
