@@ -6,6 +6,7 @@ import com.food.ordering.system.customer.service.domain.entity.Customer;
 import com.food.ordering.system.customer.service.domain.exception.CustomerDomainException;
 import com.food.ordering.system.customer.service.domain.ports.input.service.CustomerApplicationService;
 import com.food.ordering.system.customer.service.domain.ports.output.repository.CustomerRepository;
+import com.food.ordering.system.domain.valueobject.CustomerId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -49,11 +50,7 @@ public class CustomerApplicationServiceTest {
       .lastName("Doe")
       .build();
 
-    Customer customer = new Customer();
-    customer.setId(CUSTOMER_ID);
-    customer.setUsername("john_doe");
-    customer.setFirstName("John");
-    customer.setLastName("Doe");
+    Customer customer = new Customer(new CustomerId(CUSTOMER_ID), "john_doe", "John", "Doe");
 
     when(customerRepository.createCustomer(any(Customer.class))).thenReturn(customer);
   }
@@ -77,11 +74,7 @@ public class CustomerApplicationServiceTest {
   @Test
   public void testCreateCustomerWithValidation() {
     // Reset mock to return valid customer
-    Customer customer = new Customer();
-    customer.setId(CUSTOMER_ID);
-    customer.setUsername("john_doe");
-    customer.setFirstName("John");
-    customer.setLastName("Doe");
+    Customer customer = new Customer(new CustomerId(CUSTOMER_ID), "john_doe", "John", "Doe");
     when(customerRepository.createCustomer(any(Customer.class))).thenReturn(customer);
 
     CreateCustomerResponse response = customerApplicationService.createCustomer(createCustomerCommand);

@@ -113,7 +113,7 @@ public class RestaurantDataMapper {
         if (product == null) {
           throw new IllegalArgumentException("Product cannot be null");
         }
-        if (product.getQuantity() == null || product.getQuantity() < 1) {
+        if (product.getQuantity() < 1) {
           throw new IllegalArgumentException("Product quantity must be at least 1");
         }
         if (product.getQuantity() > 1000) {

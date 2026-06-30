@@ -7,16 +7,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
-import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
-import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.session.security.SpringSessionBackedSessionRegistry;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -34,17 +27,17 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .invalidSessionUrl("/login?expired")
+                .sessionFixation(sessionFixation -> sessionFixation.migrateSession())
                 .maximumSessions(2)
                 .maxSessionsPreventsLogin(true)
                 .expiredUrl("/login?expired")
-                .sessionFixation().migrateSession()
             )
             .headers(headers -> headers
                 .frameOptions().deny()
                 .contentTypeOptions().and()
                 .httpStrictTransportSecurity(hstsConfig -> hstsConfig
                     .maxAgeInSeconds(31536000)
-                    .includeSubdomains(true)
+                    .includeSubDomains(true)
                 )
                 .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
             )
@@ -63,20 +56,5 @@ public class SecurityConfig {
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
-    }
-
-    @Bean
-    public SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-        ConcurrentSessionControlAuthenticationStrategy concurrentSessionControl = 
-            new ConcurrentSessionControlAuthenticationStrategy(new SpringSessionBackedSessionRegistry<>());
-        concurrentSessionControl.setMaximumSessions(2);
-        concurrentSessionControl.setExceptionIfMaximumExceeded(true);
-
-        RegisterSessionAuthenticationStrategy registerSession = 
-            new RegisterSessionAuthenticationStrategy(new SpringSessionBackedSessionRegistry<>());
-
-        return new CompositeSessionAuthenticationStrategy(
-            Arrays.asList(concurrentSessionControl, registerSession)
-        );
     }
 }

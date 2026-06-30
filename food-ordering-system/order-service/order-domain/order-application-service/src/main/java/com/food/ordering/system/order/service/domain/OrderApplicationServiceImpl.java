@@ -5,14 +5,12 @@ import com.food.ordering.system.order.service.domain.dto.create.CreateOrderRespo
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery;
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.ports.input.service.OrderApplicationService;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 
 @Slf4j
 @Validated
@@ -33,7 +31,7 @@ class OrderApplicationServiceImpl implements OrderApplicationService {
   @Override
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   @RateLimiter(name = "create-order", fallbackMethod = "createOrderFallback")
-  public CreateOrderResponse createOrder(@Valid @NotNull CreateOrderCommand createOrderCommand) {
+  public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
     try {
       log.info("Processing order creation request for customer: {}", createOrderCommand.getCustomerId());
       return orderCreateCommandHandler.createOrder(createOrderCommand);
@@ -46,7 +44,7 @@ class OrderApplicationServiceImpl implements OrderApplicationService {
   @Override
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   @RateLimiter(name = "order-service", fallbackMethod = "trackOrderFallback")
-  public TrackOrderResponse trackOrder(@Valid @NotNull TrackOrderQuery trackOrderQuery) {
+  public TrackOrderResponse trackOrder(TrackOrderQuery trackOrderQuery) {
     try {
       log.info("Processing order tracking request for order: {}", trackOrderQuery.getOrderTrackingId());
       return orderTrackCommandHandler.trackOrder(trackOrderQuery);
@@ -58,11 +56,22 @@ class OrderApplicationServiceImpl implements OrderApplicationService {
 
   public CreateOrderResponse createOrderFallback(CreateOrderCommand createOrderCommand, Exception ex) {
     log.warn("Rate limit exceeded for order creation, customer: {}", createOrderCommand.getCustomerId());
-    throw new RuntimeException("Service temporarily unavailable. Please try again later.", ex);
+    throw fallbackException("Service temporarily unavailable. Please try again later.", ex);
   }
 
   public TrackOrderResponse trackOrderFallback(TrackOrderQuery trackOrderQuery, Exception ex) {
     log.warn("Rate limit exceeded for order tracking, order: {}", trackOrderQuery.getOrderTrackingId());
-    throw new RuntimeException("Service temporarily unavailable. Please try again later.", ex);
+    throw fallbackException("Service temporarily unavailable. Please try again later.", ex);
+  }
+
+  private RuntimeException fallbackException(String message, Exception ex) {
+    if (ex instanceof RuntimeException runtimeException && !(ex instanceof RequestNotPermitted)) {
+      return runtimeException;
+    }
+    if (ex.getCause() instanceof RuntimeException runtimeException &&
+      !(ex.getCause() instanceof RequestNotPermitted)) {
+      return runtimeException;
+    }
+    return new RuntimeException(message, ex);
   }
 }

@@ -2,14 +2,15 @@ package com.food.ordering.system.restaurant.service.domain;
 
 import com.food.ordering.system.domain.valueobject.*;
 import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
-import com.food.ordering.system.restaurant.service.domain.entity.OrderApproval;
 import com.food.ordering.system.restaurant.service.domain.entity.OrderDetail;
 import com.food.ordering.system.restaurant.service.domain.entity.Product;
 import com.food.ordering.system.restaurant.service.domain.entity.Restaurant;
 import com.food.ordering.system.restaurant.service.domain.exception.RestaurantNotFoundException;
+import com.food.ordering.system.restaurant.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.OrderApprovalRepository;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.OrderOutboxRepository;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,7 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -60,14 +62,9 @@ public class RestaurantApprovalRequestHelperTest {
       .restaurantId(RESTAURANT_ID.toString())
       .orderId(ORDER_ID.toString())
       .restaurantOrderStatus(com.food.ordering.system.domain.valueobject.RestaurantOrderStatus.PAID)
-      .products(List.of(
-        com.food.ordering.system.restaurant.service.domain.dto.Product.builder()
-          .id(PRODUCT_ID.toString())
-          .quantity(4)
-          .build()
-      ))
+      .products(List.of(requestProduct(PRODUCT_ID, 4)))
       .price(PRICE)
-      .createdAt(ZonedDateTime.now())
+      .createdAt(Instant.now())
       .build();
 
     restaurantApprovalRequestWithInactiveRestaurant = RestaurantApprovalRequest.builder()
@@ -76,23 +73,16 @@ public class RestaurantApprovalRequestHelperTest {
       .restaurantId(RESTAURANT_ID.toString())
       .orderId(ORDER_ID.toString())
       .restaurantOrderStatus(com.food.ordering.system.domain.valueobject.RestaurantOrderStatus.PAID)
-      .products(List.of(
-        com.food.ordering.system.restaurant.service.domain.dto.Product.builder()
-          .id(PRODUCT_ID.toString())
-          .quantity(4)
-          .build()
-      ))
+      .products(List.of(requestProduct(PRODUCT_ID, 4)))
       .price(PRICE)
-      .createdAt(ZonedDateTime.now())
+      .createdAt(Instant.now())
       .build();
 
     Restaurant restaurant = Restaurant.builder()
       .restaurantId(new RestaurantId(RESTAURANT_ID))
       .orderDetail(OrderDetail.builder()
         .orderId(new OrderId(ORDER_ID))
-        .products(List.of(
-          new Product(new ProductId(PRODUCT_ID), "product-1", new Money(PRODUCT_PRICE))
-        ))
+        .products(List.of(restaurantProduct()))
         .totalAmount(new Money(PRICE))
         .orderStatus(OrderStatus.PAID)
         .build())
@@ -103,9 +93,7 @@ public class RestaurantApprovalRequestHelperTest {
       .restaurantId(new RestaurantId(RESTAURANT_ID))
       .orderDetail(OrderDetail.builder()
         .orderId(new OrderId(ORDER_ID))
-        .products(List.of(
-          new Product(new ProductId(PRODUCT_ID), "product-1", new Money(PRODUCT_PRICE))
-        ))
+        .products(List.of(restaurantProduct()))
         .totalAmount(new Money(PRICE))
         .orderStatus(OrderStatus.PAID)
         .build())
@@ -114,9 +102,9 @@ public class RestaurantApprovalRequestHelperTest {
 
     when(restaurantRepository.findRestaurantInformation(any(Restaurant.class)))
       .thenReturn(Optional.of(restaurant));
-    when(orderApprovalRepository.save(any(OrderApproval.class)))
-      .thenReturn(OrderApproval.builder().build());
-    when(orderOutboxRepository.findByTypeAndSagaIdAndSagaStatus(any(), any(), any()))
+    when(orderOutboxRepository.save(any(OrderOutboxMessage.class)))
+      .thenAnswer(invocation -> invocation.getArgument(0));
+    when(orderOutboxRepository.findByTypeAndSagaIdAndOutboxStatus(any(), any(), any()))
       .thenReturn(Optional.empty());
   }
 
@@ -131,9 +119,7 @@ public class RestaurantApprovalRequestHelperTest {
       .restaurantId(new RestaurantId(RESTAURANT_ID))
       .orderDetail(OrderDetail.builder()
         .orderId(new OrderId(ORDER_ID))
-        .products(List.of(
-          new Product(new ProductId(PRODUCT_ID), "product-1", new Money(PRODUCT_PRICE))
-        ))
+        .products(List.of(restaurantProduct()))
         .totalAmount(new Money(PRICE))
         .orderStatus(OrderStatus.PAID)
         .build())
@@ -157,14 +143,9 @@ public class RestaurantApprovalRequestHelperTest {
 
   @Test
   public void testApproveOrderWithTooManyProducts() {
-    List<com.food.ordering.system.restaurant.service.domain.dto.Product> tooManyProducts = new java.util.ArrayList<>();
+    List<Product> tooManyProducts = new ArrayList<>();
     for (int i = 0; i < 101; i++) {
-      tooManyProducts.add(
-        com.food.ordering.system.restaurant.service.domain.dto.Product.builder()
-          .id(UUID.randomUUID().toString())
-          .quantity(1)
-          .build()
-      );
+      tooManyProducts.add(requestProduct(UUID.randomUUID(), 1));
     }
 
     RestaurantApprovalRequest requestWithTooManyProducts = RestaurantApprovalRequest.builder()
@@ -175,13 +156,13 @@ public class RestaurantApprovalRequestHelperTest {
       .restaurantOrderStatus(com.food.ordering.system.domain.valueobject.RestaurantOrderStatus.PAID)
       .products(tooManyProducts)
       .price(PRICE)
-      .createdAt(ZonedDateTime.now())
+      .createdAt(Instant.now())
       .build();
 
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+    ConstraintViolationException exception = assertThrows(ConstraintViolationException.class,
       () -> restaurantApprovalRequestHelper.persistOrderApproval(requestWithTooManyProducts));
 
-    assertTrue(exception.getMessage().contains("Too many products"));
+    assertTrue(exception.getMessage().contains("Products list must contain between 1 and 100 items"));
   }
 
   @Test
@@ -192,19 +173,31 @@ public class RestaurantApprovalRequestHelperTest {
       .restaurantId(RESTAURANT_ID.toString())
       .orderId(ORDER_ID.toString())
       .restaurantOrderStatus(com.food.ordering.system.domain.valueobject.RestaurantOrderStatus.PAID)
-      .products(List.of(
-        com.food.ordering.system.restaurant.service.domain.dto.Product.builder()
-          .id(PRODUCT_ID.toString())
-          .quantity(4)
-          .build()
-      ))
+      .products(List.of(requestProduct(PRODUCT_ID, 4)))
       .price(new BigDecimal("200.123")) // Invalid: more than 2 decimal places
-      .createdAt(ZonedDateTime.now())
+      .createdAt(Instant.now())
       .build();
 
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
       () -> restaurantApprovalRequestHelper.persistOrderApproval(requestWithInvalidPrice));
 
     assertTrue(exception.getMessage().contains("decimal places"));
+  }
+
+  private Product requestProduct(UUID productId, int quantity) {
+    return Product.builder()
+      .productId(new ProductId(productId))
+      .quantity(quantity)
+      .build();
+  }
+
+  private Product restaurantProduct() {
+    return Product.builder()
+      .productId(new ProductId(PRODUCT_ID))
+      .name("product-1")
+      .price(new Money(PRODUCT_PRICE))
+      .quantity(4)
+      .available(true)
+      .build();
   }
 }

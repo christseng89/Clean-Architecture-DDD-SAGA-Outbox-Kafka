@@ -3,6 +3,7 @@ package com.food.ordering.system.restaurant.service.messaging.mapper;
 import com.food.ordering.system.domain.valueobject.ProductId;
 import com.food.ordering.system.domain.valueobject.RestaurantOrderStatus;
 import com.food.ordering.system.kafka.order.avro.model.OrderApprovalStatus;
+import com.food.ordering.system.kafka.order.avro.model.ProductAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
 import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
@@ -122,7 +123,7 @@ public class RestaurantMessagingDataMapper {
     return price.setScale(2, BigDecimal.ROUND_HALF_UP);
   }
   
-  private List<Product> mapAndValidateProducts(List<com.food.ordering.system.kafka.order.avro.model.Product> products) {
+  private List<Product> mapAndValidateProducts(List<ProductAvroModel> products) {
     return products.stream()
       .limit(MAX_PRODUCTS) // Prevent resource exhaustion
       .map(avroModel -> {
@@ -134,7 +135,7 @@ public class RestaurantMessagingDataMapper {
           throw new IllegalArgumentException("Product ID cannot be null");
         }
         
-        if (avroModel.getQuantity() == null || avroModel.getQuantity() < 1) {
+        if (avroModel.getQuantity() < 1) {
           throw new IllegalArgumentException("Product quantity must be at least 1");
         }
         

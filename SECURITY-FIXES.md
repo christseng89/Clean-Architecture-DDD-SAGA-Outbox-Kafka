@@ -1,112 +1,69 @@
 # Security Vulnerability Fixes
 
 ## Overview
-This document outlines the security vulnerabilities that have been addressed in the food-ordering-system project, specifically focusing on Spring Framework vulnerabilities in the restaurant-service module.
 
-## Critical Vulnerabilities Fixed
+This repository is a multi-module Maven project. Snyk and Dependabot alerts should be fixed from the root Maven parent, `food-ordering-system/pom.xml`, so all service/module POMs inherit the same patched versions.
 
-### 1. Spring Core 6.1.13 - Incorrect Authorization (CVE-2024-22243)
-**Severity**: HIGH  
-**Component**: org.springframework:spring-core 6.1.13  
-**Description**: Authorization bypass vulnerability in Spring Framework that could allow unauthorized access to protected resources.
+The June 2026 alerts are dependency alerts, not application-code findings. The affected module paths are mostly reporting where vulnerable transitive dependencies are visible in the graph.
 
-**Fix Applied**:
-- Upgraded Spring Core from 6.1.13 to 6.1.14
-- Applied consistent version management across all modules
-- Added explicit dependency declarations in restaurant-domain-core POM
+## Fixes Applied
 
-### 2. Spring Beans 6.1.13 - Relative Path Traversal (CVE-2024-22259)
-**Severity**: HIGH  
-**Component**: org.springframework:spring-beans 6.1.13  
-**Description**: Path traversal vulnerability that could allow attackers to access files outside the intended directory structure.
+The root dependency management now pins these security-sensitive dependencies:
 
-**Fix Applied**:
-- Upgraded Spring Beans from 6.1.13 to 6.1.14
-- Implemented comprehensive path validation utilities
-- Added input sanitization across all data access layers
+| Dependency | Version | Why it is pinned |
+|------------|---------|------------------|
+| `org.apache.kafka:kafka-clients` | `3.9.1` | Fixes the Kafka 3.x Dependabot alerts for producer buffer-pool race conditions and sensitive DEBUG logging without jumping to Kafka 4.x. |
+| `org.postgresql:postgresql` | `42.7.12` | Updates pgjdbc beyond the SCRAM/PBKDF2 CPU exhaustion advisory line. |
+| `org.apache.avro:avro` | `1.12.1` | Keeps Avro on the latest 1.12.x line used by the Kafka model/plugin modules. |
+| `org.apache.commons:commons-compress` | `1.28.0` | Reduces archive-processing advisories such as resource exhaustion, symlink, and temporary-file findings. |
+| `org.yaml:snakeyaml` | `2.2` | Overrides older transitive SnakeYAML versions pulled by framework tooling. |
 
-## Security Enhancements Implemented
+PostgreSQL, Avro, Commons Compress, and SnakeYAML are centrally managed in the root parent. Do not add competing versions in individual service modules unless a module has a proven compatibility exception.
 
-### Dependency Management Strategy
-1. **Version Pinning**: Explicit version declarations for all Spring dependencies
-2. **Dependency Management**: Centralized version control in parent POMs
-3. **Security Overrides**: Override vulnerable transitive dependencies
+## Kafka Compatibility Note
 
-### Security Configurations Added
-- **Spring Security**: Latest version (6.3.4) with comprehensive security headers
-- **Input Validation**: Jakarta Validation API with Hibernate Validator
-- **Path Security**: Custom path validation utilities to prevent traversal attacks
-- **Authorization**: Method-level security with @PreAuthorize annotations
+Kafka `4.x` and Confluent serializer `8.x` are available, but they should be tested as a coordinated upgrade with Spring Kafka and the Kafka cluster/container images. For the current Spring Boot 3.x codebase, `kafka-clients` `3.9.1` is the safer remediation target for the Dependabot alerts shown in the screenshot.
 
-### Affected Modules
-- `food-ordering-system` (parent POM)
-- `restaurant-service` (service level POM)
-- `restaurant-domain-core` (domain core POM)
+## Required Scanner Setup
 
-## Verification Steps
+Snyk needs Maven available to build an accurate dependency graph. The checked-in `food-ordering-system/snyk-report.json` shows Snyk failed because `mvn` was not on `PATH`.
 
-### 1. Dependency Resolution Check
+Install Maven locally or in CI, then run scans from `food-ordering-system`:
+
 ```bash
-mvn dependency:tree -Dverbose
+mvn -version
+mvn -B -DskipTests dependency:tree
+snyk test --all-projects
 ```
-Verify that Spring Core and Spring Beans resolve to version 6.1.14 or higher.
 
-### 2. Security Scan
-```bash
-mvn org.owasp:dependency-check-maven:check
+For GitHub Actions, use `actions/setup-java` with Maven caching before invoking Snyk:
+
+```yaml
+- uses: actions/setup-java@v4
+  with:
+    distribution: temurin
+    java-version: '17'
+    cache: maven
+- run: mvn -B -DskipTests dependency:tree
+  working-directory: food-ordering-system
+- run: snyk test --all-projects
+  working-directory: food-ordering-system
 ```
-Run OWASP dependency check to verify vulnerabilities are resolved.
 
-### 3. Build Verification
-```bash
-mvn clean compile
-```
-Ensure all modules compile successfully with the new dependency versions.
+## Verification Checklist
 
-## Additional Security Measures
+1. Run `mvn -B clean verify` from `food-ordering-system`.
+2. Run `mvn -B dependency:tree -Dincludes=org.apache.kafka:kafka-clients,org.postgresql:postgresql,org.apache.avro:avro,org.apache.commons:commons-compress,org.yaml:snakeyaml`.
+3. Confirm the resolved versions match the table above.
+4. Run `snyk test --all-projects` after Maven is on `PATH`.
+5. Re-open or re-check Dependabot alerts after GitHub rescans the default branch.
 
-### 1. Runtime Security
-- Rate limiting with Resilience4j
-- Circuit breaker patterns for fault tolerance
-- Resource exhaustion prevention
-- Input sanitization and validation
+## Operational Hardening
 
-### 2. Configuration Security
-- Externalized sensitive configuration
-- Secure HTTP headers
-- Session management security
-- CSRF protection
+Dependency updates remove known vulnerable library code, but several Snyk categories also need runtime controls:
 
-### 3. Data Access Security
-- SQL injection prevention
-- Query parameter validation
-- Transaction isolation
-- Optimistic locking
-
-## Recommendations
-
-1. **Regular Updates**: Implement automated dependency scanning and updates
-2. **Security Testing**: Include security tests in CI/CD pipeline
-3. **Monitoring**: Monitor for new vulnerabilities in dependencies
-4. **Documentation**: Keep security fixes documented and tracked
-
-## Version Matrix
-
-| Component | Previous Version | Fixed Version | Security Issue |
-|-----------|------------------|---------------|----------------|
-| spring-core | 6.1.13 | 6.1.14 | Authorization Bypass |
-| spring-beans | 6.1.13 | 6.1.14 | Path Traversal |
-| spring-security-core | 6.2.x | 6.3.4 | General Security Updates |
-| spring-security-web | 6.2.x | 6.3.4 | General Security Updates |
-
-## Testing
-All security fixes have been implemented with backward compatibility in mind. The following areas should be tested:
-
-1. Authentication and authorization flows
-2. File access and path handling
-3. API endpoint security
-4. Data validation and sanitization
-5. Error handling and logging
-
-## Contact
-For questions about these security fixes, please refer to the Spring Security documentation or create an issue in the project repository.
+1. Keep HTTP request/body size limits configured on gateways and services.
+2. Avoid enabling Kafka client DEBUG logging in production.
+3. Validate external URLs and host allowlists before making outbound calls.
+4. Keep database credentials and Kafka secrets outside committed YAML files.
+5. Add CI dependency scanning so stale reports do not hide newly introduced vulnerable versions.

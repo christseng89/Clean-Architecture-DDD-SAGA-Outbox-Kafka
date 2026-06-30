@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import java.nio.file.AccessDeniedException as FileAccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -83,7 +82,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
-    @ExceptionHandler({AccessDeniedException.class, FileAccessDeniedException.class})
+    @ExceptionHandler({AccessDeniedException.class, java.nio.file.AccessDeniedException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(Exception ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()

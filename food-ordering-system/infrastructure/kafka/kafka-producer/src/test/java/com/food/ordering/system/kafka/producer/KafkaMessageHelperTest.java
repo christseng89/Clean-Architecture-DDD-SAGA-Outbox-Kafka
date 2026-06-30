@@ -9,6 +9,8 @@ import org.springframework.kafka.support.SendResult;
 
 import java.util.function.BiConsumer;
 
+import com.food.ordering.system.outbox.OutboxStatus;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,7 +28,8 @@ public class KafkaMessageHelperTest {
     String orderId = "test-order-id";
 
     BiConsumer<SendResult<String, Object>, Throwable> callback =
-      kafkaMessageHelper.getKafkaCallback(responseTopicName, avroModel, orderId, avroModel.getClass().getName());
+      kafkaMessageHelper.getKafkaCallback(responseTopicName, avroModel, orderId,
+        (String ignored, OutboxStatus status) -> { }, orderId, avroModel.getClass().getName());
 
     assertNotNull(callback);
 
@@ -48,7 +51,8 @@ public class KafkaMessageHelperTest {
     String orderId = "test-order-id";
 
     BiConsumer<SendResult<String, Object>, Throwable> callback =
-      kafkaMessageHelper.getKafkaCallback(responseTopicName, avroModel, orderId, avroModel.getClass().getName());
+      kafkaMessageHelper.getKafkaCallback(responseTopicName, avroModel, orderId,
+        (String ignored, OutboxStatus status) -> { }, orderId, avroModel.getClass().getName());
 
     assertNotNull(callback);
 
@@ -65,7 +69,8 @@ public class KafkaMessageHelperTest {
     String avroModelName = null;
 
     BiConsumer<SendResult<String, Object>, Throwable> callback =
-      kafkaMessageHelper.getKafkaCallback(responseTopicName, avroModel, orderId, avroModelName);
+      kafkaMessageHelper.getKafkaCallback(responseTopicName, avroModel, orderId,
+        (String ignored, OutboxStatus status) -> { }, orderId, avroModelName);
 
     assertNotNull(callback);
   }
