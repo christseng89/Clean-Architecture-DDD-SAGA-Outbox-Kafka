@@ -1,0 +1,13 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.22.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-17457695:
+    - '*':
+        reason: >-
+          No fixed Maven Central release is available as of 2026-07-01; keep
+          Jackson on 2.18.8 to avoid newer critical advisories and revisit when
+          Snyk publishes a fixed version.
+        expires: 2026-10-01T00:00:00.000Z
+        created: 2026-07-01T15:46:46.215Z
+patch: {}

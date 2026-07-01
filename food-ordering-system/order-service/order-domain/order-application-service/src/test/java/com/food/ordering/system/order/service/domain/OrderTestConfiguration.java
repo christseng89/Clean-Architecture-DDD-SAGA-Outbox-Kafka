@@ -1,5 +1,6 @@
 package com.food.ordering.system.order.service.domain;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
 import com.food.ordering.system.order.service.domain.ports.output.repository.*;
@@ -43,6 +44,11 @@ public class OrderTestConfiguration {
   @Bean
   public ApprovalOutboxRepository approvalOutboxRepository() {
     return Mockito.mock(ApprovalOutboxRepository.class);
+  }
+
+  @Bean
+  public ObjectMapper objectMapper() {
+    return new ObjectMapper().findAndRegisterModules();
   }
 
   @Bean
