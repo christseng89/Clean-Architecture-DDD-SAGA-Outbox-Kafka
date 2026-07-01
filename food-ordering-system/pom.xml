@@ -16,7 +16,7 @@
   <parent>
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
-    <version>3.4.10</version>
+    <version>3.5.15</version>
     <relativePath/>
   </parent>
 
@@ -28,11 +28,19 @@
   <properties>
     <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
     <mockito.version>5.8.0</mockito.version>
-    <kafka-clients.version>3.9.1</kafka-clients.version>
+    <kafka-clients.version>3.9.2</kafka-clients.version>
     <kafka-avro-serializer.version>7.5.1</kafka-avro-serializer.version>
     <avro.version>1.12.1</avro.version>
     <commons-compress.version>1.28.0</commons-compress.version>
     <postgresql.version>42.7.12</postgresql.version>
+    <jackson-bom.version>2.18.8</jackson-bom.version>
+    <logback.version>1.5.36</logback.version>
+    <micrometer.version>1.15.12</micrometer.version>
+    <spring-retry.version>2.0.13</spring-retry.version>
+    <tomcat.version>10.1.56</tomcat.version>
+    <commons-lang3.version>3.18.0</commons-lang3.version>
+    <lz4-java.version>1.8.1</lz4-java.version>
+    <resilience4j.version>2.2.0</resilience4j.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -201,21 +209,31 @@
         <artifactId>commons-compress</artifactId>
         <version>${commons-compress.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.lz4</groupId>
+        <artifactId>lz4-java</artifactId>
+        <version>${lz4-java.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>io.github.resilience4j</groupId>
         <artifactId>resilience4j-spring-boot3</artifactId>
-        <version>2.2.0</version>
+        <version>${resilience4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.resilience4j</groupId>
         <artifactId>resilience4j-ratelimiter</artifactId>
-        <version>2.2.0</version>
+        <version>${resilience4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.resilience4j</groupId>
         <artifactId>resilience4j-circuitbreaker</artifactId>
-        <version>2.2.0</version>
+        <version>${resilience4j.version}</version>
       </dependency>
       <!-- PostgreSQL ...-->
       <dependency>
